@@ -1,0 +1,219 @@
+
+
+<!-- FEEDBACK MODAL -->
+<!--<div id="feedback-tab" class="rounded" data-toggle="modal" data-target="#feedback-modal">
+    <a href="#">feedback</a>
+</div>-->
+<div id="feedback-modal" class="modal hide fade">
+    <form class="form-horizontal" id="feedback-form">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Feedback</h3>
+        </div>
+        <div class="modal-body">
+            <div class="control-group">
+              <label class="control-label" for="name">Full Name</label>
+              <div class="controls">
+                <input class="input-xlarge" type="text" name="name" placeholder="Full Name"
+                    {% if user.is_authenticated %}
+                    value="{{user.first_name}} {{user.last_name}}"
+                    {% endif %}
+                required>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="email">Email Address</label>
+              <div class="controls">
+                <input class="input-xlarge" type="email" name="email" placeholder="Email Address"
+                {% if user.is_authenticated %}
+                value="{{user.email}}"
+                {% endif %}
+                required>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="comment">Comment</label>
+              <div class="controls">
+                  <textarea id="feedback-area" class="input-xlarge" rows="3" name="comment" required></textarea>
+              </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button href="#" class="btn" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Send Feedback</button>
+        </div>
+  </form>
+</div>
+
+<!-- Layer Add MODAL -->
+{% if user.is_staff %}
+<div id="add-layer-modal" class="modal hide fade">
+    <div class="modal-header" style="min-height: 20px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Add a Layer to Marine Planner</h3>
+    </div>
+    <div class="modal-body" data-bind="if: newLayer">  
+      <div class="row-fluid" data-bind="with: newLayer">
+          <form class="form-horizontal" data-bind="submit: $root.createLayer">
+            <div class="control-group">
+              <label class="control-label" for="inputEmail">Name</label>
+              <div class="controls">
+                <input type="text" placeholder="Name" required data-bind="value: name">
+                 <i class="icon-info-sign" data-content="The name of the data layer that you want to display on the map viewer."></i>
+              </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Type</label>
+                <div class="controls">
+                    <select data-bind="value: layer_type">
+                      <option value="ArcRest">ArcRest</option>
+                      <option value="XYZ">XYZ</option>
+                      <option value="WMS">WMS</option>
+                    </select>
+                    <i class="icon-info-sign" data-content="The service type of the data layer to be added. ArcREST is the appropriate type for ESRI ArcGIS service layers. XYZ is appropriate for ?. WMS is appropriate for web mapping service data layers."></i>
+                </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="inputPassword">URL</label>
+              <div class="controls">
+                <input type="text" placeholder="URL" data-bind="value: url">
+                <i class="icon-info-sign" data-content="The full URL of the data layer. If the layer is an ArcREST layer, do not include the layer ID."></i>
+              </div>
+            </div>
+            <div class="control-group" data-bind="visible: layer_type() == 'ArcRest'">
+              <label class="control-label" for="inputPassword">ArcGIS Layers</label>
+              <div class="controls">
+                <input type="text" placeholder="ArcGIS Layers" data-bind="value: arcgis_layers">
+                <i class="icon-info-sign" data-content="The layer ID."></i>
+              </div>
+            </div>
+            <div class="control-group" data-bind="visible: layer_type() == 'WMS'">
+              <label class="control-label" for="inputPassword">WMS Layer Name</label>
+              <div class="controls">
+                <input type="text" placeholder="WMS Layer Name" data-bind="value: wms_slug">
+                <i class="icon-info-sign" data-content="The WMS layer slug."></i>
+              </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Theme</label>
+                <div class="controls">
+                    <select data-bind="options: $root.themes, value: theme, optionsText: 'name'">
+                    </select>
+                    <i class="icon-info-sign" data-content="Select the theme that the data layer will fall under."></i>
+                </div>
+            </div>
+          </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button href="#" class="btn" data-dismiss="modal">Cancel</button>
+        <button href="#" class="btn btn-primary" data-dismiss="modal" data-bind="click: $root.createLayer">Save</button>
+    </div>
+</div>
+
+{% endif %}
+<!-- HELP MODAL -->
+
+<div id="help-modal" class="modal hide fade">
+    <div class="modal-header" style="min-height: 20px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align: center">  
+      <div class="row-fluid">
+        <div class="span12" data-bind="style: {display: hideTours() ? 'none': 'block'}, css: {span12: !hideTours()}">
+            <h4>Tour the Marine Planner</h4>
+            <div style="text-align: center">
+            <ul class="unstyled" style="margin-left: 1px">
+                <li><a href="#" data-dismiss="modal" data-bind="click: startDefaultTour">Tour the Basics</a></li>
+                <li><a href="#" data-dismiss="modal" data-bind="click: startDataTour">Tour the Data Tab</a></li>
+                <li><a href="#" data-dismiss="modal" data-bind="click: startActiveTour">Tour the Active Tab</a></li>
+            </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button href="#" class="btn" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+<!-- DESIGN SHARE MODAL -->
+
+<div id="share-modal" class="modal hide fade" data-bind="with: app.viewModel.scenarios">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Sharing</h3>
+    </div>
+    <div class="modal-body" style="height: 200px; text-align: center; overflow: hidden;">  
+        <div class="row-fluid">
+            <h4 class="sharing-header">Share my design with the following:</h4>
+            <ul class="unstyled" id="sharing-groups" style="margin-left: 1px; height: 165px; outline: none;">
+                <span data-bind="foreach: sharingGroups">
+                    <li data-bind="click: $parent.toggleGroup">
+                        <div style="text-align: left; margin-left: 50px; cursor: pointer;">
+                            <div>
+                                <!--<input type="checkbox" style="margin-top: 0px; margin-bottom: 2px; margin-right: 3px;">-->
+                                <i class="check icon-large icon-check" data-bind="visible: $parent.groupIsSelected(group_name)"></i>
+                                <i class="check icon-large icon-check-empty" data-bind="visible: !$parent.groupIsSelected(group_name)"></i>
+                                <span data-bind="text: group_name"></span> 
+                                <a class="group-members-popover" rel="popover" data-bind="attr: {'data-content': $parent.groupMembers(group_name)}" data-original-title="Members"> 
+                                    <i class="icon-group"> </i>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </span>
+            </ul>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button href="#" class="btn" data-bind="click: cancelShare" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn-submit btn" data-bind="click: submitShare" data-dismiss="modal">Share</button>
+    </div>
+</div>
+
+<!-- DESIGN MAP LINKS MODAL -->
+
+<div style="display:none; width: 450px;" id="map-links-modal" class="modal hide fade" data-bind="with: app.viewModel.mapLinks">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Map Links</h3>
+    </div>
+    
+    <div class="modal-body" style="height: 165px; overflow: hidden"> 
+        <div class="row-fluid" style="padding-top: 5px">
+            <div>
+                Share this map with others  
+                <span class="pull-right">
+                    <label data-bind="visible: showShrinkOption"> 
+                        <input class="short-url-checkbox" type="checkbox" data-bind="checked: shrinkURL" style="margin-top: 0px; margin-bottom: 3px"> 
+                        Short URL 
+                    </label>
+                </span>
+            </div>
+            <div>
+                <input id="short-url" type="text" style="width: 96%" data-bind="attr: {value: getURL()}"> 
+            </div>
+            <div style="padding-top: 12px; padding-bottom: 5px"> 
+                Embed this map in your own webpage 
+            </div> 
+            <div> 
+                <input id="iframe-html" type="text" style="width: 96%" data-bind="attr: {value: getIFrameHTML}"> 
+            </div> 
+            <div style="margin-top: -4px"> 
+                <a href="#" data-bind="click: openIFrameExample"> 
+                    Preview embedded map 
+                </a> 
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button href="#" class="btn" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+
+
+

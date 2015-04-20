@@ -1,0 +1,61 @@
+
+<div style="display:none; margin-top: 80px; " id="bookmark-popover" class="popover fade left in" data-bind="with: bookmarks">
+    <div class="arrow" style="display: none"></div>
+    <div class="popover-inner">
+        <h3 class="popover-title" style="font-size: 25px; font-weight: bold; padding: 15px;">
+            Bookmarks
+        </h3>
+        <div class="popover-content">
+            <div id="bookmarks-table">
+                <table class="table table-condensed" style="margin-bottom: 5px;">
+                    <tbody data-bind="foreach: bookmarksList">
+                        <tr style="border-bottom: 1px solid #dddddd;">
+                            <td>
+                                <span data-bind="click: loadBookmark">
+                                    <a data-bind="text: name, attr: {href: getBookmarkUrl()}">name</a>
+                                </span>
+                                {% if user.is_authenticated %}
+                                <!--<a rel="tooltip" data-bind="attr: {title: sharedBy}, visible: shared()" style="text-decoration: none; cursor: default;">
+                                    <i class="icon-group" style="padding-left: 10px"></i>
+                                </a>-->
+                                {% endif %}
+                            </td>
+                            <td style="padding-right: 5px; text-align: right">
+                                <div class="btn-group" style="text-align: center">
+                                    {% if user.is_authenticated %}
+                                    <!--<a class="btn btn-mini tweet-trash" data-bind="click: showSharingModal, visible: !shared()">
+                                        <span rel="tooltip" title="Share"><i class="icon-group icon-medium"></i></span>
+                                    </a>-->
+                                    {% endif %}
+                                    <a class="btn btn-mini tweet-trash"  href="#bookmark-map-links-modal" data-toggle="modal" data-bind="click: $parent.resetBookmarkMapLinks, visible: !shared()">
+                                        <span rel="tooltip" title="Map Links"><i class="icon-link icon-medium"></i></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td style="padding-left: 0px; width: 35px">
+                                <a class="btn btn-mini tweet-trash" data-bind="click: $parent.removeBookmark, visible: !shared()">
+                                    <span rel="tooltip" title="Delete"><i class="icon-trash icon-medium"></i></span>
+                                </a>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <p data-bind="visible: bookmarksList().length === 0">
+                    Create bookmarks to store map views (active data layers, location, and zoom level) for later use and sharing with others. 
+                </p>
+            </div>
+            <hr style="margin-bottom: 10px" />
+            <h5>
+                Create Bookmark
+            </h5>
+            <form data-bind="submit: saveBookmark" style="margin-bottom: 0px">
+                <input type="text" data-bind="value: newBookmarkName" class="input">
+                <div class="pull-right">
+                    <button class="btn" type="submit">save</button>
+                    <button data-bind="click: cancel" class="btn">close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

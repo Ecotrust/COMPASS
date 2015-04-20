@@ -1,0 +1,355 @@
+{% extends "common/panel.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block panel %}
+
+<script type="text/javascript" charset="utf-8">
+
+madrona.onShow(function(){
+    madrona.setupForm($('#wind-design-form'));
+
+    var step = 1;
+    var max_step = 6;
+
+    function validate(step) {
+        return true;
+    };
+
+    function wizard(action) {
+        if (step == 1 && action == 'next') {
+            if (validate(step)) {
+                step += 1;
+            }
+        } else if (step < max_step && action == 'next') {
+            step += 1;
+        } else if (step > 1 && action == 'prev') {
+            step -= 1;
+        }
+        if (step === max_step) {
+            if ( app.viewModel.scenarios.scenarioFormModel.gridCellsRemaining() === 0) {
+                $('#empty-results-warning').effect("highlight", {}, 1000);
+            }
+        }
+        $('div.step').each(function(index) {
+            $(this).hide();
+        });
+        $('div#step' + step).show();
+        updateDesignScrollBar();
+        $('#wind-design-form').data('jsp').scrollTo(0,0);
+
+
+        if (step == 1) {
+            $('#button_prev').hide();
+            $('#button_next').css('border-radius', '4px');
+        } else {
+            $('#button_prev').show();
+            $('#button_next').css('border-top-right-radius', '4px');
+            $('#button_next').css('border-bottom-right-radius', '4px');
+            $('#button_next').css('border-top-left-radius', '0px');
+            $('#button_next').css('border-bottom-left-radius', '0px');
+        }
+
+        if (step == max_step) {
+            $('#button_next').hide();
+            if ( app.viewModel.scenarios.scenarioFormModel.gridCellsRemaining() != 0 ) {
+                $('.submit_button').show();
+            }
+        } else {
+            $('#button_next').show();
+            $('.submit_button').hide();
+        }
+    };
+
+    function showhide_widget(element) {
+        element.fadeToggle(100); //slideToggle
+    }
+
+    function updateDesignScrollBar() {
+        var designsWizardScrollpane = $('#wind-design-form').data('jsp');
+        if (designsWizardScrollpane === undefined) {
+            $('#wind-design-form').jScrollPane();
+        } else {
+            setTimeout(function() {designsWizardScrollpane.reinitialise();},200);
+        }
+    };
+
+    updateDesignScrollBar();
+    wizard();
+
+    $('.inputfield').each(function() {
+        $(this).hide();
+    });
+
+    $('#button_prev').click( function() { wizard('prev'); });
+    $('#button_next').click( function() { wizard('next'); });
+
+    $('ul.errorlist').each( function() {
+        step = 4;
+        wizard();
+    });
+
+
+    if ($("input[type='color']").length) {
+        $.getScript("media/marco/js/mColorPicker.js");
+    }
+
+    $('#id_name').keypress(function (e) {
+        if (e.which === 13) {
+            $('#scenario-form .submit_button').click();
+            return false;
+        } else {
+            $('#invalid-name-message').hide();
+        }
+    });
+    var slidervalueElements = document.getElementsByClassName('slidervalue');
+    for (var i=0; i<slidervalueElements.length; i+=1) {
+        slidervalueElements[i].addEventListener('keypress', function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                $(event.currentTarget).blur();
+            }
+        });
+    }
+    /*
+    $('#scenario-form .submit_button').click( function() {
+        var name = $('#id_name').val();
+        if ($.trim(name) !== "") {
+            return true;
+        }
+        $('#invalid-name-message').show();
+        return false;
+    });
+    */
+
+    /* Tooltips */
+    //overriding the template here to remove empty space for title
+    $('.info-icon').popover({
+        trigger: 'hover',
+        template: '<div class="popover layer-popover"><div class="arrow"></div><div class="popover-inner layer-tooltip"><div class="popover-content"><p></p></div></div></div>'
+    });
+    $('.info-icon').click(function(e) {
+        if ( $('.popover').is(':visible') ) {
+            $('.popover').hide();
+        }
+    });
+    $('.disabled-grid-button').popover({
+        trigger: 'hover',
+        template: '<div class="popover layer-popover"><div class="arrow"></div><div class="popover-inner layer-tooltip"><div class="popover-content"><p></p></div></div></div>'
+        // html: 'true'
+    });
+});
+</script>
+
+{% if form.media %} {{ form.media }} {% endif %}
+<h4>Planning Unit Filtering</h4>
+<div class="show-blocks-btn">
+    <a class="button btn enabled-grid-button" style="padding: 4px 6px; margin-right:0;" data-bind="click: showFilteringResults">
+        <span>Show Planning Units</span>
+        <span class="badge" style="margin-right: 5px; margin-left: -5px;" data-bind="text: gridCellsRemaining()"></span>
+        <i class="icon-large icon-check-empty" style="margin-left: 1px;" data-bind="visible: ! showingFilteringResults()"></i>
+        <i class="icon-large icon-check" style="margin-left: 1px;" data-bind="visible: showingFilteringResults() && !showButtonSpinner()"></i>
+        <i class="icon-large icon-refresh icon-spin" style="margin-left: 5px; height: 5px" data-bind="visible: showingFilteringResults() && showButtonSpinner()"></i>
+    </a>
+</div>
+<form id="wind-design-form" action="{{action}}" method="post" name="wind-design-form">
+    {% for hidden in form.hidden_fields %}
+        <div style="display:none;">
+            {{ hidden.errors }}
+        </div>{{ hidden }}
+    {% endfor %}
+    <div id="error_bar"></div>
+
+    {% for step in form.get_steps %}
+    <div id="step{{ forloop.counter }}" class="step">
+        <!-- <p class="step-text"><i> </i></p>         -->
+        <p class="step-text">
+            {% if forloop.counter == 1 %}
+              Habitat
+            {% elif forloop.counter == 2 %}
+              Coral
+            {% elif forloop.counter == 3 %}
+              Fish
+            {% elif forloop.counter == 4 %}
+              People
+            {% elif forloop.counter == 5 %}
+              Management
+            {% endif %}
+        </p>
+          <i>( page {{ forloop.counter }} of 6 )</i>
+        <p class="instructions">Select features to filter Planning Units</p>
+        <div id="step{{ forloop.counter }}_inputs">
+            <ul class="parameters">
+                {% for field, field_min, field_max, field_input in step %}
+                <li>
+                    <div class="accordion" id="{{ field.html_name }}_accordion">
+                        <div class="accordion-heading" data-bind="click: function() { toggleParameter('{{ field.html_name }}'); }">
+                            <label class="accordion-toggle">
+                                {{ field.as_widget }}
+                                <i class="check icon-large icon-check" data-bind="visible: {{ field.html_name }}()"></i>
+                                <i class="check icon-large icon-check-empty"></i>
+                                <span class="parameter-label" style="margin-left: 5px">{{ field.label }}</span>
+                                <i class="info-icon icon-info-sign"
+                                   rel="popover"
+                                   data-content="{{ field.help_text }}"
+                                   data-placement="right"
+                                   data-container="body">
+                                </i>
+                            </label>
+                        </div>
+                        {% if field_min or field_max or field_input %}
+                        <div id="{{ field.html_name }}_widget" class="inputfield accordion-body collapse" data-bind="css: {'in': {{ field.html_name }}()}">
+                            <div class="accordion-inner">
+                                <div>
+
+                                    {% if field_min %}
+                                        {{ field_min.field.widget.attrs.pre_text }}
+                                        {{ field_min.as_widget }}
+                                        {{ field_min.field.widget.attrs.post_text }}
+                                    {% endif %}{% if field_max %}
+                                        {{ field_max.field.widget.attrs.pre_text }}
+                                        {{ field_max.as_widget }}
+                                        {{ field_max.field.widget.attrs.post_text }}
+                                    {% endif %}{% if field_input %}
+                                        {{ field_input.field.widget.attrs.pre_text }}
+                                        {{ field_input.as_widget }}
+                                        {{ field_min.field.widget.attrs.post_text }}
+                                    {% endif %}
+
+                                    {% if field.field.widget.attrs.layer_id and field.field.widget.attrs.layer_title %}
+                                    <div class="btn-group btn-group-layer show-layer-btn-group">
+                                        <a  class="btn btn-info-sign"
+                                            style="height: 16px; line-height: 16px"
+                                            data-bind="click: function() { toggleLayerInfo( {{ field.field.widget.attrs.layer_id }} ); }, css: { 'active': isLayerInfoActive( {{ field.field.widget.attrs.layer_id }} ) }">
+                                            <i class="icon-info-sign icon-large"></i>
+                                        </a>
+
+                                        <a  class="btn btn-layer show-layer-btn"
+                                            style="height: 16px; line-height: 16px"
+                                            data-bind="css: { 'active': isLayerActive(), 'not-active': ! isLayerActive( {{ field.field.widget.attrs.layer_id }} ) }, click: function() { toggleLayer( {{ field.field.widget.attrs.layer_id }} ); }">
+                                            <div style="font-weight: normal">
+                                                <span>{{ field.field.widget.attrs.layer_title }}</span>
+                                                <i  class="check icon-large icon-check"
+                                                    style="top: 8px"
+                                                    data-bind="visible: isLayerActive( {{ field.field.widget.attrs.layer_id }} ) && isLayerVisible( {{ field.field.widget.attrs.layer_id }} )">
+                                                </i>
+                                                <i  class="check icon-large icon-check-empty"
+                                                    style="top: 8px"
+                                                    data-bind="visible: ! isLayerActive( {{ field.field.widget.attrs.layer_id }} ) || ! isLayerVisible( {{ field.field.widget.attrs.layer_id }} )">
+                                                </i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {% endif %}
+
+                                    {{ field.errors }}
+
+                                    <script type="text/javascript">
+                                        {% if field_min and not field_max %}
+                                            $('#slider-{{ field_min.html_name }}').bind( "slidestop", function(event, ui) {
+                                                $(this).slider('value', ui.value); // this line prevents the slider value from being 1 tick off (value update is normally lagging this event trigger)
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.updateFiltersAndCount('{{ field.html_name }}');
+                                                }
+                                            });
+                                            $('#slider-{{ field_min.html_name }}').bind( "slide slidechange", function(event, ui) {
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.gridCellsRemaining('...');
+                                                }
+                                            });
+                                        {% elif field_max and not field_min %}
+                                            $('#slider-{{ field_max.html_name }}').bind( "slidestop", function(event, ui) {
+                                                $(this).slider('value', ui.value); // this line prevents the slider value from being 1 tick off (value update is normally lagging this event trigger)
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.updateFiltersAndCount('{{ field.html_name }}');
+                                                }
+                                            });
+                                            $('#slider-{{ field_min.html_name }}').bind( "slide slidechange", function(event, ui) {
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.gridCellsRemaining('...');
+                                                }
+                                            });
+                                        {% elif field_min and field_max %}
+                                            $('#slider-{{ field_input.html_name }}').bind( "slidestop", function(event, ui) {
+                                                $(this).slider('value', ui.value); // this line prevents the slider value from being 1 tick off (value update is normally lagging this event trigger)
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.updateFiltersAndCount('{{ field.html_name }}');
+                                                }
+                                            });
+                                            $('#slider-{{ field_min.html_name }}').bind( "slide slidechange", function(event, ui) {
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.gridCellsRemaining('...');
+                                                }
+                                            });
+                                        {% else %}
+                                            $('#id_{{ field_input.html_name }}').change( function() {
+                                                if (app.viewModel.scenarios.scenarioFormModel) {
+                                                    app.viewModel.scenarios.scenarioFormModel.updateFiltersAndCount('{{ field.html_name }}');
+                                                }
+                                            });
+                                        {% endif %}
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <div id="step6" class="step">
+        <p class="step-text">
+           Describe
+           <i style="font-size:75%">( page 6 of 6 )</i>
+        </p>
+        <div data-bind="css: { 'disabled': gridCellsRemaining()==0 }">
+            <p class="instructions">Please name your design by the Management Action Code, the date, and your first name and last initial. (N143_20151231_JohnD) </p>
+            <div class="step5-inputs">
+                <div class="step5-param">
+                    {{ form.name.errors }}
+                    {{ form.name }}
+                    <div id="invalid-name-message" class="control-group error" style="display: none; margin-top: -10px; margin-left: -5px;">
+                        <span class="help-inline">The <b>Name</b> field is required.</span>
+                    </div>
+                </div>
+                <p class="instructions">Please copy and paste the full management action title here and add any other pertinent information about this design</b> <!--and/or attach a file--> </p>
+                <div class="step5-param">
+                    {{ form.description.errors }}
+                    {{ form.description }}
+                </div>
+            </div>
+        </div>
+        <div id="empty-results-warning" data-bind="visible: gridCellsRemaining()==0" class="well text-error">
+            <p><i class="icon-large icon-warning-sign"></i> Wait!  Your filtering results are empty!</p>
+        </div>
+    </div>
+
+    <p><button type="submit" value="submit" class="btn-submit btn">submit</button></p>
+</form>
+
+
+<div class="wizard_nav" style="width:100%">
+    <div class="btn-group pull-right" style="margin-right: 14px">
+        <a href="#" class="button btn" onclick="this.blur(); return false;" id="button_prev"><span>&lt; Previous</span></a>
+        <a href="#" class="button btn"  onclick="this.blur(); return false;" id="button_next"><span>Next &gt;</span></a>
+        <a href="#" class="submit_button button btn" onclick="this.blur(); return false;"><span>Save</span></a>
+    </div>
+</div>
+
+<div>
+    <div class="btn-group pull-left" style="margin-left: 14px">
+        <a href="#" class="cancel_button button red btn"><span>Cancel</span></a>
+
+    </div>
+</div>
+
+
+<!-- TODO: clean up the following (much of it is not being used) after we've made some progress -->
+<style type="text/css">
+
+</style>
+
+{% endblock %}

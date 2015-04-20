@@ -1,0 +1,205 @@
+{% extends "common/panel.html" %}
+{% block title %}{{title}}{% endblock %}
+
+{% block panel %}
+
+<script type="text/javascript" charset="utf-8">
+    madrona.onShow(function(){
+        madrona.setupForm($('#polygon-design-form'));
+        var max_step = 2;
+
+        var step = 1;
+
+        function validate(step) {
+            return_value = true;
+            if (step == 1) {
+                if ( app.viewModel.scenarios.drawingFormModel.isDrawing()) {
+                    $('#double-click-instructions').effect("highlight", {}, 1000);
+                    return_value = false;
+                } else if ( ! app.viewModel.scenarios.drawingFormModel.hasShape() ) {
+                    $('#click-to-begin-drawing').effect("highlight", {}, 1000);
+                    return_value = false;
+                }
+            } else if (step == max_step) {
+
+            }
+            return return_value;
+        };
+
+        function wizard(action) {
+            if (step == 1 && action == 'next') {
+                if (app.viewModel.scenarios.drawingFormModel.isEditing()) {
+                    // do nothing, button is / should be disabled
+                    return;
+                }
+                if (validate(step)) {
+                    step += 1;
+                    app.viewModel.scenarios.drawingFormModel.completeEdit();
+                    $('#id_geometry_orig')[0].value = 'SRID=3857;' + new OpenLayers.Format.WKT().write(app.viewModel.scenarios.drawingFormModel.polygonLayer.features[0]);
+                }
+            } else if (step > 1 && action == 'prev') {
+                step -= 1;
+            }
+            $('div.step').each(function(index) {
+                $(this).hide();
+            });
+            $('div#step' + step).show();
+
+            if (step == 1) {
+                $('#button_prev').hide();
+                $('#button_submit').hide();
+            } else {
+                $('#button_prev').show();
+            }
+
+            if (step == max_step) {
+                $('#button_next').hide();
+                $('.submit_button').show();
+            } else {
+                $('#button_next').show();
+                $('.submit_button').hide();
+            }
+        };
+
+        $('#button_prev').click( function() { wizard('prev'); });
+        $('#button_next').click( function() { wizard('next'); });
+        step = 1;
+        {% if form.errors %}
+            step = 2; // form errors exist
+        {% endif %}
+        wizard();
+
+
+        $('#id_name').keypress(function (e) {
+            if (e.which === 13) {
+                $('#drawing-form .submit_button').click();
+                return false;
+            } else {
+                $('#invalid-name-message').hide();
+            }
+        });
+        /*
+        $('#drawing-form .submit_button').click( function() {
+            var name = $('#id_name').val();
+            if ($.trim(name) !== "") {
+                return true;
+            }
+            $('#invalid-name-message').show();
+            return false;
+        });
+        */
+        $('#click-to-begin-drawing').effect("highlight", {}, 1000);
+    });
+</script>
+
+{% if form.media %} {{ form.media }} {% endif %}
+<h4>
+    Drawing
+</h4>
+
+<form id="polygon-design-form" action="{{action}}" method="post">
+    {% for hidden in form.hidden_fields %}
+        <div style="display:none;">
+            {{ hidden.errors }}
+        </div>
+        {{ hidden }}
+    {% endfor %}
+    <div id="error_bar"></div>
+
+    <div id="step1" class="step">
+        <p class="step-text"><i>Step 1 of 2 </i>
+        <div data-bind="visible: ! isDrawing() && ! showEdit()">
+            <p id="click-to-begin-drawing" class="well instructions">Click the <b>Draw Shape</b> button below to begin drawing your polygon.</p>
+            <a class="btn" style="margin-top: 10px" data-bind="click: startSketch, css: { disabled: isDrawing() }">
+                <span>Draw Shape</span>
+            </a>
+        </div>
+        <div data-bind="visible: isDrawing()">
+            <div id="drawing-instructions" class="well">
+                <div>
+                    <b>Click on the map</b> to add the points that make up your polygon.
+                </div>
+                <div id="double-click-instructions" style="padding-top: 10px">
+                    <b>Double-click</b> to finish drawing.
+                </div>
+            </div>
+        </div>
+        <div data-bind="visible: showEdit()">
+            <div id="drawing-step-1" data-bind="visible: ! isEditing()">
+                <div id="step-1-instructions" class="well">
+                    <p class="instructions">Click <b>Next</b> if you are satisfied with your drawing.</p>
+                    <p class="instructions" style="margin-top: 10px;">Click <b>Edit Shape</b> to make changes to your drawing.</p>
+                </div>
+                <a class="btn" style="margin-top: 10px" data-bind="click: startEdit, css: { disabled: isEditing() }">
+                    <span>Edit Shape</span>
+                </a>
+            </div>
+            <div id="draw-editing" data-bind="visible: isEditing()">
+                <div id="editing-instructions" class="well">
+                    <p class="instructions">
+                        <b>Click and drag</b> the handles or vertices of the drawing.
+                    </p>
+                    <p class="instructions">
+                        When you are done, click <b>Done Editing</b> below.
+                    </p>
+                </div>
+                <a class="btn" style="margin-top: 10px" data-bind="click: clipToGrid">
+                    <span>Done Editing</span>
+                </a>
+            </div>
+            <div id="clip-failed-alert" style="margin-top: 10px;">
+                <p class="alert alert-danger" data-bind="visible: clipAttemptFailed()">
+                    Make sure your drawing overlaps with the planning grid...
+                </p>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 66px; left-margin: 1px">
+            <label id="planning-grid-layer-toggle" data-bind="click: togglePlanningGridLayer">
+                <input id="planning-grid-layer-checkbox" data-bind="checked: planningGridLayer.active()" type="checkbox" name="checkbox" value="value">
+                Show Planning Grid</input>
+            </label>
+        </div>
+        <div id="PanelGeometry"></div>
+    </div>
+
+    <div class="step" id="step2">
+        <p class="step-text"><i>Step 2 of 2 </i></p>
+        <p class="instructions" style="margin-top: 10px">Please name your drawing by the Management Action Code, the date (YYYYMMDD), and your first name and last initial. (N143_20151231_JohnD) </p>
+        <div class="step3-inputs">
+            <div class="step3-param">
+                {{ form.name.errors }}
+                {{ form.name }}
+                <div id="invalid-name-message" class="control-group error" style="display: none; margin-top: -10px; margin-left: -5px;">
+                    <span class="help-inline">The <b>Name</b> field is required.</span>
+                </div>
+            </div>
+            <p class="instructions">Please provide any pertinent information about this drawing here</b> <!--and/or attach a file--> </p>
+            <div class="step3-param">
+                {{ form.description.errors }}
+                {{ form.description }}
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div class="wizard_nav" style="width:100%">
+    <div class="btn-group pull-right" style="margin-right: 19px">
+        <a href="#" class="button btn" onclick="this.blur(); return false;" id="button_prev"><span>&lt; Previous</span></a>
+        <a href="#" class="button btn button-next"  onclick="this.blur(); return false;" id="button_next" data-bind="css: { disabled: isEditing() || !showEdit() }"><span>Next &gt;</span></a>
+        <a href="#" class="submit_button button btn" onclick="this.blur(); return false;"><span>Save</span></a>
+    </div>
+</div>
+
+<div>
+    <div class="btn-group pull-left" style="margin-left: 14px">
+        <a href="#" class="cancel_button button red btn"><span>Cancel</span></a>
+
+    </div>
+</div>
+
+<style type="text/css">
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,357 @@
+
+
+#designs .form-container {
+  margin-top: -5px;
+  margin-right: -5px;
+}
+#scenario-form h4, #drawing-form h4 {
+    margin-left: 15px;
+}
+#scenario-form form {
+    padding-left: 15px;
+}
+
+#polygon-design-form .step {    
+    width: 310px;
+    height: 290px;
+    padding-right: 10px;
+    border-radius: 10px;    
+    padding-left: 15px;
+    top: 0px;
+    /*width: 355px !important;*/
+}
+
+#wind-design-form, #polygon-design-form {
+    border-top-width: 0px;
+    width: 370px !important;
+    border-radius: 0px;
+    border-right: 0;
+    border-left: 0;
+    margin-right: -10px;
+    margin-bottom: 14px;
+    padding: 0px;
+}
+#wind-design-form i {
+    display: inline-block;
+}
+#wind-design-form i.check {
+    top: 7px;
+}
+#wind-design-form .accordion-toggle i.check {
+    left: -3px;
+}
+#wind-design-form i.icon-check-empty {
+    opacity: .4;
+    /* for IE */
+    filter: alpha(opacity=40);
+}
+#wind-design-form label:hover i.icon-check-empty {
+    opacity: .8;
+    /* for IE */
+    filter: alpha(opacity=80);
+}
+#wind-design-form ul {
+    margin-left: 15px;
+    width: 90%;
+}
+#wind-design-form .check {
+    font-size: 14px;
+}
+#wind-design-form .parameter-label {
+    font-size: 16px;
+}
+#wind-design-form .info-icon {
+    font-size: 16px;
+}
+#wind-design-form .show-layer-btn-group {
+    width: 80%; 
+    margin: 15px 0px 5px 0px;
+}
+#wind-design-form .show-layer-btn {
+    width: 82%;
+    height: 16px; 
+    line-height: 16px;
+    padding-left: 15px;
+}
+#wind-design-form .accordion-heading .accordion-toggle {
+    padding: 4px 20px;
+}
+#wind-design-form .accordion-body {
+    border-left: 0px !important;
+}
+#wind-design-form .accordion-inner {
+    padding: 5px 0px;
+    border-top: 0px;
+    font-weight: normal;
+}
+#wind-design-form input.hidden_checkbox {
+    display:none;
+}
+#wind-design-form .inputfield {
+    margin: 0px 0px 0px 20px;
+}
+#wind-design-form .btn-info-sign {
+    padding: 4px 4px;
+}
+#wind-design-form .slider {
+    width: 80%;
+}
+#wind-design-form .slidervalue {
+    width: 27px;
+    font-weight: bold;
+    font-size: 16px;
+    height: 16px;
+}
+#wind-design-form .jspVerticalBar {
+    right: 10px;
+    height: 90%;
+}
+#wind-design-form .jspTrack {
+    border-radius: 4px;
+    height: 300px !important;
+}
+#wind-design-form .jspContainer {
+    /*width: 97% !important;*/
+    width: 370px !important;
+    height: 308px !important;
+    padding-right: 10px;
+}
+#wind-design-form .jspPane {
+    border-radius: 10px;    
+    padding-left: 15px;
+    top: 0px;
+    width: 355px !important;
+}
+
+.show-blocks-btn {
+    position: relative;
+    float: right;
+    margin-top: -33px;
+    margin-right: 14px;
+
+}
+.show-blocks-btn a {
+    height: 16px; 
+    line-height: 16px;
+}
+.show-blocks-btn span {
+    display: inline-block;
+    font-size: 13px;
+}
+.show-blocks.btn i {
+    position: absolute
+    top: 10px;
+    right: 5px;
+    display: inline-block;
+
+}
+.show-blocks-btn i.icon-check-empty {
+    opacity: .4;
+    /* for IE */
+    filter: alpha(opacity=40);
+}
+.show-blocks-btn:hover i.icon-check-empty {
+    opacity: .8;
+    /* for IE */
+    filter: alpha(opacity=80);
+}
+.show-blocks-btn .badge {
+    margin-right: 5px;
+    margin-left: -5px;
+    float: left;
+}
+
+div.disabled p {
+    color: #999;
+}
+div.disabled input {
+    background: #f5f5f5;
+}
+div.disabled textarea {
+    background: #f5f5f5;
+}
+#empty-results-warning {
+    margin-right: 20px;
+}
+#empty-results-warning p {
+    margin-bottom: 0px;
+}
+
+div .field > label { 
+    font-size: 12px; 
+    display: inline; 
+}
+div.param-checkboxes {
+    padding-left: 10px !important;
+}
+span.potential {
+    font-weight:bold; !important;
+}
+span.traffic {
+    font-weight:bold; !important;
+}
+span.form-image { 
+    float: left; 
+    margin-left: -66px; 
+}
+span.form-image > img { 
+    width:46px; 
+    height:46px; 
+}
+
+.traffic {
+    margin-top: 5px;
+}
+.traffic_widget {
+    margin-top: 15px;
+}
+
+
+p.step-text {
+    margin: 0px;
+    text-align:left;
+}
+form ul {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    padding-left: 20px;
+}
+#scenario-form {
+    margin-top: -10px;
+}
+#scenario-form li {
+    list-style:none;
+}
+li label {   
+    font-weight: normal !important;
+    margin-bottom: 0px !important;
+}
+.parameters select {
+    margin-bottom: 0px;
+}
+.parameters .accordion {
+    margin-bottom: 0px;
+}
+form ul.parameters {
+    list-style-type: none;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    width: 90%;
+}
+
+form ul.parameters i.info-icon {
+    margin-left: 0px !important; 
+    color: #666;
+}
+form ul.parameters i.info-icon:hover {
+    color: #333;
+}
+
+label.step-header {
+    margin-top: 5px;
+    font-weight: bold;
+    padding-left: 5px !important;
+}
+label.step5-header {
+    font-weight: bold;
+    padding-left: 5px !important;
+    padding-bottom: 10px !important;
+}
+label.param {
+    font-weight: normal !important;
+    padding-left: 0px !important;
+}
+img.info {
+    display: inline !important;
+}
+
+
+.panel form {
+    /*background: none repeat scroll 0 0 #DDDDDD;*/
+    border: 1px solid #BBBBBB;
+    border-radius: 10px 10px 10px 10px;
+    height: 60%;
+    width: 99%;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.panel > form textarea,
+.panel > form input[name="name"] {
+    width: 90%;
+}
+
+.errorlist {
+    color: red;
+}
+
+form {
+    outline: none;
+}
+
+#drawing-form .button-next {
+    border-radius: 4px;
+}
+
+#drawing-form textarea,
+#drawing-form input[name="name"] {
+    width: 90%;
+}
+
+#drawing-form div .step {
+    padding-right: 15px;
+}
+
+div .field > label { font-size: 12px; display: inline; }
+div .step { 
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -khtml-border-radius: 6px;
+    border-radius: 6px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    background-color: white; 
+    background-repeat: no-repeat;
+    min-height: 270px;
+}
+span.form-image { float: left; margin-left: -66px; }
+span.form-image > img { width:46px; height:46px; }
+
+
+label {
+    clear: both;
+    color: #344E63;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0 0 5px;
+    padding: 0;
+    text-shadow: 0 1px 0 #FCFAFF;
+}
+p.step-text {
+    padding-left: 0px;
+    margin: 0px;
+    text-align:left;
+}
+p.instructions {
+    margin: 5px 0px 0px 0px; 
+    text-align: left;
+    /*color: #47556C;*/
+    font-size: 14px;
+    font-weight: normal;
+    font-family: sans-serif;
+    padding-left: 0px;
+}
+#step1 .well {
+    margin-top: 10px;
+}
+.step .well {
+    margin-bottom: 0px;
+    padding: 15px;
+}
+#editing-instructions {
+    margin-bottom: 0px;
+}

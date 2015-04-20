@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+{% load url from future %}
+<html lang="en" style="height: 100%;">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {% if project_name %}
+            {{ project_name }}
+            {% else %}
+            Marine Planner
+            {% endif %}
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- Le styles -->
+        <link href="{{MEDIA_URL}}/assets/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/css/mp_style.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/assets/openlayers/scalebar-thin.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/css/style.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/assets/pageguide/pageguide.css" rel="stylesheet">
+
+        <link href="{{MEDIA_URL}}/assets/smoothness/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/assets/jquery/jquery.mCustomScrollbar.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/assets/jquery/jquery.jscrollpane.css" rel="stylesheet">
+
+        <link href="{{MEDIA_URL}}/ofr/css/ofr.css" rel="stylesheet">
+
+        <link rel="shortcut icon" href="{{MEDIA_URL}}mp/ico/favicon.ico">
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <link href="{{MEDIA_URL}}/css/mp_style.ie.css" rel="stylesheet">
+            <style>
+                    #feedback-tab {
+                        -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+                        left: 0px;
+
+                        /* IE6 and 7 */ 
+                        filter: progid:DXImageTransform.Microsoft.Matrix(
+                                 M11=-1.836909530733566e-16,
+                                 M12=-1,
+                                 M21=1,
+                                 M22=-1.836909530733566e-16,
+                                 SizingMethod='auto expand');
+
+                      }
+            </style>
+            <script src="{{MEDIA_URL}}mp/js/respond.min.js"></script>
+        <![endif]-->
+        <!-- Le fav and touch icons -->
+        <!--[if IE 7]>
+          <link rel="stylesheet" href="{{MEDIA_URL}}mp/css/font/font-awesome-ie7.css">
+        <![endif]-->
+
+        <style>
+        .navbar .nav > li:hover > a, .navbar .nav > li.active > a, .navbar .nav > li:hover > a:visited {
+            height: 30px;
+           
+        }
+        .navbar .nav > li > a {
+            height: 25px;
+        }
+
+        </style>
+        
+        <!-- Google Analytics -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-55383095-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+        
+        <style type="text/css">
+
+            .embed #aggregated-attribute-overlay {
+                bottom: 2px;
+                top: auto;
+                border-top-left-radius: 0px;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+                border-bottom-left-radius: 0px;
+            }
+            
+            #aggregated-attribute-overlay {
+                position: absolute;
+                /*border-radius: 4px; can't tell if I want this or not...*/
+                bottom: 0;
+                left: 0;
+                top: auto;
+                height: 130px;
+                min-width: 100%;
+                max-width: 100%;
+                z-index: 950; 
+                /*overflow-x: hidden;
+                overflow-y: auto;*/
+                /*overflow: auto;*/
+                font-size: 12px;
+                /* RGBa with 0.6 opacity */
+                background-color: rgba(60, 110, 160, 0.65);
+                /* For IE 5.5 - 7*/
+                filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#bb2d8998, endColorstr=#bb2d8998);
+                /* For IE 8*/
+                -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#bb2d8998, endColorstr=#bb2d8998)";
+            }
+            #aggregated-attribute-content {
+                height: 110px;
+            }
+            #aggregated-attribute-content .mCustomScrollBox {
+                height: 110px;
+            }
+            #aggregated-attribute-content .mCSB_scrollTools {
+                height: 80px;
+            }
+            .olControlScaleBarWrapper {
+                /*display: none;*/
+            }
+            #home-page-link #project-name-header {
+                border: 1px solid #bbbbbb; 
+                padding: 5px;
+            }
+            #embedded-logo {
+                position: absolute;
+                top: 12px;
+                left: 12px;
+                z-index: 800;
+                width: 20%;
+            }
+            #project-name-header {
+                position: absolute;
+                top: 0px;
+                left: 12px;
+                z-index: 800;
+            }
+        </style>
+        
+        
+    </head>
+    
+    <body class="ofr embed" style="margin: 0px; padding: 0px; height: 100%;">
+        
+        <div class="container-fluid" id="primary-content" style="height: 100%; padding: 0px">
+            <div id="loading" style="position: absolute; top: 12px; left: 12px;">
+                <h2>Loading...</h2>
+            </div>
+            <div class="row-fluid" id="fullscreen" style="height: 100%;">
+                <!-- Map Panel -->
+                <div id="map-panel" class="span12" style="height: 100%;">       
+                
+                    <div class="row-fluid" data-bind="visible: showMapPanel" style="height: 100%;">
+                        <div class="span12" style="height: 100%;">
+                            <div class="row-fluid" style="height: 100%;">
+                                <div id="map-wrapper" style="height: 100%; border-radius: 0px;">
+                                    <div id="map" style="height: 100%; border-radius: 0px;"></div>
+                                    
+                                    {% if project_home_page %}
+                                    <a id="home-page-link" class="btn" href="{{project_home_page}}" data-bind="visible: showLogo" style="text-decoration: none" target="_blank">
+                                    {% else %}
+                                    <a class="btn" data-bind="visible: showLogo" style="text-decoration: none; cursor: default;">
+                                    {% endif %}
+                                        {% if project_logo %}
+                                        <img id="embedded-logo" src="{{project_logo}}"/>
+                                        {% else %}
+                                            {% if project_name %}
+                                            <h2 id="project-name-header">{{project_name}}</h2>
+                                            {% else %}
+                                            <h2 id="project-name-header">Marine Planner</h2>
+                                            {% endif %}
+                                        {% endif %}
+                                    </a>
+                                    
+                                    <div id="aggregated-attribute-overlay-test" style="position: absolute; visibility: hidden; height: auto; width: auto">
+                                        <div data-bind="foreach: attributeLayers()">
+                                            <div data-bind="css: {display: $root.aggregatedAttributes()[name] ? 'block' : 'none'}">
+                                              <h4 data-bind="text: name"></h4>
+                                              <dl data-bind="foreach: { data: $root.aggregatedAttributes()[name], afterAdd:$root.updateMarker }">
+                                                <dt>
+                                                    <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
+                                                    <span style="font-weight: normal" data-bind="text: data"></span>
+                                                </dt>
+                                              </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Aggregated Attribution Overlay -->
+                                    <div data-bind="visible: showFeatureAttribution">
+                                        <div id="aggregated-attribute-overlay" class="scrollpane" data-bind="visible: aggregatedAttributes, style: {width: aggregatedAttributesWidth}" style="display: none">
+                                            <div id="aggregated-attribute-content" class="accordion">
+                                                <div data-bind="foreach: attributeLayers()">
+                                                    <div class="accordion-group">
+                                                        <div data-bind="visible: $root.aggregatedAttributes()[name]">
+                                                            <div class="accordion-heading" data-bind="click: toggleLayerAttribution">
+                                                                <a class="accordion-toggle">
+                                                                    <h4 data-bind="text: name"></h4>
+                                                                </a>
+                                                            </div>
+                                                            <div class="accordion-body collapse in" data-bind="attr: { id: $root.convertToSlug(name) }" >
+                                                                <div class="accordion-inner">
+                                                                    <dl data-bind="foreach: { data: $root.aggregatedAttributes()[name], afterAdd:$root.updateMarker }">
+                                                                        <dt>
+                                                                            <!-- ko if: $data.hasOwnProperty("tab") --> 
+                                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+                                                                            <!-- /ko -->
+                                                                            <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
+                                                                            <span style="font-weight: normal" data-bind="text: data"></span>
+                                                                        </dt>
+                                                                    </dl>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="close-attribute-overlay" class="pull-right"><a href="#" style="position: absolute; top: 10px; right: 10px; opacity: .6;" class="btn btn-mini close" data-bind="click: closeAttribution"> x </a> </span>
+                                        </div>
+                                    </div>
+                                                                   
+                                    <!--Hide/Show Legends Button-->
+                                    <a id="embedded-legend-button" class="btn" data-bind="click: toggleEmbeddedLegend, visible: activeLegendLayers().length > 0 && app.viewModel.showLegend()">
+                                        <!--<i class="icon-list-ul icon-large"></i> -->
+                                        <span>Legend</span>
+                                        <!--<span data-bind="visible: hasActiveLegends() > 0"> (<span data-bind="text: activeLegendLayers().length"></span>) </span>-->
+                                    </a>
+                                    
+                                    <!-- Legend -->
+                                    <div id="embedded-legend" data-bind="visible: showEmbeddedLegend()">
+                                        <div id="embedded-legend-wrapper">
+                                            <div id="embedded-legend-content">
+                                                <div data-bind="foreach: activeLegendLayers">
+                                                <!--<div data-bind="foreach: { data: activeLegendLayers, afterRender: updateScrollBars }">-->
+                                                    <div style="padding-bottom: 10px;">
+                                                        <span class="pagination-centered legend-title" data-bind="html: legendTitle ? legendTitle : name"></span>
+                                                        <p style="margin: 0px -5px 3px; text-align: left;font-size: 12px;" data-bind="visible: legendSubTitle, html: legendSubTitle"></p>
+                                                        <span data-bind="if: legend">
+                                                            <div data-bind="if: legend['elements']">
+                                                                <div data-bind="foreach: legend['elements']">
+                                                                    <div>
+                                                                        <img data-bind="attr: {src: swatch}" />
+                                                                        <span data-bind="text: label" style="font-size: 11px; font-weight: bold;"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div data-bind="if: !legend['elements']">
+                                                                <div data-bind="css: { 'in': legendVisibility }" style="padding-top: 5px;">
+                                                                    <img data-bind="attr: { src: legend }" />
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Legend -->
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <span class="timestamp" data-bind="visible: mapTitle"><span data-bind="text: new Date().toString('M/d/yyyy HH:mm')"></span></span>
+        </div>
+
+        <!--/row-->
+          
+        <!--/.fluid-container-->
+
+        
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.js"></script>
+        <script src="{{MEDIA_URL}}/assets/bootstrap/bootstrap.min.js"></script>
+        <script src="{{MEDIA_URL}}/assets/amplify/amplify.min.js"></script>
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.ba-bbq.js"></script>
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery-ui-1.9.1.custom.js"></script>
+        <script src="{{MEDIA_URL}}/assets/knockout/knockout-2.1.0.js"></script>
+        <script src="{{MEDIA_URL}}/assets/knockout/knockout-bindings.js"></script>
+        <script src="{{MEDIA_URL}}/assets/knockout/knockout.mapping-latest.js"></script>
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.pageguide.js"></script>
+        <script src="{{MEDIA_URL}}/assets/highcharts/highcharts.js" type="text/javascript"></script>
+        <script src="{{MEDIA_URL}}/assets/highcharts/highcharts-more.js" type="text/javascript"></script>
+        <script src="http://maps.google.com/maps/api/js?v=3.6&amp;sensor=false"></script>
+        <script src="{{MEDIA_URL}}/assets/openlayers/OpenLayers-mp-min.js"></script>
+        <!-- <script src="{{MEDIA_URL}}/assets/openlayers/arcgisrestidentify.js"></script>
+        <script src="{{MEDIA_URL}}/assets/openlayers/featureclick.js"></script> -->
+        <script src="{{MEDIA_URL}}/ofr/js/OpenLayersWindowsPinchZoom.js"></script>
+        <script src="{{MEDIA_URL}}/assets/simplelayerswitcher/simplelayerswitcher.js"></script>
+        <script src="{{MEDIA_URL}}/assets/scalebar/scalebar.js"></script>
+        <script src="{{MEDIA_URL}}/assets/bigscreen/bigscreen.js"></script>
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.ui.touch-punch.min.js"></script>
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.jscrollpane.min.js"></script>
+        <script src="{{MEDIA_URL}}/assets/date/date.js"></script>
+        <script src="{{MEDIA_URL}}/assets/underscore/underscore-min.js"></script>
+
+
+        <script src="{{MEDIA_URL}}/js/fixtures.js"></script>
+        <script src="{{MEDIA_URL}}/js/map.js"></script>
+        <script src="{{MEDIA_URL}}/js/state.js"></script>
+        <script src="{{MEDIA_URL}}/js/models.js"></script>
+        <script src="{{MEDIA_URL}}/js/server.js"></script>
+        <script src="{{MEDIA_URL}}/js/printing.js"></script>
+        <script src="{{MEDIA_URL}}/js/app.js"></script>
+        <script src="{{MEDIA_URL}}/js/pageguide.js"></script>
+
+        <!--[if gt IE 8]><!-->
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.mousewheel.min.js"></script>
+        <!--<![endif]-->
+
+        <script src="{{MEDIA_URL}}/assets/jquery/jquery.mCustomScrollbar.js"></script>
+        
+        <script type="text/javascript">
+            $('#fullscreen').on('click', function() {
+                setTimeout(function() { 
+                    if ( $('#aggregated-attribute-overlay').is(":visible") ) {
+                        app.viewModel.hideMapAttribution(); 
+                    } else {
+                        app.viewModel.showMapAttribution(); 
+                    }
+                }, 500);
+            });
+        
+            $(document).ready( function() {
+                // app.map.getLayersByName('ESRI Satellite')[0]['attribution'] = "Basemap Attribution";
+                //$('.olControlAttribution').attr('title',"The Ocean Basemap was created with data from the General Bathymetric Chart of the Oceans (GEBCO), IHO-IOC GEBCO Gazetteer of Undersea Feature Names, NOAA, Seafloor Mapping Lab of the California State University Monterey Bay, National Geographic, DeLorme, and Esri.");
+                var updatedAttribution = false;
+                var updateBasemapAttribution = function(done) {
+                    if (!updatedAttribution) {
+                        $('.olControlAttribution').text("Basemap Attribution");
+                        $('.olControlAttribution').width("112px");
+                        $('.olControlAttribution').attr('rel',"tooltip");
+                        if (app.map.baseLayer.name === 'ESRI Satellite') {
+                            app.map.getLayersByName('ESRI Satellite')[0]['attribution'] = "Basemap Attribution";
+                            $('.olControlAttribution').attr('title',"This ESRI Satellite basemap was built using data provided by Esri, DigitalGlobe, Earthstar Geographics, CNES/Airbus DS, GeoEye, USDA FSA, USGS, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community.");
+                        } else if (app.map.baseLayer.name === 'ESRI Physical') {
+                            app.map.getLayersByName('ESRI Physical')[0]['attribution'] = "Basemap Attribution";
+                            $('.olControlAttribution').attr('title',"This ESRI Physical basemap was built using data provided by the U.S. National Park Service.");
+                        } else if (app.map.baseLayer.name === 'ESRI Streets') {
+                            app.map.getLayersByName('ESRI Streets')[0]['attribution'] = "Basemap Attribution";
+                            $('.olControlAttribution').attr('title',"This ESRI Streets basemap was built using data provided by Esri, HERE, DeLorme, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), MapmyIndia, TomTom, © OpenStreetMap contributors, and the GIS User Community.");
+                        } else if (app.map.baseLayer.name === 'Nautical Charts') {
+                            app.map.getLayersByName('Nautical Charts')[0]['attribution'] = "Basemap Attribution";
+                            $('.olControlAttribution').attr('title',"The NOAA_RNC MapService provides a seamless collarless mosaic of the NOAA Raster Nautical Charts. Source charts are updated by the 10th of each month. This map service is not to be used for navigation.");
+                        } else if (app.map.baseLayer.name === 'OpenStreetMap') {
+                            app.map.getLayersByName('OpenStreetMap')[0]['attribution'] = "Basemap Attribution";
+                            $('.olControlAttribution').attr('title',"Basemap provided by © OpenStreetMap contributors.");
+                        }
+                        if (done) {
+                            // console.log(app.map.baseLayer.name);
+                            // console.log('done');
+                            updatedAttribution = true;
+                        } else {
+                            // console.log(app.map.baseLayer.name);
+                            // console.log('not done');
+                        }
+                    }
+                };
+                updateBasemapAttribution();
+                var finalBasemapAttributionUpdate = _.partial(updateBasemapAttribution, true);
+                // $('.olControlAttribution').attr('title',"The ESRI Ocean Basemap was was built using data provided by ESRI, GEBCO, NOAA, Canadian Hydrographic Service (CHS), California State University at Monterey Bay (CSUMB), National Geographic, DeLorme, and NAVTEQ.");
+                window.onhashchange = finalBasemapAttributionUpdate;
+            });
+            
+            $(function () { 
+                $(".olControlAttribution").tooltip({trigger: 'hover'});
+            });  
+        
+        </script>
+        
+        <script type="text/javascript">
+            app.embeddedMap = true;
+        </script>
+        
+    </body>
+
+</html>
