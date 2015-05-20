@@ -1,0 +1,265 @@
+[
+{
+  "pk": 7, 
+  "model": "data_manager.toc", 
+  "fields": {
+    "themes": [
+      28, 
+      29, 
+      27
+    ], 
+    "name": "ODFW Compass"
+  }
+},
+{
+  "pk": 27, 
+  "model": "data_manager.toctheme", 
+  "fields": {
+    "layers": [
+      443, 
+      442
+    ], 
+    "display_name": "ODFW Crucial Habitat", 
+    "name": "ODFW Crucial Habitat", 
+    "description": "ODFW Crucial Habitat"
+  }
+},
+{
+  "pk": 28, 
+  "model": "data_manager.toctheme", 
+  "fields": {
+    "layers": [], 
+    "display_name": "ODFW Data Layers", 
+    "name": "ODFW Data Layers", 
+    "description": "ODFW Data Layers"
+  }
+},
+{
+  "pk": 29, 
+  "model": "data_manager.toctheme", 
+  "fields": {
+    "layers": [], 
+    "display_name": "Partner Data Layers", 
+    "name": "Partner Data Layers", 
+    "description": "Partner Data Layers"
+  }
+},
+{
+  "pk": 442, 
+  "model": "data_manager.layer", 
+  "fields": {
+    "layer_type": "XYZ", 
+    "themes": [], 
+    "is_sublayer": false, 
+    "compress_display": false, 
+    "map_tiles": null, 
+    "legend_subtitle": "", 
+    "filterable": false, 
+    "vector_graphic": "", 
+    "kml": null, 
+    "source": "Oregon Conservation Strategy, ODFW", 
+    "lookup_table": [], 
+    "proj": null, 
+    "utfurl": "", 
+    "data_download": "", 
+    "metadata": "", 
+    "opacity": 0.5, 
+    "vector_color": "", 
+    "attribute_event": "click", 
+    "description": "Crucial Habitat Rank", 
+    "attribute_fields": [], 
+    "vector_fill": null, 
+    "data_overview": null, 
+    "slug_name": "compiled-crucial-habitat-overview", 
+    "summarize_to_grid": false, 
+    "lookup_field": "", 
+    "legend": "/media/compass/legend/ODFW_Cruc_Hab.png", 
+    "shareable_url": true, 
+    "data_source": "Oregon Conservation Strategy, ODFW", 
+    "data_notes": "", 
+    "name": "Compiled Crucial Habitat Overview", 
+    "sublayers": [], 
+    "url": "http://tiles2.arcgis.com/tiles/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHOverview_CompiledCH/MapServer/tile/${z}/${y}/${x}", 
+    "proxy_url": false, 
+    "arcgis_layers": "ODFW_CHOverview_CompiledCH", 
+    "bookmark": null, 
+    "legend_title": "", 
+    "attribute_title": "", 
+    "utfjsonp": false, 
+    "wms_slug": null
+  }
+},
+{
+  "pk": 443, 
+  "model": "data_manager.layer", 
+  "fields": {
+    "layer_type": "Vector", 
+    "themes": [], 
+    "is_sublayer": false, 
+    "compress_display": false, 
+    "map_tiles": null, 
+    "legend_subtitle": "", 
+    "filterable": false, 
+    "vector_graphic": "", 
+    "kml": null, 
+    "source": "", 
+    "lookup_table": [], 
+    "proj": null, 
+    "utfurl": "", 
+    "data_download": "", 
+    "metadata": "", 
+    "opacity": 0.5, 
+    "vector_color": "green", 
+    "attribute_event": "click", 
+    "description": "", 
+    "attribute_fields": [
+      169
+    ], 
+    "vector_fill": 1.0, 
+    "data_overview": null, 
+    "slug_name": "compiled-crucial-habitat-data", 
+    "summarize_to_grid": false, 
+    "lookup_field": "wurfelsports", 
+    "legend": "", 
+    "shareable_url": true, 
+    "data_source": "", 
+    "data_notes": "", 
+    "name": "Compiled Crucial Habitat Data", 
+    "sublayers": [], 
+    "url": "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?spatialRel=esriSpatialRelIntersects&returnDistinctValues=false&inSR=102100&f=json&geometryType=esriGeometryEnvellope&outFields=*", 
+    "proxy_url": false, 
+    "arcgis_layers": "ODFW_CHData_CompiledCH", 
+    "bookmark": null, 
+    "legend_title": "", 
+    "attribute_title": "", 
+    "utfjsonp": false, 
+    "wms_slug": null
+  }
+},
+{
+  "pk": 138, 
+  "model": "data_manager.attributeinfo", 
+  "fields": {
+    "field_name": "count", 
+    "display_name": "Count", 
+    "precision": null, 
+    "order": 1
+  }
+},
+{
+  "pk": 139, 
+  "model": "data_manager.attributeinfo", 
+  "fields": {
+    "field_name": "categories", 
+    "display_name": "Categories", 
+    "precision": null, 
+    "order": 2
+  }
+},
+{
+  "pk": 168, 
+  "model": "data_manager.attributeinfo", 
+  "fields": {
+    "field_name": "Snorker/freediving from vessel", 
+    "display_name": "Snorkel / Freediving from Vessel", 
+    "precision": null, 
+    "order": 1
+  }
+},
+{
+  "pk": 169, 
+  "model": "data_manager.attributeinfo", 
+  "fields": {
+    "field_name": "Watersports", 
+    "display_name": "Watersports", 
+    "precision": null, 
+    "order": 2
+  }
+},
+{
+  "pk": 170, 
+  "model": "data_manager.attributeinfo", 
+  "fields": {
+    "field_name": "NAME", 
+    "display_name": "", 
+    "precision": null, 
+    "order": 1
+  }
+},
+{
+  "pk": 171, 
+  "model": "data_manager.attributeinfo", 
+  "fields": {
+    "field_name": "NAME", 
+    "display_name": "Name", 
+    "precision": null, 
+    "order": 2
+  }
+},
+{
+  "pk": 1, 
+  "model": "data_manager.lookupinfo", 
+  "fields": {
+    "color": "#330000", 
+    "dashstyle": "solid", 
+    "graphic": "", 
+    "value": "1", 
+    "fill": true
+  }
+},
+{
+  "pk": 2, 
+  "model": "data_manager.lookupinfo", 
+  "fields": {
+    "color": "#550000", 
+    "dashstyle": "solid", 
+    "graphic": "", 
+    "value": "2", 
+    "fill": true
+  }
+},
+{
+  "pk": 3, 
+  "model": "data_manager.lookupinfo", 
+  "fields": {
+    "color": "#770000", 
+    "dashstyle": "solid", 
+    "graphic": "", 
+    "value": "3", 
+    "fill": true
+  }
+},
+{
+  "pk": 4, 
+  "model": "data_manager.lookupinfo", 
+  "fields": {
+    "color": "#990000", 
+    "dashstyle": "solid", 
+    "graphic": "", 
+    "value": "4", 
+    "fill": true
+  }
+},
+{
+  "pk": 5, 
+  "model": "data_manager.lookupinfo", 
+  "fields": {
+    "color": "#bb0000", 
+    "dashstyle": "solid", 
+    "graphic": "", 
+    "value": "5", 
+    "fill": true
+  }
+},
+{
+  "pk": 6, 
+  "model": "data_manager.lookupinfo", 
+  "fields": {
+    "color": "#dd0000", 
+    "dashstyle": "solid", 
+    "graphic": "", 
+    "value": "6", 
+    "fill": true
+  }
+}
+]
