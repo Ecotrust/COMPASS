@@ -115,7 +115,17 @@ app.init = function() {
     this.esri_query = function(evt){
         var px = new OpenLayers.Pixel(evt.x,evt.y);
         var coords = this.getLonLatFromViewPortPx(px);
-        var ajax_url= "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?geometry=%7B%22x%22%3A" + coords.lon + "%2C%22y%22%3A" + coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=json";
+        var layer_id = "uUvqNMGPm7axC2dD";                      //Needed from layer manager
+        var layer_name = "ODFW_CHData_CompiledCH";              //Needed from layer manager
+        var layer_fields = "*";                                 //Needed from layer manager
+        var ajax_url= "http://services.arcgis.com/" + 
+            layer_id + "/arcgis/rest/services/" + 
+            layer_name + "/FeatureServer/0/query?geometry=%7B%22x%22%3A" + 
+            coords.lon + "%2C%22y%22%3A" + 
+            coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" + 
+            "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" + 
+            "&units=esriSRUnit_Meter&outFields=" + 
+            layer_fields + "&returnGeometry=true&f=json";
         $.ajax({
           url: ajax_url
         }).done(function(res) {
