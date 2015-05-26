@@ -103,6 +103,42 @@ app.init = function() {
         buffer: 3
     });
 
+    app.getFieldName = function(fields, key){
+        for(var field_idx=0; field_idx < fields.length; field_idx++) {
+            if (fields[field_idx].name == key){
+                return fields[field_idx].alias;
+            }
+        }
+        return null;
+    };
+
+    this.esri_query = function(evt){
+        var px = new OpenLayers.Pixel(evt.x,evt.y);
+        var coords = this.getLonLatFromViewPortPx(px);
+        var ajax_url= "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?geometry=%7B%22x%22%3A" + coords.lon + "%2C%22y%22%3A" + coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=json";
+        $.ajax({
+          url: ajax_url
+        }).done(function(res) {
+          var feats = JSON.parse(res);
+          if (feats.features.length != 1) {
+            alert(feats.features.length + " features returned!");
+          } else {
+            var attributes = feats.features[0].attributes;
+            var keys = Object.keys(attributes);
+            var out = '';
+            for(var key_idx=0; key_idx < keys.length; key_idx++) {
+                var label = app.getFieldName(feats.fields, keys[key_idx]);
+                if (out.length !== 0){
+                    out += "\n\r";
+                }
+                out+= label + ": " + attributes[keys[key_idx]];
+            }
+            console.log(out);
+          }
+        });
+
+    };
+
     map.addLayers([esriImagery, esriOcean, esriTopo, esriStreets, openStreetMap, nauticalCharts]);
 
     // map.addLayers([esriOcean]);
