@@ -126,7 +126,7 @@
     "data_notes": "", 
     "name": "Compiled Crucial Habitat Data", 
     "sublayers": [], 
-    "url": "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?spatialRel=esriSpatialRelIntersects&returnDistinctValues=false&inSR=102100&f=json&geometryType=esriGeometryEnvellope&outFields=*", 
+    "url": "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?spatialRel=esriSpatialRelIntersects&returnDistinctValues=false&inSR=102100&f=json&geometryType=esriGeometryEnvelope&outFields=*", 
     "proxy_url": false, 
     "arcgis_layers": "ODFW_CHData_CompiledCH", 
     "bookmark": null, 
