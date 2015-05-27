@@ -8,6 +8,10 @@ function layerModel(options, parent) {
     self.featureAttributionName = self.name;
     self.url = options.url || null;
     self.arcgislayers = options.arcgis_layers || -1;
+    self.hasArcRestDataLayer = options.arc_rest_data_layer || false;
+    self.arcRestInstanceId = options.arc_rest_instance_id || null;
+    self.arcRestServiceName = options.arc_rest_service_name || null;
+    self.arcRestOutFields = options.arc_rest_out_fields || "*";
     self.wms_slug = options.wms_slug || '';
     self.type = options.type || null;
     self.utfurl = options.utfurl || false;

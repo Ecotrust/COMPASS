@@ -16,7 +16,6 @@
   "model": "data_manager.toctheme", 
   "fields": {
     "layers": [
-      443, 
       442
     ], 
     "display_name": "ODFW Crucial Habitat", 
@@ -49,6 +48,7 @@
   "model": "data_manager.layer", 
   "fields": {
     "layer_type": "XYZ", 
+    "arc_rest_service_name": "ODFW_CHData_CompiledCH", 
     "themes": [], 
     "is_sublayer": false, 
     "compress_display": false, 
@@ -60,6 +60,7 @@
     "source": "Oregon Conservation Strategy, ODFW", 
     "lookup_table": [], 
     "proj": null, 
+    "arc_rest_instance_id": "uUvqNMGPm7axC2dD", 
     "utfurl": "", 
     "data_download": "", 
     "metadata": "", 
@@ -68,7 +69,9 @@
     "attribute_event": "click", 
     "description": "Crucial Habitat Rank", 
     "attribute_fields": [], 
+    "arc_rest_out_fields": "*", 
     "vector_fill": null, 
+    "arc_rest_data_layer": true, 
     "data_overview": null, 
     "slug_name": "compiled-crucial-habitat-overview", 
     "summarize_to_grid": false, 
@@ -94,6 +97,7 @@
   "model": "data_manager.layer", 
   "fields": {
     "layer_type": "Vector", 
+    "arc_rest_service_name": null, 
     "themes": [], 
     "is_sublayer": false, 
     "compress_display": false, 
@@ -105,6 +109,7 @@
     "source": "", 
     "lookup_table": [], 
     "proj": null, 
+    "arc_rest_instance_id": null, 
     "utfurl": "", 
     "data_download": "", 
     "metadata": "", 
@@ -115,7 +120,9 @@
     "attribute_fields": [
       169
     ], 
+    "arc_rest_out_fields": "*", 
     "vector_fill": 1.0, 
+    "arc_rest_data_layer": false, 
     "data_overview": null, 
     "slug_name": "compiled-crucial-habitat-data", 
     "summarize_to_grid": false, 
@@ -126,7 +133,7 @@
     "data_notes": "", 
     "name": "Compiled Crucial Habitat Data", 
     "sublayers": [], 
-    "url": "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?spatialRel=esriSpatialRelIntersects&returnDistinctValues=false&inSR=102100&f=json&geometryType=esriGeometryEnvelope&outFields=*", 
+    "url": "http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0/query?spatialRel=esriSpatialRelIntersects&returnDistinctValues=false&inSR=102100&f=pjson&geometryType=esriGeometryEnvelope&outFields=*", 
     "proxy_url": false, 
     "arcgis_layers": "ODFW_CHData_CompiledCH", 
     "bookmark": null, 

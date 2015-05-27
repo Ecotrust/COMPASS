@@ -103,52 +103,6 @@ app.init = function() {
         buffer: 3
     });
 
-    app.getFieldName = function(fields, key){
-        for(var field_idx=0; field_idx < fields.length; field_idx++) {
-            if (fields[field_idx].name == key){
-                return fields[field_idx].alias;
-            }
-        }
-        return null;
-    };
-
-    this.esri_query = function(evt){
-        var px = new OpenLayers.Pixel(evt.x,evt.y);
-        var coords = this.getLonLatFromViewPortPx(px);
-        var layer_id = "uUvqNMGPm7axC2dD";                      //Needed from layer manager
-        var layer_name = "ODFW_CHData_CompiledCH";              //Needed from layer manager
-        var layer_fields = "*";                                 //Needed from layer manager
-        var ajax_url= "http://services.arcgis.com/" + 
-            layer_id + "/arcgis/rest/services/" + 
-            layer_name + "/FeatureServer/0/query?geometry=%7B%22x%22%3A" + 
-            coords.lon + "%2C%22y%22%3A" + 
-            coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" + 
-            "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" + 
-            "&units=esriSRUnit_Meter&outFields=" + 
-            layer_fields + "&returnGeometry=true&f=json";
-        $.ajax({
-          url: ajax_url
-        }).done(function(res) {
-          var feats = JSON.parse(res);
-          if (feats.features.length != 1) {
-            alert(feats.features.length + " features returned!");
-          } else {
-            var attributes = feats.features[0].attributes;
-            var keys = Object.keys(attributes);
-            var out = '';
-            for(var key_idx=0; key_idx < keys.length; key_idx++) {
-                var label = app.getFieldName(feats.fields, keys[key_idx]);
-                if (out.length !== 0){
-                    out += "\n\r";
-                }
-                out+= label + ": " + attributes[keys[key_idx]];
-            }
-            console.log(out);
-          }
-        });
-
-    };
-
     map.addLayers([esriImagery, esriOcean, esriTopo, esriStreets, openStreetMap, nauticalCharts]);
 
     // map.addLayers([esriOcean]);
@@ -469,6 +423,12 @@ app.addLayerToMap = function(layer) {
         } else { //if XYZ with no utfgrid
             app.addXyzLayerToMap(layer);
         }
+        if (layer.hasArcRestDataLayer) {
+            layer.layer.arcRestInstanceId = layer.arcRestInstanceId;
+            layer.layer.arcRestServiceName = layer.arcRestServiceName;
+            layer.layer.arcRestOutFields = layer.arcRestOutFields;
+            layer.layer.events.register('click', null, app.queryEsriDataLayer);
+        }
     }
 
     app.map.addLayer(layer.layer);
@@ -676,6 +636,56 @@ app.addArcRestLayerToMap = function(layer) {
         }
     );
 };
+
+app.getEsriJSONFieldName = function(fields, key){
+    for(var field_idx=0; field_idx < fields.length; field_idx++) {
+        if (fields[field_idx].name == key){
+            return fields[field_idx].alias;
+        }
+    }
+    return null;
+};
+
+app.queryEsriDataLayer = function(evt){
+    var px = new OpenLayers.Pixel(evt.x,evt.y);
+    var coords = this.getLonLatFromViewPortPx(px);
+    // var instance_id = "uUvqNMGPm7axC2dD";
+    var instanceId = this.arcRestInstanceId;            //Needed from layer manager
+    // var service_name = "ODFW_CHData_CompiledCH";
+    var serviceName = this.arcRestServiceName;          //Needed from layer manager
+    // var out_fields = "*";
+    var outFields = this.arcRestOutFields;              //Needed from layer manager
+    var ajaxUrl= "http://services.arcgis.com/" + 
+        instanceId + "/arcgis/rest/services/" + 
+        serviceName + "/FeatureServer/0/query?geometry=%7B%22x%22%3A" + 
+        coords.lon + "%2C%22y%22%3A" + 
+        coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" + 
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" + 
+        "&units=esriSRUnit_Meter&outFields=" + 
+        outFields + "&returnGeometry=true&f=json";
+    $.ajax({
+      url: ajaxUrl
+    }).done(function(res) {
+      var feats = JSON.parse(res);
+      if (feats.features.length != 1) {
+        alert(feats.features.length + " features returned!");
+      } else {
+        var attributes = feats.features[0].attributes;
+        var keys = Object.keys(attributes);
+        var out = '';
+        for(var key_idx=0; key_idx < keys.length; key_idx++) {
+            var label = app.getEsriJSONFieldName(feats.fields, keys[key_idx]);
+            if (out.length !== 0){
+                out += "\n\r";
+            }
+            out+= label + ": " + attributes[keys[key_idx]];
+        }
+        console.log(out);
+      }
+    });
+
+};
+
 
 app.addVectorLayerToMap = function(layer) {
 

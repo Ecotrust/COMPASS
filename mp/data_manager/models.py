@@ -137,6 +137,12 @@ class Layer(models.Model):
     vector_fill = models.FloatField(blank=True, null=True, help_text="Fill opacity represented by a floating point value (e.g. '.8')")
     vector_graphic = models.CharField(max_length=255, blank=True, null=True)
     opacity = models.FloatField(default=.5, blank=True, null=True)
+
+    # associate Layer with a ArcGIS hosted Data Layer
+    arc_rest_data_layer = models.BooleanField(default=False)
+    arc_rest_instance_id = models.CharField(max_length=150, blank=True, null=True, default=None)
+    arc_rest_service_name = models.CharField(max_length=255, blank=True, null=True, default=None)
+    arc_rest_out_fields = models.CharField(max_length=255, blank=True, null=True, default="*", help_text="comma separated list of fields to return. '*' for all fields.")
     
     def __unicode__(self):
         return unicode('%s' % (self.name))
@@ -332,7 +338,11 @@ class Layer(models.Model):
             'color': self.vector_color,
             'fill_opacity': self.vector_fill,
             'graphic': self.vector_graphic,
-            'opacity': self.opacity
+            'opacity': self.opacity,
+            'arc_rest_data_layer': self.arc_rest_data_layer,
+            'arc_rest_instance_id': self.arc_rest_instance_id,
+            'arc_rest_service_name': self.arc_rest_service_name,
+            'arc_rest_out_fields': self.arc_rest_out_fields
         }
         return layers_dict
         
