@@ -270,7 +270,7 @@ class Layer(models.Model):
     def serialize_lookups(self):
         return {'field': self.lookup_field, 
                 'details': [{'value': lookup.value, 'color': lookup.color, 'dashstyle': lookup.dashstyle, 'fill': lookup.fill, 'graphic': lookup.graphic} for lookup in self.lookup_table.all()]}
-    
+
     @property
     def toDict(self):
         sublayers = [

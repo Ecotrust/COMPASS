@@ -20,8 +20,38 @@ class LayerAdmin(admin.ModelAdmin):
     list_display = ('name', 'layer_type', 'url')
     search_fields = ['name', 'layer_type', 'url']
     ordering = ('name',)
-    exclude = ('slug_name','wms_slug','themes','summarize_to_grid','filterable','proj','data_overview','compress_display','attribute_event','bookmark','map_tiles','kml')
-    
+    exclude = (
+        'slug_name',
+        'shareable_url',
+        'proxy_url',
+        'arcgis_layers',
+        'wms_slug',
+        'sublayers',
+        'themes',
+        'is_sublayer',
+        'legend_title',
+        'legend_subtitle',
+        'utfurl',
+        'utfjsonp',
+        'summarize_to_grid',
+        'filterable',
+        'proj',
+        'data_overview',
+        'bookmark',
+        'map_tiles',
+        'kml',
+        'attribute_title',
+        'attribute_fields',
+        'compress_display',
+        'attribute_event',
+        'lookup_field',
+        'lookup_table',
+        'vector_color',
+        'vector_fill',
+        'vector_graphic',
+        'opacity'
+    )
+
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "sublayers":
             kwargs["queryset"] = Layer.objects.order_by('name')
