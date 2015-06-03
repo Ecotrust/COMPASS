@@ -16,6 +16,7 @@ class ThemeAdmin(admin.ModelAdmin):
     list_display = ('display_name', 'name', 'id')
     pass
 
+
 class LayerAdmin(admin.ModelAdmin):
     list_display = ('name', 'layer_type', 'url')
     search_fields = ['name', 'layer_type', 'url']
@@ -29,6 +30,7 @@ class LayerAdmin(admin.ModelAdmin):
         'sublayers',
         'themes',
         'is_sublayer',
+        'legend',
         'legend_title',
         'legend_subtitle',
         'utfurl',

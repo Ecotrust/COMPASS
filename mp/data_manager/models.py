@@ -82,15 +82,17 @@ class Layer(models.Model):
         ('XYZ', 'XYZ'),
         ('WMS', 'WMS'),
         ('ArcRest', 'ArcRest'),
-        ('radio', 'radio'),
-        ('checkbox', 'checkbox'),
+        # ('radio', 'radio'),
+        # ('checkbox', 'checkbox'),
         ('Vector', 'Vector'),
-        ('placeholder', 'placeholder'),
+        # ('placeholder', 'placeholder'),
     )
     name = models.CharField(max_length=244)
     slug_name = models.CharField(max_length=244, blank=True, null=True)
-    layer_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-    url = models.CharField(max_length=255, blank=True, null=True)
+    layer_type = models.CharField(max_length=50, choices=TYPE_CHOICES, help_text='Use "XYZ" for ArcGIS tiles')
+    url = models.CharField(max_length=255, blank=True, null=True, help_text='If source other than ODFW ArcGIS Online')
+    compass_instance_id = models.CharField(max_length=255, blank=True, null=True, default='uUvqNMGPm7axC2dD')
+    compass_service_name = models.CharField(max_length=255, blank=True, null=True, default=None)
     shareable_url = models.BooleanField(default=True, help_text="Shareable (non-vector) layers will offer a Tiles link")
     proxy_url = models.BooleanField(default=False, help_text="proxy layer url through marine planner")
     arcgis_layers = models.CharField(max_length=255, blank=True, null=True, help_text="IDs separated by commas (no spaces)")
@@ -140,7 +142,7 @@ class Layer(models.Model):
 
     # associate Layer with a ArcGIS hosted Data Layer
     arc_rest_data_layer = models.BooleanField(default=False)
-    arc_rest_instance_id = models.CharField(max_length=150, blank=True, null=True, default=None)
+    arc_rest_instance_id = models.CharField(max_length=150, blank=True, null=True, default='uUvqNMGPm7axC2dD')
     arc_rest_service_name = models.CharField(max_length=255, blank=True, null=True, default=None)
     arc_rest_out_fields = models.CharField(max_length=255, blank=True, null=True, default="*", help_text="comma separated list of fields to return. '*' for all fields.")
     
@@ -348,6 +350,8 @@ class Layer(models.Model):
         
     def save(self, *args, **kwargs):
         self.slug_name = self.slug
+        if self.compass_instance_id and len(self.compass_instance_id) > 0 and self.compass_service_name and len(self.compass_service_name) > 0:
+            self.url = 'http://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
         super(Layer, self).save(*args, **kwargs)
 
 class AttributeInfo(models.Model):
