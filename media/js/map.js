@@ -1,4 +1,6 @@
 app.init = function() {
+    // proj4.defs("EPSG:3643", "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+    Proj4js.defs["EPSG:3643"] = "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
     var max_zoom,
         min_zoom;
     //to turn basemap indicator off (hide the plus sign)
@@ -8,6 +10,7 @@ app.init = function() {
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
         projection: "EPSG:3857"
     });
+
 
     if (app.MPSettings && app.MPSettings.max_zoom) {
         max_zoom = app.MPSettings.max_zoom + 1;

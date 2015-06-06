@@ -77,6 +77,7 @@ class Theme(models.Model):
         }
         return themes_dict
 
+
 class Layer(models.Model):
     TYPE_CHOICES = (
         ('XYZ', 'XYZ'),
@@ -87,10 +88,20 @@ class Layer(models.Model):
         ('Vector', 'Vector'),
         # ('placeholder', 'placeholder'),
     )
+
+    SOURCE_CHOICES = (
+        ('featureserver', 'ArcGIS Feature Server'),
+        ('mapserver', 'ArcGIS Map Server (tiles)'),
+        ('ArcRest', 'ArcGIS Map Server (vector)'),
+        ('XYZ', 'XYZ Tiles'),
+        ('Vector', 'Vector'),
+        ('WMS', 'WMS')
+    )
     name = models.CharField(max_length=244)
     slug_name = models.CharField(max_length=244, blank=True, null=True)
     layer_type = models.CharField(max_length=50, choices=TYPE_CHOICES, help_text='Use "XYZ" for ArcGIS tiles')
-    url = models.CharField(max_length=255, blank=True, null=True, help_text='If source other than ODFW ArcGIS Online')
+    layer_source = models.CharField(max_length=50, choices=SOURCE_CHOICES, null=True, blank=True, default=None)
+    url = models.TextField(blank=True, null=True)
     compass_instance_id = models.CharField(max_length=255, blank=True, null=True, default='uUvqNMGPm7axC2dD')
     compass_service_name = models.CharField(max_length=255, blank=True, null=True, default=None)
     shareable_url = models.BooleanField(default=True, help_text="Shareable (non-vector) layers will offer a Tiles link")
@@ -107,24 +118,30 @@ class Layer(models.Model):
     utfjsonp = models.BooleanField(default=False, help_text="For MBTiles, check this box")
     summarize_to_grid = models.BooleanField(default=False)
     filterable = models.BooleanField(default=False)
-    proj = models.CharField(max_length=255, blank=True, null=True, help_text="will be EPSG:3857, if unspecified")
-    #tooltip
+
+    PROJ_CHOICES = (
+        ('EPSG:3643', 'Oregon Lambert (ODFW Default)'),
+        ('EPSG:3857', 'Web Mercator'),
+        ('EPSG:4326', 'WGS 84')
+    )
+    proj = models.CharField(max_length=255, choices=PROJ_CHOICES, blank=True, null=True, help_text="will be EPSG:3857, if unspecified")
+    # tooltip
     description = models.TextField(blank=True, null=True)
-    
-    #data description (updated fact sheet) (now the Learn pages)
+
+    # data description (updated fact sheet) (now the Learn pages)
     data_overview = models.TextField(blank=True, null=True)
     data_source = models.CharField(max_length=255, blank=True, null=True)
     data_notes = models.TextField(blank=True, null=True)
-    
-    #data catalog links    
+
+    # data catalog links
     bookmark = models.CharField(max_length=755, blank=True, null=True)
     map_tiles = models.CharField(max_length=255, blank=True, null=True)
     kml = models.CharField(max_length=255, blank=True, null=True)
     data_download = models.CharField(max_length=255, blank=True, null=True, help_text="Link to download the data")
     metadata = models.CharField(max_length=255, blank=True, null=True, help_text="Link to the metadata")
     source = models.CharField(max_length=255, blank=True, null=True, help_text="Link to the data providers")
-    
-    #geojson javascript attribution
+
+    # geojson javascript attribution
     EVENT_CHOICES = (
         ('click', 'click'),
         ('mouseover', 'mouseover')
@@ -145,27 +162,27 @@ class Layer(models.Model):
     arc_rest_instance_id = models.CharField(max_length=150, blank=True, null=True, default='uUvqNMGPm7axC2dD')
     arc_rest_service_name = models.CharField(max_length=255, blank=True, null=True, default=None)
     arc_rest_out_fields = models.CharField(max_length=255, blank=True, null=True, default="*", help_text="comma separated list of fields to return. '*' for all fields.")
-    
+
     def __unicode__(self):
         return unicode('%s' % (self.name))
 
     @property
     def is_parent(self):
         return self.sublayers.all().count() > 0 and not self.is_sublayer
-    
+
     @property
     def parent(self):
         if self.is_sublayer:
             return self.sublayers.all()[0]
         return self
-    
-    @property 
+
+    @property
     def sublayer_list(self):
         if self.is_parent:
             return self.sublayers.all().order_by('name')
         else:
             return None
-    
+
     @property
     def slug(self):
         return slugify(self.name)
@@ -176,30 +193,30 @@ class Layer(models.Model):
             return self.parent.data_overview
         else:
             return self.data_overview
-        
+
     @property
     def data_source_text(self):
         if not self.data_source and self.is_sublayer:
             return self.parent.data_source
         else:
             return self.data_source
-        
+
     @property
     def data_notes_text(self):
         if not self.data_notes and self.is_sublayer:
             return self.parent.data_notes
         else:
             return self.data_notes
-    
+
     @property
     def bookmark_link(self):
         if not self.bookmark and self.is_sublayer and self.parent.bookmark:
             return self.parent.bookmark.replace('<layer_id>', str(self.id))
         if not self.bookmark:
             domain = get_domain(8000)
-            return '%s/planner/#%s' %(domain, self.slug)
+            return '%s/planner/#%s' % (domain, self.slug)
         return self.bookmark
-    
+
     @property
     def data_download_link(self):
         if self.data_download and self.data_download.lower() == 'none':
@@ -208,9 +225,9 @@ class Layer(models.Model):
             return self.parent.data_download
         else:
             return self.data_download
-        
+
     # Originally the structure of this method was similar to others (e.g. data_download_link and source_link)
-    # but those aren't making sense to me right now so I'm changing the structure of this one 
+    # but those aren't making sense to me right now so I'm changing the structure of this one
     # Eventually this method should change back to reflect the others, or the others should be changed to reflect this method
     @property
     def metadata_link(self):
@@ -219,9 +236,9 @@ class Layer(models.Model):
         if self.is_sublayer:
             return self.parent.metadata_link
         if self.layer_type == 'ArcRest':
-            return self.url.replace('/export', '/info/metadata') 
+            return self.url.replace('/export', '/info/metadata')
         return None
-        
+
     @property
     def source_link(self):
         if self.source and self.source.lower() == 'none':
@@ -230,20 +247,20 @@ class Layer(models.Model):
             return self.parent.source
         else:
             return self.source
-        
+
     @property
     def description_link(self):
         theme_name = self.themes.all()[0].name
         domain = get_domain(8000)
-        return '%s/learn/%s#%s' %(domain, theme_name, self.slug)
-        
+        return '%s/learn/%s#%s' % (domain, theme_name, self.slug)
+
     @property
     def tiles_link(self):
         if self.is_shareable and self.layer_type in ['XYZ', 'ArcRest', 'WMS']:
             domain = get_domain(8000)
-            return '%s/explore/%s' %(domain, self.slug)
+            return '%s/explore/%s' % (domain, self.slug)
         return None
-        
+
     @property
     def tooltip(self):
         if self.description and self.description.strip() != '':
@@ -252,25 +269,25 @@ class Layer(models.Model):
             return self.parent.description
         else:
             return None
-            
+
     @property
     def is_shareable(self):
-        if self.shareable_url == False:
+        if self.shareable_url is False:
             return False
-        if self.parent and self.parent.shareable_url == False:
+        if self.parent and self.parent.shareable_url is False:
             return False
         return True
-            
+
     @property
     def serialize_attributes(self):
-        return {'title': self.attribute_title, 
+        return {'title': self.attribute_title,
                 'compress_attributes': self.compress_display,
                 'event': self.attribute_event,
                 'attributes': [{'display': attr.display_name, 'field': attr.field_name, 'precision': attr.precision} for attr in self.attribute_fields.all().order_by('order')]}
-    
+
     @property
     def serialize_lookups(self):
-        return {'field': self.lookup_field, 
+        return {'field': self.lookup_field,
                 'details': [{'value': lookup.value, 'color': lookup.color, 'dashstyle': lookup.dashstyle, 'fill': lookup.fill, 'graphic': lookup.graphic} for lookup in self.lookup_table.all()]}
 
     @property
@@ -307,7 +324,7 @@ class Layer(models.Model):
                 'fill_opacity': layer.vector_fill,
                 'graphic': layer.vector_graphic,
                 'opacity': layer.opacity
-            } 
+            }
             for layer in self.sublayers.all()
         ]
         layers_dict = {
@@ -347,12 +364,26 @@ class Layer(models.Model):
             'arc_rest_out_fields': self.arc_rest_out_fields
         }
         return layers_dict
-        
+
     def save(self, *args, **kwargs):
         self.slug_name = self.slug
-        if self.compass_instance_id and len(self.compass_instance_id) > 0 and self.compass_service_name and len(self.compass_service_name) > 0:
-            self.url = 'http://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
+        if self.layer_source in ['ArcRest', 'XYZ', 'Vector', 'WMS']:
+            self.layer_type = self.layer_source
+        else:
+            # if self.compass_instance_id and len(self.compass_instance_id) > 0 and self.compass_service_name and len(self.compass_service_name) > 0:
+            if self.layer_source == 'mapserver':
+                self.layer_type = 'XYZ'
+                self.url = 'http://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
+            if self.layer_source == 'featureserver':
+                self.layer_type = 'Vector'
+                self.url = 'http://services.arcgis.com/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
+                    self.compass_instance_id,
+                    self.compass_service_name,
+                    self.arcgis_layers[0],
+                    "geometry=%7B%22xmin%22%3A-13882776.537694%2C%22ymin%22%3A5140361.7152923%2C%22xmax%22%3A-12925173.44747%2C%22ymax%22%3A5825237.4886322%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=pgeojson"
+                )
         super(Layer, self).save(*args, **kwargs)
+
 
 class AttributeInfo(models.Model):
     display_name = models.CharField(max_length=255, blank=True, null=True)
