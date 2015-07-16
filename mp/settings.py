@@ -9,13 +9,13 @@ LOGIN_REDIRECT_URL = '/visualize'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'marco',
+        'NAME': 'compass',
         'USER': 'postgres',
     }
 }
 
-FEEDBACK_RECIPIENT = ["help@pointnineseven.com"] # default value, actual emails are assigned in settings_local.py
-FEEDBACK_SUBJECT = "Our Florida Reefs Marine Planner Feedback"
+FEEDBACK_RECIPIENT = ["odfwcompass@ecotrust.org"] # default value, actual emails are assigned in settings_local.py
+FEEDBACK_SUBJECT = "Compass"
 
 
 LOG_FILE = os.path.realpath(os.path.join(os.path.dirname(__file__),
@@ -44,27 +44,25 @@ GEOMETRY_CLIENT_SRID = 3857  # for latlon
 GEOJSON_SRID = 3857
 NULLVALUE = -999  # Nulls will be filtered out in the info reports
 
-APP_NAME = "OFR Marine Planner"
-SERVER_ADMIN = 'seth@pointnineseven.com'
-DEFAULT_FROM_EMAIL = 'OFR Marine Planner <developers@pointnineseven.com>'
+APP_NAME = "Compass"
+SERVER_ADMIN = 'odfwcompass@ecotrust.org'
+DEFAULT_FROM_EMAIL = 'Compass <odfwcompass@ecotrust.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 MANAGERS = ADMINS
-EMAIL_SUBJECT_PREFIX = 'OFR Marine Planner'
+EMAIL_SUBJECT_PREFIX = 'Compass'
 ADMINS = (
-    ('Dan Crowther', 'dan@pointnineseven.com'),
-    ('Scott Fletcher', 'scott@pointnineseven.com'),
-    ('Seth Hill', 'seth@pointnineseven.com'),
+    ('Ryan Hodges', 'rhodges@ecotrust.org'),
 )
 
 
 
-FEEDBACK_RECIPIENT = "Marine Planning Team <mp-team@marineplanner.org>"
-HELP_EMAIL = "mp-team@marineplanner.org"
-DEFAULT_FROM_EMAIL = "Marine Planning Team <mp-team@marineplanner.org>"
+FEEDBACK_RECIPIENT = "Compass Team <odfwcompass@ecotrust.org>"
+HELP_EMAIL = "odfwcompass@ecotrust.org"
+DEFAULT_FROM_EMAIL = "Compass Team <odfwcompass@ecotrust.org>"
 
 # url for socket.io printing
-SOCKET_URL = 'http://ofr.marineplanner.io:8080'
-# SOCKET_URL = False
+# SOCKET_URL = 'http://ofr.marineplanner.io:8080'
+SOCKET_URL = False
 
 # Change the following line to True,
 # to display the 'under maintenance' template
@@ -76,7 +74,7 @@ TEMPLATE_DIRS = (os.path.realpath(os.path.join(os.path.dirname(__file__),
 
 AUTHENTICATION_BACKENDS = (
     # 'social.backends.google.GooglePlusAuth',
-    'auth.CustomGooglePlusAuth',
+    # 'auth.CustomGooglePlusAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -169,4 +167,3 @@ import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 
 from settings_local import *
-
