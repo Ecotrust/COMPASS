@@ -376,7 +376,7 @@ class Layer(models.Model):
                 self.url = 'http://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
             if self.layer_source == 'featureserver':
                 self.layer_type = 'Vector'
-                self.url = 'http://services.arcgis.com/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
+                self.url = '/arcgis/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
                     self.compass_instance_id,
                     self.compass_service_name,
                     self.arcgis_layers[0],
