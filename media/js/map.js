@@ -431,6 +431,7 @@ app.addLayerToMap = function(layer) {
             layer.layer.arcRestInstanceId = layer.arcRestInstanceId;
             layer.layer.arcRestServiceName = layer.arcRestServiceName;
             layer.layer.arcRestOutFields = layer.arcRestOutFields;
+            layer.layer.arcGisLayerId = layer.arcgislayers;
             layer.layer.events.register('click', null, app.queryEsriDataLayer);
         }
     }
@@ -663,9 +664,10 @@ app.queryEsriDataLayer = function(evt){
     var serviceName = this.arcRestServiceName;          //Needed from layer manager
     // var out_fields = "*";
     var outFields = this.arcRestOutFields;              //Needed from layer manager
+    var layerId = this.arcGisLayerId;
     var ajaxUrl= "http://services.arcgis.com/" +
         instanceId + "/arcgis/rest/services/" +
-        serviceName + "/FeatureServer/0/query?geometry=%7B%22x%22%3A" +
+        serviceName + "/FeatureServer/" + layerId + "/query?geometry=%7B%22x%22%3A" +
         coords.lon + "%2C%22y%22%3A" +
         coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" +
         "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
