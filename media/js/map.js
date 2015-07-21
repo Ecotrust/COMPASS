@@ -652,19 +652,23 @@ app.getEsriJSONFieldName = function(fields, key){
 app.queryEsriDataLayer = function(evt){
     var px = new OpenLayers.Pixel(evt.x,evt.y);
     var coords = this.getLonLatFromViewPortPx(px);
+    app.esriQueryClickEvent = {};
+    app.esriQueryClickEvent.px = px;
+    app.esriQueryClickEvent.lonlat = coords;
+    app.esriQueryClickEvent.layerName = evt.object.name;
     // var instance_id = "uUvqNMGPm7axC2dD";
     var instanceId = this.arcRestInstanceId;            //Needed from layer manager
     // var service_name = "ODFW_CHData_CompiledCH";
     var serviceName = this.arcRestServiceName;          //Needed from layer manager
     // var out_fields = "*";
     var outFields = this.arcRestOutFields;              //Needed from layer manager
-    var ajaxUrl= "http://services.arcgis.com/" + 
-        instanceId + "/arcgis/rest/services/" + 
-        serviceName + "/FeatureServer/0/query?geometry=%7B%22x%22%3A" + 
-        coords.lon + "%2C%22y%22%3A" + 
-        coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" + 
-        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" + 
-        "&units=esriSRUnit_Meter&outFields=" + 
+    var ajaxUrl= "http://services.arcgis.com/" +
+        instanceId + "/arcgis/rest/services/" +
+        serviceName + "/FeatureServer/0/query?geometry=%7B%22x%22%3A" +
+        coords.lon + "%2C%22y%22%3A" +
+        coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" +
+        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        "&units=esriSRUnit_Meter&outFields=" +
         outFields + "&returnGeometry=true&f=json";
     $.ajax({
       url: ajaxUrl
@@ -676,14 +680,23 @@ app.queryEsriDataLayer = function(evt){
         var attributes = feats.features[0].attributes;
         var keys = Object.keys(attributes);
         var out = '';
+        var clickAttributes = [];
+        clickAttributes[app.esriQueryClickEvent.layerName] = [];
         for(var key_idx=0; key_idx < keys.length; key_idx++) {
             var label = app.getEsriJSONFieldName(feats.fields, keys[key_idx]);
             if (out.length !== 0){
                 out += "\n\r";
             }
             out+= label + ": " + attributes[keys[key_idx]];
+            clickAttributes[app.esriQueryClickEvent.layerName].push({
+              'display': label,
+              'data':attributes[keys[key_idx]]
+            });
         }
-        console.log(out);
+        $.extend(app.map.clickOutput.attributes, clickAttributes);
+        app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
+        app.viewModel.updateMarker(app.esriQueryClickEvent.lonlat);
+
       }
     });
 
