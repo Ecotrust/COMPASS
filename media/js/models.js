@@ -54,10 +54,19 @@ function layerModel(options, parent) {
 
     // if legend is not provided, try using legend from web services
     if ( !self.legend && self.url && (self.arcgislayers !== -1) ) {
+        var url = '';
+        if (self.url.indexOf('/export') !== -1){
+          url = self.url.replace('/export', '/legend/?f=pjson');
+        } else if (self.url.indexOf('/MapServer/tile') !== -1){
+          url = self.url.split('/MapServer')[0] + '/MapServer/legend/?f=pjson';
+        } else {
+          url = self.url; //Todo: Need to handle featureServers - will need new logic to pick apart 'drawingInfo'
+              // http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0?f=json
+        }
         $.ajax({
             dataType: "jsonp",
             //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/legend/?f=pjson
-            url: self.url.replace('/export', '/legend/?f=pjson'),
+            url: url,
             type: 'GET',
             success: function(data) {
                 if (data.layers) {
@@ -66,8 +75,14 @@ function layerModel(options, parent) {
                             self.legend = {'elements': []};
                             $.each(layerobj.legend, function(j, legendobj) {
                                 //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/13/images/94ed037ab533027972ba3fc4a7c9d05c
-                                var swatchURL = self.url.replace('/export', '/'+self.arcgislayers+'/images/'+legendobj.url),
-                                    label = legendobj.label;
+                                var swatchUrl = "", label = "";
+                                if (self.url.indexOf('/export') !== -1) {
+                                  swatchURL = self.url.replace('/export', '/'+self.arcgislayers+'/images/'+legendobj.url),
+                                      label = legendobj.label;
+                                } else if (self.url.indexOf('/MapServer/tile/') !== -1) {
+                                  swatchURL = self.url.split('/MapServer')[0] + '/MapServer/'+self.arcgislayers+'/images/'+legendobj.url,
+                                      label = legendobj.label;
+                                }
                                 if (label === "") {
                                     label = layerobj.layerName;
                                 }
