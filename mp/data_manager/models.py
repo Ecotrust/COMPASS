@@ -7,10 +7,10 @@ from django.template.defaultfilters import slugify
 class TOC(models.Model):
     name = models.CharField(max_length=100)
     themes = models.ManyToManyField("TOCTheme", blank=True, null=True)
-    
+
     def __unicode__(self):
         return unicode('%s' % (self.name))
-    
+
 class TOCTheme(models.Model):
     display_name = models.CharField(max_length=100)
     name = models.CharField(max_length=100, help_text="This field should be a 'slugified' version of Display Name (must start with a letter and should only contain letters (a-z or A-Z), digits (0-9), hyphens(-), and underscores(_))")
@@ -52,7 +52,7 @@ class Theme(models.Model):
     factsheet_thumb = models.CharField(max_length=255, blank=True, null=True)
     factsheet_link = models.CharField(max_length=255, blank=True, null=True)
 
-    # not really using these atm    
+    # not really using these atm
     feature_image = models.CharField(max_length=255, blank=True, null=True)
     feature_excerpt = models.TextField(blank=True, null=True)
     feature_link = models.CharField(max_length=255, blank=True, null=True)
@@ -64,7 +64,7 @@ class Theme(models.Model):
     def learn_link(self):
         domain = get_domain(8000)
         return '%s/learn/%s' %(domain, self.name)
-        
+
     @property
     def toDict(self):
         layers = [layer.id for layer in self.layer_set.filter(is_sublayer=False).exclude(layer_type='placeholder')]
@@ -161,7 +161,7 @@ class Layer(models.Model):
     arc_rest_data_layer = models.BooleanField(default=False)
     arc_rest_instance_id = models.CharField(max_length=150, blank=True, null=True, default='uUvqNMGPm7axC2dD')
     arc_rest_service_name = models.CharField(max_length=255, blank=True, null=True, default=None)
-    arc_rest_out_fields = models.CharField(max_length=255, blank=True, null=True, default="*", help_text="comma separated list of fields to return. '*' for all fields.")
+    arc_rest_out_fields = models.TextField(blank=True, null=True, default="*", help_text="comma separated list of fields to return. '*' for all fields.")
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
@@ -390,10 +390,10 @@ class AttributeInfo(models.Model):
     field_name = models.CharField(max_length=255, blank=True, null=True)
     precision = models.IntegerField(blank=True, null=True)
     order = models.IntegerField(default=1)
-    
+
     def __unicode__(self):
-        return unicode('%s' % (self.field_name)) 
-    
+        return unicode('%s' % (self.field_name))
+
 class LookupInfo(models.Model):
     DASH_CHOICES = (
         ('dot', 'dot'),
@@ -408,11 +408,11 @@ class LookupInfo(models.Model):
     dashstyle = models.CharField(max_length=11, choices=DASH_CHOICES, default='solid')
     fill = models.BooleanField(default=False)
     graphic = models.CharField(max_length=255, blank=True, null=True)
-    
+
     def __unicode__(self):
-        return unicode('%s' % (self.value)) 
-    
-        
+        return unicode('%s' % (self.value))
+
+
 class DataNeed(models.Model):
     name = models.CharField(max_length=100)
     archived = models.BooleanField(default=False)
@@ -428,6 +428,6 @@ class DataNeed(models.Model):
     @property
     def html_name(self):
         return self.name.lower().replace(' ', '-')
-    
+
     def __unicode__(self):
         return unicode('%s' % (self.name))
