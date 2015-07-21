@@ -675,9 +675,7 @@ app.queryEsriDataLayer = function(evt){
       url: ajaxUrl
     }).done(function(res) {
       var feats = JSON.parse(res);
-      if (feats.features.length != 1) {
-        alert(feats.features.length + " features returned!");
-      } else {
+      if (feats.features.length > 0) {
         var attributes = feats.features[0].attributes;
         var keys = Object.keys(attributes);
         var out = '';
