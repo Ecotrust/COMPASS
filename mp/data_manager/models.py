@@ -120,9 +120,10 @@ class Layer(models.Model):
     filterable = models.BooleanField(default=False)
 
     PROJ_CHOICES = (
-        ('EPSG:3643', 'Oregon Lambert (ODFW Default)'),
-        ('EPSG:3857', 'Web Mercator'),
-        ('EPSG:4326', 'WGS 84')
+        ('EPSG:3643', 'Oregon Lambert (ODFW Default) [3643]'),
+        ('EPSG:2992', 'Oregon Lambert (ft) [2992]'),
+        ('EPSG:3857', 'Web Mercator [3857]'),
+        ('EPSG:4326', 'WGS 84 [4326]')
     )
     proj = models.CharField(max_length=255, choices=PROJ_CHOICES, blank=True, null=True, help_text="will be EPSG:3857, if unspecified")
     # tooltip
