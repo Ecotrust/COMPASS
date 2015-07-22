@@ -59,13 +59,19 @@ function layerModel(options, parent) {
           url = self.url.replace('/export', '/legend/?f=pjson');
         } else if (self.url.indexOf('/MapServer/tile') !== -1){
           url = self.url.split('/MapServer')[0] + '/MapServer/legend/?f=pjson';
+        } else if (self.url.indexOf('/FeatureServer') !== -1) {
+          url = self.url.split('/FeatureServer')[0] + '/' + self.arcgislayers.split(',')[0] + '?f=json';
+          while (url.indexOf(' ') !== -1) {
+            url.replace(' ','');
+          }
         } else {
-          url = self.url; //Todo: Need to handle featureServers - will need new logic to pick apart 'drawingInfo'
-              // http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0?f=json
+          url = self.url;
         }
         $.ajax({
             dataType: "jsonp",
             //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/legend/?f=pjson
+            //Todo: Need to handle featureServers - will need new logic to pick apart 'drawingInfo'
+                // http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0?f=json
             url: url,
             type: 'GET',
             success: function(data) {
