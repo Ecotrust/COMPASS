@@ -758,7 +758,7 @@ app.addVectorLayerToMap = function(layer) {
         layerModel.active(false);
         layerModel.visible(false);
         layerModel.activateLayer();
-
+        ret.object.redraw();
     }
 
     layer.layer = new OpenLayers.Layer.Vector(
