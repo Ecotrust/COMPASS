@@ -109,29 +109,61 @@ function layerModel(options, parent) {
       var rules = [];
       // TODO 'classBreaks'
       if (renderer.type  == 'simple') {
-          var defaultStyle = self.interpretStyle(renderer.symbol);
-      } else if (renderer.type  == 'uniqueValue') {
-        if (renderer.field1 !== null ) {
-          // TODO 'field2, field3'
-          if (renderer.defaultSymbol){
-            var defaultStyle = self.interpretStyle(renderer.defaultSymbol);
+          defaultStyle = self.interpretStyle(renderer.symbol);
+      } else {
+        if (renderer.defaultSymbol){
+          defaultStyle = self.interpretStyle(renderer.defaultSymbol);
+        }
+        if (renderer.type  == 'uniqueValue') {
+          if (renderer.field1 !== null ) {
+            // TODO 'field2, field3'
+            for (var uviIdx in renderer.uniqueValueInfos){
+              var uvi = renderer.uniqueValueInfos[uviIdx];
+              var ruleSymbolizer = self.interpretStyle(uvi.symbol);
+              var ruleFilter = new OpenLayers.Filter.Comparison({
+                  type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                  property: renderer.field1,
+                  value: uvi.value
+              });
+              rules.push(
+                new OpenLayers.Rule(
+                  {
+                    filter: ruleFilter,
+                    symbolizer: ruleSymbolizer
+                  }
+                )
+              );
+            }
           }
-          for (var uviIdx in renderer.uniqueValueInfos){
-            var uvi = renderer.uniqueValueInfos[uviIdx];
-            var ruleSymbolizer = self.interpretStyle(uvi.symbol);
-            var ruleFilter = new OpenLayers.Filter.Comparison({
-                type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                property: renderer.field1,
-                value: uvi.value
-            });
-            rules.push(
-              new OpenLayers.Rule(
-                {
-                  filter: ruleFilter,
-                  symbolizer: ruleSymbolizer
-                }
-              )
-            )
+        }
+        if (renderer.type == 'classBreaks') {
+          var minVal = 0;
+          if (renderer.hasOwnProperty('minValue') && renderer.minValue !== null) {
+            minVal = renderer.minValue;
+          }
+          if (renderer.field !== null) {
+            for (var breakIdx in renderer.classBreakInfos) {
+              var cbi = renderer.classBreakInfos[breakIdx];
+              var ruleSymbolizer = self.interpretStyle(cbi.symbol);
+              if (cbi.hasOwnProperty('classMinValue')) {
+                minVal = cbi.classMinValue;
+              }
+              var ruleFilter = new OpenLayers.Filter.Comparison({
+                type: OpenLayers.Filter.Comparison.BETWEEN,
+                lowerBoundary: minVal,
+                upperBoundary: cbi.classMaxValue,
+                property: renderer.field
+              });
+              rules.push(
+                new OpenLayers.Rule(
+                  {
+                    filter: ruleFilter,
+                    symbolizer: ruleSymbolizer
+                  }
+                )
+              );
+              minVal = cbi.classMaxValue;
+            }
           }
         }
       }
