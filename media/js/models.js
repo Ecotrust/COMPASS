@@ -52,6 +52,75 @@ function layerModel(options, parent) {
         }
     }
 
+    self.rgbToHex = function(r,g,b){
+      return '#' + r.toString(16) + g.toString(16) + b.toString(16);
+    }
+
+    self.interpretStyle = function(symbol){
+      var style = {}; // TODO
+      if (!symbol.hasOwnProperty('type')){
+        debugger;
+      }
+      if (symbol.type.indexOf('esriSFS') !== -1){
+        style.fillColor = self.rgbToHex(symbol.color[0], symbol.color[1], symbol.color[2]);
+        if (symbol.hasOwnProperty('outline')) {
+          var outline = self.interpretStyle(symbol.outline);
+          style.strokeColor = outline.strokeColor;
+          style.strokeWidth = outline.strokeWidth;
+        }
+      } else if (symbol.type.indexOf('esriSLS') !== -1){
+        style.strokeColor = self.rgbToHex(symbol.color[0], symbol.color[1], symbol.color[2]);
+        style.strokeWidth = symbol.width;
+      } else if (symbol.type.indexOf('esriSMS') !== -1){
+        // TODO
+      } else if (symbol.type.indexOf('esriPMS') !== -1){
+        // TODO
+      } else if (symbol.type.indexOf('esriPFS') !== -1){
+        // TODO
+      } else if (symbol.type.indexOf('esriTS') !== -1){
+        // TODO
+      }
+      return style;
+    };
+
+    self.esriRendererToOLStyleMap = function(renderer) {
+
+      var style;
+      // TODO 'simple', 'classBreaks'
+      if (renderer.type  == 'uniqueValue') {
+        if (renderer.field1 !== null ) {
+          // TODO 'field2, field3'
+          if (renderer.defaultSymbol){
+            console.log(renderer.defaultSymbol);
+            var defaultStyle = self.interpretStyle(renderer.defaultSymbol);
+          } else {
+            var defaultStyle = {};
+          }
+          var rules = [];
+          for (var uviIdx in renderer.uniqueValueInfos){
+            var uvi = renderer.uniqueValueInfos[uviIdx];
+            console.log(uvi.symbol);
+            var ruleSymbolizer = self.interpretStyle(uvi.symbol);
+            var ruleFilter = new OpenLayers.Filter.Comparison({
+                type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                property: renderer.field1,
+                value: uvi.value
+            });
+            rules.push(
+              new OpenLayers.Rule(
+                {
+                  filter: ruleFilter,
+                  symbolizer: ruleSymbolizer
+                }
+              )
+            )
+          }
+          style = new OpenLayers.Style(defaultStyle, {rules: rules});
+        }
+      }
+      return new OpenLayers.StyleMap(style);
+    }
+
     // if legend is not provided, try using legend from web services
     if ( !self.legend && self.url && (self.arcgislayers !== -1) ) {
         var url = '';
@@ -60,7 +129,7 @@ function layerModel(options, parent) {
         } else if (self.url.indexOf('/MapServer/tile') !== -1){
           url = self.url.split('/MapServer')[0] + '/MapServer/legend/?f=pjson';
         } else if (self.url.indexOf('/FeatureServer') !== -1) {
-          url = self.url.split('/FeatureServer')[0] + '/' + self.arcgislayers.split(',')[0] + '?f=json';
+          url = self.url.split('/FeatureServer')[0] + '/FeatureServer/' + self.arcgislayers.split(',')[0] + '?f=json';
           while (url.indexOf(' ') !== -1) {
             url.replace(' ','');
           }
@@ -101,12 +170,15 @@ function layerModel(options, parent) {
                     var visible = self.visible();
                     self.visible(false);
                     self.visible(visible);
+                } else if (data.drawingInfo && data.drawingInfo.renderer){
+                  self.stylemap = self.esriRendererToOLStyleMap(data.drawingInfo.renderer);
+                  // TODO : set create self.legendDiv
                 } else {
-                    //debugger;
+                    debugger;
                 }
             },
             error: function(error) {
-                //debugger;
+                debugger;
             }
         });
     }
