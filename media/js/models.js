@@ -52,6 +52,14 @@ function layerModel(options, parent) {
         }
     }
 
+    self.hexDigitAdjuster = function(hexVal) {
+      hexVal = hexVal.toString(16);
+      if (hexVal.length == 1) {
+        hexVal = "0" + hexVal;
+      }
+      return hexVal;
+    }
+
     self.rgbToHex = function(color){
       r = color[0];
       g = color[1];
@@ -62,7 +70,7 @@ function layerModel(options, parent) {
           return false;
         }
       }
-      return '#' + r.toString(16) + g.toString(16) + b.toString(16);
+      return '#' + self.hexDigitAdjuster(r) + self.hexDigitAdjuster(g) + self.hexDigitAdjuster(b);
     }
 
     self.interpretStyle = function(symbol){
