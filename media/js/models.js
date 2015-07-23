@@ -91,7 +91,6 @@ function layerModel(options, parent) {
         if (renderer.field1 !== null ) {
           // TODO 'field2, field3'
           if (renderer.defaultSymbol){
-            console.log(renderer.defaultSymbol);
             var defaultStyle = self.interpretStyle(renderer.defaultSymbol);
           } else {
             var defaultStyle = {};
@@ -99,7 +98,6 @@ function layerModel(options, parent) {
           var rules = [];
           for (var uviIdx in renderer.uniqueValueInfos){
             var uvi = renderer.uniqueValueInfos[uviIdx];
-            console.log(uvi.symbol);
             var ruleSymbolizer = self.interpretStyle(uvi.symbol);
             var ruleFilter = new OpenLayers.Filter.Comparison({
                 type: OpenLayers.Filter.Comparison.EQUAL_TO,
@@ -174,11 +172,11 @@ function layerModel(options, parent) {
                   self.stylemap = self.esriRendererToOLStyleMap(data.drawingInfo.renderer);
                   // TODO : set create self.legendDiv
                 } else {
-                    debugger;
+                    // debugger;
                 }
             },
             error: function(error) {
-                debugger;
+                // debugger;
             }
         });
     }

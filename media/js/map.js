@@ -708,22 +708,26 @@ app.addVectorLayerToMap = function(layer) {
 
     var url = layer.url,
         proj = layer.proj || 'EPSG:3857';
-    var styleMap = new OpenLayers.StyleMap({
-        fillColor: layer.color,
-        fillOpacity: layer.fillOpacity,
-        //strokeDashStyle: "dash",
-        //strokeOpacity: 1,
-        strokeColor: layer.color,
-        strokeOpacity: layer.defaultOpacity,
-        //strokeLinecap: "square",
-        //http://dev.openlayers.org/apidocs/files/OpenLayers/Feature/Vector-js.html
-        //title: 'testing'
-        pointRadius: 2,
-        externalGraphic: layer.graphic,
-        graphicWidth: 8,
-        graphicHeight: 8,
-        graphicOpacity: layer.defaultOpacity
-    });
+    if (layer.hasOwnProperty('stylemap')){
+      var styleMap = layer.stylemap;
+    } else {
+      var styleMap = new OpenLayers.StyleMap({
+          fillColor: layer.color,
+          fillOpacity: layer.fillOpacity,
+          //strokeDashStyle: "dash",
+          //strokeOpacity: 1,
+          strokeColor: layer.color,
+          strokeOpacity: layer.defaultOpacity,
+          //strokeLinecap: "square",
+          //http://dev.openlayers.org/apidocs/files/OpenLayers/Feature/Vector-js.html
+          //title: 'testing'
+          pointRadius: 2,
+          externalGraphic: layer.graphic,
+          graphicWidth: 8,
+          graphicHeight: 8,
+          graphicOpacity: layer.defaultOpacity
+      });
+    }
     if (layer.proxy_url) {
         url = '/proxy/layer/' + layer.id;
     }
