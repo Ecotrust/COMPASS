@@ -751,6 +751,16 @@ app.addVectorLayerToMap = function(layer) {
         });
         styleMap.addUniqueValueRules("default", layer.lookupField, mylookup);
     }
+
+    vectorLoadEndListener = function(ret) {
+        var layerModel = ret.object.layerModel;
+        ret.object.styleMap = layerModel.stylemap;
+        layerModel.active(false);
+        layerModel.visible(false);
+        layerModel.activateLayer();
+
+    }
+
     layer.layer = new OpenLayers.Layer.Vector(
         layer.name, {
             projection: new OpenLayers.Projection(proj), // 3857
@@ -764,7 +774,7 @@ app.addVectorLayerToMap = function(layer) {
             layerModel: layer
         }
     );
-
+    layer.layer.events.on({"loadend": vectorLoadEndListener});
 
 };
 
