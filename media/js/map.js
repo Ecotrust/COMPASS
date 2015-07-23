@@ -755,9 +755,6 @@ app.addVectorLayerToMap = function(layer) {
     vectorLoadEndListener = function(ret) {
         var layerModel = ret.object.layerModel;
         ret.object.styleMap = layerModel.stylemap;
-        layerModel.active(false);
-        layerModel.visible(false);
-        layerModel.activateLayer();
         ret.object.redraw();
     }
 
