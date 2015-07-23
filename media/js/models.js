@@ -52,24 +52,36 @@ function layerModel(options, parent) {
         }
     }
 
-    self.rgbToHex = function(r,g,b){
+    self.rgbToHex = function(color){
+      r = color[0];
+      g = color[1];
+      b = color[2];
+      if (color.length == 4) {
+        a = color[3];
+        if (a == 0) {
+          return false;
+        }
+      }
       return '#' + r.toString(16) + g.toString(16) + b.toString(16);
     }
 
     self.interpretStyle = function(symbol){
       var style = {}; // TODO
-      if (!symbol.hasOwnProperty('type')){
-        debugger;
-      }
+
       if (symbol.type.indexOf('esriSFS') !== -1){
-        style.fillColor = self.rgbToHex(symbol.color[0], symbol.color[1], symbol.color[2]);
+        var fillColor = self.rgbToHex(symbol.color);
+        if (fillColor) {
+          style.fillColor = fillColor;
+        } else {
+          style.fillOpacity = 0;
+        }
         if (symbol.hasOwnProperty('outline')) {
           var outline = self.interpretStyle(symbol.outline);
           style.strokeColor = outline.strokeColor;
           style.strokeWidth = outline.strokeWidth;
         }
       } else if (symbol.type.indexOf('esriSLS') !== -1){
-        style.strokeColor = self.rgbToHex(symbol.color[0], symbol.color[1], symbol.color[2]);
+        style.strokeColor = self.rgbToHex(symbol.color);
         style.strokeWidth = symbol.width;
       } else if (symbol.type.indexOf('esriSMS') !== -1){
         // TODO
@@ -85,17 +97,17 @@ function layerModel(options, parent) {
 
     self.esriRendererToOLStyleMap = function(renderer) {
 
-      var style;
-      // TODO 'simple', 'classBreaks'
-      if (renderer.type  == 'uniqueValue') {
+      var defaultStyle = {};
+      var rules = [];
+      // TODO 'classBreaks'
+      if (renderer.type  == 'simple') {
+          var defaultStyle = self.interpretStyle(renderer.symbol);
+      } else if (renderer.type  == 'uniqueValue') {
         if (renderer.field1 !== null ) {
           // TODO 'field2, field3'
           if (renderer.defaultSymbol){
             var defaultStyle = self.interpretStyle(renderer.defaultSymbol);
-          } else {
-            var defaultStyle = {};
           }
-          var rules = [];
           for (var uviIdx in renderer.uniqueValueInfos){
             var uvi = renderer.uniqueValueInfos[uviIdx];
             var ruleSymbolizer = self.interpretStyle(uvi.symbol);
@@ -113,9 +125,9 @@ function layerModel(options, parent) {
               )
             )
           }
-          style = new OpenLayers.Style(defaultStyle, {rules: rules});
         }
       }
+      var style = new OpenLayers.Style(defaultStyle, {rules: rules});
       return new OpenLayers.StyleMap(style);
     }
 
