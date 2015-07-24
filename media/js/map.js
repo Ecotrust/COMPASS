@@ -2,6 +2,7 @@ app.init = function() {
     // proj4.defs("EPSG:3643", "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
     Proj4js.defs["EPSG:3643"] = "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=400000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs";
     Proj4js.defs["EPSG:2992"] = "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=399999.9999984 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048 +no_defs";
+    Proj4js.defs["SR-ORG:6928"] = "";
     var max_zoom,
         min_zoom;
     //to turn basemap indicator off (hide the plus sign)
@@ -703,9 +704,7 @@ app.queryEsriDataLayer = function(evt){
 
 };
 
-
 app.addVectorLayerToMap = function(layer) {
-
     var url = layer.url,
         proj = layer.proj || 'EPSG:3857';
     if (layer.hasOwnProperty('stylemap')){
@@ -755,21 +754,79 @@ app.addVectorLayerToMap = function(layer) {
     vectorLoadEndListener = function(ret) {
         var layerModel = ret.object.layerModel;
         ret.object.styleMap = layerModel.stylemap;
-        if (!layerModel.visible()) {
+        if (ret.object.features.length >= 1000) {
+          // Arc maxes out at 1000 features. The map will not be complete.
+          alert('You are too far zoomed out to load data for ' +
+          layerModel.name + '. Please zoom in and try again.');
+          layerModel.deactivateLayer();
+        } else if (!layerModel.visible() || !layerModel.loaded) {
+            layer.loaded = true;
+            setGeom(layer);
             layerModel.deactivateLayer();
             layerModel.activateLayer();
+            ret.object.redraw();
+        } else {
+          ret.object.redraw();
         }
-        ret.object.redraw();
     }
+
+    getGeom = function(layer) {
+        var extent = app.map.getExtent();
+        geometry = {
+          xmin: extent.left,
+          ymin: extent.bottom,
+          xmax: extent.right,
+          ymax: extent.top,
+          spatialReference: {
+            wkid:102100
+          }
+        };
+        return geometry;
+    }
+
+    setGeom = function(layer) {
+      var geometry = getGeom(layer);
+      if (layer.hasOwnProperty('layer') && layer.layer.hasOwnProperty('protocol') && layer.layer.protocol.hasOwnProperty('params')) {
+        layer.layer.protocol.params.geometry = JSON.stringify(geometry);
+        layer.layer.protocol.params.returnGeometry = true;
+      }
+    }
+
+    var refreshLayer = new OpenLayers.Strategy.Refresh({ force: true, active: true });
+
+    bBoxStrategy = new OpenLayers.Strategy.BBOX({
+      update: function(options){
+        setGeom(layer);
+        var mapBounds = this.getMapBounds();
+        if (mapBounds !== null && ((options && options.force) ||
+                                   this.invalidBounds(mapBounds))) {
+            this.calculateBounds(mapBounds);
+            this.resolution = this.layer.map.getResolution();
+            this.triggerRead(options);
+        }
+      }
+    });
 
     layer.layer = new OpenLayers.Layer.Vector(
         layer.name, {
             projection: new OpenLayers.Projection(proj), // 3857
             displayInLayerSwitcher: false,
-            strategies: [new OpenLayers.Strategy.Fixed()],
+            strategies: [
+              bBoxStrategy,
+              refreshLayer
+            ],
             protocol: new OpenLayers.Protocol.HTTP({
-                url: url,
-                format: new OpenLayers.Format.GeoJSON()
+                url: url.split('?')[0],
+                format: new OpenLayers.Format.GeoJSON(),
+                params: {
+                  'geometryType':'esriGeometryEnvelope',
+                  'spatialRel':'esriSpatialRelIntersects',
+                  'units':'esriSRUnit_Meter',
+                  'outFields':'*',
+                  'returnGeometry':true,
+                  'f':'pgeojson',
+                  'geometry': JSON.stringify(getGeom())
+                }
             }),
             styleMap: styleMap,
             layerModel: layer

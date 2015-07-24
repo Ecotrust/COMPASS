@@ -86,7 +86,7 @@ app.loadCompressedState = function(state) {
             app.viewModel.unloadedDesigns = unloadedDesigns;
             // $('#designsTab').tab('show'); //to activate the loading of designs
             // better yet...
-            app.viewModel.scenarios.loadDesigns(); 
+            app.viewModel.scenarios.loadDesigns();
        }
     }
 
@@ -322,6 +322,5 @@ app.updateUrl = function () {
     }
     window.location.hash = $.param(state);
     app.viewModel.currentURL(window.location.pathname + window.location.hash);
+    app.state = state;
 };
-
-

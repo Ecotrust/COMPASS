@@ -66,13 +66,8 @@ app.viewModel.loadLayersFromServer().done(function() {
   // trigger events that depend on the map
   $(document).trigger('map-ready');
 
-  // if we have the hash state go ahead and load it now
-  if (app.hash) {
-    app.loadStateFromHash(app.hash);
-  } else if (app.MPSettings.default_hash) {
-    app.loadStateFromDefaultHash(app.MPSettings.default_hash);
-  } 
-  
+
+
   // autocomplete for filter
   $('.search-box').typeahead({
     source: app.typeAheadSource
@@ -89,26 +84,44 @@ app.viewModel.loadLayersFromServer().done(function() {
 app.init();
 // Google.v3 uses EPSG:900913 as projection, so we have to
 // transform our coordinates
-app.initializeMapLocation = function() {
-    var latitude = 40.46,
-        longitude = -124.56,
-        zoom = 5;
+app.initializeMapLocation = function(mapInit) {
+    if (mapInit) {
+      var latitude = mapInit.latitude,
+          longitude = mapInit.longitude,
+          zoom = mapInit.zoom
+    } else {
+      var latitude = 40.46,
+          longitude = -124.56,
+          zoom = 5;
 
-    if (app.MPSettings && app.MPSettings.latitude && app.MPSettings.longitude) {
-        latitude = app.MPSettings.latitude;
-        longitude = app.MPSettings.longitude;
-    }
-    if (app.MPSettings && app.MPSettings.zoom) {
-        zoom = app.MPSettings.zoom;
+      if (app.MPSettings && app.MPSettings.latitude && app.MPSettings.longitude) {
+          latitude = app.MPSettings.latitude;
+          longitude = app.MPSettings.longitude;
+      }
+      if (app.MPSettings && app.MPSettings.zoom) {
+          zoom = app.MPSettings.zoom;
+      }
     }
 
     app.map.setCenter(new OpenLayers.LonLat(longitude, latitude).transform(
         new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913")), zoom);
 
 };
-app.initializeMapLocation();
+// if we have the hash state go ahead and load it now
+var mapInit = false;
+if (app.hash) {
+  app.loadStateFromHash(app.hash);
+  mapInit = {
+    'latitude': app.state.y,
+    'longitude': app.state.x,
+    'zoom': app.state.x
+  }
+} else if (app.MPSettings.default_hash) {
+  app.loadStateFromDefaultHash(app.MPSettings.default_hash);
+}
+app.initializeMapLocation(mapInit);
 
-setTimeout(function() {  
+setTimeout(function() {
     app.map.mousedrag = false;
 }, 800);
 
@@ -147,7 +160,7 @@ $(document).ready(function() {
   if(app.MPSettings && app.MPSettings.enable_drawing === "True") {
     app.viewModel.enableDrawing(true);
   }
-  
+
 
   //fixes a problem in which the data accordion scrollbar was reinitialized before the app switched back to the data tab
   //causing the data tab to appear empty
