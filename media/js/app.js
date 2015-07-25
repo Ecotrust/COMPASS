@@ -66,7 +66,11 @@ app.viewModel.loadLayersFromServer().done(function() {
   // trigger events that depend on the map
   $(document).trigger('map-ready');
 
-
+if (app.hash) {
+  app.loadStateFromHash(app.hash);
+} else if (app.MPSettings.default_hash) {
+  app.loadStateFromDefaultHash(app.MPSettings.default_hash);
+}
 
   // autocomplete for filter
   $('.search-box').typeahead({
