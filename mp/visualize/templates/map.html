@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load url from future %}
 <html lang="en" style="height: 100%;">
-    
+
     <head>
         <meta charset="utf-8">
         <title>
@@ -38,7 +38,7 @@
                         -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
                         left: 0px;
 
-                        /* IE6 and 7 */ 
+                        /* IE6 and 7 */
                         filter: progid:DXImageTransform.Microsoft.Matrix(
                                  M11=-1.836909530733566e-16,
                                  M12=-1,
@@ -58,14 +58,14 @@
         <style>
         .navbar .nav > li:hover > a, .navbar .nav > li.active > a, .navbar .nav > li:hover > a:visited {
             height: 30px;
-           
+
         }
         .navbar .nav > li > a {
             height: 25px;
         }
 
         </style>
-        
+
         <!-- Google Analytics -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -76,7 +76,7 @@
           ga('create', 'UA-55383095-1', 'auto');
           ga('send', 'pageview');
         </script>
-        
+
         <style type="text/css">
 
             .embed #aggregated-attribute-overlay {
@@ -87,7 +87,7 @@
                 border-bottom-right-radius: 0px;
                 border-bottom-left-radius: 0px;
             }
-            
+
             #aggregated-attribute-overlay {
                 position: absolute;
                 /*border-radius: 4px; can't tell if I want this or not...*/
@@ -97,7 +97,7 @@
                 height: 130px;
                 min-width: 100%;
                 max-width: 100%;
-                z-index: 950; 
+                z-index: 950;
                 /*overflow-x: hidden;
                 overflow-y: auto;*/
                 /*overflow: auto;*/
@@ -122,7 +122,7 @@
                 /*display: none;*/
             }
             #home-page-link #project-name-header {
-                border: 1px solid #bbbbbb; 
+                border: 1px solid #bbbbbb;
                 padding: 5px;
             }
             #embedded-logo {
@@ -139,26 +139,26 @@
                 z-index: 800;
             }
         </style>
-        
-        
+
+
     </head>
-    
+
     <body class="ofr embed" style="margin: 0px; padding: 0px; height: 100%;">
-        
+
         <div class="container-fluid" id="primary-content" style="height: 100%; padding: 0px">
             <div id="loading" style="position: absolute; top: 12px; left: 12px;">
                 <h2>Loading...</h2>
             </div>
             <div class="row-fluid" id="fullscreen" style="height: 100%;">
                 <!-- Map Panel -->
-                <div id="map-panel" class="span12" style="height: 100%;">       
-                
+                <div id="map-panel" class="span12" style="height: 100%;">
+
                     <div class="row-fluid" data-bind="visible: showMapPanel" style="height: 100%;">
                         <div class="span12" style="height: 100%;">
                             <div class="row-fluid" style="height: 100%;">
                                 <div id="map-wrapper" style="height: 100%; border-radius: 0px;">
                                     <div id="map" style="height: 100%; border-radius: 0px;"></div>
-                                    
+
                                     {% if project_home_page %}
                                     <a id="home-page-link" class="btn" href="{{project_home_page}}" data-bind="visible: showLogo" style="text-decoration: none" target="_blank">
                                     {% else %}
@@ -174,7 +174,7 @@
                                             {% endif %}
                                         {% endif %}
                                     </a>
-                                    
+
                                     <div id="aggregated-attribute-overlay-test" style="position: absolute; visibility: hidden; height: auto; width: auto">
                                         <div data-bind="foreach: attributeLayers()">
                                             <div data-bind="css: {display: $root.aggregatedAttributes()[name] ? 'block' : 'none'}">
@@ -204,8 +204,8 @@
                                                                 <div class="accordion-inner">
                                                                     <dl data-bind="foreach: { data: $root.aggregatedAttributes()[name], afterAdd:$root.updateMarker }">
                                                                         <dt>
-                                                                            <!-- ko if: $data.hasOwnProperty("tab") --> 
-                                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> 
+                                                                            <!-- ko if: $data.hasOwnProperty("tab") -->
+                                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                                                             <!-- /ko -->
                                                                             <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
                                                                             <span style="font-weight: normal" data-bind="text: data"></span>
@@ -220,14 +220,14 @@
                                             <span id="close-attribute-overlay" class="pull-right"><a href="#" style="position: absolute; top: 10px; right: 10px; opacity: .6;" class="btn btn-mini close" data-bind="click: closeAttribution"> x </a> </span>
                                         </div>
                                     </div>
-                                                                   
+
                                     <!--Hide/Show Legends Button-->
                                     <a id="embedded-legend-button" class="btn" data-bind="click: toggleEmbeddedLegend, visible: activeLegendLayers().length > 0 && app.viewModel.showLegend()">
                                         <!--<i class="icon-list-ul icon-large"></i> -->
                                         <span>Legend</span>
                                         <!--<span data-bind="visible: hasActiveLegends() > 0"> (<span data-bind="text: activeLegendLayers().length"></span>) </span>-->
                                     </a>
-                                    
+
                                     <!-- Legend -->
                                     <div id="embedded-legend" data-bind="visible: showEmbeddedLegend()">
                                         <div id="embedded-legend-wrapper">
@@ -258,21 +258,21 @@
                                         </div>
                                     </div>
                                     <!-- /Legend -->
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>
             </div>
             <span class="timestamp" data-bind="visible: mapTitle"><span data-bind="text: new Date().toString('M/d/yyyy HH:mm')"></span></span>
         </div>
 
         <!--/row-->
-          
+
         <!--/.fluid-container-->
 
-        
+
         <script src="{{MEDIA_URL}}/assets/jquery/jquery.js"></script>
         <script src="{{MEDIA_URL}}/assets/bootstrap/bootstrap.min.js"></script>
         <script src="{{MEDIA_URL}}/assets/amplify/amplify.min.js"></script>
@@ -312,18 +312,18 @@
         <!--<![endif]-->
 
         <script src="{{MEDIA_URL}}/assets/jquery/jquery.mCustomScrollbar.js"></script>
-        
+
         <script type="text/javascript">
             $('#fullscreen').on('click', function() {
-                setTimeout(function() { 
+                setTimeout(function() {
                     if ( $('#aggregated-attribute-overlay').is(":visible") ) {
-                        app.viewModel.hideMapAttribution(); 
+                        app.viewModel.hideMapAttribution();
                     } else {
-                        app.viewModel.showMapAttribution(); 
+                        app.viewModel.showMapAttribution();
                     }
                 }, 500);
             });
-        
+
             $(document).ready( function() {
                 // app.map.getLayersByName('ESRI Satellite')[0]['attribution'] = "Basemap Attribution";
                 //$('.olControlAttribution').attr('title',"The Ocean Basemap was created with data from the General Bathymetric Chart of the Oceans (GEBCO), IHO-IOC GEBCO Gazetteer of Undersea Feature Names, NOAA, Seafloor Mapping Lab of the California State University Monterey Bay, National Geographic, DeLorme, and Esri.");
@@ -364,17 +364,17 @@
                 // $('.olControlAttribution').attr('title',"The ESRI Ocean Basemap was was built using data provided by ESRI, GEBCO, NOAA, Canadian Hydrographic Service (CHS), California State University at Monterey Bay (CSUMB), National Geographic, DeLorme, and NAVTEQ.");
                 window.onhashchange = finalBasemapAttributionUpdate;
             });
-            
-            $(function () { 
+
+            $(function () {
                 $(".olControlAttribution").tooltip({trigger: 'hover'});
-            });  
-        
+            });
+
         </script>
-        
+
         <script type="text/javascript">
             app.embeddedMap = true;
         </script>
-        
+
     </body>
 
 </html>

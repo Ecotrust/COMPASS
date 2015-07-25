@@ -792,9 +792,8 @@ app.addVectorLayerToMap = function(layer) {
       }
     }
 
-    var refreshLayer = new OpenLayers.Strategy.Refresh({ force: true, active: true });
-
     bBoxStrategy = new OpenLayers.Strategy.BBOX({
+      ratio: 1.2,
       update: function(options){
         setGeom(layer);
         var mapBounds = this.getMapBounds();
@@ -812,8 +811,7 @@ app.addVectorLayerToMap = function(layer) {
             projection: new OpenLayers.Projection(proj), // 3857
             displayInLayerSwitcher: false,
             strategies: [
-              bBoxStrategy,
-              refreshLayer
+              bBoxStrategy
             ],
             protocol: new OpenLayers.Protocol.HTTP({
                 url: url.split('?')[0],

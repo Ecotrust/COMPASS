@@ -1,6 +1,7 @@
 from django.db import models
 from utils import get_domain
 from django.template.defaultfilters import slugify
+import settings
 #from sorl.thumbnail import ImageField
 
 
@@ -377,7 +378,8 @@ class Layer(models.Model):
                 self.url = 'http://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
             if self.layer_source == 'featureserver':
                 self.layer_type = 'Vector'
-                self.url = '/arcgis/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
+                self.url = '%s/arcgis/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
+                    settings.ARC_URL_DOMAIN,
                     self.compass_instance_id,
                     self.compass_service_name,
                     self.arcgis_layers[0],

@@ -163,6 +163,8 @@ LOGGING = {
     }
 }
 
+ARC_URL_DOMAIN = ''
+
 import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 
