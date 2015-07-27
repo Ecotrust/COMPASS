@@ -92,12 +92,21 @@ function layerModel(options, parent) {
         style.strokeColor = self.rgbToHex(symbol.color);
         style.strokeWidth = symbol.width;
       } else if (symbol.type.indexOf('esriSMS') !== -1){
+        // alert('esriSMS');
         // TODO
       } else if (symbol.type.indexOf('esriPMS') !== -1){
-        // TODO
+        var imageUrl = self.url.split('query?')[0] + 'images/' + symbol.url;
+        style.externalGraphic = imageUrl;
+        style.graphicHeight = symbol.height;
+        style.graphicWidth = symbol.width;
+        style.graphicXOffset = symbol.xoffset;
+        style.graphicYOffset = symbol.yoffset;
+        style.rotation = symbol.angle;
       } else if (symbol.type.indexOf('esriPFS') !== -1){
+        // alert('esriPFS');
         // TODO
       } else if (symbol.type.indexOf('esriTS') !== -1){
+        // alert('esriTS');
         // TODO
       }
       return style;
