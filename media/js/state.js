@@ -86,7 +86,9 @@ app.loadCompressedState = function(state) {
             app.viewModel.unloadedDesigns = unloadedDesigns;
             // $('#designsTab').tab('show'); //to activate the loading of designs
             // better yet...
-            app.viewModel.scenarios.loadDesigns();
+            if (app.viewModel.hasOwnProperty('scenarios')) {
+              app.viewModel.scenarios.loadDesigns();
+            }
        }
     }
 
