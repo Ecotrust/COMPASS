@@ -433,7 +433,7 @@ app.addLayerToMap = function(layer) {
             layer.layer.arcRestServiceName = layer.arcRestServiceName;
             layer.layer.arcRestOutFields = layer.arcRestOutFields;
             layer.layer.arcGisLayerId = layer.arcgislayers;
-            layer.layer.events.register('click', null, app.queryEsriDataLayer);
+            // layer.layer.events.register('click', null, app.queryEsriDataLayer);
         }
     }
 
