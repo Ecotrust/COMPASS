@@ -52,7 +52,7 @@ function bookmarkModel(options) {
     // get the url from a bookmark
     self.getBookmarkUrl = function() {
         var host = window.location.href.split('#')[0];
-        host = 'http://52.26.64.192/visualize/';
+        host = 'http://52.25.124.64/visualize/';
         return host + "#" + self.getBookmarkHash();
         //return host + "#" + self.state;
     };
