@@ -176,8 +176,15 @@ function layerModel(options, parent) {
           }
         }
       }
-      var style = new OpenLayers.Style(defaultStyle, {rules: rules});
-      return new OpenLayers.StyleMap(style);
+      var selectStyle = defaultStyle;
+      selectStyle.strokeColor = "#00FF00";
+      selectStyle.strokeWidth = 4;
+      selectStyle.strokeOpacity = 1;
+      return new OpenLayers.StyleMap({
+        "default": new OpenLayers.Style(defaultStyle, {rules: rules}),
+        "select": new OpenLayers.Style(selectStyle)
+      })
+
     }
 
     // if legend is not provided, try using legend from web services

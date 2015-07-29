@@ -620,16 +620,16 @@ app.addArcRestLayerToMap = function(layer) {
         {
             isBaseLayer: false
         }
-    );*/
-    //2013-02-20 DWR
-    //layer.layer.setVisibility(isVisible);
-    //app.map.addLayer(layer.layer);
-    //2013-02-20 DWR
-    //ADd the identify control.
-    //layer.identifyControl.activate();
+    );
+    2013-02-20 DWR
+    layer.layer.setVisibility(isVisible);
+    app.map.addLayer(layer.layer);
+    2013-02-20 DWR
+    ADd the identify control.
+    layer.identifyControl.activate();
+    */
+
     app.map.addControl(layer.arcIdentifyControl);
-
-
 
     layer.layer = new OpenLayers.Layer.ArcGIS93Rest(
         layer.name,
@@ -711,6 +711,7 @@ app.addVectorLayerToMap = function(layer) {
       var styleMap = layer.stylemap;
     } else {
       var styleMap = new OpenLayers.StyleMap({
+        'default': new OpenLayers.Style({
           fillColor: layer.color,
           fillOpacity: layer.fillOpacity,
           //strokeDashStyle: "dash",
@@ -725,7 +726,16 @@ app.addVectorLayerToMap = function(layer) {
           graphicWidth: 8,
           graphicHeight: 8,
           graphicOpacity: layer.defaultOpacity
+        })
       });
+    }
+    if (!styleMap.styles.hasOwnProperty('select')){
+      styleMap.select = new OpenLayers.Style({
+        fillColor: layer.color,
+        fillOpacity: layer.fillOpacity,
+        strokeColor: "#0077FF",
+        strokeWidth: 1
+      })
     }
     if (layer.proxy_url) {
         url = '/proxy/layer/' + layer.id;
@@ -768,6 +778,7 @@ app.addVectorLayerToMap = function(layer) {
         } else {
           ret.object.redraw();
         }
+        layerModel.selectControl.activate();
     }
 
     getGeom = function(layer) {
@@ -832,6 +843,25 @@ app.addVectorLayerToMap = function(layer) {
     );
     layer.layer.events.on({"loadend": vectorLoadEndListener});
 
+    layer.selectControl = new OpenLayers.Control.SelectFeature(
+        layer.layer,
+        {
+          clickOut: true,
+          toggle: false,
+          multiple: false,
+          hover: false
+          // multipleKey: "ctrlKey",
+          // box: true
+        }
+    );
+
+    app.map.addControl(layer.selectControl);
+
+    layer.layer.events.register('featureclick', layer.layer, function(event) {
+        console.log(event.object.name + " says: " + event.feature.id + " clicked.");
+        // TODO: Push attributes to info-window.
+        return false;
+    });
 };
 
 app.addUtfLayerToMap = function(layer) {
