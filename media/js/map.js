@@ -855,10 +855,14 @@ app.addVectorLayerToMap = function(layer) {
         }
     );
 
+    // Allow clicking + dragging on feature layer
+    layer.selectControl.handlers.feature.stopDown = false;
+
     app.map.addControl(layer.selectControl);
 
     layer.layer.events.register('featureclick', layer.layer, function(event) {
         console.log(event.object.name + " says: " + event.feature.id + " clicked.");
+        // TODO: retain selection on layer reload due to bbox.
         // TODO: Push attributes to info-window.
         return false;
     });
