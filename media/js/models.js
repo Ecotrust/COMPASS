@@ -1191,6 +1191,19 @@ function viewModel() {
                 if (app.embeddedMap) {
                     self.hideMapAttribution();
                 }
+                // Increase marker Z-index if needed.
+                var topZIndex = 0;
+                for (var lyrIdx in app.map.layers) {
+                  if (app.map.layers[lyrIdx] !== app.markers) {
+                    var lyrZIndex = app.map.layers[lyrIdx].getZIndex();
+                    if (lyrZIndex > topZIndex) {
+                      topZIndex = lyrZIndex;
+                    }
+                  }
+                }
+                if (topZIndex > app.markers.getZIndex()) {
+                  app.markers.setZIndex(topZIndex+1);
+                }
             }
         }
     };
