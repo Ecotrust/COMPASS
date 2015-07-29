@@ -433,7 +433,9 @@ app.addLayerToMap = function(layer) {
             layer.layer.arcRestServiceName = layer.arcRestServiceName;
             layer.layer.arcRestOutFields = layer.arcRestOutFields;
             layer.layer.arcGisLayerId = layer.arcgislayers;
-            // layer.layer.events.register('click', null, app.queryEsriDataLayer);
+            if (layer.type !== "Vector") {
+              layer.layer.events.register('click', null, app.queryEsriDataLayer);
+            }
         }
     }
 
@@ -653,19 +655,28 @@ app.getEsriJSONFieldName = function(fields, key){
 };
 
 app.queryEsriDataLayer = function(evt){
+    var self = this;
+    if (!self.hasOwnProperty('arcGisLayerId')) {
+      self = evt.object;
+      evt = evt.event;
+    }
     var px = new OpenLayers.Pixel(evt.x,evt.y);
-    var coords = this.getLonLatFromViewPortPx(px);
+    var coords = self.getLonLatFromViewPortPx(px);
     app.esriQueryClickEvent = {};
     app.esriQueryClickEvent.px = px;
     app.esriQueryClickEvent.lonlat = coords;
-    app.esriQueryClickEvent.layerName = evt.object.name;
+    if (evt.object.hasOwnProperty('name')){
+      app.esriQueryClickEvent.layerName = evt.object.name;
+    } else {
+      app.esriQueryClickEvent.layerName = self.name;
+    }
     // var instance_id = "uUvqNMGPm7axC2dD";
-    var instanceId = this.arcRestInstanceId;            //Needed from layer manager
+    var instanceId = self.arcRestInstanceId;            //Needed from layer manager
     // var service_name = "ODFW_CHData_CompiledCH";
-    var serviceName = this.arcRestServiceName;          //Needed from layer manager
+    var serviceName = self.arcRestServiceName;          //Needed from layer manager
     // var out_fields = "*";
-    var outFields = this.arcRestOutFields;              //Needed from layer manager
-    var layerId = this.arcGisLayerId;
+    var outFields = self.arcRestOutFields;              //Needed from layer manager
+    var layerId = self.arcGisLayerId;
     var ajaxUrl= "http://services.arcgis.com/" +
         instanceId + "/arcgis/rest/services/" +
         serviceName + "/FeatureServer/" + layerId + "/query?geometry=%7B%22x%22%3A" +
@@ -861,9 +872,8 @@ app.addVectorLayerToMap = function(layer) {
     app.map.addControl(layer.selectControl);
 
     layer.layer.events.register('featureclick', layer.layer, function(event) {
-        console.log(event.object.name + " says: " + event.feature.id + " clicked.");
         // TODO: retain selection on layer reload due to bbox.
-        // TODO: Push attributes to info-window.
+        app.queryEsriDataLayer(event);
         return false;
     });
 };
