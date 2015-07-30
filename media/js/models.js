@@ -116,7 +116,6 @@ function layerModel(options, parent) {
 
       var defaultStyle = {};
       var rules = [];
-      // TODO 'classBreaks'
       if (renderer.type  == 'simple') {
           defaultStyle = self.interpretStyle(renderer.symbol);
       } else {
@@ -187,6 +186,44 @@ function layerModel(options, parent) {
 
     }
 
+    self.renderStyleToLegend = function(stylemap) {
+      var style = stylemap.styles.default;
+      var legendObj = {
+        'title': self.name,
+        'colors': []
+      };
+      if (style.rules.length == 0) {
+        // for 'simple'
+        legendObj.colors.push({
+            'label': self.name,
+            'color': style.defaultStyle.fillColor
+        });
+      } else {
+        for ( var ruleIndex in style.rules) {
+          var symbol = style.rules[ruleIndex].symbolizer;
+          var filter = style.rules[ruleIndex].filter;
+          if (filter.type == OpenLayers.Filter.Comparison.EQUAL_TO) {
+            // for 'uniqueValue'
+            var element = {
+              'label': filter.value
+            };
+          } else if (filter.type == OpenLayers.Filter.Comparison.BETWEEN) {
+            // for 'classBreaks'
+            var element = {
+              'label': filter.lowerBoundary.toString() + ' - ' + filter.upperBoundary.toString()
+            };
+          } else {
+            var element = {
+                'label': null
+            };
+          }
+          element.color = symbol.fillColor;
+          legendObj.colors.push(element);
+        }
+      }
+      return legendObj;
+    }
+
     // if legend is not provided, try using legend from web services
     if ( !self.legend && self.url && (self.arcgislayers !== -1) ) {
         var url = '';
@@ -238,6 +275,7 @@ function layerModel(options, parent) {
                     self.visible(visible);
                 } else if (data.drawingInfo && data.drawingInfo.renderer){
                   self.stylemap = self.esriRendererToOLStyleMap(data.drawingInfo.renderer);
+                  self.legend = self.renderStyleToLegend(self.stylemap);
                   // TODO : set create self.legendDiv
                 } else {
                     // debugger;
