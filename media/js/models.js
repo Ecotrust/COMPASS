@@ -190,7 +190,8 @@ function layerModel(options, parent) {
       var style = stylemap.styles.default;
       var legendObj = {
         'title': self.name,
-        'colors': []
+        'colors': [],
+        'elements': []
       };
       if (style.rules.length == 0) {
         // for 'simple'
@@ -217,8 +218,13 @@ function layerModel(options, parent) {
                 'label': null
             };
           }
-          element.color = symbol.fillColor;
-          legendObj.colors.push(element);
+          if (symbol.fillColor) {
+            element.color = symbol.fillColor;
+            legendObj.colors.push(element);
+          } else if (symbol.externalGraphic){
+            element.swatch = symbol.externalGraphic;
+            legendObj.elements.push(element);
+          }
         }
       }
       return legendObj;
