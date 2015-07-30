@@ -254,33 +254,30 @@ function layerModel(options, parent) {
             type: 'GET',
             success: function(data) {
                 if (data.layers) {
+                    self.legend = {'layers': []};
                     $.each(data.layers, function(i, layerobj) {
-                        if (parseInt(layerobj.layerId, 10) === parseInt(self.arcgislayers, 10)) {
-                            self.legend = {'elements': []};
+                        if (parseInt(layerobj.layerId, 10) in self.arcgislayers.split(',')) {
+                            var layerLegend = {
+                              'title': layerobj.layerName,
+                              'elements': []
+                            };
                             $.each(layerobj.legend, function(j, legendobj) {
+
                                 //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/13/images/94ed037ab533027972ba3fc4a7c9d05c
                                 var swatchUrl = "", label = "";
                                 if (self.url.indexOf('/export') !== -1) {
-                                  swatchURL = self.url.replace('/export', '/'+self.arcgislayers+'/images/'+legendobj.url),
+                                  swatchURL = self.url.replace('/export', '/'+ layerobj.layerId +'/images/'+legendobj.url),
                                       label = legendobj.label;
                                 } else if (self.url.indexOf('/MapServer/tile/') !== -1) {
-                                  swatchURL = self.url.split('/MapServer')[0] + '/MapServer/'+self.arcgislayers+'/images/'+legendobj.url,
+                                  swatchURL = self.url.split('/MapServer')[0] + '/MapServer/'+ layerobj.layerId +'/images/'+legendobj.url,
                                       label = legendobj.label;
-                                }
-                                if (swatchURL.indexOf(',') !== -1){
-                                  var commaIndex = swatchURL.indexOf(',');
-                                  var pt1 = swatchURL.substr(0, commaIndex);
-                                  var ptToClean = swatchURL.substr(commaIndex);
-                                  var endCleanIndex = ptToClean.indexOf('/');
-                                  var pt2 = ptToClean.substr(endCleanIndex);
-                                  swatchURL = pt1 + pt2;
                                 }
                                 if (label === "") {
                                     label = layerobj.layerName;
                                 }
-                                self.legend.elements.push({'swatch': swatchURL, 'label': label});
-                                //console.log(self.legend);
+                                layerLegend.elements.push({'swatch': swatchURL, 'label': label});
                             });
+                            self.legend.layers.push({'layer':layerLegend});
                         }
                     });
                     //reset visibility (to reset activeLegendLayers)

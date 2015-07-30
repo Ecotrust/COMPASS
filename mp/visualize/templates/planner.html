@@ -641,6 +641,30 @@
                                             <div class="accordion-body collapse in" data-bind="attr: { id: $root.convertToSlug(name)+'-legend-content' }" >
                                                 <div class="accordion-inner" style="border: 0px; padding-top: 0px;">
                                                     <span data-bind="if: legend">
+                                                        <div data-bind="if: legend['layers']">
+                                                            <div data-bind="foreach: legend['layers']" class="legendLayer">
+                                                                <span data-bind="text: layer['title']" style="font-size: 13px; font-weight: bold;"></span>
+                                                                <div data-bind="if: layer['elements']">
+                                                                    <div data-bind="foreach: layer['elements']" class="legendLayerElement">
+                                                                        <div>
+                                                                            <img data-bind="attr: {src: swatch}" />
+                                                                            <span data-bind="text: label" style="font-size: 11px; font-weight: bold;"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div data-bind="if: layer['colors']">
+                                                                    <div data-bind="foreach: layer['colors']">
+                                                                        <div>
+                                                                            <svg style="width: 150px; height: 15px;">
+                                                                                <rect width="15" height="15" data-bind="style: { fill: color }"></rect>
+                                                                                <text x="25" y="12" style="font-size: 11px; fill: #555;" data-bind="text: label">
+                                                                            </svg>
+                                                                            <!-- <span data-bind="text: label" style="font-size: 11px; margin-left: 5px"></span> -->
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div data-bind="if: legend['elements']">
                                                             <div data-bind="foreach: legend['elements']">
                                                                 <div>
@@ -660,7 +684,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div data-bind="if: !legend['elements'] && !legend['colors']">
+                                                        <div data-bind="if: !legend['elements'] && !legend['colors'] && !legend['layers']">
                                                             <div data-bind="css: { 'in': legendVisibility }" style="padding-top: 5px;">
                                                                 <img data-bind="attr: { src: legend }" />
                                                             </div>
