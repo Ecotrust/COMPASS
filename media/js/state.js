@@ -189,6 +189,9 @@ app.setMapPosition = function(x, y, z) {
 // hide buttons and other features for printing
 app.printMode = function () {
     $('body').addClass('print');
+    // TODO: I don't know why this works.
+    var iframeLegend = $('#legend-content').clone();
+    iframeLegend.appendTo('#map-wrapper');
 };
 
 // also hide logo and rules

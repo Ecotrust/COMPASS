@@ -990,9 +990,10 @@ body.print .user-btn,
 body.print #feedback-tab,
 body.print #help-tab,
 body.print #basemaps,
-body.print .olControlZoom
+body.print .olControlZoom,
+body.print #login-buttons
  {
-	display: none;
+	visibility: hidden;
 }
 
 body.print #legend-wrapper, body.print #map-wrapper, body.print #map {
@@ -1019,13 +1020,32 @@ body.borderless #primary-content {
 body.borderless hr,
 body.borderless .navbar,
 body.borderless .timestamp  {
-	display: none;
+	visibility: hidden;
 }
 
 body.borderless #map-wrapper {
 	border: 0px;
 }
 /*** END PRINTING ***/
+
+/*** START IFRAMES DISPLAY ***/
+
+body.print #legend-content {
+  visibility: visible;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0 !important;
+  padding: 0;
+  background-color: white;
+}
+
+body.print .sidebar-nav {
+  top: 0;
+  margin-left: 0;
+}
+
+/*** END IFRAMES DISPLAY ***/
 
 /** add layer modal **/
 #add-layer-modal .controls {
