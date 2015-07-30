@@ -267,6 +267,14 @@ function layerModel(options, parent) {
                                   swatchURL = self.url.split('/MapServer')[0] + '/MapServer/'+self.arcgislayers+'/images/'+legendobj.url,
                                       label = legendobj.label;
                                 }
+                                if (swatchURL.indexOf(',') !== -1){
+                                  var commaIndex = swatchURL.indexOf(',');
+                                  var pt1 = swatchURL.substr(0, commaIndex);
+                                  var ptToClean = swatchURL.substr(commaIndex);
+                                  var endCleanIndex = ptToClean.indexOf('/');
+                                  var pt2 = ptToClean.substr(endCleanIndex);
+                                  swatchURL = pt1 + pt2;
+                                }
                                 if (label === "") {
                                     label = layerobj.layerName;
                                 }
