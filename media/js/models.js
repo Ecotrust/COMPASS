@@ -291,6 +291,13 @@ function layerModel(options, parent) {
                 } else {
                     // debugger;
                 }
+                if (data.fields) {
+                  self.fieldMap = {}
+                  for (var fieldId in data.fields) {
+                    var field = data.fields[fieldId];
+                    self.fieldMap[field.name] = field.alias;
+                  }
+                }
             },
             error: function(error) {
                 // debugger;
@@ -1192,6 +1199,7 @@ function viewModel() {
         self.updateAggregatedAttributesOverlayWidthAndScrollbar();
         self.showFeatureAttribution( self.featureAttribution() && !($.isEmptyObject(self.aggregatedAttributes())) );
     });
+    self.featureClick = ko.observable(false); //tracks if current event is in the middle of a feature click.
     self.removeFromAggregatedAttributes = function(layerName) {
         delete app.viewModel.aggregatedAttributes()[layerName];
         //if there are no more attributes left to display, then remove the overlay altogether

@@ -275,6 +275,7 @@ app.init = function() {
 
     }; //end utfGridClickHandling
 
+/* --- replaced by later featureclick register
     app.map.events.register("featureclick", null, function(e) {
         var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
         var attrs;
@@ -322,6 +323,7 @@ app.init = function() {
         }
 
     });
+    */
 
     app.markers = new OpenLayers.Layer.Markers("Markers");
     var size = new OpenLayers.Size(18, 28);
@@ -670,11 +672,8 @@ app.queryEsriDataLayer = function(evt){
     } else {
       app.esriQueryClickEvent.layerName = self.name;
     }
-    // var instance_id = "uUvqNMGPm7axC2dD";
     var instanceId = self.arcRestInstanceId;            //Needed from layer manager
-    // var service_name = "ODFW_CHData_CompiledCH";
     var serviceName = self.arcRestServiceName;          //Needed from layer manager
-    // var out_fields = "*";
     var outFields = self.arcRestOutFields;              //Needed from layer manager
     var layerId = self.arcGisLayerId;
     var ajaxUrl= "http://services.arcgis.com/" +
@@ -873,7 +872,20 @@ app.addVectorLayerToMap = function(layer) {
 
     layer.layer.events.register('featureclick', layer.layer, function(event) {
         // TODO: retain selection on layer reload due to bbox.
-        app.queryEsriDataLayer(event);
+        var attributes = event.feature.attributes;
+        var keys = Object.keys(attributes);
+        var clickAttributes = [];
+        clickAttributes[event.feature.layer.name] = [];
+        for(var key_idx=0; key_idx < keys.length; key_idx++) {
+            var label = event.object.layerModel.fieldMap[keys[key_idx]];
+            clickAttributes[event.feature.layer.name].push({
+              'display': label,
+              'data':attributes[keys[key_idx]]
+            });
+        }
+        $.extend(app.map.clickOutput.attributes, clickAttributes);
+        app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
+        app.viewModel.featureClick(true);
         return false;
     });
 };

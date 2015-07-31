@@ -384,8 +384,11 @@ $(document).ready(function() {
   $('#map').mouseup( function() {
     if ( !app.map.mousedrag ) {
       app.map.clickOutput.attributes = {};
-      app.viewModel.closeAttribution();
-      app.viewModel.closeDescription();
+      if (!app.viewModel.featureClick()) {
+        app.viewModel.closeAttribution();
+        app.viewModel.closeDescription();
+      }
+      app.viewModel.featureClick(false);
     }
     app.map.mousedrag = false;
   });
