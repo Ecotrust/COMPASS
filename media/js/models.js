@@ -473,6 +473,11 @@ function layerModel(options, parent) {
         if (layer.arcIdentifyControl) {
             layer.arcIdentifyControl.deactivate();
         }
+        if (layer.arcIdentifyControls) {
+          for (var i in layer.arcIdentifyControls) {
+            layer.arcIdentifyControls[i].deactivate();
+          }
+        }
 
         layer.layer = null;
 
@@ -569,6 +574,11 @@ function layerModel(options, parent) {
             //activate arcIdentifyControl (if applicable)
             if (layer.arcIdentifyControl) {
                 layer.arcIdentifyControl.activate();
+            }
+            if (layer.arcIdentifyControls) {
+              for (var i in layer.arcIdentifyControls) {
+                layer.arcIdentifyControls[i].activate();
+              }
             }
 
         }

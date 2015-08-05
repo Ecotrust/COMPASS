@@ -264,7 +264,11 @@ app.init = function() {
                     if ( title === 'Planning Grid' ) {
                         text = app.clickAttributes.getGridAttributes(gridLayerInfo.data);
                     }
-                    clickAttributes[title] = text;
+                    clickAttributes[title] = {
+                      'hasSublayers': false,
+                      'subLayers': {}
+                    };
+                    clickAttributes[title].subLayers[title] = text;
                 }
             }
             $.extend(app.map.clickOutput.attributes, clickAttributes);
@@ -274,56 +278,6 @@ app.init = function() {
         app.viewModel.updateMarker(lonlat);
 
     }; //end utfGridClickHandling
-
-/* --- replaced by later featureclick register
-    app.map.events.register("featureclick", null, function(e) {
-        var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
-        var attrs;
-        if (layer) {
-            var text = [],
-                title = layer.name;
-
-            if (layer.scenarioAttributes && layer.scenarioAttributes.length) {
-                attrs = layer.scenarioAttributes;
-                for (var i = 0; i < attrs.length; i++) {
-                    text.push({
-                        'display': attrs[i].title,
-                        'data': attrs[i].data
-                    });
-                }
-            // } else if (layer.id === 374 || layer.id === 375 || layer.id === 377 || layer.id === 378) { // special case for Survey Results
-            } else if (app.surveyResults.surveyLayerNames.indexOf(layer.name) !== -1) { // is Survey Results layer
-                text = app.clickAttributes.getSurveyAttributes(e.feature.data, layer.name);
-            } else if (layer.attributes.length) {
-                attrs = layer.attributes;
-
-                for (var idx=0; idx < attrs.length; idx++) {
-                    if (e.feature.data[attrs[idx].field]) {
-                        text.push({
-                            'display': attrs[idx].display,
-                            'data': e.feature.data[attrs[idx].field]
-                        });
-                    }
-                }
-            }
-
-            // the following delay prevents the #map click-event-attributes-clearing from taking place after this has occurred
-            setTimeout(function() {
-                if (!app.map.clickOutput.attributes[title]) {
-                    app.map.clickOutput.attributes[title] = text;
-                }
-                app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
-                app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
-                //if (app.marker) {
-                //    app.marker.display(true);
-                //app.viewModel.updateMarker(lonlat);
-                //}
-            }, 100);
-
-        }
-
-    });
-    */
 
     app.markers = new OpenLayers.Layer.Markers("Markers");
     var size = new OpenLayers.Size(18, 28);
@@ -533,107 +487,106 @@ app.addWmsLayerToMap = function(layer) {
 };
 
 app.addArcRestLayerToMap = function(layer) {
-    var identifyUrl = layer.url.replace('export', layer.arcgislayers + '/query');
-    /*var esriQueryFields = [];
-    for(var i = 0; i < layer.attributes.length; i++)
-    {
-      esriQueryFields.push(layer.attributes[i].display);
-    }*/
-    layer.arcIdentifyControl = new OpenLayers.Control.ArcGisRestIdentify({
-        eventListeners: {
-            //the handler for the return click data
-            resultarrived: function(responseText, xy) {
-                var clickAttributes = [],
-                    jsonFormat = new OpenLayers.Format.JSON(),
-                    returnJSON = jsonFormat.read(responseText.text);
-                var attributeObjs;
-                if (returnJSON.features && returnJSON.features.length) {
-                    attributeObjs = [];
+    layer.arcIdentifyControls = [];
+    for (var layerIdIndex in layer.arcgislayers.split(',')) {
+      layerIdIndex = parseInt(layerIdIndex);
+      var layerId = layer.arcgislayers.split(',')[layerIdIndex].trim();
+      var identifyUrl = layer.url.replace('export', layerId + '/query');
 
-                    $.each(returnJSON.features, function(index, feature) {
-                        if (index === 0) {
-                            var attributeList = feature.attributes;
+      layer.arcIdentifyControls[layerIdIndex] = new OpenLayers.Control.ArcGisRestIdentify({
+          eventListeners: {
+              //the handler for the return click data
+              resultarrived: function(responseText, xy) {
+                  var clickAttributes = {},
+                      jsonFormat = new OpenLayers.Format.JSON(),
+                      returnJSON = jsonFormat.read(responseText.text);
+                  var attributeObjs;
+                  if (returnJSON.features && returnJSON.features.length) {
+                      attributeObjs = [];
 
-                            if ('fields' in returnJSON) {
-                                if (layer.attributes.length) {
-                                    for (var i = 0; i < layer.attributes.length; i += 1) {
-                                        if (attributeList[layer.attributes[i].field]) {
-                                            var data = attributeList[layer.attributes[i].field],
-                                                field_obj = app.utils.getObjectFromList(returnJSON.fields, 'name', layer.attributes[i].field);
-                                            if (field_obj && field_obj.type === 'esriFieldTypeDate') {
-                                                data = new Date(data).toDateString();
-                                            } else if (app.utils.isNumber(data)) {
-                                                data = app.utils.formatNumber(data);
-                                            }
-                                            if (app.utils.trim(data) !== "") {
-                                                attributeObjs.push({
-                                                    'display': layer.attributes[i].display,
-                                                    'data': data
-                                                });
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    $.each(returnJSON.fields, function(fieldNdx, field) {
-                                        if (field.name.indexOf('OBJECTID') === -1) {
-                                            var data = attributeList[field.name];
-                                            if (field.type === 'esriFieldTypeDate') {
-                                                data = new Date(data).toDateString();
-                                            } else if (app.utils.isNumber(data)) {
-                                                data = app.utils.formatNumber(data);
-                                            }
-                                            if (app.utils.trim(data) !== "") {
-                                                attributeObjs.push({
-                                                    'display': field.alias,
-                                                    'data': data
-                                                });
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                            return;
-                        }
-                    });
-                }
+                      $.each(returnJSON.features, function(index, feature) {
+                          if (index === 0) {
+                              var attributeList = feature.attributes;
 
-                if (attributeObjs && attributeObjs.length) {
-                    clickAttributes[layer.name] = attributeObjs;
-                    $.extend(app.map.clickOutput.attributes, clickAttributes);
-                    app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
-                    app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
-                }
-            }
-        },
-        url: identifyUrl,
-        layerid: layer.arcgislayers,
-        sr: 3857,
-        clickTolerance: 3,
-        //outFields : esriQueryFields.length ? esriQueryFields.join(',') : '*'
-        outFields: '*'
-    });
-    /*
-    layer.layer = new OpenLayers.Layer.ArcGIS93Rest(
-        layer.name,
-        layer.url,
-        {
-            layers: "show:"+layer.arcgislayers,
-            srs: 'EPSG:102113',
-            transparent: true
-        },
-        {
-            isBaseLayer: false
-        }
-    );
-    2013-02-20 DWR
-    layer.layer.setVisibility(isVisible);
-    app.map.addLayer(layer.layer);
-    2013-02-20 DWR
-    ADd the identify control.
-    layer.identifyControl.activate();
-    */
+                              if ('fields' in returnJSON) {
+                                  if (layer.attributes.length) {
+                                      for (var i = 0; i < layer.attributes.length; i += 1) {
+                                          if (attributeList[layer.attributes[i].field]) {
+                                              var data = attributeList[layer.attributes[i].field],
+                                                  field_obj = app.utils.getObjectFromList(returnJSON.fields, 'name', layer.attributes[i].field);
+                                              if (field_obj && field_obj.type === 'esriFieldTypeDate') {
+                                                  data = new Date(data).toDateString();
+                                              } else if (app.utils.isNumber(data)) {
+                                                  data = app.utils.formatNumber(data);
+                                              }
+                                              if (app.utils.trim(data) !== "") {
+                                                  attributeObjs.push({
+                                                      'display': layer.attributes[i].display,
+                                                      'data': data
+                                                  });
+                                              }
+                                          }
+                                      }
+                                  } else {
+                                      $.each(returnJSON.fields, function(fieldNdx, field) {
+                                          if (field.name.indexOf('OBJECTID') === -1) {
+                                              var data = attributeList[field.name];
+                                              if (field.type === 'esriFieldTypeDate') {
+                                                  data = new Date(data).toDateString();
+                                              } else if (app.utils.isNumber(data)) {
+                                                  data = app.utils.formatNumber(data);
+                                              }
+                                              if (app.utils.trim(data) !== "") {
+                                                  attributeObjs.push({
+                                                      'display': field.alias,
+                                                      'data': data
+                                                  });
+                                              }
+                                          }
+                                      });
+                                  }
+                              }
+                              return;
+                          }
+                      });
+                  } else {
+                    // clickAttributes[layer.name] = {};
+                    //TODO if not all sublayers are hit, remove all missed ones and update (if priors)
+                  }
 
-    app.map.addControl(layer.arcIdentifyControl);
+                  var layerName = layer.name;
+                  if (layer.legend.layers.length >= layerIdIndex){
+                    layerName = layer.legend.layers[layerIdIndex].layer.title;
+                  } else if (returnJSON.hasOwnProperty("displayFieldName")) {
+                    layerName = returnJSON.displayFieldName;
+                  }
+
+                  if (attributeObjs && attributeObjs.length) {
+                      if (!clickAttributes.hasOwnProperty(layer.name)) {
+                        clickAttributes[layer.name] = {
+                          'hasSublayers': (layer.arcgislayers.split(',').length !== 1),
+                          'subLayers': {}
+                        };
+                      }
+                      clickAttributes[layer.name].subLayers[layerName] = attributeObjs;
+                      console.log(clickAttributes);
+                      $.extend(app.map.clickOutput.attributes, clickAttributes);
+                      app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
+                      app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
+                  }
+              }
+          },
+          url: identifyUrl,
+          layerid: layer.arcgislayers,
+          sr: 3857,
+          clickTolerance: 3,
+          outFields: '*'
+      });
+
+      app.map.addControl(layer.arcIdentifyControls[layerIdIndex]);
+      console.log('Control added to ' + layer.name + ' for layer id: ' + layerId);
+
+    }
 
     layer.layer = new OpenLayers.Layer.ArcGIS93Rest(
         layer.name,
@@ -692,19 +645,32 @@ app.queryEsriDataLayer = function(evt){
         var attributes = feats.features[0].attributes;
         var keys = Object.keys(attributes);
         var out = '';
-        var clickAttributes = [];
-        clickAttributes[app.esriQueryClickEvent.layerName] = [];
+        var clickAttributes = {};
+        clickAttributes[app.esriQueryClickEvent.layerName] = {
+            'hasSublayers':(layerId.split.length !== 1),
+            'subLayers': {}
+        };
+        var layerAttributes = [];
         for(var key_idx=0; key_idx < keys.length; key_idx++) {
             var label = app.getEsriJSONFieldName(feats.fields, keys[key_idx]);
             if (out.length !== 0){
                 out += "\n\r";
             }
             out+= label + ": " + attributes[keys[key_idx]];
-            clickAttributes[app.esriQueryClickEvent.layerName].push({
+            layerAttributes.push({
               'display': label,
               'data':attributes[keys[key_idx]]
             });
         }
+        var layerName = app.esriQueryClickEvent.layerName;
+        var namedLayers = app.map.layers.filter(function(layer){return layer.name == app.esriQueryClickEvent.layerName;});
+        if (namedLayers.length > 0) {
+          if (namedLayers[0].hasOwnProperty('layerModel')) {
+            // TODO: Untested, and cannot test well until a proper layer candidate appears
+            layerName = namedLayers[0].layerModel.legend.layers[parseInt(namedLayers[0].argGisLayerId)].layer.title;
+          }
+        }
+        clickAttributes[app.esriQueryClickEvent.layerName].subLayers[layerName] = layerAttributes;
         $.extend(app.map.clickOutput.attributes, clickAttributes);
         app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
         app.viewModel.updateMarker(app.esriQueryClickEvent.lonlat);
@@ -874,15 +840,27 @@ app.addVectorLayerToMap = function(layer) {
         // TODO: retain selection on layer reload due to bbox.
         var attributes = event.feature.attributes;
         var keys = Object.keys(attributes);
-        var clickAttributes = [];
-        clickAttributes[event.feature.layer.name] = [];
+        var clickAttributes = {};
+        clickAttributes[event.feature.layer.name] = {
+          'hasSublayers': (event.feature.layer.arcGisLayerId.split(',').length !== 1),
+          'subLayers': {}
+        };
+        var layerAttributes = [];
         for(var key_idx=0; key_idx < keys.length; key_idx++) {
             var label = event.object.layerModel.fieldMap[keys[key_idx]];
-            clickAttributes[event.feature.layer.name].push({
+            layerAttributes.push({
               'display': label,
               'data':attributes[keys[key_idx]]
             });
         }
+        var layerName = event.feature.layer.name;
+        if (event.feature.layer.layerModel.hasOwnProperty('legend')) {
+          if (event.feature.layer.layerModel.legend.hasOwnProperty('layers')) {
+            var layerId = event.object.arcGisLayerId; // TODO - identify actual sublayer!!!
+            layerName = event.feature.layer.layerModel.legend.layers[layerId].title;
+          }
+        }
+        clickAttributes[event.feature.layer.name].subLayers[layerName] = layerAttributes;
         $.extend(app.map.clickOutput.attributes, clickAttributes);
         app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
         app.viewModel.featureClick(true);

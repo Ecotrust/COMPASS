@@ -224,12 +224,15 @@
                                         <div data-bind="foreach: attributeLayers()">
                                             <div data-bind="css: {display: $root.aggregatedAttributes()[name] ? 'block' : 'none'}">
                                               <h4 data-bind="text: featureAttributionName"></h4>
-                                              <dl data-bind="foreach: { data: $root.aggregatedAttributes()[name], afterAdd:$root.updateMarker }">
-                                                <dt>
-                                                    <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
-                                                    <span style="font-weight: normal" data-bind="text: data"></span>
-                                                </dt>
-                                              </dl>
+                                              <div data-bind="foreach: { data: $root.aggregatedAttributes()[name]}">
+                                                <dl data-bind="foreach: { data: $root.aggregatedAttributes()[$parent.name].subLayers, afterAdd:$root.updateMarker }">
+                                                  <dt>
+                                                      <!-- <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span> -->
+                                                      <span >Lorem ipsum</span><span data-bind="visible:  data ? true : data===0">:</span>
+                                                      <span style="font-weight: normal" data-bind="text: data"></span>
+                                                  </dt>
+                                                </dl>
+                                              </div>
                                             </div>
                                         </div>
                                     </div>
@@ -241,27 +244,58 @@
                                             <div id="aggregated-attribute-content" class="accordion">
                                                 <div data-bind="foreach: attributeLayers()">
                                                     <div class="accordion-group">
-                                                        <div data-bind="visible: $root.aggregatedAttributes()[name]">
+                                                        <div data-bind="if: $root.aggregatedAttributes()[name]">
+                                                            <p data-bind="text: Object.keys($root.aggregatedAttributes()).toString() ">---3---</p>
+                                                            <div data-bind="foreach: Object.keys({'a':1, 'b':2})">
+                                                              <p>thing</p>
+                                                            </div>
+                                                            <!-- <p data-bind="if: $root.aggregatedAttributes()[name].subLayers ">---try---</p> -->
                                                             <div class="accordion-heading" data-bind="click: toggleLayerAttribution">
                                                                 <a class="accordion-toggle">
+                                                                    <p>---4---</p>
                                                                     <h4 data-bind="text: featureAttributionName"></h4>
                                                                     <h5 data-bind="text: description"></h5>
                                                                 </a>
                                                             </div>
                                                             <div class="accordion-body collapse in" data-bind="attr: { id: $root.convertToSlug(name) }" >
                                                                 <div class="accordion-inner">
-                                                                    <dl data-bind="foreach: { data: $root.aggregatedAttributes()[name], afterAdd:$root.updateMarker }">
-                                                                        <dt>
-                                                                            <!-- ko if: $data.hasOwnProperty("tab") -->
+                                                                    <p data-bind="text: name">---5---</p>
+                                                                    <p>---5---</p>
+                                                                    <div data-bind="visible: { data: $root.aggregatedAttributes()[name].subLayers } , foreach: { data: $root.aggregatedAttributes()[name].subLayers }">
+                                                                        <p data-bind="text: $parent.name">---6---</p>
+                                                                        <p>---6---</p>
+                                                                        <!-- <h5 data-bind="text: name, visible: $root.aggregatedAttributes()[name].hasSublayers"></h5> -->
+                                                                        <div data-bind="foreach: {data: $root.aggregatedAttributes()[$parent.name].subLayers}">
+                                                                          <p>data</p>
+                                                                          <p data-bind: "text: $data">data</p>
+                                                                          <p data-bind: "text: $parent.$data">$parent.data</p>
+                                                                          <p>index</p>
+                                                                          <p data-bind: "text: $index">index</p>
+                                                                          <p data-bind: "text: $parent.$index">$parent.index</p>
+                                                                          <p>rawData</p>
+                                                                          <p data-bind: "text: $rawData">rawData</p>
+                                                                          <p data-bind: "text: $parent.$rawData">$parent.rawData</p>
+                                                                          <p>context</p>
+                                                                          <p data-bind: "text: $context">context</p>
+                                                                          <p data-bind: "text: $parent.$context">$parent.context</p>
+                                                                          <p>element</p>
+                                                                          <p data-bind: "text: $element">element</p>
+                                                                          <p data-bind: "text: $parent.$element">$parent.element</p>
 
-                                                                            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                                        </div>
+                                                                        <dl data-bind="foreach: { data: $root.aggregatedAttributes()[$parent.name].subLayers, afterAdd:$root.updateMarker }">
+                                                                            <dt>
+                                                                                <!-- ko if: $data.hasOwnProperty("tab") -->
 
-                                                                            <!-- /ko -->
+                                                                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-                                                                            <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
-                                                                            <span style="font-weight: normal" data-bind="html: data"></span>
-                                                                        </dt>
-                                                                    </dl>
+                                                                                <!-- /ko -->
+
+                                                                                <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
+                                                                                <span style="font-weight: normal" data-bind="html: data"></span>
+                                                                            </dt>
+                                                                        </dl>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
