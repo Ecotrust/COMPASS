@@ -176,9 +176,6 @@ function layerModel(options, parent) {
         }
       }
       var selectStyle = defaultStyle;
-      selectStyle.strokeColor = "#00FF00";
-      selectStyle.strokeWidth = 4;
-      selectStyle.strokeOpacity = 1;
       return new OpenLayers.StyleMap({
         "default": new OpenLayers.Style(defaultStyle, {rules: rules}),
         "select": new OpenLayers.Style(selectStyle)
@@ -333,9 +330,10 @@ function layerModel(options, parent) {
 
     // if no description is provided, try using the web services description
     if ( !self.overview && self.url && (self.arcgislayers !== -1) ) {
+        var url = self.url.replace('/export', '/'+self.arcgislayers) + '?f=pjson';
         $.ajax({
             dataType: "jsonp",
-            url: self.url.replace('/export', '/'+self.arcgislayers) + '?f=pjson',
+            url: url,
             type: 'GET',
             success: function(data) {
                 self.overview = data.description;
