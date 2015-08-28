@@ -80,6 +80,10 @@ function layerModel(options, parent) {
         var fillColor = self.rgbToHex(symbol.color);
         if (fillColor) {
           style.fillColor = fillColor;
+          if (self.fillOpacity == 0) {
+            self.fillOpacity = 0.5;
+          }
+          style.fillOpacity = self.fillOpacity;
         } else {
           style.fillOpacity = 0;
         }
@@ -174,6 +178,12 @@ function layerModel(options, parent) {
             }
           }
         }
+      }
+      if (app.viewModel.layerIndex[self.id].opacity() != 0) {
+        defaultStyle.fillOpacity = app.viewModel.layerIndex[self.id].opacity();
+        defaultStyle.strokeOpacity = app.viewModel.layerIndex[self.id].opacity();
+        self.fillOpacity = app.viewModel.layerIndex[self.id].opacity();
+        self.defaultOpacity = app.viewModel.layerIndex[self.id].opacity();
       }
       var selectStyle = defaultStyle;
       return new OpenLayers.StyleMap({
@@ -366,13 +376,14 @@ function layerModel(options, parent) {
 
     // opacity
     self.opacity.subscribe(function(newOpacity) {
-        if (self.layer.CLASS_NAME === "OpenLayers.Layer.Vector") {
+        if (self.layer && self.layer.CLASS_NAME && self.layer.CLASS_NAME === "OpenLayers.Layer.Vector") {
             var styleMap = self.layer.styleMap;
             styleMap.styles['default'].defaultStyle.strokeOpacity = newOpacity;
             styleMap.styles['default'].defaultStyle.graphicOpacity = newOpacity;
             //fill is currently turned off for many of the vector layers
             //the following should not override the zeroed out fill opacity
             //however we do still need to account for shipping lanes (in which styling is handled via lookup)
+
             if (self.fillOpacity > 0) {
                 var newFillOpacity = self.fillOpacity - (self.defaultOpacity - newOpacity);
                 self.layer.styleMap.styles['default'].defaultStyle.fillOpacity = newFillOpacity;
@@ -387,7 +398,9 @@ function layerModel(options, parent) {
             }
             self.layer.redraw();
         } else {
+          if (self.layer) {
             self.layer.setOpacity(newOpacity);
+          } 
         }
     });
 
@@ -1132,10 +1145,10 @@ function viewModel() {
     // toggle layer panel visibility
     self.toggleLayers = function() {
         self.showLayers(!self.showLayers());
-        app.map.render('map');
-        if (self.showLayers()) app.map.render('map'); //doing this again seems to prevent the vector wandering effect
+        // if (self.showLayers()) app.map.render('map'); //doing this again seems to prevent the vector wandering effect
         app.updateUrl();
         app.viewModel.updateScrollBars();
+        app.map.render('map');
         //if toggling layers during default pageguide, then correct step 4 position
         //self.correctTourPosition();
         //throws client-side error in pageguide.js for some reason...
@@ -1927,6 +1940,7 @@ function viewModel() {
         if (app.viewModel.themes()[3]) {
             for (var idx=0; idx < app.viewModel.themes()[3].layers().length; idx++) {
                 if ( app.viewModel.themes()[3].layers()[idx].name === 'EEZ Boundary Lines' ) {
+
                     app.viewModel.themes()[3].layers()[idx].activateLayer();
                     foundSecondLayer = true;
                 }
