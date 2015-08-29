@@ -179,7 +179,7 @@ function layerModel(options, parent) {
           }
         }
       }
-      if (app.viewModel.layerIndex[self.id].opacity() != 0) {
+      if (app.viewModel.layerIndex[self.id].opacity() != 0 && defaultStyle.fillOpacity != 0) {
         defaultStyle.fillOpacity = app.viewModel.layerIndex[self.id].opacity();
         defaultStyle.strokeOpacity = app.viewModel.layerIndex[self.id].opacity();
         self.fillOpacity = app.viewModel.layerIndex[self.id].opacity();
@@ -400,7 +400,7 @@ function layerModel(options, parent) {
         } else {
           if (self.layer) {
             self.layer.setOpacity(newOpacity);
-          } 
+          }
         }
     });
 
