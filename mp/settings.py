@@ -46,15 +46,13 @@ NULLVALUE = -999  # Nulls will be filtered out in the info reports
 
 APP_NAME = "Compass"
 SERVER_ADMIN = 'odfwcompass@ecotrust.org'
-DEFAULT_FROM_EMAIL = 'Compass <odfwcompass@ecotrust.org>'
+DEFAULT_FROM_EMAIL = 'ODFW Compass <odfwcompass@ecotrust.org>'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 MANAGERS = ADMINS
-EMAIL_SUBJECT_PREFIX = 'Compass'
+EMAIL_SUBJECT_PREFIX = 'ODFW Compass'
 ADMINS = (
     ('Ryan Hodges', 'rhodges@ecotrust.org'),
 )
-
-
 
 FEEDBACK_RECIPIENT = "Compass Team <odfwcompass@ecotrust.org>"
 HELP_EMAIL = "odfwcompass@ecotrust.org"
@@ -68,8 +66,10 @@ SOCKET_URL = False
 # to display the 'under maintenance' template
 UNDER_MAINTENANCE_TEMPLATE = False
 
-TEMPLATE_DIRS = (os.path.realpath(os.path.join(os.path.dirname(__file__),
-                 'templates').replace('\\', '/')), )
+TEMPLATE_DIRS = (
+    os.path.realpath(os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/')),
+    os.path.realpath(os.path.join(os.path.dirname(__file__), 'mp_profile/templates').replace('\\', '/')),
+)
 
 
 AUTHENTICATION_BACKENDS = (

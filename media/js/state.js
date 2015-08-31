@@ -201,6 +201,7 @@ app.borderLess = function () {
 // load state from fixture or server
 
 app.loadState = function(state) {
+    console.log('LOAD STATE');
     var loadTimer;
     if (state.z || state.login) {
         return app.loadCompressedState(state);
