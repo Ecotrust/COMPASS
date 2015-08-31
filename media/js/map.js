@@ -10,7 +10,7 @@ app.init = function() {
     var map = new OpenLayers.Map(null, {
         //allOverlays: true,
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
-        projection: "EPSG:3857"
+        projection: "EPSG:900913"
     });
 
 
@@ -104,7 +104,7 @@ app.init = function() {
     }, {
         isBaseLayer: true,
         numZoomLevels: max_zoom,
-        projection: "EPSG:3857",
+        projection: "EPSG:900913",
         buffer: 3
     });
 
@@ -173,9 +173,6 @@ app.init = function() {
         // numDigits: 2,
         emptyString: '',
         formatOutput: function( lonLat ) {
-            // console.log(lonLat);
-            // console.log(lonLat.lat);
-            // console.log(lonLat.lon);
             // return 'Lat/Lng: (' + lonLat.lat.toFixed(3) + ', ' + lonLat.lon.toFixed(3) + ')';
             if (lonLat.lat > 0) {
                 var degreesLat = Math.floor(lonLat.lat);
