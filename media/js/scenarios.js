@@ -433,6 +433,7 @@ function scenarioModel(options) {
     self.name = options.name;
     self.featureAttributionName = self.name;
     self.description = options.description;
+    self.featureData = ko.observable();   //TODO
     self.shared = ko.observable();
     self.sharedByName = options.sharedByName || null;
     self.sharedByUsername = options.sharedByUsername;
