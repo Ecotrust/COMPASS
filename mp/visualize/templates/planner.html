@@ -256,10 +256,6 @@
                                                                   <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">
                                                                     <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">
                                                                       <div data-bind="foreach: { data: Object.keys(_sublayer), as: '_key'}">
-                                                                        <!-- <span data-bind:"text:_key.toString()">burg</span> -->
-                                                                        <!-- ko if: (_layer.aliases) -->
-                                                                          <!-- TODO: if aliases are not set in display section in js, enter them here -->
-                                                                        <!-- /ko -->
                                                                         <dl data-bind="foreach: { data: _sublayer[_key], afterAdd:$root.updateMarker }">
 
                                                                             <dt>

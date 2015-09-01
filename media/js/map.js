@@ -526,7 +526,7 @@ app.addArcRestLayerToMap = function(layer) {
                                       }
                                   } else {
                                       $.each(returnJSON.fields, function(fieldNdx, field) {
-                                          if (field.name.indexOf('OBJECTID') === -1) {
+                                          if (field.name.indexOf('OBJECTID') === -1 && field.name.indexOf('objectid') === -1) {
                                               var data = attributeList[field.name];
                                               if (field.type === 'esriFieldTypeDate') {
                                                   data = new Date(data).toDateString();
@@ -562,12 +562,9 @@ app.addArcRestLayerToMap = function(layer) {
                       if (!clickAttributes.hasOwnProperty(layer.name)) {
                         clickAttributes[layer.name] = {
                           'hasSublayers': (layer.arcgislayers.split(',').length !== 1),
-                          'subLayers': {},
-                          // 'fields': returnJSON.features[0].attributes,
-                          'aliases': returnJSON.fieldAliases
+                          'subLayers': {}
                         };
                       }
-                      //TODO: adjust attributeObjs keys with aliases for GeoMAC et al
                       clickAttributes[layer.name].subLayers[layerName] = attributeObjs;
                       $.extend(app.map.clickOutput.attributes, clickAttributes);
                       app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
@@ -583,7 +580,6 @@ app.addArcRestLayerToMap = function(layer) {
       });
 
       app.map.addControl(layer.arcIdentifyControls[layerIdIndex]);
-      console.log('Control added to ' + layer.name + ' for layer id: ' + layerId);
 
     }
 
