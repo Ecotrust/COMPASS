@@ -245,83 +245,23 @@
                                                 <div data-bind="foreach: attributeLayers()">
                                                     <div class="accordion-group">
                                                         <div data-bind="if: $root.aggregatedAttributes()[name]">
-                                                            <!-- <p data-bind="text: Object.keys($root.aggregatedAttributes()).toString() ">---3---</p> -->
-                                                            <div data-bind="foreach: Object.keys({'a':1, 'b':2})">
-                                                              <!-- <p>thing</p> -->
-                                                            </div>
-                                                            <!-- <p data-bind="if: $root.aggregatedAttributes()[name].subLayers ">---try---</p> -->
                                                             <div class="accordion-heading" data-bind="click: toggleLayerAttribution">
                                                                 <a class="accordion-toggle">
-                                                                    <!-- <p>---4---</p> -->
                                                                     <h4 data-bind="text: featureAttributionName"></h4>
                                                                     <h5 data-bind="text: description"></h5>
                                                                 </a>
                                                             </div>
                                                             <div class="accordion-body collapse in" data-bind="attr: { id: $root.convertToSlug(name) }" >
                                                                 <div class="accordion-inner">
-                                                                    <p data-bind="text: name">---5---</p>
-                                                                    <p>---5---</p>
-                                                                    <p>Open Fields:----</p>
-                                                                    <!--
-                                                                    <div><p data-bind="text: JSON.stringify($root.aggregatedAttributes()[name].fields)">JSON</p></div>
-                                                                    <p data-bind="text: Object.keys($root.aggregatedAttributes()[name].fields).toString()">KEY LIST</p>
-                                                                    <p data-bind="text: $root.aggregatedAttributes()[name].fields.fire_name">FIRE NAME</p>
-                                                                    <p data-bind="text: $root.aggregatedAttributes()[name].fields['fire_name']">FIRE NAME 2</p>
+                                                                  <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">
+                                                                    <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">
+                                                                      <div data-bind="foreach: { data: Object.keys(_sublayer), as: '_key'}">
+                                                                        <!-- <span data-bind:"text:_key.toString()">burg</span> -->
+                                                                        <!-- ko if: (_layer.aliases) -->
+                                                                          <!-- TODO: if aliases are not set in display section in js, enter them here -->
+                                                                        <!-- /ko -->
+                                                                        <dl data-bind="foreach: { data: _sublayer[_key], afterAdd:$root.updateMarker }">
 
-                                                                    <div data-bind="foreach: {data: [
-                                                                      'objectid',
-                                                                      'acres',
-                                                                      'agency',
-                                                                      'time_',
-                                                                      'comments',
-                                                                      'year_',
-                                                                      'active',
-                                                                      'unit_id',
-                                                                      'fire_name',
-                                                                      'fire_num',
-                                                                      'date_',
-                                                                      'fire',
-                                                                      'load_date',
-                                                                      'inciweb_id',
-                                                                      'st_area(shape)',
-                                                                      'st_length(shape)',
-                                                                      'type',
-                                                                      'inc_num'
-                                                                    ], as: 'key'}">
-                                                                    -->
-                                                                    <div data-bind="foreach: {data: Object.keys($root.aggregatedAttributes()[name].fields), as: 'key'}">
-                                                                        <p data-bind="text: key">key</p>
-                                                                        <p data-bind="text: $root.aggregatedAttributes()[name].fields[key]">value1</p>
-                                                                        <p data-bind="text: $root.aggregatedAttributes()[name].fields[key.toString()]">value2</p>
-                                                                        <p data-bind="text: $parent[key.toString()]">value3</p>
-                                                                      </div>
-                                                                    </div>
-                                                                    <p>---- Close Fields</p>
-                                                                    <div data-bind="visible: { data: $root.aggregatedAttributes()[name].subLayers } , foreach: { data: $root.aggregatedAttributes()[name].subLayers }">
-                                                                        <p data-bind="text: $parent.name">---parent name 6---</p>
-                                                                        <p data-bind="text: name">---name 6---</p>
-                                                                        <p>---6---</p>
-
-                                                                        <!-- <h5 data-bind="text: name, visible: $root.aggregatedAttributes()[name].hasSublayers"></h5> -->
-                                                                        <div data-bind="foreach: {data: $root.aggregatedAttributes()[$parent.name].subLayers}">
-                                                                          <p>data</p>
-                                                                          <p data-bind: "text: $data">data1</p>
-                                                                          <p data-bind: "text: $parent.$data">$parent.data2</p>
-                                                                          <p>index</p>
-                                                                          <p data-bind: "text: $index">index1</p>
-                                                                          <p data-bind: "text: $parent.$index">$parent.index2</p>
-                                                                          <p>rawData</p>
-                                                                          <p data-bind: "text: $rawData">rawData1</p>
-                                                                          <p data-bind: "text: $parent.$rawData">$parent.rawData2</p>
-                                                                          <p>context</p>
-                                                                          <p data-bind: "text: $context">context1</p>
-                                                                          <p data-bind: "text: $parent.$context">$parent.context2</p>
-                                                                          <p>element</p>
-                                                                          <p data-bind: "text: $element">element1</p>
-                                                                          <p data-bind: "text: $parent.$element">$parent.element2</p>
-
-                                                                        </div>
-                                                                        <dl data-bind="foreach: { data: $root.aggregatedAttributes()[$parent.name].subLayers, afterAdd:$root.updateMarker }">
                                                                             <dt>
                                                                                 <!-- ko if: $data.hasOwnProperty("tab") -->
 
@@ -333,7 +273,9 @@
                                                                                 <span style="font-weight: normal" data-bind="html: data"></span>
                                                                             </dt>
                                                                         </dl>
+                                                                      </div>
                                                                     </div>
+                                                                  </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -856,6 +798,9 @@
         <!-- <script src="{{MEDIA_URL}}/assets/jquery/jquery-ui-1.9.1.custom.js"></script> -->
         <script src="{{MEDIA_URL}}/assets/jquery-ui/jquery-ui.min.js"></script>
         <script src="{{MEDIA_URL}}/assets/knockout/knockout-2.2.1.js"></script>
+        <!--
+        <script src="{{MEDIA_URL}}/assets/knockout/knockout-2.3.0.js"></script>
+        -->
         <script src="{{MEDIA_URL}}/assets/knockout/knockout-bindings.js"></script>
         <script src="{{MEDIA_URL}}/assets/knockout/knockout.mapping-latest.js"></script>
         <script src="{{MEDIA_URL}}/assets/jquery/jquery.pageguide.js"></script>

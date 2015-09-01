@@ -562,11 +562,13 @@ app.addArcRestLayerToMap = function(layer) {
                       if (!clickAttributes.hasOwnProperty(layer.name)) {
                         clickAttributes[layer.name] = {
                           'hasSublayers': (layer.arcgislayers.split(',').length !== 1),
-                          'subLayers': {}
+                          'subLayers': {},
+                          // 'fields': returnJSON.features[0].attributes,
+                          'aliases': returnJSON.fieldAliases
                         };
                       }
+                      //TODO: adjust attributeObjs keys with aliases for GeoMAC et al
                       clickAttributes[layer.name].subLayers[layerName] = attributeObjs;
-                      console.log(clickAttributes);
                       $.extend(app.map.clickOutput.attributes, clickAttributes);
                       app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
                       app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
