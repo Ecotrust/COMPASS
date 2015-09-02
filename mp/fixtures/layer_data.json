@@ -8,8 +8,8 @@
       30, 
       32, 
       34, 
-      33, 
-      31
+      31, 
+      33
     ], 
     "name": "ODFW Compass"
   }
@@ -109,11 +109,12 @@
   "fields": {
     "layers": [
       447, 
-      466, 
       468, 
       469, 
+      478, 
       475, 
-      476
+      476, 
+      466
     ], 
     "display_name": "OCS", 
     "name": "Oregon Conservation Strategy", 
@@ -1795,6 +1796,58 @@
     "attribute_title": null, 
     "utfjsonp": false, 
     "layer_source": null, 
+    "wms_slug": null
+  }
+},
+{
+  "pk": 478, 
+  "model": "data_manager.layer", 
+  "fields": {
+    "layer_type": "Vector", 
+    "arc_rest_service_name": "ODFW_DCOA_V2_webmap", 
+    "bookmark": null, 
+    "themes": [], 
+    "compass_service_name": "ODFW_DCOA_V2_webmap", 
+    "is_sublayer": false, 
+    "compress_display": false, 
+    "map_tiles": null, 
+    "legend_subtitle": null, 
+    "filterable": false, 
+    "vector_graphic": null, 
+    "kml": null, 
+    "source": "http://services.arcgis.com/uUvqNMGPm7axC2dD/ArcGIS/rest/services/ODFW_DCOA_V2_webmap/FeatureServer/0?f=pjson", 
+    "lookup_table": [], 
+    "proj": "SR-ORG:7149", 
+    "arc_rest_instance_id": "uUvqNMGPm7axC2dD", 
+    "utfurl": null, 
+    "data_download": "", 
+    "metadata": "http://services.arcgis.com/uUvqNMGPm7axC2dD/ArcGIS/rest/services/ODFW_DCOA_V2_webmap/FeatureServer/0", 
+    "opacity": 0.5, 
+    "vector_color": null, 
+    "attribute_event": "click", 
+    "description": "Conservation Opportunity Areas v2", 
+    "attribute_fields": [], 
+    "arc_rest_out_fields": "COAName, OBJECTID, FIRST_ECOR, FIRST_EC_1, Area_sqMi", 
+    "vector_fill": null, 
+    "arc_rest_data_layer": true, 
+    "data_overview": null, 
+    "slug_name": "odfw-coas-v2", 
+    "summarize_to_grid": false, 
+    "lookup_field": null, 
+    "legend": null, 
+    "shareable_url": true, 
+    "name": "ODFW COAs v2", 
+    "data_source": "ODFW", 
+    "data_notes": "Conservation Opportunity Areas were developed for the Oregon Conservation Strategy to help identify priority areas for conservation actions that directly benefit wildlife and habitats.", 
+    "compass_instance_id": "uUvqNMGPm7axC2dD", 
+    "url": "/arcgis/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_DCOA_V2_webmap/FeatureServer/0/query?geometry=%7B%22xmin%22%3A-13882776.537694%2C%22ymin%22%3A5140361.7152923%2C%22xmax%22%3A-12925173.44747%2C%22ymax%22%3A5825237.4886322%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=pgeojson", 
+    "proxy_url": false, 
+    "arcgis_layers": "0", 
+    "legend_title": null, 
+    "sublayers": [], 
+    "attribute_title": null, 
+    "utfjsonp": false, 
+    "layer_source": "featureserver", 
     "wms_slug": null
   }
 },
