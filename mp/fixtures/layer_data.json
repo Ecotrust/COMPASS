@@ -116,7 +116,7 @@
       476, 
       466
     ], 
-    "display_name": "OCS", 
+    "display_name": "Oregon Conservation Strategy", 
     "name": "Oregon Conservation Strategy", 
     "description": "Layers used for the 2015 Oregon Conservation Strategy Viewer"
   }
@@ -1804,10 +1804,10 @@
   "model": "data_manager.layer", 
   "fields": {
     "layer_type": "Vector", 
-    "arc_rest_service_name": "ODFW_DCOA_V2_webmap", 
+    "arc_rest_service_name": "ODFW_2015_COA_webmap2", 
     "bookmark": null, 
     "themes": [], 
-    "compass_service_name": "ODFW_DCOA_V2_webmap", 
+    "compass_service_name": "ODFW_2015_COA_webmap2", 
     "is_sublayer": false, 
     "compress_display": false, 
     "map_tiles": null, 
@@ -1817,7 +1817,7 @@
     "kml": null, 
     "source": "http://services.arcgis.com/uUvqNMGPm7axC2dD/ArcGIS/rest/services/ODFW_DCOA_V2_webmap/FeatureServer/0?f=pjson", 
     "lookup_table": [], 
-    "proj": "SR-ORG:7149", 
+    "proj": "ESRI:102100", 
     "arc_rest_instance_id": "uUvqNMGPm7axC2dD", 
     "utfurl": null, 
     "data_download": "", 
@@ -1840,7 +1840,7 @@
     "data_source": "ODFW", 
     "data_notes": "Conservation Opportunity Areas were developed for the Oregon Conservation Strategy to help identify priority areas for conservation actions that directly benefit wildlife and habitats.", 
     "compass_instance_id": "uUvqNMGPm7axC2dD", 
-    "url": "/arcgis/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_DCOA_V2_webmap/FeatureServer/0/query?geometry=%7B%22xmin%22%3A-13882776.537694%2C%22ymin%22%3A5140361.7152923%2C%22xmax%22%3A-12925173.44747%2C%22ymax%22%3A5825237.4886322%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=pgeojson", 
+    "url": "/arcgis/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_2015_COA_webmap2/FeatureServer/0/query?geometry=%7B%22xmin%22%3A-13882776.537694%2C%22ymin%22%3A5140361.7152923%2C%22xmax%22%3A-12925173.44747%2C%22ymax%22%3A5825237.4886322%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=pgeojson", 
     "proxy_url": false, 
     "arcgis_layers": "0", 
     "legend_title": null, 
