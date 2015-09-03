@@ -288,6 +288,12 @@ app.init = function() {
 
     app.map.addLayer(app.markers);
 
+    //  app.map.events.register("click", app.map, function(e) {
+       // TODO: This needs to cycle through all active layers and trigger
+       // a click event at that pixel.
+       // All layer click events should be triggered by this, not by actual clicks
+    //  });
+
     app.map.removeLayerByName = function(layerName) {
         for (var i = 0; i < app.map.layers.length; i++) {
             if (app.map.layers[i].name === layerName) {
