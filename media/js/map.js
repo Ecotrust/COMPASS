@@ -288,16 +288,6 @@ app.init = function() {
 
     app.map.addLayer(app.markers);
 
-    //no longer needed?
-    //replaced with #map mouseup and move events in app.js?
-    //place the marker on click events
-    app.map.events.register("click", app.map, function(e) {
-        //app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.xy));
-        //the following is in place to prevent flash of marker appearing on what is essentially no feature click
-        //display is set to true in the featureclick and utfgridclick handlers (when there is actually a hit)
-        //app.marker.display(false);
-    });
-
     app.map.removeLayerByName = function(layerName) {
         for (var i = 0; i < app.map.layers.length; i++) {
             if (app.map.layers[i].name === layerName) {
@@ -336,6 +326,7 @@ app.init = function() {
     };
 
     app.utils.numberWithCommas = function(x) {
+        // TODO: do not apply to 4 digits or less. year 2,015 looks weird.
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
 
@@ -615,8 +606,25 @@ app.queryEsriDataLayer = function(evt){
       self = evt.object;
       evt = evt.event;
     }
+    var pixel_buffer = 1;
     var px = new OpenLayers.Pixel(evt.x,evt.y);
+    var nwpx = new OpenLayers.Pixel(evt.x-pixel_buffer,evt.y-pixel_buffer);
+    var sepx = new OpenLayers.Pixel(evt.x+pixel_buffer,evt.y+pixel_buffer);
     var coords = self.getLonLatFromViewPortPx(px);
+    var nwCoords = self.getLonLatFromViewPortPx(nwpx);
+    var seCoords = self.getLonLatFromViewPortPx(sepx);
+
+    var geometry = {
+      xmin: nwCoords.lon,
+      ymin: seCoords.lat,
+      xmax: seCoords.lon,
+      ymax: nwCoords.lat,
+      spatialReference: {
+        wkid:102100
+      }
+    };
+
+    var geomQuery = JSON.stringify(geometry);
     app.esriQueryClickEvent = {};
     app.esriQueryClickEvent.px = px;
     app.esriQueryClickEvent.lonlat = coords;
@@ -631,10 +639,8 @@ app.queryEsriDataLayer = function(evt){
     var layerId = self.arcGisLayerId;
     var ajaxUrl= "http://services.arcgis.com/" +
         instanceId + "/arcgis/rest/services/" +
-        serviceName + "/FeatureServer/" + layerId + "/query?geometry=%7B%22x%22%3A" +
-        coords.lon + "%2C%22y%22%3A" +
-        coords.lat + "%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D" +
-        "&geometryType=esriGeometryPoint&spatialRel=esriSpatialRelIntersects" +
+        serviceName + "/FeatureServer/" + layerId + "/query?geometry=" + encodeURIComponent(geomQuery) +
+        "&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects" +
         "&units=esriSRUnit_Meter&outFields=" +
         outFields + "&returnGeometry=true&f=json";
     $.ajax({
