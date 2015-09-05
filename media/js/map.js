@@ -288,12 +288,6 @@ app.init = function() {
 
     app.map.addLayer(app.markers);
 
-    //  app.map.events.register("click", app.map, function(e) {
-       // TODO: This needs to cycle through all active layers and trigger
-       // a click event at that pixel.
-       // All layer click events should be triggered by this, not by actual clicks
-    //  });
-
     app.map.removeLayerByName = function(layerName) {
         for (var i = 0; i < app.map.layers.length; i++) {
             if (app.map.layers[i].name === layerName) {
@@ -368,6 +362,31 @@ app.init = function() {
         return undefined;
     };
 
+    app.mapClick = function(evt){
+      console.log('Map Click');
+      app.viewModel.aggregatedAttributes(false)
+      for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
+        var layer = app.map.layers[layerIndex];
+        if (layer.hasOwnProperty('layerModelId') &&
+            app.viewModel.layerIndex[layer.layerModelId].visible()) {
+          layer.events.triggerEvent('click', evt);
+        }
+      }
+    }
+    app.featureClick = function(evt){
+      console.log('Feature Click');
+      app.viewModel.aggregatedAttributes(false)
+      for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
+        var layer = app.map.layers[layerIndex];
+        if (layer.hasOwnProperty('layerModelId') &&
+            app.viewModel.layerIndex[layer.layerModelId].visible()) {
+          layer.events.triggerEvent('click', evt.event);
+        }
+      }
+    }
+    app.map.events.register('click',null, app.mapClick);
+    app.map.events.register('featureclick',null, app.featureClick);
+
 };
 
 app.addLayerToMap = function(layer) {
@@ -394,6 +413,7 @@ app.addLayerToMap = function(layer) {
         }
     }
 
+    layer.layer.layerModelId = layer.id;
     app.map.addLayer(layer.layer);
     layer.layer.opacity = layer.opacity();
     layer.layer.setVisibility(true);
@@ -494,6 +514,10 @@ app.addArcRestLayerToMap = function(layer) {
 
       layer.arcIdentifyControls[layerIdIndex] = new OpenLayers.Control.ArcGisRestIdentify({
           eventListeners: {
+              // arcfeaturequery: function(evt) {
+              //   TODO: clear out current aggreatedAttributes for this layer
+              //      Maybe replace with a spinner?
+              // },
               //the handler for the return click data
               resultarrived: function(responseText, xy) {
                   var clickAttributes = {},
