@@ -1144,6 +1144,12 @@ function viewModel() {
         self.attributeLayers(attributeLayersList);
     };
 
+    self.toggleFeatureLayer = function(show) {
+      if(!show) {
+        app.map.getLayersByName('Selected Features')[0].removeAllFeatures();
+      }
+    };
+
     // boolean flag determining whether or not to show layer panel
     self.showLayers = ko.observable(true);
 
@@ -1219,6 +1225,7 @@ function viewModel() {
     self.aggregatedAttributes.subscribe( function() {
         self.updateAggregatedAttributesOverlayWidthAndScrollbar();
         self.showFeatureAttribution( self.featureAttribution() && !($.isEmptyObject(self.aggregatedAttributes())) );
+        self.toggleFeatureLayer(self.showFeatureAttribution());
     });
     self.featureClick = ko.observable(false); //tracks if current event is in the middle of a feature click.
     self.removeFromAggregatedAttributes = function(layerName) {

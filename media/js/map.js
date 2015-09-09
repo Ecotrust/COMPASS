@@ -363,7 +363,6 @@ app.init = function() {
     };
 
     app.mapClick = function(evt){
-      console.log('Map Click');
       app.viewModel.aggregatedAttributes(false)
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
@@ -374,7 +373,6 @@ app.init = function() {
       }
     }
     app.featureClick = function(evt){
-      console.log('Feature Click');
       app.viewModel.aggregatedAttributes(false)
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
@@ -386,6 +384,48 @@ app.init = function() {
     }
     app.map.events.register('click',null, app.mapClick);
     app.map.events.register('featureclick',null, app.featureClick);
+
+    // takes GeoJSON of a single feature and adds it to 'selected' layer on map.
+    app.displaySelectedFeature = function(feature, projection) {
+      var attributes = {};
+      if (feature.hasOwnProperty('attributes')) {
+        attributes = feature.attributes;
+      }
+      if (feature.hasOwnProperty('geometry')) {
+        var geometry = feature.geometry;
+        if (geometry.hasOwnProperty('rings')){
+          if (geometry.rings.length == 1) {
+            var featureRingsIdx = 0;
+            var points = [];
+            for (var i = 0; i < geometry.rings[featureRingsIdx].length; i++) {
+              var point = new OpenLayers.Geometry.Point(geometry.rings[featureRingsIdx][i][0], geometry.rings[featureRingsIdx][i][1]);
+              // .transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"))
+              point.transform(projection, new OpenLayers.Projection("EPSG:900913"))
+              points.push(point);
+            }
+            var ring = new OpenLayers.Geometry.LinearRing(points);
+            var polygon = new OpenLayers.Geometry.Polygon([ring]);
+            var layerFeature = new OpenLayers.Feature.Vector(polygon, attributes);
+          } else {
+            // TODO: remove this
+            debugger;
+          }
+        }
+      }
+
+      if (app.map.getLayersByName('Selected Features').length === 0) {
+        var selectedFeatureLayer = new OpenLayers.Layer.Vector(
+          "Selected Features",
+          {}
+        );
+
+        app.map.addLayer(selectedFeatureLayer);
+      }
+      var selFeatLayer = app.map.getLayersByName('Selected Features')[0];
+      selFeatLayer.removeAllFeatures();
+      selFeatLayer.addFeatures([layerFeature]);
+      // app.map.zoomToExtent(selFeatLayer.getDataExtent());
+    }
 
 };
 
@@ -485,23 +525,6 @@ app.addWmsLayerToMap = function(layer) {
         // 'buffer': 0
     });
 
-    // map.addLayer(cables);
-
-    // var url = app.modifyURL(layer.url);
-
-    // layer.layer = new OpenLayers.Layer.WMS(
-    //     "25M Depth Contour", "http://www.coastalatlas.net/services/wms/getmap",
-    //     // layer.name,
-    //     // url,
-    //     {
-    //         layers: "SubmarineCables_OFCC_2012",
-    //         transparent: "true",
-    //         format: "image/png"
-    //     },
-    //     {
-    //         singleTile: true
-    //     }
-    // );
 
 };
 
@@ -678,6 +701,7 @@ app.queryEsriDataLayer = function(evt){
     }).done(function(res) {
       var feats = JSON.parse(res);
       if (feats.features.length > 0) {
+        // TODO: gather all features and allow user to cycle through
         var attributes = feats.features[0].attributes;
         var keys = Object.keys(attributes);
         var out = '';
@@ -709,7 +733,14 @@ app.queryEsriDataLayer = function(evt){
         clickAttributes[app.esriQueryClickEvent.layerName].subLayers[layerName] = layerAttributes;
         $.extend(app.map.clickOutput.attributes, clickAttributes);
         app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
-        app.viewModel.updateMarker(app.esriQueryClickEvent.lonlat);
+        // app.viewModel.updateMarker(app.esriQueryClickEvent.lonlat);
+        var projection;
+        if (feats.spatialReference.hasOwnProperty('wkid')) {
+          projection = new OpenLayers.Projection("EPSG:" + feats.spatialReference.wkid.toString());
+        } else {
+          projection = new OpenLayers.Projection("EPSG:900913")
+        }
+        app.displaySelectedFeature(feats.features[0], projection);
 
       }
     });
@@ -908,7 +939,6 @@ app.addUtfLayerToMap = function(layer) {
     var opts = {
         displayInLayerSwitcher: false
     };
-    // console.log(layer);
     layer.utfgrid = new OpenLayers.Layer.UTFGrid({
         layerModel: layer,
         url: layer.utfurl ? layer.utfurl : layer.parent.utfurl,
