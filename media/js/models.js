@@ -1263,6 +1263,19 @@ function viewModel() {
         }
     };
 
+    self.getTopZIndex = function() {
+      var topZIndex = 0;
+      for (var lyrIdx in app.map.layers) {
+        if (app.map.layers[lyrIdx] !== app.markers) {
+          var lyrZIndex = app.map.layers[lyrIdx].getZIndex();
+          if (lyrZIndex > topZIndex) {
+            topZIndex = lyrZIndex;
+          }
+        }
+      }
+      return topZIndex;
+    }
+
     self.updateMarker = function(lonlat) {
         //at some point this function is being called without an appropriate lonlat object...
         if (lonlat.lon && lonlat.lat) {
@@ -1277,21 +1290,21 @@ function viewModel() {
                     self.hideMapAttribution();
                 }
                 // Increase marker Z-index if needed.
-                var topZIndex = 0;
-                for (var lyrIdx in app.map.layers) {
-                  if (app.map.layers[lyrIdx] !== app.markers) {
-                    var lyrZIndex = app.map.layers[lyrIdx].getZIndex();
-                    if (lyrZIndex > topZIndex) {
-                      topZIndex = lyrZIndex;
-                    }
-                  }
-                }
+                var topZIndex = self.getTopZIndex();
                 if (topZIndex > app.markers.getZIndex()) {
                   app.markers.setZIndex(topZIndex+1);
                 }
             }
         }
     };
+
+    self.updateSelectionHighlight = function() {
+      var topZIndex = self.getTopZIndex();
+      var selectedLayer = app.map.getLayersByName('Selected Features')[0];
+      if (topZIndex > selectedLayer.getZIndex()) {
+        selectedLayer.setZIndex(topZIndex+1);
+      }
+    }
 
     /*
     self.getAttributeHTML = function() {

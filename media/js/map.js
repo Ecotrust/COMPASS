@@ -386,44 +386,50 @@ app.init = function() {
     app.map.events.register('featureclick',null, app.featureClick);
 
     // takes GeoJSON of a single feature and adds it to 'selected' layer on map.
-    app.displaySelectedFeature = function(feature, projection) {
-      var attributes = {};
-      if (feature.hasOwnProperty('attributes')) {
-        attributes = feature.attributes;
-      }
-      if (feature.hasOwnProperty('geometry')) {
-        var geometry = feature.geometry;
-        if (geometry.hasOwnProperty('rings')){
-          if (geometry.rings.length == 1) {
-            var featureRingsIdx = 0;
-            var points = [];
-            for (var i = 0; i < geometry.rings[featureRingsIdx].length; i++) {
-              var point = new OpenLayers.Geometry.Point(geometry.rings[featureRingsIdx][i][0], geometry.rings[featureRingsIdx][i][1]);
-              // .transform(new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913"))
-              point.transform(projection, new OpenLayers.Projection("EPSG:900913"))
-              points.push(point);
-            }
-            var ring = new OpenLayers.Geometry.LinearRing(points);
-            var polygon = new OpenLayers.Geometry.Polygon([ring]);
-            var layerFeature = new OpenLayers.Feature.Vector(polygon, attributes);
-          } else {
-            // TODO: remove this
-            debugger;
-          }
-        }
-      }
+    app.displaySelectedFeature = function(feature) {
 
       if (app.map.getLayersByName('Selected Features').length === 0) {
+        var vectorStyle = new OpenLayers.StyleMap({
+          "default": new OpenLayers.Style({
+            pointRadius: 5,
+            fillColor: '#000000',
+            fillOpacity: 0,
+            strokeColor: '#FF9933',
+            strokeOpacity: 1,
+            strokeWidth: 3
+          }),
+          "select": new OpenLayers.Style({
+            pointRadius: 5,
+            fillColor: '#000000',
+            fillOpacity: 0,
+            strokeColor: '#FF9933',
+            strokeOpacity: 1,
+            strokeWidth: 3
+          }),
+          "temporary": new OpenLayers.Style({
+            pointRadius: 5,
+            fillColor: '#000000',
+            fillOpacity: 0,
+            strokeColor: '#FF9933',
+            strokeOpacity: 1,
+            strokeWidth: 3
+          })
+        });
+
         var selectedFeatureLayer = new OpenLayers.Layer.Vector(
           "Selected Features",
-          {}
+          {
+            styleMap: vectorStyle,
+            rendererOptions: {zIndexing: true}
+          }
         );
 
         app.map.addLayer(selectedFeatureLayer);
       }
       var selFeatLayer = app.map.getLayersByName('Selected Features')[0];
       selFeatLayer.removeAllFeatures();
-      selFeatLayer.addFeatures([layerFeature]);
+      selFeatLayer.addFeatures([feature]);
+      app.viewModel.updateSelectionHighlight();
       // app.map.zoomToExtent(selFeatLayer.getDataExtent());
     }
 
@@ -740,7 +746,34 @@ app.queryEsriDataLayer = function(evt){
         } else {
           projection = new OpenLayers.Projection("EPSG:900913")
         }
-        app.displaySelectedFeature(feats.features[0], projection);
+
+        var feature = feats.features[0];
+        var attributes = {};
+        if (feature.hasOwnProperty('attributes')) {
+          attributes = feature.attributes;
+        }
+        if (feature.hasOwnProperty('geometry')) {
+          var geometry = feature.geometry;
+          if (geometry.hasOwnProperty('rings')){
+            if (geometry.rings.length == 1) {
+              var featureRingsIdx = 0;
+              var points = [];
+              for (var i = 0; i < geometry.rings[featureRingsIdx].length; i++) {
+                var point = new OpenLayers.Geometry.Point(geometry.rings[featureRingsIdx][i][0], geometry.rings[featureRingsIdx][i][1]);
+                point.transform(projection, new OpenLayers.Projection("EPSG:900913"))
+                points.push(point);
+              }
+              var ring = new OpenLayers.Geometry.LinearRing(points);
+              var polygon = new OpenLayers.Geometry.Polygon([ring]);
+              var layerFeature = new OpenLayers.Feature.Vector(polygon, attributes);
+            } else {
+              // TODO: remove this
+              debugger;
+            }
+          }
+        }
+
+        app.displaySelectedFeature(layerFeature);
 
       }
     });
@@ -905,6 +938,8 @@ app.addVectorLayerToMap = function(layer) {
 
     layer.layer.events.register('featureclick', layer.layer, function(event) {
         // TODO: retain selection on layer reload due to bbox.
+        app.displaySelectedFeature(event.feature.clone());
+
         var attributes = event.feature.attributes;
         var keys = Object.keys(attributes);
         var clickAttributes = {};
