@@ -388,7 +388,6 @@ $(document).ready(function() {
         app.viewModel.closeAttribution();
         app.viewModel.closeDescription();
       }
-      app.viewModel.featureClick(false);
     }
     app.map.mousedrag = false;
   });

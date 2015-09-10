@@ -363,7 +363,6 @@ app.init = function() {
     };
 
     app.mapClick = function(evt){
-      app.viewModel.aggregatedAttributes(false)
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
         if (layer.hasOwnProperty('layerModelId') &&
@@ -371,9 +370,14 @@ app.init = function() {
           layer.events.triggerEvent('click', evt);
         }
       }
+      // featureclick events always trigger before map click events
+          // therefore We want to turn 'featureClick' to false at end of mapclick
+      app.viewModel.featureClick(false);
     }
     app.featureClick = function(evt){
-      app.viewModel.aggregatedAttributes(false)
+      // featureclick events always trigger before map click events
+          // Since we only want to reset attrs once, do it now.
+      app.viewModel.aggregatedAttributes(false);
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
         if (layer.hasOwnProperty('layerModelId') &&
@@ -937,8 +941,9 @@ app.addVectorLayerToMap = function(layer) {
     app.map.addControl(layer.selectControl);
 
     layer.layer.events.register('featureclick', layer.layer, function(event) {
-        // TODO: retain selection on layer reload due to bbox.
-        app.displaySelectedFeature(event.feature.clone());
+        // featureclick events always trigger before map click events
+          // Therefore we want to turn featureclick on at beginning of featureclick
+        app.viewModel.featureClick(true);
 
         var attributes = event.feature.attributes;
         var keys = Object.keys(attributes);
@@ -965,8 +970,8 @@ app.addVectorLayerToMap = function(layer) {
         clickAttributes[event.feature.layer.name].subLayers[layerName] = layerAttributes;
         $.extend(app.map.clickOutput.attributes, clickAttributes);
         app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
-        app.viewModel.featureClick(true);
-        return false;
+        // return false;
+        app.displaySelectedFeature(event.feature.clone());
     });
 };
 
