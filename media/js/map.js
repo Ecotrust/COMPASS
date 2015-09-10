@@ -288,6 +288,24 @@ app.init = function() {
 
     app.map.addLayer(app.markers);
 
+    app.map.extentWithinExtent = function (innerExtent, outerExtent) {
+      if (outerExtent.contains(innerExtent.left, innerExtent.top) && outerExtent.contains(innerExtent.right, innerExtent.bottom)) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+
+    app.map.panToFeature = function(feature) {
+      var featExtent = feature.geometry.getBounds();
+      var mapExtent = app.map.getExtent();
+      if (app.map.extentWithinExtent(featExtent, mapExtent)) {
+        var centroid = feature.geometry.getCentroid();
+        var lonlat = new OpenLayers.LonLat(centroid.x, centroid.y);
+        app.map.panTo(lonlat);
+      }
+    };
+
     app.map.removeLayerByName = function(layerName) {
         for (var i = 0; i < app.map.layers.length; i++) {
             if (app.map.layers[i].name === layerName) {
@@ -362,18 +380,6 @@ app.init = function() {
         return undefined;
     };
 
-    app.mapClick = function(evt){
-      for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
-        var layer = app.map.layers[layerIndex];
-        if (layer.hasOwnProperty('layerModelId') &&
-            app.viewModel.layerIndex[layer.layerModelId].visible()) {
-          layer.events.triggerEvent('click', evt);
-        }
-      }
-      // featureclick events always trigger before map click events
-          // therefore We want to turn 'featureClick' to false at end of mapclick
-      app.viewModel.featureClick(false);
-    }
     app.featureClick = function(evt){
       // featureclick events always trigger before map click events
           // Since we only want to reset attrs once, do it now.
@@ -386,6 +392,20 @@ app.init = function() {
         }
       }
     }
+
+    app.mapClick = function(evt){
+      for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
+        var layer = app.map.layers[layerIndex];
+        if (layer.hasOwnProperty('layerModelId') &&
+            app.viewModel.layerIndex[layer.layerModelId].visible()) {
+          layer.events.triggerEvent('click', evt);
+        }
+      }
+      // featureclick events always trigger before map click events
+          // therefore We want to turn 'featureClick' to false at end of mapclick
+      app.viewModel.featureClick(false);
+    }
+
     app.map.events.register('click',null, app.mapClick);
     app.map.events.register('featureclick',null, app.featureClick);
 
@@ -434,6 +454,8 @@ app.init = function() {
       selFeatLayer.removeAllFeatures();
       selFeatLayer.addFeatures([feature]);
       app.viewModel.updateSelectionHighlight();
+      // This should require a button like ODFW's Compass - don't zoom on click
+      // app.map.panToFeature(feature);
       // app.map.zoomToExtent(selFeatLayer.getDataExtent());
     }
 
