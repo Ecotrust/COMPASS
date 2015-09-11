@@ -1262,6 +1262,7 @@ function viewModel() {
     self.closeAttribution = function() {
         self.aggregatedAttributes(false);
         app.markers.clearMarkers();
+        app.viewModel.clearSelectedLayer();
         if ( app.embeddedMap ) {
             self.showMapAttribution();
         }
@@ -1284,6 +1285,7 @@ function viewModel() {
         //at some point this function is being called without an appropriate lonlat object...
         if (lonlat.lon && lonlat.lat) {
             app.markers.clearMarkers();
+            app.viewModel.clearSelectedLayer();
             app.marker = new OpenLayers.Marker(lonlat, app.markers.icon);
             app.marker.map = app.map;
             //app.marker.display(true);
@@ -1309,6 +1311,13 @@ function viewModel() {
         selectedLayer.setZIndex(topZIndex+1);
       }
     }
+
+    self.clearSelectedLayer = function () {
+      var selectedLayers = app.map.getLayersByName('Selected Features');
+      if (selectedLayers.length > 0) {
+        selectedLayers[0].removeAllFeatures();
+      }
+    };
 
     /*
     self.getAttributeHTML = function() {
