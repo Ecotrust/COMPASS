@@ -103,8 +103,12 @@ function layerModel(options, parent) {
         style.externalGraphic = imageUrl;
         style.graphicHeight = symbol.height;
         style.graphicWidth = symbol.width;
-        style.graphicXOffset = symbol.xoffset;
-        style.graphicYOffset = symbol.yoffset;
+        // Centering the graphic on the point appears to be OL default
+            // ESRI offsets end up over-correcting in this case.
+            // It's possible for specialty markers like pointers this adjustment
+            // would be necessary, but for now there's no known need.
+        // style.graphicXOffset = symbol.xoffset;
+        // style.graphicYOffset = symbol.yoffset;
         style.rotation = symbol.angle;
       } else if (symbol.type.indexOf('esriPFS') !== -1){
         // alert('esriPFS');
