@@ -581,7 +581,8 @@ app.addArcRestLayerToMap = function(layer) {
                   var attributeObjs;
                   if (returnJSON.features && returnJSON.features.length) {
                       attributeObjs = [];
-
+                      returnJSON.olGeometries = [];
+                      var selectedFeature = false;
                       $.each(returnJSON.features, function(index, feature) {
                           if (index === 0) {
                               var attributeList = feature.attributes;
@@ -624,9 +625,37 @@ app.addArcRestLayerToMap = function(layer) {
                                       });
                                   }
                               }
+
+                              if (feature.hasOwnProperty('geometry')) {
+                                if (feature.geometry.hasOwnProperty('x') && feature.geometry.hasOwnProperty('y')) {
+                                  returnJSON.olGeometries.push(new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y));
+                                } else if (feature.geometry.hasOwnProperty('rings')) {
+                                  var linearRings = [];
+                                  for (var i=0; i < feature.geometry.rings.length; i++) {
+                                    var ring = feature.geometry.rings[i];
+                                    var points = [];
+                                    for (var j=0; j < ring.length; j++) {
+                                      points.push(new OpenLayers.Geometry.Point(ring[j][0], ring[j][1]));
+                                    }
+                                    linearRings.push(new OpenLayers.Geometry.LinearRing(points));
+                                  }
+                                  returnJSON.olGeometries.push(new OpenLayers.Geometry.Polygon(linearRings));
+                                } else if (feature.geometry.hasOwnProperty('paths')) {
+                                  for (var i=0; i < feature.geometry.paths.length; i++) {
+                                    var path = feature.geometry.paths[i];
+                                    var points = [];
+                                    for (var j=0; j < path.length; j++) {
+                                      points.push(new OpenLayers.Geometry.Point(path[j][0], path[j][1]));
+                                    }
+                                  }
+                                  returnJSON.olGeometries.push(new OpenLayers.Geometry.LineString(points));
+                                }
+                              }
                               return;
                           }
                       });
+                      var featCollection = new OpenLayers.Geometry.Collection(returnJSON.olGeometries);
+                      selectedFeature = new OpenLayers.Feature.Vector(featCollection);
                   } else {
                     // clickAttributes[layer.name] = {};
                     //TODO if not all sublayers are hit, remove all missed ones and update (if priors)
@@ -649,7 +678,11 @@ app.addArcRestLayerToMap = function(layer) {
                       clickAttributes[layer.name].subLayers[layerName] = attributeObjs;
                       $.extend(app.map.clickOutput.attributes, clickAttributes);
                       app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
-                      app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
+                      if (selectedFeature) {
+                        app.displaySelectedFeature(selectedFeature);
+                      } else {
+                        app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
+                      }
                   }
               }
           },

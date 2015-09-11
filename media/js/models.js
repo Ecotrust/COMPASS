@@ -1060,7 +1060,6 @@ function mapLinksModel() {
         if ( projectSlug ) {
             embedURL = urlOrigin + '/' + projectSlug + '/embed/map/' + urlHash;
         }
-        //console.log(embedURL);
         return '<iframe width="600" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"' +
                                      'src="' + embedURL + '">' + '</iframe>' + '<br />';
         //$('#iframe-html')[0].value = '<iframe width="600" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"' +
@@ -1247,7 +1246,6 @@ function viewModel() {
         setTimeout( function() {
             var overlayWidth = (document.getElementById('aggregated-attribute-overlay-test').clientWidth+50),
                 width = overlayWidth < 380 ? overlayWidth : 380;
-            //console.log('setting overlay width to ' + width);
             self.aggregatedAttributesWidth(width + 'px');
             self.updateCustomScrollbar('#aggregated-attribute-content');
         }, 500);
