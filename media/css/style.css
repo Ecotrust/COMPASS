@@ -216,6 +216,20 @@
 #map .olControlScaleBar {
     right: 50px;
     line-height: 17px;
+    /*background: rgba(255,255,255,0) !important;*/
+    background: none !important;
+}
+
+#map .olControlScaleBarMarkerMajor,
+#map .olControlScaleBarMarkerMinor,
+#map .olControlScaleBarBar,
+#map .olControlScaleBarBarAlt{
+  border: 1px white solid;
+}
+
+#map .olControlScaleBarLabelBox,
+#map .olControlScaleBarNumbersBox {
+  text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
 }
 
 i.check {
