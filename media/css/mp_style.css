@@ -1001,6 +1001,10 @@ body.print #login-buttons
 	visibility: hidden;
 }
 
+body.print #legend-bottom-wrapper {
+  visibility: visible;
+}
+
 body.print #legend-wrapper, body.print #map-wrapper, body.print #map {
 	border-radius: 0px;
 	-moz-border-radius: 0px;

@@ -3,7 +3,6 @@ html {
   width: 100%;
   overflow: hidden;
   position: relative;
-  border: solid green 3px;
 }
 
 body {
@@ -12,14 +11,12 @@ body {
   overflow: hidden;
   position: absolute;
   margin: 0px;
-  border: solid red 3px;
 }
 
 .container {
   display: table;
   width: 100%;
   height: 100%;
-  border: solid yellow 3px;
 }
 
 .container-row {
@@ -30,7 +27,6 @@ body {
 
 .container-cell {
   display: table-cell;
-  border: solid blue 3px;
 }
 
 #primary-content {
@@ -440,32 +436,73 @@ a.disabled-link:hover {
   display: table-row;
   height: 1px;
   bottom: 0;
-  border: solid blue 3px;
   /*display: none;*/
+}
+
+#legend-bottom-wrapper {
+  width:  100%;
+  position: absolute;
+  bottom: 0;
+  z-index: 1010;
+  visibility: hidden;
+}
+
+#legend-bottom-wrapper .nav {
+  margin-bottom: -2px;
+}
+
+#legend-bottom-wrapper .nav-tabs > li,
+#legend-bottom-wrapper .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+    zoom:1; /* hasLayout ie7 trigger */
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: solid gray 1px;
+    border-bottom: 0;
+}
+
+#legend-bottom-wrapper .nav-tabs > li.active a,
+#legend-bottom-wrapper .nav-pills > li.active a {
+  color: #00446D;
+}
+
+#legend-bottom-wrapper .nav-tabs,
+#legend-bottom-wrapper .nav-pills {
+    text-align:center;
+}
+
+#legend-bottom-wrapper .nav-tabs > .active > a,
+#legend-bottom-wrapper .nav-tabs > .active > a:hover,
+#legend-bottom-wrapper .nav-tabs > .active > a:focus {
+    border: none;
+    cursor: pointer;
 }
 
 #legend-bottom {
   overflow-x: auto;
-  bottom: 0;
   background-color: white;
   width:  100%;
   float: left;
-  position: absolute;
-  z-index: 999;
   border-radius: 8px 8px 0 0;
   border: solid gray 1px;
-  padding: 10px 10px 0 10px;
   margin:0;
 }
 
 #legend-bottom-contents {
+  margin:10px;
   width: 600em;
+  padding-left: 10px;
 }
 
 #legend-bottom-contents .legend-group {
   float: left;
-  margin: auto 10px 0 10px;
-  padding: 0;
+  margin: auto 10px 10px;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
 
 #legend-bottom-contents .legend-body {

@@ -396,6 +396,21 @@ $(document).ready(function() {
     app.updateUrl();
   });
 
+  $('#legendTab a').click(function (e) {
+    e.preventDefault();
+    var legendBottom = $('#legend-bottom');
+    var chevronIcon = $('#legendTab i');
+    if (chevronIcon.attr('class') == "icon-chevron-up") {
+      legendBottom.slideDown(400, function() {
+        chevronIcon.attr('class', 'icon-chevron-down');
+      });
+    } else {
+      legendBottom.slideUp(400, function() {
+        chevronIcon.attr('class', 'icon-chevron-up');
+      });
+    }
+  });
+
 });
 
 $('#bookmark-form').on('submit', function(event) {
