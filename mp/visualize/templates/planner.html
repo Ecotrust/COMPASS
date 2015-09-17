@@ -742,31 +742,31 @@
                   <div data-bind="foreach: activeLegendLayers">
                     <div class="legend-group">
                         <div class="legend-heading">
-                            <a class="legend-toggle" style="text-decoration: none; padding-left: 0px;">
+                            <a class="legend-toggle">
                                 <span class="pagination-centered legend-title" data-bind="html: legendTitle ? legendTitle : name"></span>
-                                <p style="margin: 0px -5px 3px; text-align: left;font-size: 12px;" data-bind="visible: legendSubTitle, html: legendSubTitle"></p>
+                                <p class='legend-subtitle' data-bind="visible: legendSubTitle, html: legendSubTitle"></p>
                             </a>
                         </div>
                         <div class="legend-body collapse in" data-bind="attr: { id: $root.convertToSlug(name)+'-legend-content' }" >
-                            <div class="legend-inner" style="border: 0px; padding-top: 0px;">
+                            <div class="legend-inner">
                                 <span data-bind="if: legend">
                                     <div data-bind="if: legend['layers']">
                                         <div data-bind="foreach: legend['layers']" class="legendLayer">
-                                            <span data-bind="text: layer['title']" style="font-size: 13px; font-weight: bold;"></span>
+                                            <span class='legend-layer-title' data-bind="text: layer['title']"></span>
                                             <div data-bind="if: layer['elements']">
                                                 <div data-bind="foreach: layer['elements']" class="legendLayerElement">
                                                     <div>
                                                         <img data-bind="attr: {src: swatch}" />
-                                                        <span data-bind="text: label" style="font-size: 11px; font-weight: bold;"></span>
+                                                        <span class="legend-layer-label" data-bind="text: label"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div data-bind="if: layer['colors']">
                                                 <div data-bind="foreach: layer['colors']">
                                                     <div>
-                                                        <svg style="width: 150px; height: 15px;">
+                                                        <svg class="legend-svg">
                                                             <rect width="15" height="15" data-bind="style: { fill: color }"></rect>
-                                                            <text x="25" y="12" style="font-size: 11px; fill: #555;" data-bind="text: label">
+                                                            <text x="25" y="12" class="legend-svg-text" data-bind="text: label">
                                                         </svg>
                                                     </div>
                                                 </div>
@@ -777,22 +777,22 @@
                                         <div data-bind="foreach: legend['elements']">
                                             <div>
                                                 <img data-bind="attr: {src: swatch}" />
-                                                <span data-bind="text: label" style="font-size: 11px; font-weight: bold;"></span>
+                                                <span data-bind="text: label" class="legend-layer-label"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div data-bind="if: legend['colors']">
                                         <div data-bind="foreach: legend['colors']">
                                             <div>
-                                                <svg style="width: 150px; height: 15px;">
+                                                <svg class="legend-svg">
                                                     <rect width="15" height="15" data-bind="style: { fill: color }"></rect>
-                                                    <text x="25" y="12" style="font-size: 11px; fill: #555;" data-bind="text: label">
+                                                    <text x="25" y="12" class="legend-svg-text" data-bind="text: label">
                                                 </svg>
                                             </div>
                                         </div>
                                     </div>
                                     <div data-bind="if: !legend['elements'] && !legend['colors'] && !legend['layers']">
-                                        <div data-bind="css: { 'in': legendVisibility }" style="padding-top: 5px;">
+                                        <div data-bind="css: { 'in': legendVisibility }" class="legend-element">
                                             <img data-bind="attr: { src: legend }" />
                                         </div>
                                     </div>

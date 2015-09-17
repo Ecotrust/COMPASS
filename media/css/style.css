@@ -510,6 +510,46 @@ a.disabled-link:hover {
   overflow-y: auto;
 }
 
+.legend-toggle {
+  text-decoration: none;
+  padding-left: 0px;
+}
+
+.legend-subtitle {
+  margin: 0px -5px 3px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.legend-inner {
+  border: 0px;
+  padding-top: 0px;
+}
+
+.legend-layer-title {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.legend-layer-label {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.legend-svg {
+  width: 150px;
+  height: 15px;
+}
+
+.legend-svg-text {
+  font-size: 11px;
+  fill: #555;
+}
+
+.legend-element {
+  padding-top: 5px;
+}
+
 #overview-overlay {
   position: absolute;
   /*border-radius: 4px; can't tell if I want this or not...*/
