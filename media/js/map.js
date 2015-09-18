@@ -7,6 +7,8 @@ app.init = function() {
     //OR LAMBERT CONFORMAL CONIC NAD83
     Proj4js.defs["ORNAD83M"] = "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=1312336.0 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=1 +no_defs";
     // Proj4js.defs["SR-ORG:8252"] = "+proj=lcc +lat_1=43 +lat_2=45.5 +lat_0=41.75 +lon_0=-120.5 +x_0=1312336.0 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=1 +no_defs";
+    Proj4js.defs["SR-ORG:45"] = "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6378137 +b=6378137 +units=m +no_defs";
+    Proj4js.defs["EPSG:3857"] = "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
 
     var max_zoom,
         min_zoom;
@@ -15,7 +17,7 @@ app.init = function() {
     var map = new OpenLayers.Map(null, {
         //allOverlays: true,
         displayProjection: new OpenLayers.Projection("EPSG:4326"),
-        projection: "EPSG:900913"
+        projection: "EPSG:3857"
     });
 
 
@@ -109,7 +111,7 @@ app.init = function() {
     }, {
         isBaseLayer: true,
         numZoomLevels: max_zoom,
-        projection: "EPSG:900913",
+        projection: "EPSG:3857",
         buffer: 3
     });
 
@@ -688,7 +690,7 @@ app.addArcRestLayerToMap = function(layer) {
           },
           url: identifyUrl,
           layerid: layer.arcgislayers,
-          sr: 3857,
+          sr: 'EPSG:3857',
           clickTolerance: 3,
           outFields: '*'
       });
@@ -803,7 +805,7 @@ app.queryEsriDataLayer = function(evt){
         if (feats.spatialReference.hasOwnProperty('wkid')) {
           projection = new OpenLayers.Projection("EPSG:" + feats.spatialReference.wkid.toString());
         } else {
-          projection = new OpenLayers.Projection("EPSG:900913")
+          projection = new OpenLayers.Projection("EPSG:3857")
         }
 
         var feature = feats.features[0];
@@ -819,7 +821,7 @@ app.queryEsriDataLayer = function(evt){
               var points = [];
               for (var i = 0; i < geometry.rings[featureRingsIdx].length; i++) {
                 var point = new OpenLayers.Geometry.Point(geometry.rings[featureRingsIdx][i][0], geometry.rings[featureRingsIdx][i][1]);
-                point.transform(projection, new OpenLayers.Projection("EPSG:900913"))
+                point.transform(projection, new OpenLayers.Projection("EPSG:3857"))
                 points.push(point);
               }
               var ring = new OpenLayers.Geometry.LinearRing(points);
@@ -1069,7 +1071,7 @@ app.setLayerZIndex = function(layer, index) {
 
 app.reCenterMap = function() {
     app.map.setCenter(new OpenLayers.LonLat(app.state.x, app.state.y).transform(
-        new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913")), 7);
+        new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:3857")), 7);
 };
 
 // block mousehweel when over overlay

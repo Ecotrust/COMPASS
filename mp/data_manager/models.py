@@ -126,7 +126,8 @@ class Layer(models.Model):
         ('EPSG:3857', 'Web Mercator [3857]'),
         ('EPSG:4326', 'WGS 84 [4326]'),
         ('ESRI:102100', 'ESRI Web Mercator WSG84'),
-        ('ORNAD83M', 'OR Lambert Conformal Conic NAD 1983 (m)')
+        ('ORNAD83M', 'OR Lambert Conformal Conic NAD 1983 (m)'),
+        ('SR-ORG:45', '102113')
     )
     proj = models.CharField(max_length=255, choices=PROJ_CHOICES, blank=True, null=True, help_text="will be EPSG:3857, if unspecified")
     # tooltip
