@@ -568,6 +568,10 @@ app.addArcRestLayerToMap = function(layer) {
       layerIdIndex = parseInt(layerIdIndex);
       var layerId = layer.arcgislayers.split(',')[layerIdIndex].trim();
       var identifyUrl = layer.url.replace('export', layerId + '/query');
+      var outfields = layer.arcRestOutFields;
+      if (outfields.length < 1) {
+        outfields = "*";
+      }
 
       layer.arcIdentifyControls[layerIdIndex] = new OpenLayers.Control.ArcGisRestIdentify({
           eventListeners: {
@@ -692,7 +696,7 @@ app.addArcRestLayerToMap = function(layer) {
           layerid: layer.arcgislayers,
           sr: '3857',
           clickTolerance: 3,
-          outFields: '*'
+          outFields: outfields
       });
 
       app.map.addControl(layer.arcIdentifyControls[layerIdIndex]);
