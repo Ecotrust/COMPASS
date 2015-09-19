@@ -690,7 +690,7 @@ app.addArcRestLayerToMap = function(layer) {
           },
           url: identifyUrl,
           layerid: layer.arcgislayers,
-          sr: 'EPSG:3857',
+          sr: '3857',
           clickTolerance: 3,
           outFields: '*'
       });
