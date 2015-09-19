@@ -696,7 +696,8 @@ app.addArcRestLayerToMap = function(layer) {
           layerid: layer.arcgislayers,
           sr: '3857',
           clickTolerance: 3,
-          outFields: outfields
+          outFields: outfields,
+          maxAllowableOffset: 100
       });
 
       app.map.addControl(layer.arcIdentifyControls[layerIdIndex]);
