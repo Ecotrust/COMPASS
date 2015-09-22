@@ -256,14 +256,13 @@ function layerModel(options, parent) {
         } else {
           url = self.url;
         }
+        app.viewModel.loadingLayers.push(self.id);
         $.ajax({
             dataType: "jsonp",
-            //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/legend/?f=pjson
-            //Todo: Need to handle featureServers - will need new logic to pick apart 'drawingInfo'
-                // http://services.arcgis.com/uUvqNMGPm7axC2dD/arcgis/rest/services/ODFW_CHData_CompiledCH/FeatureServer/0?f=json
             url: url,
             type: 'GET',
             success: function(data) {
+                app.viewModel.loadingLayers.remove(self.id);
                 if (data.layers) {
                     self.legend = {'layers': []};
                     $.each(data.layers, function(i, layerobj) {
@@ -298,9 +297,6 @@ function layerModel(options, parent) {
                 } else if (data.drawingInfo && data.drawingInfo.renderer){
                   self.stylemap = self.esriRendererToOLStyleMap(data.drawingInfo.renderer);
                   self.legend = self.renderStyleToLegend(self.stylemap);
-                  // TODO : set create self.legendDiv
-                } else {
-                    // debugger;
                 }
                 if (data.fields) {
                   self.fieldMap = {}
@@ -311,7 +307,7 @@ function layerModel(options, parent) {
                 }
             },
             error: function(error) {
-                // debugger;
+              app.viewModel.loadingLayers.remove(self.id);
             }
         });
     }
@@ -340,19 +336,6 @@ function layerModel(options, parent) {
         self.overview = parent.description;
     } else {
         self.overview = null;
-    }
-
-    // if no description is provided, try using the web services description
-    if ( !self.overview && self.url && (self.arcgislayers !== -1) ) {
-        var url = self.url.replace('/export', '/'+self.arcgislayers) + '?f=pjson';
-        $.ajax({
-            dataType: "jsonp",
-            url: url,
-            type: 'GET',
-            success: function(data) {
-                self.overview = data.description;
-            }
-        });
     }
 
     // set data source and data notes text
@@ -1102,6 +1085,28 @@ function viewModel() {
 
     // list of active layermodels
     self.activeLayers = ko.observableArray();
+
+    self.loadingLayers = ko.observableArray();
+
+    self.loadingLayers.subscribe( function() {
+      if (self.loadingLayers().length > 0) {
+        if (self.spinnerList().indexOf('loadingLayers') == -1) {
+          self.spinnerList.push('loadingLayers');
+        }
+      } else {
+        self.spinnerList.remove('loadingLayers');
+      }
+    });
+
+    self.spinnerList = ko.observableArray();
+
+    self.spinnerList.subscribe( function() {
+      if (self.spinnerList().length > 0) {
+        $('#loading').show();
+      } else {
+        $('#loading').hide();
+      }
+    });
 
     // list of visible layermodels in same order as activeLayers
     self.visibleLayers = ko.computed(function() {
