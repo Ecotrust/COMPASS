@@ -18,7 +18,8 @@ app.getState = function () {
         dls: layers.reverse(),
         basemap: app.map.baseLayer.name,
         themes: {ids: app.viewModel.getOpenThemeIDs()},
-        tab: $('#myTab').find('li.active').data('tab')
+        tab: $('#myTab').find('li.active').data('tab'),
+        print: app.viewModel.printMode()
         // legends: app.viewModel.showLegend() ? 'true': 'false',
         // layers: app.viewModel.showLayers() ? 'true': 'false'
         //and active tab
@@ -98,7 +99,7 @@ app.loadCompressedState = function(state) {
     }
 
     if (state.print === 'true') {
-        app.printMode();
+        app.setPrintMode();
     }
     if (state.borderless === 'true') {
         app.borderLess();
@@ -186,11 +187,12 @@ app.setMapPosition = function(x, y, z) {
 };
 
 // hide buttons and other features for printing
-app.printMode = function () {
+app.setPrintMode = function () {
     $('body').addClass('print');
+    app.viewModel.printMode(true);
     // TODO: I don't know why this works.
-    var iframeLegend = $('#legend-content').clone();
-    iframeLegend.appendTo('#map-wrapper');
+    // var iframeLegend = $('#legend-content').clone();
+    // iframeLegend.appendTo('#map-wrapper');
 };
 
 // also hide logo and rules
