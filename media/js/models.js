@@ -81,7 +81,11 @@ function layerModel(options, parent) {
         if (fillColor) {
           style.fillColor = fillColor;
           if (self.fillOpacity == 0) {
-            self.fillOpacity = 0.5;
+            if (self.opacity()) {
+              self.fillOpacity = self.opacity();
+            } else {
+              self.fillOpacity = 0.5;
+            }
           }
           style.fillOpacity = self.fillOpacity;
         } else {
