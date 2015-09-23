@@ -233,6 +233,7 @@ app.loadStateFromDefaultHash = function (default_hash) {
 
 // update the hash
 app.updateUrl = function () {
+  setTimeout(function(){
     var state = app.getState();
 
     // save the restore state
@@ -242,4 +243,5 @@ app.updateUrl = function () {
     window.location.hash = $.param(state);
     app.viewModel.currentURL(window.location.pathname + window.location.hash);
     app.state = state;
+  }, 10);
 };
