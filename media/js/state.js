@@ -45,7 +45,6 @@ app.establishLayerLoadState = function () {
             });
             if (status === true) {
                 app.layersAreLoaded = true;
-                //console.log('layers are loaded');
                 clearInterval(loadTimer);
             }
         }, 100);
@@ -71,8 +70,7 @@ app.loadCompressedState = function(state) {
                 isVisible = state.dls[x];
 
             if (app.viewModel.layerIndex[id]) {
-                app.viewModel.layerIndex[id].activateLayer();
-                app.addLayerToMap(app.viewModel.layerIndex[id]);
+                app.viewModel.layerIndex[id].activateLayer();   //IMPORTANT!
                 app.viewModel.layerIndex[id].opacity(parseFloat(opacity));
                 //must not be understanding something about js, but at the least the following seems to work now...
                 if (isVisible || !isVisible) {

@@ -464,6 +464,7 @@ app.init = function() {
 };
 
 app.addLayerToMap = function(layer) {
+    layer.addLegendToLayer();
     if (!layer.layer) {
         if (layer.utfurl || (layer.parent && layer.parent.utfurl)) {
             app.addUtfLayerToMap(layer);

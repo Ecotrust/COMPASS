@@ -28,7 +28,7 @@ app.viewModel.loadLayers = function(data) {
 				searchTerm = layer.name + ' (' + themeFixture.display_name + ')';
 			layer.themes.push(theme);
 			theme.layers.push(layer);
-            
+
 			if (!layer.subLayers.length) { //if the layer does not have sublayers
                 self.layerSearchIndex[searchTerm] = {
                     layer: layer,
@@ -44,14 +44,14 @@ app.viewModel.loadLayers = function(data) {
                             theme: theme
                         };
                     }
-				});  
+				});
                 layer.subLayers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
-			} 
+			}
 
 		});
         //sort by name
         theme.layers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
-        
+
 		self.themes.push(theme);
 	});
 	app.typeAheadSource = (function () {
@@ -63,11 +63,11 @@ app.viewModel.loadLayers = function(data) {
             }
             return keys;
     })();
-    
-    //re-initialise the legend scrollbar 
+
+    //re-initialise the legend scrollbar
     //if ( ! app.embeddedMap ) {
     if ( $(window).width() > 767 && !app.embeddedMap ) {
-        $('#legend-content').jScrollPane(); 
+        $('#legend-content').jScrollPane();
     }
 
 };
@@ -77,6 +77,7 @@ app.viewModel.loadLayersFromFixture = function() {
 
 
 app.viewModel.loadLayersFromServer = function() {
+		app.viewModel.spinnerList.push('loadLayersFromServer');
     var pathname = window.location.pathname,
         slug_name = pathname.substring(1, pathname.indexOf('/planner'));
     if (slug_name === '/') {

@@ -241,75 +241,77 @@ function layerModel(options, parent) {
       return legendObj;
     }
 
-    // if legend is not provided, try using legend from web services
-    if ( !self.legend && self.url && (self.arcgislayers !== -1) ) {
-        var url = '';
-        if (self.url.indexOf('/export') !== -1){
-          url = self.url.replace('/export', '/legend/?f=pjson');
-        } else if (self.url.indexOf('/MapServer/tile') !== -1){
-          url = self.url.split('/MapServer')[0] + '/MapServer/legend/?f=pjson';
-        } else if (self.url.indexOf('/FeatureServer') !== -1) {
-          url = self.url.split('/FeatureServer')[0] + '/FeatureServer/' + self.arcgislayers.split(',')[0] + '?f=json';
-          while (url.indexOf(' ') !== -1) {
-            url.replace(' ','');
-          }
-        } else {
-          url = self.url;
-        }
-        app.viewModel.loadingLayers.push(self.id);
-        $.ajax({
-            dataType: "jsonp",
-            url: url,
-            type: 'GET',
-            success: function(data) {
-                app.viewModel.loadingLayers.remove(self.id);
-                if (data.layers) {
-                    self.legend = {'layers': []};
-                    $.each(data.layers, function(i, layerobj) {
-                        if (parseInt(layerobj.layerId, 10) in self.arcgislayers.split(',')) {
-                            var layerLegend = {
-                              'title': layerobj.layerName,
-                              'elements': []
-                            };
-                            $.each(layerobj.legend, function(j, legendobj) {
-
-                                //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/13/images/94ed037ab533027972ba3fc4a7c9d05c
-                                var swatchUrl = "", label = "";
-                                if (self.url.indexOf('/export') !== -1) {
-                                  swatchURL = self.url.replace('/export', '/'+ layerobj.layerId +'/images/'+legendobj.url),
-                                      label = legendobj.label;
-                                } else if (self.url.indexOf('/MapServer/tile/') !== -1) {
-                                  swatchURL = self.url.split('/MapServer')[0] + '/MapServer/'+ layerobj.layerId +'/images/'+legendobj.url,
-                                      label = legendobj.label;
-                                }
-                                if (label === "") {
-                                    label = layerobj.layerName;
-                                }
-                                layerLegend.elements.push({'swatch': swatchURL, 'label': label});
-                            });
-                            self.legend.layers.push({'layer':layerLegend});
-                        }
-                    });
-                    //reset visibility (to reset activeLegendLayers)
-                    var visible = self.visible();
-                    self.visible(false);
-                    self.visible(visible);
-                } else if (data.drawingInfo && data.drawingInfo.renderer){
-                  self.stylemap = self.esriRendererToOLStyleMap(data.drawingInfo.renderer);
-                  self.legend = self.renderStyleToLegend(self.stylemap);
-                }
-                if (data.fields) {
-                  self.fieldMap = {}
-                  for (var fieldId in data.fields) {
-                    var field = data.fields[fieldId];
-                    self.fieldMap[field.name] = field.alias;
-                  }
-                }
-            },
-            error: function(error) {
-              app.viewModel.loadingLayers.remove(self.id);
+    self.addLegendToLayer = function() {
+      // if legend is not provided, try using legend from web services
+      if ( !self.legend && self.url && (self.arcgislayers !== -1) ) {
+          var url = '';
+          if (self.url.indexOf('/export') !== -1){
+            url = self.url.replace('/export', '/legend/?f=pjson');
+          } else if (self.url.indexOf('/MapServer/tile') !== -1){
+            url = self.url.split('/MapServer')[0] + '/MapServer/legend/?f=pjson';
+          } else if (self.url.indexOf('/FeatureServer') !== -1) {
+            url = self.url.split('/FeatureServer')[0] + '/FeatureServer/' + self.arcgislayers.split(',')[0] + '?f=json';
+            while (url.indexOf(' ') !== -1) {
+              url.replace(' ','');
             }
-        });
+          } else {
+            url = self.url;
+          }
+          app.viewModel.loadingLayers.push(self.id);
+          $.ajax({
+              dataType: "jsonp",
+              url: url,
+              type: 'GET',
+              success: function(data) {
+                  if (data.layers) {
+                      self.legend = {'layers': []};
+                      $.each(data.layers, function(i, layerobj) {
+                          if (parseInt(layerobj.layerId, 10) in self.arcgislayers.split(',')) {
+                              var layerLegend = {
+                                'title': layerobj.layerName,
+                                'elements': []
+                              };
+                              $.each(layerobj.legend, function(j, legendobj) {
+
+                                  //http://ocean.floridamarine.org/arcgis/rest/services/SAFMC/SAFMC_Regulations/MapServer/13/images/94ed037ab533027972ba3fc4a7c9d05c
+                                  var swatchUrl = "", label = "";
+                                  if (self.url.indexOf('/export') !== -1) {
+                                    swatchURL = self.url.replace('/export', '/'+ layerobj.layerId +'/images/'+legendobj.url),
+                                        label = legendobj.label;
+                                  } else if (self.url.indexOf('/MapServer/tile/') !== -1) {
+                                    swatchURL = self.url.split('/MapServer')[0] + '/MapServer/'+ layerobj.layerId +'/images/'+legendobj.url,
+                                        label = legendobj.label;
+                                  }
+                                  if (label === "") {
+                                      label = layerobj.layerName;
+                                  }
+                                  layerLegend.elements.push({'swatch': swatchURL, 'label': label});
+                              });
+                              self.legend.layers.push({'layer':layerLegend});
+                          }
+                      });
+                      //reset visibility (to reset activeLegendLayers)
+                      var visible = self.visible();
+                      self.visible(false);
+                      self.visible(visible);
+                  } else if (data.drawingInfo && data.drawingInfo.renderer){
+                    self.stylemap = self.esriRendererToOLStyleMap(data.drawingInfo.renderer);
+                    self.legend = self.renderStyleToLegend(self.stylemap);
+                  }
+                  if (data.fields) {
+                    self.fieldMap = {}
+                    for (var fieldId in data.fields) {
+                      var field = data.fields[fieldId];
+                      self.fieldMap[field.name] = field.alias;
+                    }
+                  }
+                  app.viewModel.loadingLayers.remove(self.id);
+              },
+              error: function(error) {
+                app.viewModel.loadingLayers.remove(self.id);
+              }
+          });
+      }
     }
 
     // set target blank for all links
