@@ -977,7 +977,8 @@ app.addVectorLayerToMap = function(layer) {
                   'outFields':'*',
                   'returnGeometry':true,
                   'f':'pgeojson',
-                  'geometry': JSON.stringify(getGeom())
+                  'geometry': JSON.stringify(getGeom()),
+                  'maxAllowableOffset': 100
                 }
             }),
             styleMap: styleMap,
