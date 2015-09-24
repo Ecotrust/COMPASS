@@ -3,7 +3,7 @@ app.hash = window.location.hash;
 
 app.onResize = function(percent) {
 
-  var height = $(window).height() * (percent || 0.855);
+  var height = $(window).height();
   var width = $(window).width();
   // when fullscreen be odd?
   if (height) {
@@ -11,11 +11,12 @@ app.onResize = function(percent) {
     if ( width > 767 && !app.embeddedMap ) {
         //$("#map").height(height);
         //$("#map-wrapper").height(height);
-        $(".tabs").height(height);
+        // $(".tabs").height(height);
         //$("#legend-wrapper").height(height - 20);
         $("#data-accordion").height(height - (($.browser.msie && $.browser.version < 9)? 130: 96));
         //$("#designs-accordion").height(height - 20 - (($.browser.msie && $.browser.version < 9)? 130: 96));
         //$("#active").height(height + 20 - (($.browser.msie && $.browser.version < 9)? 130: 96));
+        $('#myTabContent').height(height - 270);
     }
     app.map.render('map');
   }
