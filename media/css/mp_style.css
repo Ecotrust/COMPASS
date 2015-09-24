@@ -59,7 +59,7 @@ li a {
 
 }
 #data-accordion .jspContainer, .jspPane, .jspScrollable {
-	background: white!important;
+	background: white;
 }
 
 .navbar {
@@ -710,9 +710,13 @@ img + h3 {
 
 #legend-content {
   /*height: 94%;*/
-  margin-left:20px;
+  /*margin-left:20px;*/
   outline: none !important;
   height: 100%;"
+}
+
+#legend-content .legend-title {
+  padding-left: 20px;
 }
 
 #legend-accordion .accordion-toggle {

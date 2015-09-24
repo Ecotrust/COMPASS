@@ -28,7 +28,7 @@
         <link href="{{MEDIA_URL}}/assets/jquery/jquery.mCustomScrollbar.css" rel="stylesheet">
         <link href="{{MEDIA_URL}}/assets/jquery/jquery.jscrollpane.css" rel="stylesheet">
 
-        <link href="{{MEDIA_URL}}/ofr/css/ofr.css" rel="stylesheet">
+        <link href="{{MEDIA_URL}}/compass/css/compass.css" rel="stylesheet">
 
         {% if project_icon %}
         <link rel="shortcut icon" href="{{project_icon}}">
@@ -392,8 +392,8 @@
 
                               <!-- Header -->
                               <div id="data-panel-header">
-                                  <div class="row-fluid">
-                                      <div class="span12">
+                                  <div class="row-fluid header">
+                                      <div class="span12 brand">
                                           {% if project_home_page %}
                                           <a href="{{project_home_page}}" style="text-decoration: none" target="_blank">
                                           {% else %}
@@ -410,7 +410,6 @@
                                               {% endif %}
                                           </a>
                                           <h3 class="pull-right" data-bind="visible: mapTitle, text: mapTitle"></h3>
-                                          <i id="minimize-icon" class="icon-minus icon-large" data-bind="click: minimizeLeftPanel" style="cursor: pointer; position: absolute; top: 5px; right: 12px;"></i>
                                       </div>
                                       <div data-bind="visible: showBottomButtons()">
                                           <span style="position: absolute; bottom: 12px; left: 12px; z-index: 1;" class="btn-group">
@@ -455,11 +454,6 @@
                                   <li class="active" data-tab="data">
                                       <a href="#data" data-toggle="tab" id="dataTab">Data</a>
                                   </li>
-                                  {% if user.is_authenticated %}
-                                  <li data-tab="designs" data-bind="visible: enableDrawing()">
-                                      <a href="#designs" data-toggle="tab" id="designsTab">Designs</a>
-                                  </li>
-                                  {% endif %}
                                   <li data-tab="active" >
                                       <a href="#active" data-toggle="tab" id="activeTab">Active</a>
                                   </li>
@@ -475,7 +469,7 @@
                                   <!-- DATA TAB -->
                                   <div class="tab-pane active in fade" id="data" style="height: 100%">
                                       <!-- Search -->
-                                      <div class="row-fluid" style="padding: 10px 0px 20px 0px; height: 30px;">
+                                      <div class="row-fluid search-bar-row" >
                                           <div class="search-form span12">
                                               <form class="form-search" data-bind="submit: layerSearch" style="margin-left: auto; margin-right: auto; width: 80%; height: 0px">
                                                   <div class="span12" style="float: none;">
@@ -563,14 +557,8 @@
                                   </div>
                                   <!-- END DATA TAB -->
 
-                                  <!-- DESIGNS TAB -->
-                                  {% if user.is_authenticated %}
-                                    {% include "scenarios.html" %}
-                                  {% endif %}
-                                  <!-- END DESIGNS TAB -->
-
                                   <!-- ACTIVE TAB -->
-                                  <div class="tab-pane fade" id="active" style="background-color: white; height: 100%">
+                                  <div class="tab-pane fade" id="active">
                                       <div class="row-fluid" style="height: 100%">
                                           <div id="active-content" class="span12" style="height: 100%;">
                                               <div data-bind="visible: activeLayers().length === 0">
@@ -611,7 +599,7 @@
                                   <!-- END ACTIVE TAB -->
 
                                   <!-- LEGEND TAB -->
-                                  <div class="tab-pane fade" id="legend" style="background-color: white; height: 100%">
+                                  <div class="tab-pane fade" id="legend">
                                       <div class="row-fluid" style="height: 100%">
 
                                           <div id="legend-content" class="accordion">

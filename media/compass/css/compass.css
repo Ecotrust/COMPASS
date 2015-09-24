@@ -10,7 +10,14 @@
 }
 
 .ofr .btn {
-	color: #00446D; /* 0, 68, 109 */
+	background-image: none;
+	text-shadow: none;
+	background-color: inherit;
+	border: none;
+	border-radius: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	color: white;
 }
 
 .ofr #login-buttons a {
@@ -51,7 +58,7 @@
 .ofr #create-new-button {
 	background-color: #10767D;  /* for IE */
 	background-color: rgba(16,118,125,1);
-	color: white;
+	color: black;
 }
 
 .ofr .form-search input {
@@ -65,7 +72,7 @@
 .ofr .nav-tabs > li a {
 	font-family: "bebas_neueregular";
 	font-size: 19px;
-	color: #00446D; /* 0, 68, 109 */
+	color: white; /* 0, 68, 109 */
 }
 
 .ofr .sidebar-nav .nav-tabs a {
@@ -75,20 +82,25 @@
 .ofr .sidebar-nav .nav-tabs li.active a, .ofr .sidebar-nav .nav-tabs li.active:hover a {
 	border: 0;
 	border-bottom: 2px solid #2d8998;
-	background-color: inherit;
+	background-color: #737562;
 }
 
 .ofr .sidebar-nav .nav-tabs li:hover a {
 	border: 0;
-	color: #EF3824; /* 239, 56, 36 */
+	color: #111; /* 239, 56, 36 */
+	background-color: white;
 }
 
 .ofr .nav > li > a:hover, .ofr .nav > li > a:focus {
 	background-color: inherit;
 }
 
+.nav-tabs {
+	border-bottom: 1px solid #737562;
+}
+
 .ofr .nav-tabs > li.active a {
-	color: #EF3824; /* 239, 56, 36 */
+	color: white; /* 239, 56, 36 */
 }
 
 .ofr .accordion-group .active span {
@@ -98,6 +110,7 @@
 .ofr .accordion-toggle span {
 	font-family: "bebas_neueregular";
 	font-size: 18px;
+	color: white;
 }
 
 .ofr .create-new-button span {
@@ -107,10 +120,19 @@
 
 .ofr .accordion-heading.active {
 	font-weight: inherit;
+	background-color: white;
+}
+.ofr .accordion-heading.active .accordion-toggle span,
+.ofr .accordion-heading.active .create-new-button * {
+	color: #111;
 }
 
-.ofr .accordion-inner .btn:hover, .ofr .accordion-inner .btn:focus {
-	color: #00446D; /* 0, 68, 109 */
+.ofr .btn:hover, .ofr .btn:focus {
+	color: white; /* 0, 68, 109 */
+}
+
+.ofr .btn:hover, .ofr .btn:hover * {
+	text-decoration: underline;
 }
 
 .ofr #active .btn-group .btn-layer {
@@ -340,6 +362,58 @@
 	z-index: 751 !important;
 }
 
+.header .brand {
+	background-color: #005130;
+}
+
+.header .brand img {
+	background-color: white;
+	padding: 8px;
+	border-radius: 10px;
+}
+
+.sidebar-nav {
+	background-color: #404041;
+	border: none;
+}
+
+.search-bar-row {
+  padding: 10px 0px 5px 0px;
+  height: 30px;
+}
+
+#data-accordion .jspContainer, .jspPane, .jspScrollable {
+	background: #404041;
+	width: 100% !important;
+}
+
+#data-accordion .accordion-group, #designs-accordion .accordion-group {
+	border: none;
+}
+
+.accordion-heading.active, .active .accordion-body {
+	/*margin-left: -1px;*/
+	/*font-weight: bold;*/
+	background-color: #737562;
+	color: white;
+}
+
+.accordion-heading:hover {
+	background-color: white;
+}
+
+.accordion-heading:hover .accordion-toggle span,
+.accordion-heading:hover .create-new-button * {
+	color: #111;
+}
+
+#myTabContent .accordion-inner {
+	background-color: #737562;
+}
+
+#myTabContent a {
+	color: white;
+}
 
 @font-face {
     font-family: 'bebas_neueregular';
