@@ -236,11 +236,13 @@ body {
 }
 
 .ofr #aggregated-attribute-overlay {
-	background: white; /* for IE8 */
-	background: rgba(255,255,255, 0.95);
-	color: #00446D;
+	background: none;
 	top: 250px;
 	right: 12px;
+}
+
+body.print #aggregated-attribute-overlay {
+	top: 12px;
 }
 
 .ofr #aggregated-attribute-overlay > div {
@@ -468,7 +470,7 @@ body {
 
 #aggregated-attribute-content .accordion-heading {
 	padding: 1px;
-	margin-top: 5px;
+	margin-top: 0;
 	padding-left: 10px;
 }
 
@@ -523,6 +525,16 @@ body {
 #aggregated-attribute-content .accordion-heading.layer-attr-init h5,
 .accordion-heading:hover h5 {
 	color: #111;
+}
+
+#aggregated-attribute-overlay > div {
+	border-radius: 0;
+	padding: 30px 0 0 0;
+}
+
+.ofr #aggregated-attribute-content .mCustomScrollBox {
+	margin-right: 0;
+	left: 0;
 }
 
 .jspTrack {
