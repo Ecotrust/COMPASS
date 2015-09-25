@@ -10,11 +10,11 @@ body {
 
 .ofr h1, .ofr h2, .ofr h3, .ofr h4 {
 	font-family: "bebas_neueregular";
-	color: #20767D;
+	color: white;
 }
 
 .ofr a {
-	color: #00446D; /* 0, 68, 109 */
+	color: white; /* 0, 68, 109 */
 }
 
 .ofr .btn {
@@ -244,16 +244,15 @@ body {
 }
 
 .ofr #aggregated-attribute-overlay > div {
-	background: white; /* for IE8 */
-	background: rgba(255,255,255, 0.99);
+	background: #404041;
 }
 
 .ofr #aggregated-attribute-overlay .mCSB_dragger_bar {
-	background: #20767D;
+	background: #A0A0A0;
 }
 
 .ofr #overview-overlay .mCSB_dragger_bar {
-	background: #20767D;
+	background: #A0A0A0;
 }
 
 /*.ofr #basemaps {
@@ -461,7 +460,9 @@ body {
 }
 
 .accordion-heading:hover .accordion-toggle span,
-.accordion-heading:hover .create-new-button * {
+.accordion-heading:hover .create-new-button *,
+.accordion-heading:hover h4,
+.accordion-heading:hover h5 {
 	color: #111;
 }
 
@@ -480,6 +481,34 @@ body {
 
 #legend-content .accordion-inner svg {
 	margin-top: 15px;
+}
+
+#aggregated-attribute-content {
+	background-color: #404041;
+	color: white;
+}
+
+#aggregated-attribute-content .accordion-heading {
+	padding: 1px;
+	margin-top: 5px;
+	padding-left: 10px;
+}
+
+#aggregated-attribute-content .mCSB_container {
+	padding: 0;
+}
+
+#aggregated-attribute-content .accordion-body {
+	padding-left: 10px;
+	background-color: #737562;
+}
+
+.jspTrack {
+	background-color: white !important;
+}
+
+.jspDrag {
+	background-color: #A0A0A0 !important;
 }
 
 @font-face {
