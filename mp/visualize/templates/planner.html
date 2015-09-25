@@ -229,7 +229,7 @@
                                           <div data-bind="foreach: attributeLayers()">
                                               <div class="accordion-group">
                                                   <div data-bind="if: $root.aggregatedAttributes()[name]">
-                                                      <div class="accordion-heading" data-bind="click: toggleLayerAttribution">
+                                                      <div class="accordion-heading layer-attr-init" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
                                                           <a class="accordion-toggle">
                                                               <h4 data-bind="text: featureAttributionName"></h4>
                                                               <h5 data-bind="text: description"></h5>

@@ -798,12 +798,17 @@ function layerModel(options, parent) {
     self.showingLayerAttribution = ko.observable(true);
     self.toggleLayerAttribution = function() {
         var layerID = '#' + app.viewModel.convertToSlug(self.name);
+        var layerHeaderID = layerID + '-header';
         if ( self.showingLayerAttribution() ) {
             self.showingLayerAttribution(false);
             $(layerID).css('display', 'none');
+            $(layerHeaderID).removeClass('layer-attr-init');
+            $(layerHeaderID).addClass('layer-attr-collapse');
         } else {
             self.showingLayerAttribution(true);
             $(layerID).css('display', 'block');
+            $(layerHeaderID).removeClass('layer-attr-collapse');
+            $(layerHeaderID).addClass('layer-attr-init');
         }
         //update scrollbar
         app.viewModel.updateAggregatedAttributesOverlayScrollbar();

@@ -444,28 +444,6 @@ body {
 	width: 100% !important;
 }
 
-#data-accordion .accordion-group, #designs-accordion .accordion-group {
-	border: none;
-}
-
-.accordion-heading.active, .active .accordion-body {
-	/*margin-left: -1px;*/
-	/*font-weight: bold;*/
-	background-color: #737562;
-	color: white;
-}
-
-.accordion-heading:hover {
-	background-color: white;
-}
-
-.accordion-heading:hover .accordion-toggle span,
-.accordion-heading:hover .create-new-button *,
-.accordion-heading:hover h4,
-.accordion-heading:hover h5 {
-	color: #111;
-}
-
 #myTabContent .accordion-inner {
 	background-color: #737562;
 }
@@ -501,6 +479,50 @@ body {
 #aggregated-attribute-content .accordion-body {
 	padding-left: 10px;
 	background-color: #737562;
+}
+
+
+#data-accordion .accordion-group, #designs-accordion .accordion-group {
+	border: none;
+}
+
+.accordion-heading.active, .active .accordion-body {
+	/*margin-left: -1px;*/
+	/*font-weight: bold;*/
+	background-color: #737562;
+	color: white;
+}
+
+#aggregated-attribute-content .accordion-heading.layer-attr-init:hover,
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse {
+	background-color: #404041;
+}
+
+#aggregated-attribute-content .accordion-heading.layer-attr-init:hover h4,
+#aggregated-attribute-content .accordion-heading.layer-attr-init:hover h5,
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse h4,
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse h5 {
+	color: white;
+}
+
+.ofr #map .olButton:hover,
+#aggregated-attribute-content .accordion-heading.layer-attr-init,
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse:hover,
+.accordion-heading:hover,
+.layer-attr-init {
+	background-color: white;
+}
+
+.ofr #map .olButton:hover,
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse:hover h4,
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse:hover h5,
+.accordion-heading:hover .accordion-toggle span,
+.accordion-heading:hover .create-new-button *,
+#aggregated-attribute-content .accordion-heading.layer-attr-init h4,
+.accordion-heading:hover h4,
+#aggregated-attribute-content .accordion-heading.layer-attr-init h5,
+.accordion-heading:hover h5 {
+	color: #111;
 }
 
 .jspTrack {
