@@ -91,6 +91,10 @@ body {
 	color: white; /* 0, 68, 109 */
 }
 
+.ofr #legendTab a {
+	color: #005130;
+}
+
 .ofr .sidebar-nav .nav-tabs a {
 	border: 0;
 }
@@ -217,7 +221,10 @@ body {
 }
 
 .ofr .olControlAttribution {
-	width: 46%;
+	max-width: 46%;
+	width: auto;
+	display: table;
+	padding-right: 10px;
 }
 
 .ofr #overview-overlay {
@@ -388,8 +395,9 @@ body.print #aggregated-attribute-overlay {
 	margin: 10px auto 10px auto;
 }
 
+#legend-bottom-wrapper .nav-tabs > li.active a,
 .ofr .legend-title {
-	color: #20767D;
+	color: #005130;
 	/* color: #00446D; */
 }
 
@@ -461,6 +469,10 @@ body.print #aggregated-attribute-overlay {
 
 #legend-content .accordion-inner svg {
 	margin-top: 15px;
+}
+
+.legend-inner {
+	color: #111;
 }
 
 #aggregated-attribute-content {
