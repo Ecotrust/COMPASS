@@ -91,6 +91,7 @@ body {
 	color: white; /* 0, 68, 109 */
 }
 
+#loading > h2,
 .ofr #legendTab a {
 	color: #005130;
 }
