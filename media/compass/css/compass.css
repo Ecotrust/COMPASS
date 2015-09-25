@@ -557,6 +557,14 @@ body.print #aggregated-attribute-overlay {
 	background-color: #A0A0A0 !important;
 }
 
+#map-wrapper {
+	margin-left: 370px;
+}
+
+body.print #map-wrapper {
+	margin-left: 0;
+}
+
 @font-face {
     font-family: 'bebas_neueregular';
     src: url('../fonts/bebasneue-webfont.eot');
