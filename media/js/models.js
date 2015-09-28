@@ -1176,6 +1176,14 @@ function viewModel() {
     // boolean flag determining whether or not to show layer panel
     self.showLayers = ko.observable(true);
 
+    self.showLayers.subscribe( function () {
+      if (self.showLayers()) {
+        $('#map-wrapper').css('margin-left', 370);
+      } else {
+        $('#map-wrapper').css('margin-left', 0);
+      }
+    });
+
     self.showLayersText = ko.computed(function() {
         if (self.showLayers()) return "Hide Layers";
         else return "Show Layers";
