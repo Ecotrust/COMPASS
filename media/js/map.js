@@ -917,11 +917,21 @@ app.addVectorLayerToMap = function(layer) {
         } else if (!layerModel.visible() || !layerModel.loaded) {
             layer.loaded = true;
             setGeom(layer);
-            layerModel.deactivateLayer();
-            layerModel.activateLayer();
             ret.object.redraw();
         } else {
           ret.object.redraw();
+        }
+
+        if (app.viewModel.vectorLayersLoading().length != 0) {
+          app.viewModel.vectorLayersLoading.remove(layerModel.name);
+          if (app.viewModel.vectorLayersLoading().length == 0) {
+            // if slow-loading vector layers were added and are now all loaded:
+            //swap layer order, then undo, with 50ms timeout to make sure that we don't jump the gun.
+            setTimeout(function() {
+              app.viewModel.activeLayers()[0].lowerLayer(app.viewModel.activeLayers()[0], false);
+              app.viewModel.activeLayers()[0].lowerLayer(app.viewModel.activeLayers()[0], false);
+            }, 50);
+          }
         }
         layerModel.selectControl.activate();
     }
@@ -987,6 +997,7 @@ app.addVectorLayerToMap = function(layer) {
             layerModel: layer
         }
     );
+    app.viewModel.vectorLayersLoading.push(layer.name);
     layer.layer.events.on({"loadend": vectorLoadEndListener});
 
     layer.selectControl = new OpenLayers.Control.SelectFeature(

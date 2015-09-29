@@ -750,22 +750,32 @@ function layerModel(options, parent) {
             // already at top
             return;
         }
-        $(event.target).closest('tr').fadeOut('fast', function() {
-            app.viewModel.activeLayers.remove(layer);
-            app.viewModel.activeLayers.splice(current - 1, 0, layer);
-        });
+        if (event) {
+          $(event.target).closest('tr').fadeOut('fast', function() {
+              app.viewModel.activeLayers.remove(layer);
+              app.viewModel.activeLayers.splice(current - 1, 0, layer);
+          });
+        } else {
+          app.viewModel.activeLayers.remove(layer);
+          app.viewModel.activeLayers.splice(current + 1, 0, layer);
+        }
     };
 
     self.lowerLayer = function(layer, event) {
         var current = app.viewModel.activeLayers.indexOf(layer);
         if (current === app.viewModel.activeLayers().length) {
-            // already at top
+            // already at bottom
             return;
         }
-        $(event.target).closest('tr').fadeOut('fast', function() {
-            app.viewModel.activeLayers.remove(layer);
-            app.viewModel.activeLayers.splice(current + 1, 0, layer);
-        });
+        if (event) {
+          $(event.target).closest('tr').fadeOut('fast', function() {
+              app.viewModel.activeLayers.remove(layer);
+              app.viewModel.activeLayers.splice(current + 1, 0, layer);
+          });
+        } else {
+          app.viewModel.activeLayers.remove(layer);
+          app.viewModel.activeLayers.splice(current + 1, 0, layer);
+        }
     };
 
     self.isTopLayer = function(layer) {
@@ -1860,6 +1870,8 @@ function viewModel() {
             //search($(this).text());
         });
     };
+
+    self.vectorLayersLoading = ko.observableArray();
 
     // do this stuff when the active layers change
     self.activeLayers.subscribe(function() {
