@@ -440,6 +440,20 @@ body.print #aggregated-attribute-overlay {
 	border-radius: 10px;
 }
 
+.brand h2 {
+	margin: auto;
+	display: table;
+	color: #fff;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 33px;
+	letter-spacing: 0.08em;
+	line-height: 63px;
+	text-align: center;
+	text-transform: uppercase;
+	width: 16.6667%;
+
+}
+
 .sidebar-nav {
 	background-color: #404041;
 	border: none;
