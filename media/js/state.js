@@ -4,26 +4,33 @@ app.saveStateMode = true;
 
 // save the state of app
 app.getState = function () {
-    var center = app.map.getCenter().transform(
-            new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326")),
-                layers = $.map(app.viewModel.activeLayers(), function(layer) {
-                    //return {id: layer.id, opacity: layer.opacity(), isVisible: layer.visible()};
-                    return [ layer.id, layer.opacity(), layer.visible() ];
-                });
-    return {
-        x: center.lon.toFixed(2),
-        y: center.lat.toFixed(2),
-        z: app.map.getZoom(),
-        logo: app.viewModel.showLogo(),
-        dls: layers.reverse(),
-        basemap: app.map.baseLayer.name,
-        themes: {ids: app.viewModel.getOpenThemeIDs()},
-        tab: $('#myTab').find('li.active').data('tab'),
-        print: app.viewModel.printMode()
-        // legends: app.viewModel.showLegend() ? 'true': 'false',
-        // layers: app.viewModel.showLayers() ? 'true': 'false'
-        //and active tab
-    };
+    if (app.map.getCenter()) {
+
+        var center = app.map.getCenter().transform(
+                new OpenLayers.Projection("EPSG:900913"), new OpenLayers.Projection("EPSG:4326")),
+                    layers = $.map(app.viewModel.activeLayers(), function(layer) {
+                        //return {id: layer.id, opacity: layer.opacity(), isVisible: layer.visible()};
+                        return [ layer.id, layer.opacity(), layer.visible() ];
+                    });
+        return {
+            x: center.lon.toFixed(2),
+            y: center.lat.toFixed(2),
+            z: app.map.getZoom(),
+            logo: app.viewModel.showLogo(),
+            dls: layers.reverse(),
+            basemap: app.map.baseLayer.name,
+            themes: {ids: app.viewModel.getOpenThemeIDs()},
+            tab: $('#myTab').find('li.active').data('tab'),
+            print: app.viewModel.printMode()
+            // legends: app.viewModel.showLegend() ? 'true': 'false',
+            // layers: app.viewModel.showLayers() ? 'true': 'false'
+            //and active tab
+        };
+    } else {
+      var ret = setTimeout(function() { return app.getState();}, 50);
+      return ret;
+    }
+
 };
 
 $(document).on('map-ready', function () {
@@ -51,6 +58,45 @@ app.establishLayerLoadState = function () {
     }
 
 };
+
+app.displayActiveTab = function (state) {
+  // active tab -- the following prevents theme and data layers from loading in either tab (not sure why...disbling for now)
+  // it appears the dataTab show in state.themes above was causing the problem...?
+  // timeout worked, but then realized that removing datatab show from above worked as well...
+  // Reinstating the timeout which seems to fix the toggling between tours issue (toggling to ActiveTour while already in ActiveTab)
+  if (state.tab && state.tab === "active") {
+      setTimeout( function() {
+        $('#active').addClass('active');
+        $('#active').addClass('in');
+        $('#activeTab').tab('show');
+        $('#legend').removeClass('in');
+        $('#legend').removeClass('active');
+        $('#data').removeClass('in');
+        $('#data').removeClass('active');
+      }, 500 );
+  } else if (state.tab && state.tab === "legend") {
+      setTimeout( function() {
+        $('#legend').addClass('active');
+        $('#legend').addClass('in');
+        $('#legendTab').tab('show');
+        $('#active').removeClass('in');
+        $('#active').removeClass('active');
+        $('#data').removeClass('in');
+        $('#data').removeClass('active');
+      }, 500 );
+  } else {
+      setTimeout( function() {
+        $('#data').addClass('active');
+        $('#data').addClass('in');
+        $('#dataTab').tab('show');
+        $('#active').removeClass('in');
+        $('#active').removeClass('active');
+        $('#legend').removeClass('in');
+        $('#legend').removeClass('active');
+      }, 500 );
+  }
+}
+
 // load compressed state (the url was getting too long so we're compressing it
 app.loadCompressedState = function(state) {
     // turn off active laters
@@ -130,19 +176,7 @@ app.loadCompressedState = function(state) {
         state.tab = "data";
     }
 
-    // active tab -- the following prevents theme and data layers from loading in either tab (not sure why...disbling for now)
-    // it appears the dataTab show in state.themes above was causing the problem...?
-    // timeout worked, but then realized that removing datatab show from above worked as well...
-    // Reinstating the timeout which seems to fix the toggling between tours issue (toggling to ActiveTour while already in ActiveTab)
-    if (state.tab && state.tab === "active") {
-        setTimeout( function() { $('#activeTab').tab('show'); }, 300 );
-    } else if (state.tab && state.tab === "designs") {
-        setTimeout( function() { $('#designsTab').tab('show'); }, 300 );
-    } else if (state.tab && state.tab === "legend") {
-        setTimeout( function() { $('#legendTab').tab('show'); }, 300 );
-    } else {
-        setTimeout( function() { $('#dataTab').tab('show'); }, 300 );
-    }
+    app.displayActiveTab(state);
 
     if ( state.legends && state.legends === 'true' ) {
         app.viewModel.showLegend(true);

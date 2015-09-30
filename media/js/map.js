@@ -917,7 +917,12 @@ app.addVectorLayerToMap = function(layer) {
         } else if (!layerModel.visible() || !layerModel.loaded) {
             layer.loaded = true;
             setGeom(layer);
-            ret.object.redraw();
+            try {
+              ret.object.redraw();
+            } catch (err) {
+              console.log('Error redrawing vector layer:');
+              console.log(err.toString());
+            }
         } else {
           ret.object.redraw();
         }
@@ -934,6 +939,7 @@ app.addVectorLayerToMap = function(layer) {
           }
         }
         layerModel.selectControl.activate();
+        app.displayActiveTab(app.getState());
     }
 
     getGeom = function(layer) {
