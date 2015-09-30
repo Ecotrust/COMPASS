@@ -174,21 +174,34 @@ $(document).ready(function() {
     app.viewModel.showBottomButtons(true);
     app.viewModel.updateScrollBars();
     app.viewModel.showLegend(false);
+    $('#active').removeClass('in');
+    $('#active').removeClass('active');
+    $('#legend').removeClass('in');
+    $('#legend').removeClass('active');
+    $('#data').addClass('active');
+    $('#data').addClass('in');
   });
   $('#activeTab[data-toggle="tab"]').on('shown', function(e) {
     app.viewModel.showBottomButtons(true);
     app.viewModel.updateScrollBars();
     app.viewModel.showLegend(false);
-  });
-  $('#designsTab[data-toggle="tab"]').on('shown', function(e) {
-    app.viewModel.showBottomButtons(false);
-    app.viewModel.updateAllScrollBars();
-    setTimeout(function() {$('.group-members-popover').popover({html: true, trigger: 'hover', container: 'body'});}, 2000);
+    $('#legend').removeClass('in');
+    $('#legend').removeClass('active');
+    $('#data').removeClass('in');
+    $('#data').removeClass('active');
+    $('#active').addClass('active');
+    $('#active').addClass('in');
   });
   $('#legendTab[data-toggle="tab"]').on('shown', function(e) {
     app.viewModel.showBottomButtons(true);
     app.viewModel.showLegend(true);
     app.viewModel.updateScrollBars();
+    $('#active').removeClass('in');
+    $('#active').removeClass('active');
+    $('#data').removeClass('in');
+    $('#data').removeClass('active');
+    $('#legend').addClass('active');
+    $('#legend').addClass('in');
   });
 
   //the following appears to handle the bookmark sharing, while the earlier popover activation handles the design sharing

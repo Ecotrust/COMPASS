@@ -936,10 +936,11 @@ app.addVectorLayerToMap = function(layer) {
               app.viewModel.activeLayers()[0].lowerLayer(app.viewModel.activeLayers()[0], false);
               app.viewModel.activeLayers()[0].lowerLayer(app.viewModel.activeLayers()[0], false);
             }, 50);
+            //Force the correct tab to show
+            app.displayActiveTab(app.getState());
           }
         }
         layerModel.selectControl.activate();
-        app.displayActiveTab(app.getState());
     }
 
     getGeom = function(layer) {

@@ -65,35 +65,11 @@ app.displayActiveTab = function (state) {
   // timeout worked, but then realized that removing datatab show from above worked as well...
   // Reinstating the timeout which seems to fix the toggling between tours issue (toggling to ActiveTour while already in ActiveTab)
   if (state.tab && state.tab === "active") {
-      setTimeout( function() {
-        $('#active').addClass('active');
-        $('#active').addClass('in');
         $('#activeTab').tab('show');
-        $('#legend').removeClass('in');
-        $('#legend').removeClass('active');
-        $('#data').removeClass('in');
-        $('#data').removeClass('active');
-      }, 500 );
   } else if (state.tab && state.tab === "legend") {
-      setTimeout( function() {
-        $('#legend').addClass('active');
-        $('#legend').addClass('in');
         $('#legendTab').tab('show');
-        $('#active').removeClass('in');
-        $('#active').removeClass('active');
-        $('#data').removeClass('in');
-        $('#data').removeClass('active');
-      }, 500 );
   } else {
-      setTimeout( function() {
-        $('#data').addClass('active');
-        $('#data').addClass('in');
         $('#dataTab').tab('show');
-        $('#active').removeClass('in');
-        $('#active').removeClass('active');
-        $('#legend').removeClass('in');
-        $('#legend').removeClass('active');
-      }, 500 );
   }
 }
 
@@ -176,7 +152,9 @@ app.loadCompressedState = function(state) {
         state.tab = "data";
     }
 
-    app.displayActiveTab(state);
+    if (state.tab && app.getState().tab) {
+        app.displayActiveTab(state);
+    }
 
     if ( state.legends && state.legends === 'true' ) {
         app.viewModel.showLegend(true);

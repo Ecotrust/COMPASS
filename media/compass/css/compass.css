@@ -455,6 +455,12 @@ body.print #aggregated-attribute-overlay {
 	width: 100% !important;
 }
 
+#myTabContent {
+	background-image: url('/media/img/ajax-loader.gif');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
 #myTabContent .accordion-inner {
 	background-color: #737562;
 }
