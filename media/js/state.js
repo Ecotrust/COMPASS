@@ -73,6 +73,25 @@ app.displayActiveTab = function (state) {
   }
 }
 
+app.getScopeBounds = function(scope) {
+  //list of known scopes
+    //represented as [left, bottom, right, top]
+  var scopes = {
+    'OR': [-124.7,41.8,-116.3,46.3], //Oregon State
+    'CP': [-121.5,44.7,-118.0,46] //Columbia Plateau
+  }
+
+  var bounds_array = [];
+  if (scopes.hasOwnProperty(scope.toUpperCase())) {
+    bounds_array = scopes[scope.toUpperCase()];
+  } else {
+    bounds_array = scopes['OR'];
+  }
+
+  var bounds = new OpenLayers.Bounds(bounds_array);
+  return bounds;
+}
+
 // load compressed state (the url was getting too long so we're compressing it
 app.loadCompressedState = function(state) {
     // turn off active laters
@@ -177,7 +196,14 @@ app.loadCompressedState = function(state) {
 
     // Google.v3 uses EPSG:900913 as projection, so we have to
     // transform our coordinates
-    app.setMapPosition(state.x, state.y, state.z);
+    if (state.hasOwnProperty('scope')) {
+      var bounds = app.getScopeBounds(state.scope);
+      //Bounds should come in as EPSG:4326, let's convert to 900913
+      bounds.transform(new OpenLayers.Projection('EPSG:4326'),new OpenLayers.Projection('EPSG:900913'));
+      app.map.zoomToExtent(bounds);
+    } else {
+      app.setMapPosition(state.x, state.y, state.z);
+    }
     //app.map.setCenter(
     //    new OpenLayers.LonLat(state.x, state.y).transform(
     //        new OpenLayers.Projection("EPSG:4326"), new OpenLayers.Projection("EPSG:900913") ), state.z);
@@ -214,7 +240,7 @@ app.borderLess = function () {
 
 app.loadState = function(state) {
     var loadTimer;
-    if (state.z || state.login) {
+    if (state.z || state.login || state.scope) {
         return app.loadCompressedState(state);
     } else {
         var slug = Object.keys(state)[0],
