@@ -469,6 +469,10 @@ body.print #aggregated-attribute-overlay {
 	width: 100% !important;
 }
 
+.jspContainer {
+	background-color: #404041;
+}
+
 #myTabContent {
 	background-image: url('/media/img/ajax-loader.gif');
 	background-repeat: no-repeat;
