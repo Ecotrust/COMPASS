@@ -270,7 +270,7 @@ function layerModel(options, parent) {
                   if (data.layers) {
                       self.legend = {'layers': []};
                       $.each(data.layers, function(i, layerobj) {
-                          if (parseInt(layerobj.layerId, 10) in self.arcgislayers.split(',')) {
+                          if (self.arcgislayers.split(',').map(function(item) { return parseInt(item, 10);}).indexOf(parseInt(layerobj.layerId, 10)) >= 0) {
                               var layerLegend = {
                                 'title': layerobj.layerName,
                                 'elements': []
