@@ -735,6 +735,12 @@ app.queryEsriDataLayer = function(evt){
     var pixel_buffer = 1;
     var leftOffset = evt.object.map.div.offsetParent.offsetLeft;
     var topOffset = evt.object.map.div.offsetParent.offsetTop;
+    if (!evt.hasOwnProperty('x')) {
+      evt.x = evt.clientX;
+    }
+    if (!evt.hasOwnProperty('y')) {
+      evt.y = evt.clientY;
+    }
     var px = new OpenLayers.Pixel(evt.x-leftOffset,evt.y-topOffset);
     var nwpx = new OpenLayers.Pixel(evt.x-pixel_buffer-leftOffset,evt.y-pixel_buffer-topOffset);
     var sepx = new OpenLayers.Pixel(evt.x+pixel_buffer-leftOffset,evt.y+pixel_buffer-topOffset);
