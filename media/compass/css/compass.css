@@ -590,6 +590,32 @@ body.print #map-wrapper {
 	margin-left: 0;
 }
 
+#overview-accordion span,
+#overview-accordion div,
+#overview-accordion-text {
+	color: black;
+	font-size: 12px;
+	white-space: normal;
+	overflow-x: auto;
+}
+
+#overview-accordion .well {
+	padding: 10px;
+}
+
+#overview-accordion .well .btn {
+	border: 1px solid #cccccc;
+	border-radius: 4px;
+}
+
+.ofr #overview-accordion .well .btn:hover {
+	background-color: #cccccc;
+	border-color: #999999;
+}
+.ofr #overview-accordion .well .btn:hover * {
+	text-decoration: none;
+}
+
 @font-face {
     font-family: 'bebas_neueregular';
     src: url('../fonts/bebasneue-webfont.eot');

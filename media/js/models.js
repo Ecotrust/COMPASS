@@ -861,15 +861,19 @@ function layerModel(options, parent) {
         self.infoActive(true);
         if (layer.subLayers.length > 0) {
             $('#overview-overlay').height(195); // 195
+            $('#overview-accordion').height(195); // 195
         } else {
             $('#overview-overlay').height(app.OVERVIEW_OVERLAY_HEIGHT); // 186
+            $('#overview-accordion').height(app.OVERVIEW_OVERLAY_HEIGHT); // 186
         }
         if (app.viewModel.getOverviewText() === "") {
             $('#overview-overlay').height(88);
             $('#overview-overlay-text').height(0);
+            $('#overview-accordion').height(88);
+            $('#overview-accordion-text').height(0);
         }
         app.viewModel.showOverview(true);
-        app.viewModel.updateCustomScrollbar('#overview-overlay-text');
+        app.viewModel.updateCustomScrollbar('#overview-accordion-text');
         //app.viewModel.updateDropdownScrollbar('#overview-overlay-dropdown');
         //app.viewModel.hideMapAttribution();
     };

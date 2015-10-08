@@ -543,6 +543,99 @@
                                                                               </ul>
                                                                               <!-- /ko -->
                                                                               <!-- /ko -->
+
+
+                                                                              <div id="overview-accordion" class="row-fluid">
+                                                                                  <div id="overview-accordion-content" class="span10  well">
+                                                                                      <!--
+                                                                                      <div id="overview-accordion-header" >
+                                                                                          <span class="btn-group">
+                                                                                              <a id="overview-accordion-dropdown-button" class="btn dropdown-toggle" href="#" name="description-dropdown" data-bind="click: activateOverviewDropdown">
+                                                                                                  <span data-bind="text: name"></span>
+                                                                                                  <span class="caret"></span>
+                                                                                              </a>
+                                                                                              <ul id="overview-accordion-dropdown" class="dropdown-menu">
+                                                                                                  <li>
+                                                                                                      <a>
+                                                                                                          <span data-bind="text: name"></span>
+                                                                                                      </a>
+                                                                                                  </li>
+                                                                                                  <li data-bind="foreach: subLayers">
+                                                                                                      <a data-bind="click: toggleSublayerDescription">
+                                                                                                          <span data-bind="text: name"></span>
+                                                                                                      </a>
+                                                                                                  </li>
+                                                                                              </ul>
+
+                                                                                          </span>
+                                                                                          <div style="width: 90%;overflow: hidden;text-overflow: ellipsis;">
+
+                                                                                              <span style="white-space: nowrap" class="title" data-bind="text: name, visible: activeInfoLayer() && (!layer.subLayers || layer.subLayers.length == 0)"></span>
+
+                                                                                          </div>
+                                                                                          <span style="position: absolute; top: 8px; right: 8px"><a href="#" style="margin-left: 10px; opacity: .8;" class="btn btn-mini pull-right close" data-bind="click: closeDescription"> x </a> </span>
+                                                                                      </div>
+                                                                                      -->
+                                                                                      <div id="overview-accordion-text" style="margin-top: 5px">
+                                                                                          <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
+                                                                                          <div class="notes">
+                                                                                              <div data-bind="visible: data_source">
+                                                                                                  Source:
+                                                                                                  <span data-bind="text: data_source"></span>
+                                                                                              </div>
+                                                                                              <div style="margin-top: 5px" data-bind="visible: data_notes">
+                                                                                                  Notes:
+                                                                                                  <span data-bind="text: data_notes"></span>
+                                                                                              </div>
+                                                                                          </div>
+                                                                                      </div>
+
+                                                                                      <div id="overview-accordion-links">
+                                                                                        <span class="span11">
+                                                                                          <div class="text" style="margin-top: 5px">
+                                                                                              <span>
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
+                                                                                                      <span rel="tooltip" title="Download ESRI Formatted Dataset">
+                                                                                                          DATA
+                                                                                                      </span>
+                                                                                                  </a>
+                                                                                              </span>
+                                                                                      <!--
+                                                                                              <span>
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: ! activeMetadataLink() }, attr: { href: activeMetadataLink() }" target="_blank">
+                                                                                                      <span rel="tooltip" title="View the Metadata">
+                                                                                                          METADATA
+                                                                                                      </span>
+                                                                                                  </a>
+                                                                                              </span>
+                                                                                              <span>
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: ! activeSourceLink() }, attr: { href: activeSourceLink() }" target="_blank">
+                                                                                                      <span rel="tooltip" title="Link to Dataset Source Provider">
+                                                                                                          SOURCE
+                                                                                                      </span>
+                                                                                                  </a>
+                                                                                              </span>
+                                                                                              <span>
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: ! activeTilesLink() }, attr: { href: activeTilesLink() }" target="_blank">
+                                                                                                      <span rel="tooltip" title="Web Mapping Services">
+                                                                                                          WMS
+                                                                                                      </span>
+                                                                                                  </a>
+                                                                                              </span>
+                                                                                    -->
+                                                                                          </div>
+                                                                                        </span>
+                                                                                        <span class="span1"></span>
+                                                                                      </div>
+                                                                                  </div>
+                                                                              </div>
+
+
+
+
+
+
+
                                                                           </div>
                                                                       </li>
                                                                   </ul>
