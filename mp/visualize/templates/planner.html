@@ -600,29 +600,27 @@
                                                                                                       </span>
                                                                                                   </a>
                                                                                               </span>
-                                                                                      <!--
                                                                                               <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: ! activeMetadataLink() }, attr: { href: activeMetadataLink() }" target="_blank">
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (metadata == '' || metadata == null) }, attr: { href: metadata }" target="_blank">
                                                                                                       <span rel="tooltip" title="View the Metadata">
                                                                                                           METADATA
                                                                                                       </span>
                                                                                                   </a>
                                                                                               </span>
                                                                                               <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: ! activeSourceLink() }, attr: { href: activeSourceLink() }" target="_blank">
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (source == '' || source == null) }, attr: { href: source }" target="_blank">
                                                                                                       <span rel="tooltip" title="Link to Dataset Source Provider">
                                                                                                           SOURCE
                                                                                                       </span>
                                                                                                   </a>
                                                                                               </span>
                                                                                               <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: ! activeTilesLink() }, attr: { href: activeTilesLink() }" target="_blank">
+                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (tiles == '' || tiles == null) }, attr: { href: tiles }" target="_blank">
                                                                                                       <span rel="tooltip" title="Web Mapping Services">
                                                                                                           WMS
                                                                                                       </span>
                                                                                                   </a>
                                                                                               </span>
-                                                                                    -->
                                                                                           </div>
                                                                                         </span>
                                                                                         <span class="span1"></span>

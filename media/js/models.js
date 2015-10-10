@@ -362,7 +362,7 @@ function layerModel(options, parent) {
     self.tiles = options.tiles || null;
 
     if ( ! self.metadata ) {
-        if ( self.url && (self.arcgislayers !== -1) ) {
+        if ( self.url && (self.arcgislayers !== -1 && self.url.indexOf('/export') != -1))  {
             self.metadata = self.url.replace('/export', '/'+self.arcgislayers);
         }
     }
