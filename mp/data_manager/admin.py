@@ -1,12 +1,12 @@
 from django.contrib import admin
-from models import * 
+from models import *
 
 class TOCAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
 
 class TOCThemeAdmin(admin.ModelAdmin):
     list_display = ('display_name', 'name', 'TOC', 'id')
-    
+
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "layers":
             kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name')
@@ -26,7 +26,7 @@ class LayerAdmin(admin.ModelAdmin):
         'shareable_url',
         'proxy_url',
         # 'arcgis_layers',
-        'wms_slug',
+        # 'wms_slug',
         'sublayers',
         'themes',
         'is_sublayer',
@@ -79,4 +79,3 @@ admin.site.register(Layer, LayerAdmin)
 admin.site.register(AttributeInfo, AttributeInfoAdmin)
 admin.site.register(LookupInfo, LookupInfoAdmin)
 admin.site.register(DataNeed, DataNeedAdmin)
-
