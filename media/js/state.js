@@ -102,6 +102,21 @@ app.loadCompressedState = function(state) {
     $.each(activeLayers, function (index, layer) {
         layer.deactivateLayer();
     });
+
+    if (!state.hasOwnProperty('dls') || state.dls == null ) {
+      var mask_layer_id = false;
+      for (var i = 0; i < Object.keys(app.viewModel.layerIndex).length; i++) {
+        var key = Object.keys(app.viewModel.layerIndex)[i];
+        if (app.viewModel.layerIndex[key].name.toLowerCase() == 'oregon mask') {
+          mask_layer_id = key;
+          break;
+        }
+      }
+      if (mask_layer_id) {
+        state.dls = [true,0.5,mask_layer_id];
+      }
+    }
+
     // turn on the layers that should be active
     if (state.dls) {
         var unloadedDesigns = [];
