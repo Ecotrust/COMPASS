@@ -119,7 +119,7 @@ if (app.hash) {
   mapInit = {
     'latitude': app.state.y,
     'longitude': app.state.x,
-    'zoom': app.state.x
+    'zoom': app.state.z
   }
 } else if (app.MPSettings.default_hash) {
   app.loadStateFromDefaultHash(app.MPSettings.default_hash);
