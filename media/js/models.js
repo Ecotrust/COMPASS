@@ -849,11 +849,10 @@ function layerModel(options, parent) {
 
     // display descriptive text below the map
     self.toggleDescription = function(layer) {
-        if ( ! layer.infoActive() ) {
-            self.showDescription(layer);
-            app.viewModel.closeAttribution();
+        if ( ! $('#' + layer.id + '_overview').hasClass('in')) {
+          $('#' + layer.id + '_overview').addClass('in');
         } else {
-            self.hideDescription(layer);
+          $('#' + layer.id + '_overview').removeClass('in');
         }
     };
 
@@ -867,7 +866,7 @@ function layerModel(options, parent) {
             $('#overview-accordion').height(195); // 195
         } else {
             $('#overview-overlay').height(app.OVERVIEW_OVERLAY_HEIGHT); // 186
-            $('#overview-accordion').height(app.OVERVIEW_OVERLAY_HEIGHT); // 186
+            // $('#overview-accordion').height(app.OVERVIEW_OVERLAY_HEIGHT); // 186
         }
         if (app.viewModel.getOverviewText() === "") {
             $('#overview-overlay').height(88);

@@ -545,38 +545,9 @@
                                                                               <!-- /ko -->
 
 
-                                                                              <div id="overview-accordion" class="row-fluid">
-                                                                                  <div id="overview-accordion-content" class="span10  well">
-                                                                                      <!--
-                                                                                      <div id="overview-accordion-header" >
-                                                                                          <span class="btn-group">
-                                                                                              <a id="overview-accordion-dropdown-button" class="btn dropdown-toggle" href="#" name="description-dropdown" data-bind="click: activateOverviewDropdown">
-                                                                                                  <span data-bind="text: name"></span>
-                                                                                                  <span class="caret"></span>
-                                                                                              </a>
-                                                                                              <ul id="overview-accordion-dropdown" class="dropdown-menu">
-                                                                                                  <li>
-                                                                                                      <a>
-                                                                                                          <span data-bind="text: name"></span>
-                                                                                                      </a>
-                                                                                                  </li>
-                                                                                                  <li data-bind="foreach: subLayers">
-                                                                                                      <a data-bind="click: toggleSublayerDescription">
-                                                                                                          <span data-bind="text: name"></span>
-                                                                                                      </a>
-                                                                                                  </li>
-                                                                                              </ul>
-
-                                                                                          </span>
-                                                                                          <div style="width: 90%;overflow: hidden;text-overflow: ellipsis;">
-
-                                                                                              <span style="white-space: nowrap" class="title" data-bind="text: name, visible: activeInfoLayer() && (!layer.subLayers || layer.subLayers.length == 0)"></span>
-
-                                                                                          </div>
-                                                                                          <span style="position: absolute; top: 8px; right: 8px"><a href="#" style="margin-left: 10px; opacity: .8;" class="btn btn-mini pull-right close" data-bind="click: closeDescription"> x </a> </span>
-                                                                                      </div>
-                                                                                      -->
-                                                                                      <div id="overview-accordion-text" style="margin-top: 5px">
+                                                                              <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
+                                                                                  <div class="span10  well overview-accordion-content">
+                                                                                      <div class="overview-accordion-text" style="margin-top: 5px">
                                                                                           <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
                                                                                           <div class="notes">
                                                                                               <div data-bind="visible: data_source">
@@ -590,7 +561,7 @@
                                                                                           </div>
                                                                                       </div>
 
-                                                                                      <div id="overview-accordion-links">
+                                                                                      <div class="overview-accordion-links">
                                                                                         <span class="span11">
                                                                                           <div class="text" style="margin-top: 5px">
                                                                                               <span>

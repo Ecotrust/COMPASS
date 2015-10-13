@@ -157,8 +157,8 @@ body {
 	text-decoration: underline;
 }
 
-.ofr #overview-accordion-links .btn:hover,
-.ofr #overview-accordion-links .btn:hover * {
+.ofr .overview-accordion-links .btn:hover,
+.ofr .overview-accordion-links .btn:hover * {
 	text-decoration: none;
 }
 
@@ -605,46 +605,46 @@ body.print #map-wrapper {
 	margin-left: 0;
 }
 
-#overview-accordion span,
-#overview-accordion div,
-#overview-accordion-text {
+.overview-accordion span,
+.overview-accordion div,
+.overview-accordion-text {
 	color: black;
 	font-size: 12px;
 	white-space: normal;
 	overflow-x: auto;
 }
 
-.ofr #overview-accordion .well .btn {
+.ofr .overview-accordion .well .btn {
 	border: solid 0.15em black;
 }
 
-.ofr #overview-accordion .well .btn.disabled,
-.ofr #overview-accordion .well .btn.disabled:hover {
+.ofr .overview-accordion .well .btn.disabled,
+.ofr .overview-accordion .well .btn.disabled:hover {
 	border: solid 1px #B5B5B5;
 }
 
-.ofr #overview-accordion .well .btn.disabled * {
+.ofr .overview-accordion .well .btn.disabled * {
 	color: #B5B5B5;
 }
 
-.ofr #overview-accordion .well .btn.disabled:hover {
+.ofr .overview-accordion .well .btn.disabled:hover {
 	background-color: inherit;
 }
 
-#overview-accordion .well {
+.overview-accordion .well {
 	padding: 10px;
 }
 
-#overview-accordion .well .btn {
+.overview-accordion .well .btn {
 	border: 1px solid #cccccc;
 	border-radius: 4px;
 }
 
-.ofr #overview-accordion .well .btn:hover {
+.ofr .overview-accordion .well .btn:hover {
 	background-color: #cccccc;
 	border-color: #999999;
 }
-.ofr #overview-accordion .well .btn:hover * {
+.ofr .overview-accordion .well .btn:hover * {
 	text-decoration: none;
 }
 
