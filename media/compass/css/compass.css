@@ -618,7 +618,8 @@ body.print #map-wrapper {
 	border: solid 0.15em black;
 }
 
-.ofr #overview-accordion .well .btn.disabled {
+.ofr #overview-accordion .well .btn.disabled,
+.ofr #overview-accordion .well .btn.disabled:hover {
 	border: solid 1px #B5B5B5;
 }
 
