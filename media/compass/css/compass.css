@@ -157,6 +157,11 @@ body {
 	text-decoration: underline;
 }
 
+.ofr #overview-accordion-links .btn:hover,
+.ofr #overview-accordion-links .btn:hover * {
+	text-decoration: none;
+}
+
 .ofr #active .btn-group .btn-layer {
 	width: 220px;
 }
@@ -607,6 +612,22 @@ body.print #map-wrapper {
 	font-size: 12px;
 	white-space: normal;
 	overflow-x: auto;
+}
+
+.ofr #overview-accordion .well .btn {
+	border: solid 0.15em black;
+}
+
+.ofr #overview-accordion .well .btn.disabled {
+	border: solid 1px #B5B5B5;
+}
+
+.ofr #overview-accordion .well .btn.disabled * {
+	color: #B5B5B5;
+}
+
+.ofr #overview-accordion .well .btn.disabled:hover {
+	background-color: inherit;
 }
 
 #overview-accordion .well {
