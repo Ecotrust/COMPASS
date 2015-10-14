@@ -412,39 +412,15 @@
                                           </a>
                                           <h3 class="pull-right" data-bind="visible: mapTitle, text: mapTitle"></h3>
                                       </div>
-                                      <div data-bind="visible: showBottomButtons()">
-                                          <span style="position: absolute; bottom: 12px; left: 12px; z-index: 1;" class="btn-group">
-                                            <a id="help-button" class="btn" style="outline: none; margin-top: 10px;" href="#help-modal" data-toggle="modal">Tutorial</a>
+                                      <div id="compass-footer" data-bind="visible: showBottomButtons()">
+                                          <span class="btn-group">
+                                            <a id="help-button" class="btn" href="#help-modal" data-toggle="modal">Tutorial</a>
+                                            <div id="data-panel-footer" class="row-fluid footer">
+                                              <a href="http://www.dfw.state.or.us/maps/compass/" target="_blank">
+                                                <img class="span12" src="/media/compass/img/CompassAndODFW_BW_green.png" />
+                                              </a>
+                                            </div>
                                           </span>
-                                          {% if user.is_staff %}
-                                          <!-- <span style="position: absolute; bottom: 12px; right: 12px; z-index: 1;" class="btn-group">
-                                            <a id="add-layer-button" class="btn" style="outline: none; margin-top: 10px;" data-bind="click: showAddLayerModal">
-                                              <i class="icon-plus"></i>
-                                              Add Layer
-                                            </a>
-                                          </span> -->
-                                          {% endif %}
-                                          <!--
-                                          {% if user.is_authenticated %}
-                                          <span style="position: absolute; bottom: 12px; right: 12px; z-index: 1;" class="btn-group">
-                                            <a class="btn dropdown-toggle" style="margin-top: 10px;" data-toggle="dropdown" href="#">
-                                              <i class="icon-user"></i>
-                                              {{user.username}}
-                                              <span class="caret"></span>
-                                            </a>
-                                            <ul id="username" class="dropdown-menu">
-                                              <li><a href="#profile-modal" data-toggle="modal"><i class="icon-pencil"></i> Profile</a></li>
-                                              <li><a href="#reset-password-modal" data-toggle="modal"><i class="icon-lock"></i> Password</a></li>
-                                              <li class="divider"></li>
-                                              <li><a href="{% url 'user_signout' %}"><i class="i"></i>Log Out</a></li>
-                                            </ul>
-                                          </span>
-                                          {% else %}
-                                          <span style="position: absolute; bottom: 12px; right: 12px; z-index: 1;" class="btn-group">
-                                            <a id="#sign-in-button" style="margin-top: 10px;" class="btn" href="#sign-in-modal" data-toggle="modal">Sign In / Register</a>
-                                          </span>
-                                          {% endif %}
-                                          -->
                                       </div>
                                   </div>
                               </div>
