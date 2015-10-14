@@ -841,6 +841,11 @@ function layerModel(options, parent) {
         app.viewModel.updateAggregatedAttributesOverlayScrollbar();
     };
 
+    self.zoomToFeature = function() {
+      self.toggleLayerAttribution();
+      app.map.zoomToExtent(app.viewModel.clickEvent.features[self.id.toString()].geometry.bounds);
+    }
+
     self.toggleSublayerDescription = function(layer) {
         if ( ! self.infoActive() ) {
             self.showSublayerDescription(self);
