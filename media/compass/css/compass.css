@@ -149,6 +149,10 @@ body {
 	color: #111;
 }
 
+.ofr .accordion-heading.active:hover .accordion-toggle span {
+	text-decoration: underline;
+}
+
 .ofr .btn:hover, .ofr .btn:focus {
 	color: white; /* 0, 68, 109 */
 }
@@ -550,11 +554,15 @@ body.print #map .olControlMousePosition {
 
 #aggregated-attribute-content .accordion-heading.layer-attr-init:hover,
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse {
-	background-color: #404041;
+	/*background-color: #404041;*/
 }
 
 #aggregated-attribute-content .accordion-heading.layer-attr-init:hover h4,
-#aggregated-attribute-content .accordion-heading.layer-attr-init:hover h5,
+#aggregated-attribute-content .accordion-heading.layer-attr-init:hover h5 {
+	color: black;
+	text-decoration: underline;
+}
+
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse h4,
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse h5 {
 	color: white;

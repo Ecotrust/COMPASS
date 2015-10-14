@@ -808,22 +808,36 @@ function layerModel(options, parent) {
         setTimeout( function() { app.viewModel.updateScrollBars(); }, 200 );
     };
 
-    self.showingLayerAttribution = ko.observable(true);
+    self.showingLayerAttribution = ko.observable(false);
     self.toggleLayerAttribution = function() {
+        var attributeHeads = $('#aggregated-attribute-content').find('.accordion-heading');
+        var attributeBodies = $('#aggregated-attribute-content').find('.accordion-body');
+        attributeBodies.slideUp(0);
+        attributeBodies.removeClass('in');
+        attributeHeads.removeClass('layer-attr-init');
+        attributeHeads.addClass('layer-attr-collapse');
+        for (var i = 0; i < attributeBodies.length; i++) {
+          if (app.viewModel.convertToSlug(self.name) != attributeBodies[i].id) {
+            for (var j = 0; j < app.map.layers.length; j++) {
+              if (app.viewModel.convertToSlug(app.map.layers[j].name) == attributeBodies[i].id) {
+                app.viewModel.layerIndex[app.map.layers[j].layerModelId.toString()].showingLayerAttribution(false);
+                break;
+              }
+            }
+          }
+        }
         var layerID = '#' + app.viewModel.convertToSlug(self.name);
         var layerHeaderID = layerID + '-header';
         if ( self.showingLayerAttribution() ) {
             self.showingLayerAttribution(false);
-            $(layerID).css('display', 'none');
-            $(layerHeaderID).removeClass('layer-attr-init');
-            $(layerHeaderID).addClass('layer-attr-collapse');
         } else {
             self.showingLayerAttribution(true);
-            $(layerID).css('display', 'block');
             $(layerHeaderID).removeClass('layer-attr-collapse');
             $(layerHeaderID).addClass('layer-attr-init');
+            app.displaySelectedFeature(false, self.id);
+            $(layerID).addClass('in');
+            $(layerID).show(0);
         }
-        //update scrollbar
         app.viewModel.updateAggregatedAttributesOverlayScrollbar();
     };
 

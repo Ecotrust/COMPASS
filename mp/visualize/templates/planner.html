@@ -230,13 +230,13 @@
                                           <div data-bind="foreach: attributeLayers()">
                                               <div class="accordion-group">
                                                   <div data-bind="if: $root.aggregatedAttributes()[name]">
-                                                      <div class="accordion-heading layer-attr-init" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
+                                                      <div class="accordion-heading layer-attr-collapse" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
                                                           <a class="accordion-toggle">
                                                               <h4 data-bind="text: featureAttributionName"></h4>
                                                               <h5 data-bind="text: description"></h5>
                                                           </a>
                                                       </div>
-                                                      <div class="accordion-body collapse in" data-bind="attr: { id: $root.convertToSlug(name) }" >
+                                                      <div class="accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }" >
                                                           <div class="accordion-inner">
                                                             <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">
                                                               <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">
