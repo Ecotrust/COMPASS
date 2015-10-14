@@ -382,10 +382,19 @@ app.init = function() {
         return undefined;
     };
 
+    app.clickEvent = function(x,y) {
+      if ( ! app.viewModel.hasOwnProperty('clickEvent') || app.viewModel.clickEvent.x != x || app.viewModel.clickEvent.y != y ) {
+        app.viewModel.aggregatedAttributes(false);
+        app.viewModel.clickEvent = {
+          'x': x,
+          'y': y,
+          'features': []
+        }
+      }
+    }
+
     app.featureClick = function(evt){
-      // featureclick events always trigger before map click events
-          // Since we only want to reset attrs once, do it now.
-      app.viewModel.aggregatedAttributes(false);
+      app.clickEvent(evt.event.x, evt.event.y);
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
         if (layer.hasOwnProperty('layerModelId') &&
@@ -396,6 +405,7 @@ app.init = function() {
     }
 
     app.mapClick = function(evt){
+      app.clickEvent(evt.x, evt.y);
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
         if (layer.hasOwnProperty('layerModelId') &&
@@ -412,8 +422,12 @@ app.init = function() {
     app.map.events.register('featureclick',null, app.featureClick);
 
     // takes GeoJSON of a single feature and adds it to 'selected' layer on map.
-    app.displaySelectedFeature = function(feature) {
-
+    app.displaySelectedFeature = function(feature, layerModelId) {
+      if (! feature ) {
+        feature = app.viewModel.clickEvent.features[layerModelId.toString()];
+      } else {
+        app.viewModel.clickEvent.features[layerModelId.toString()] = feature;
+      }
       if (app.map.getLayersByName('Selected Features').length === 0) {
         var vectorStyle = new OpenLayers.StyleMap({
           "default": new OpenLayers.Style({
@@ -688,7 +702,7 @@ app.addArcRestLayerToMap = function(layer) {
                       $.extend(app.map.clickOutput.attributes, clickAttributes);
                       app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
                       if (selectedFeature) {
-                        app.displaySelectedFeature(selectedFeature);
+                        app.displaySelectedFeature(selectedFeature, layer.id);
                       } else {
                         app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
                       }
@@ -850,7 +864,7 @@ app.queryEsriDataLayer = function(evt){
           }
         }
 
-        app.displaySelectedFeature(layerFeature);
+        app.displaySelectedFeature(layerFeature, self.layerModelId);
 
       }
     });
@@ -1063,7 +1077,7 @@ app.addVectorLayerToMap = function(layer) {
         $.extend(app.map.clickOutput.attributes, clickAttributes);
         app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
         // return false;
-        app.displaySelectedFeature(event.feature.clone());
+        app.displaySelectedFeature(event.feature.clone(), event.feature.layer.layerModelId);
     });
 };
 
