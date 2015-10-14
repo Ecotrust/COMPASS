@@ -699,6 +699,10 @@ body.print #map-wrapper {
 	float: none;
 }
 
+img.olTileImage {
+	max-width: none !important;
+}
+
 @font-face {
     font-family: 'bebas_neueregular';
     src: url('../fonts/bebasneue-webfont.eot');

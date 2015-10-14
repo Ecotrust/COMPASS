@@ -728,7 +728,9 @@ app.addArcRestLayerToMap = function(layer) {
             srs: 'EPSG:3857',
             transparent: true
         }, {
-            isBaseLayer: false
+            isBaseLayer: false,
+            singleTile: true,
+            ratio: 1
         }
     );
 };
