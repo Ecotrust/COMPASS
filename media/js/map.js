@@ -745,6 +745,7 @@ app.getEsriJSONFieldName = function(fields, key){
 };
 
 app.queryEsriDataLayer = function(evt){
+    app.clickEvent(evt.x,evt.y);
     var self = this;
     if (!self.hasOwnProperty('arcGisLayerId')) {
       self = evt.object;
