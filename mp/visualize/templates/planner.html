@@ -235,8 +235,8 @@
                                                               <h4 data-bind="text: featureAttributionName"></h4>
                                                               <h5 data-bind="text: description"></h5>
                                                           </a>
+                                                          <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
                                                       </div>
-                                                      <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
                                                       <div class="accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }" >
                                                           <div class="accordion-inner">
                                                             <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">

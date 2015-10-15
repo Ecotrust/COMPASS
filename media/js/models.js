@@ -842,7 +842,10 @@ function layerModel(options, parent) {
     };
 
     self.zoomToFeature = function() {
-      self.toggleLayerAttribution();
+      event.stopPropagation();
+        //The below line would highlight the feature you were zooming to and open
+            // its id report. This was found to be confusing.
+      // self.toggleLayerAttribution();
       app.map.zoomToExtent(app.viewModel.clickEvent.features[self.id.toString()].geometry.bounds);
     }
 
