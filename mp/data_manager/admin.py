@@ -1,11 +1,16 @@
 from django.contrib import admin
 from models import *
+from django.forms import CheckboxSelectMultiple
 
 class TOCAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
 
 class TOCThemeAdmin(admin.ModelAdmin):
     list_display = ('display_name', 'name', 'TOC', 'id')
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple }
+    }
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "layers":
