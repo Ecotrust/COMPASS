@@ -16,11 +16,10 @@ class TOCTheme(models.Model):
     display_name = models.CharField(max_length=100)
     name = models.CharField(max_length=100, help_text="This field should be a 'slugified' version of Display Name (must start with a letter and should only contain letters (a-z or A-Z), digits (0-9), hyphens(-), and underscores(_))")
     description = models.TextField(blank=True, null=True)
+    subthemes = models.ManyToManyField("TOCSubTheme", blank=True, null=True)
     layers = models.ManyToManyField("Layer", blank=True, null=True)
 
     def TOC(self):
-        #import pdb
-        #pdb.set_trace()
         #return self.toc_set.all()[0]
         return "\n".join([toc.name for toc in self.toc_set.all()])
 
@@ -30,6 +29,7 @@ class TOCTheme(models.Model):
     @property
     def toDict(self):
         layers = [layer.id for layer in self.layers.filter(is_sublayer=False).exclude(layer_type='placeholder')]
+        subthemes = [subtheme.toDict for subtheme in self.subthemes.all()]
         themes_dict = {
             'id': self.id,
             'display_name': self.display_name,
@@ -39,6 +39,29 @@ class TOCTheme(models.Model):
         }
         return themes_dict
 
+class TOCSubTheme(models.Model):
+    display_name = models.CharField(max_length=150)
+    name = models.CharField(max_length=255, help_text="This field should be a 'slugified' version of Display Name (must start with a letter and should only contain letters (a-z or A-Z), digits (0-9), hyphens(-), and underscores(_))")
+    description = models.TextField(blank=True, null=True)
+    layers = models.ManyToManyField("Layer", blank=True, null=True)
+
+    def TOCTheme(self):
+        return "\n".join([toctheme.name for toctheme in self.toctheme_set.all()])
+
+    def __unicode__(self):
+        return unicode('%s' % (self.name))
+
+    @property
+    def toDict(self):
+        layers = [layer.id for layer in self.layers.filter(is_sublayer=False).exclude(layer_type='placeholder')]
+        subthemes_dict = {
+            'id': self.id,
+            'display_name': self.display_name,
+            'layers': layers,
+            'description': self.description,
+            'is_toc_subtheme': True
+        }
+        return subthemes_dict
 
 
 class Theme(models.Model):
