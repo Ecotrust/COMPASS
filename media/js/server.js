@@ -20,40 +20,59 @@ app.viewModel.loadLayers = function(data) {
 
 	// load themes
 	$.each(data.themes, function(i, themeFixture) {
-		var layers = [],
-			theme = new themeModel(themeFixture);
-		$.each(themeFixture.layers, function(j, layer_id) {
+		var theme = new themeModel(themeFixture);
+		var updateLayerSearchIndexWithThemeLayers = function(j, layer_id) {
+			updateLayerSearchIndex(j, layer_id, null);
+		};
+
+		var updateLayerSearchIndex = function(j, layer_id, subtheme) {
 			// create a layerModel and add it to the list of layers
-			var layer = self.layerIndex[layer_id],
-				searchTerm = layer.name + ' (' + themeFixture.display_name + ')';
+			var layer = self.layerIndex[layer_id];
+			var searchTerm = layer.name + ' (' + themeFixture.display_name + ')';
 			layer.themes.push(theme);
-			theme.layers.push(layer);
+			if (subtheme) {
+				subtheme.layers.push(layer);
+			} else {
+				theme.layers.push(layer);
+			}
 
 			if (!layer.subLayers.length) { //if the layer does not have sublayers
                 self.layerSearchIndex[searchTerm] = {
                     layer: layer,
-                    theme: theme
+                    theme: theme,
+                    subtheme: subtheme
                 };
-            } else { //if the layer has sublayers
-				$.each(layer.subLayers, function(i, subLayer) {
-					//var searchTerm = subLayer.name + ' (' + themeFixture.display_name + ')';
-                    var searchTerm = subLayer.name + ' (' + themeFixture.display_name + ' / ' + subLayer.parent.name + ')';
-					if (subLayer.name !== 'Data Under Development') {
-                        self.layerSearchIndex[searchTerm] = {
-                            layer: subLayer,
-                            theme: theme
-                        };
-                    }
-				});
-                layer.subLayers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
-			}
+        } else { //if the layer has sublayers
+						$.each(layer.subLayers, function(i, subLayer) {
+                var searchTerm = subLayer.name + ' (' + themeFixture.display_name + ' / ' + subLayer.parent.name + ')';
+								if (subLayer.name !== 'Data Under Development') {
+                		self.layerSearchIndex[searchTerm] = {
+                    		layer: subLayer,
+                        theme: theme,
+                        subtheme: subtheme
+                    };
+                }
+						});
+            layer.subLayers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
+				}
 
+		}
+
+		$.each(themeFixture.layers, updateLayerSearchIndexWithThemeLayers );
+		$.each(themeFixture.subthemes, function (j, subtheme) {
+				var subthemeMod = new subthemeModel(subtheme);
+				theme.subthemes.push(subthemeMod);
+				for (var layer_idx = 0; layer_idx < subtheme.layers.length; layer_idx++) {
+					updateLayerSearchIndex(layer_idx, subtheme.layers[layer_idx], subthemeMod);
+				}
 		});
-        //sort by name
-        theme.layers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
+
+    //sort by name
+    theme.layers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
 
 		self.themes.push(theme);
 	});
+
 	app.typeAheadSource = (function () {
             var keys = [];
             for (var searchTerm in app.viewModel.layerSearchIndex) {

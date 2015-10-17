@@ -34,6 +34,7 @@ class TOCTheme(models.Model):
             'id': self.id,
             'display_name': self.display_name,
             'layers': layers,
+            'subthemes': subthemes,
             'description': self.description,
             'is_toc_theme': True
         }

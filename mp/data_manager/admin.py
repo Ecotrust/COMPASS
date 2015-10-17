@@ -17,6 +17,18 @@ class TOCThemeAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name')
         return super(TOCThemeAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
+class TOCSubThemeAdmin(admin.ModelAdmin):
+    list_display = ('display_name', 'name', 'TOCTheme', 'id')
+
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple }
+    }
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "layers":
+            kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name')
+        return super(TOCSubThemeAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
 class ThemeAdmin(admin.ModelAdmin):
     list_display = ('display_name', 'name', 'id')
     pass
@@ -79,7 +91,8 @@ class DataNeedAdmin(admin.ModelAdmin):
 
 admin.site.register(TOC, TOCAdmin)
 admin.site.register(TOCTheme, TOCThemeAdmin)
-admin.site.register(Theme, ThemeAdmin)
+admin.site.register(TOCSubTheme, TOCSubThemeAdmin)
+# admin.site.register(Theme, ThemeAdmin)
 admin.site.register(Layer, LayerAdmin)
 admin.site.register(AttributeInfo, AttributeInfoAdmin)
 admin.site.register(LookupInfo, LookupInfoAdmin)

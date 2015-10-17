@@ -477,115 +477,236 @@
                                                           </div>
                                                           <div class="accordion-body collapse" data-bind="css: { 'in': isOpenTheme() }">
                                                               <div class="accordion-inner">
-                                                                  <ul  class="unstyled" data-bind="foreach: layers ">
-                                                                      <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
-                                                                          <div class="btn-group btn-group-layer" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
-                                                                              <a class="btn btn-info-sign" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
-                                                                                  <i class="icon-info-sign icon-large"></i>
-                                                                              </a>
+                                                                <ul  class="unstyled" data-bind="foreach: layers ">
+                                                                    <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
+                                                                        <div class="btn-group btn-group-layer" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
+                                                                            <a class="btn btn-info-sign" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
+                                                                                <i class="icon-info-sign icon-large"></i>
+                                                                            </a>
 
-                                                                              <a class="btn btn-layer" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
-                                                                                  <div style="font-weight: normal">
-                                                                                      <span style="padding-left: 5px;" data-bind="text: name"></span>
-                                                                                      <span class="caret" style="display:none" data-bind="visible: subLayers.length > 0"></span>
-                                                                                      <i class="check icon-large icon-check" data-bind="visible: active() && visible()"></i>
-                                                                                      <i class="check icon-large icon-check-empty" data-bind="visible: active() && ! visible()"></i>
-                                                                                  </div>
-                                                                              </a>
-                                                                              <!-- ko if: subLayers.length > 0 -->
-                                                                              <!-- ko if: !isCheckBoxLayer() -->
-                                                                              <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
-                                                                                  <li data-bind="foreach: subLayers">
-                                                                                      <a data-bind="click: toggleActive">
-                                                                                          <!--<span data-bind="style: {visibility: active() ? 'visible': 'hidden' }">• </span>-->
-                                                                                          <!--<span style="margin-left: -10px" data-bind="style: {visibility: active() ? 'visible': 'hidden' }">
-                                                                                              <i class="icon-ok-circle"></i>
-                                                                                          </span>-->
-                                                                                          <i class="icon-ok" data-bind="style: {visibility: active() ? 'visible': 'hidden' }"></i>
-                                                                                          <span data-bind="text: name"></span>
-                                                                                      </a>
-                                                                                  </li>
-                                                                              </ul>
-                                                                              <!-- /ko -->
-                                                                              <!-- ko if: isCheckBoxLayer() -->
-                                                                              <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
-                                                                                  <li data-bind="foreach: subLayers">
-                                                                                      <a data-bind="click: toggleActive" style="padding-left: 15px;">
-                                                                                          <span style="margin-left: -10px">
-                                                                                              <i class="icon-check" data-bind="style: {display: active() ? 'inline': 'none' }"></i>
-                                                                                              <i style="opacity: .4" class="icon-check-empty" data-bind="style: {display: ! active() ? 'inline': 'none' }"></i>
-                                                                                          </span>
-                                                                                          <span data-bind="text: name"></span>
-                                                                                      </a>
-                                                                                  </li>
-                                                                              </ul>
-                                                                              <!-- /ko -->
-                                                                              <!-- /ko -->
-
-
-                                                                              <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
-                                                                                  <div class="span10  well overview-accordion-content">
-                                                                                      <div class="overview-accordion-text" style="margin-top: 5px">
-                                                                                          <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
-                                                                                          <div class="notes">
-                                                                                              <div data-bind="visible: data_source">
-                                                                                                  Source:
-                                                                                                  <span data-bind="text: data_source"></span>
-                                                                                              </div>
-                                                                                              <div style="margin-top: 5px" data-bind="visible: data_notes">
-                                                                                                  Notes:
-                                                                                                  <span data-bind="text: data_notes"></span>
-                                                                                              </div>
-                                                                                          </div>
-                                                                                      </div>
-
-                                                                                      <div class="overview-accordion-links">
-                                                                                        <span class="span11">
-                                                                                          <div class="text" style="margin-top: 5px">
-                                                                                              <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
-                                                                                                      <span rel="tooltip" title="Download ESRI Formatted Dataset">
-                                                                                                          DATA
-                                                                                                      </span>
-                                                                                                  </a>
-                                                                                              </span>
-                                                                                              <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (metadata == '' || metadata == null) }, attr: { href: metadata }" target="_blank">
-                                                                                                      <span rel="tooltip" title="View the Metadata">
-                                                                                                          METADATA
-                                                                                                      </span>
-                                                                                                  </a>
-                                                                                              </span>
-                                                                                              <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (source == '' || source == null) }, attr: { href: source }" target="_blank">
-                                                                                                      <span rel="tooltip" title="Link to Dataset Source Provider">
-                                                                                                          SOURCE
-                                                                                                      </span>
-                                                                                                  </a>
-                                                                                              </span>
-                                                                                              <span>
-                                                                                                  <a class="btn btn-mini" data-bind="css: { disabled: (tiles == '' || tiles == null) }, attr: { href: tiles }" target="_blank">
-                                                                                                      <span rel="tooltip" title="Web Mapping Services">
-                                                                                                          WMS
-                                                                                                      </span>
-                                                                                                  </a>
-                                                                                              </span>
-                                                                                          </div>
+                                                                            <a class="btn btn-layer" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
+                                                                                <div style="font-weight: normal">
+                                                                                    <span style="padding-left: 5px;" data-bind="text: name"></span>
+                                                                                    <span class="caret" style="display:none" data-bind="visible: subLayers.length > 0"></span>
+                                                                                    <i class="check icon-large icon-check" data-bind="visible: active() && visible()"></i>
+                                                                                    <i class="check icon-large icon-check-empty" data-bind="visible: active() && ! visible()"></i>
+                                                                                </div>
+                                                                            </a>
+                                                                            <!-- ko if: subLayers.length > 0 -->
+                                                                            <!-- ko if: !isCheckBoxLayer() -->
+                                                                            <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
+                                                                                <li data-bind="foreach: subLayers">
+                                                                                    <a data-bind="click: toggleActive">
+                                                                                        <!--<span data-bind="style: {visibility: active() ? 'visible': 'hidden' }">• </span>-->
+                                                                                        <!--<span style="margin-left: -10px" data-bind="style: {visibility: active() ? 'visible': 'hidden' }">
+                                                                                            <i class="icon-ok-circle"></i>
+                                                                                        </span>-->
+                                                                                        <i class="icon-ok" data-bind="style: {visibility: active() ? 'visible': 'hidden' }"></i>
+                                                                                        <span data-bind="text: name"></span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <!-- /ko -->
+                                                                            <!-- ko if: isCheckBoxLayer() -->
+                                                                            <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
+                                                                                <li data-bind="foreach: subLayers">
+                                                                                    <a data-bind="click: toggleActive" style="padding-left: 15px;">
+                                                                                        <span style="margin-left: -10px">
+                                                                                            <i class="icon-check" data-bind="style: {display: active() ? 'inline': 'none' }"></i>
+                                                                                            <i style="opacity: .4" class="icon-check-empty" data-bind="style: {display: ! active() ? 'inline': 'none' }"></i>
                                                                                         </span>
-                                                                                        <span class="span1"></span>
-                                                                                      </div>
-                                                                                  </div>
+                                                                                        <span data-bind="text: name"></span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                            <!-- /ko -->
+                                                                            <!-- /ko -->
+                                                                            <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
+                                                                                <div class="span10  well overview-accordion-content">
+                                                                                    <div class="overview-accordion-text" style="margin-top: 5px">
+                                                                                        <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
+                                                                                        <div class="notes">
+                                                                                            <div data-bind="visible: data_source">
+                                                                                                Source:
+                                                                                                <span data-bind="text: data_source"></span>
+                                                                                            </div>
+                                                                                            <div style="margin-top: 5px" data-bind="visible: data_notes">
+                                                                                                Notes:
+                                                                                                <span data-bind="text: data_notes"></span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="overview-accordion-links">
+                                                                                      <span class="span11">
+                                                                                        <div class="text" style="margin-top: 5px">
+                                                                                            <span>
+                                                                                                <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
+                                                                                                    <span rel="tooltip" title="Download ESRI Formatted Dataset">
+                                                                                                        DATA
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                <a class="btn btn-mini" data-bind="css: { disabled: (metadata == '' || metadata == null) }, attr: { href: metadata }" target="_blank">
+                                                                                                    <span rel="tooltip" title="View the Metadata">
+                                                                                                        METADATA
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                <a class="btn btn-mini" data-bind="css: { disabled: (source == '' || source == null) }, attr: { href: source }" target="_blank">
+                                                                                                    <span rel="tooltip" title="Link to Dataset Source Provider">
+                                                                                                        SOURCE
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </span>
+                                                                                            <span>
+                                                                                                <a class="btn btn-mini" data-bind="css: { disabled: (tiles == '' || tiles == null) }, attr: { href: tiles }" target="_blank">
+                                                                                                    <span rel="tooltip" title="Web Mapping Services">
+                                                                                                        WMS
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                      </span>
+                                                                                      <span class="span1"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+
+
+                                                                  <div class="accordion" data-bind="foreach: subthemes">
+                                                                      <div class="accordion-group">
+                                                                          <div class="accordion-heading subcategory-heading" data-bind="click: setOpenSubTheme, css:{ 'active': isOpenSubTheme() }">
+                                                                              <div>
+                                                                                  <a class="accordion-toggle">
+                                                                                      <span data-bind="text: name">Subcategory</span>
+                                                                                  </a>
                                                                               </div>
+                                                                          </div>
+                                                                          <div class="accordion-botdy collapse" data-bind="css: { 'in': isOpenSubTheme() }">
+
+
+
+                                                                              <ul  class="unstyled" data-bind="foreach: layers ">
+                                                                                  <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
+                                                                                      <div class="btn-group btn-group-layer" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
+                                                                                          <a class="btn btn-info-sign" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
+                                                                                              <i class="icon-info-sign icon-large"></i>
+                                                                                          </a>
+
+                                                                                          <a class="btn btn-layer" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
+                                                                                              <div style="font-weight: normal">
+                                                                                                  <span style="padding-left: 5px;" data-bind="text: name"></span>
+                                                                                                  <span class="caret" style="display:none" data-bind="visible: subLayers.length > 0"></span>
+                                                                                                  <i class="check icon-large icon-check" data-bind="visible: active() && visible()"></i>
+                                                                                                  <i class="check icon-large icon-check-empty" data-bind="visible: active() && ! visible()"></i>
+                                                                                              </div>
+                                                                                          </a>
+                                                                                          <!-- ko if: subLayers.length > 0 -->
+                                                                                          <!-- ko if: !isCheckBoxLayer() -->
+                                                                                          <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
+                                                                                              <li data-bind="foreach: subLayers">
+                                                                                                  <a data-bind="click: toggleActive">
+                                                                                                      <!--<span data-bind="style: {visibility: active() ? 'visible': 'hidden' }">• </span>-->
+                                                                                                      <!--<span style="margin-left: -10px" data-bind="style: {visibility: active() ? 'visible': 'hidden' }">
+                                                                                                          <i class="icon-ok-circle"></i>
+                                                                                                      </span>-->
+                                                                                                      <i class="icon-ok" data-bind="style: {visibility: active() ? 'visible': 'hidden' }"></i>
+                                                                                                      <span data-bind="text: name"></span>
+                                                                                                  </a>
+                                                                                              </li>
+                                                                                          </ul>
+                                                                                          <!-- /ko -->
+                                                                                          <!-- ko if: isCheckBoxLayer() -->
+                                                                                          <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
+                                                                                              <li data-bind="foreach: subLayers">
+                                                                                                  <a data-bind="click: toggleActive" style="padding-left: 15px;">
+                                                                                                      <span style="margin-left: -10px">
+                                                                                                          <i class="icon-check" data-bind="style: {display: active() ? 'inline': 'none' }"></i>
+                                                                                                          <i style="opacity: .4" class="icon-check-empty" data-bind="style: {display: ! active() ? 'inline': 'none' }"></i>
+                                                                                                      </span>
+                                                                                                      <span data-bind="text: name"></span>
+                                                                                                  </a>
+                                                                                              </li>
+                                                                                          </ul>
+                                                                                          <!-- /ko -->
+                                                                                          <!-- /ko -->
+
+
+                                                                                          <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
+                                                                                              <div class="span10  well overview-accordion-content">
+                                                                                                  <div class="overview-accordion-text" style="margin-top: 5px">
+                                                                                                      <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
+                                                                                                      <div class="notes">
+                                                                                                          <div data-bind="visible: data_source">
+                                                                                                              Source:
+                                                                                                              <span data-bind="text: data_source"></span>
+                                                                                                          </div>
+                                                                                                          <div style="margin-top: 5px" data-bind="visible: data_notes">
+                                                                                                              Notes:
+                                                                                                              <span data-bind="text: data_notes"></span>
+                                                                                                          </div>
+                                                                                                      </div>
+                                                                                                  </div>
+
+                                                                                                  <div class="overview-accordion-links">
+                                                                                                    <span class="span11">
+                                                                                                      <div class="text" style="margin-top: 5px">
+                                                                                                          <span>
+                                                                                                              <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
+                                                                                                                  <span rel="tooltip" title="Download ESRI Formatted Dataset">
+                                                                                                                      DATA
+                                                                                                                  </span>
+                                                                                                              </a>
+                                                                                                          </span>
+                                                                                                          <span>
+                                                                                                              <a class="btn btn-mini" data-bind="css: { disabled: (metadata == '' || metadata == null) }, attr: { href: metadata }" target="_blank">
+                                                                                                                  <span rel="tooltip" title="View the Metadata">
+                                                                                                                      METADATA
+                                                                                                                  </span>
+                                                                                                              </a>
+                                                                                                          </span>
+                                                                                                          <span>
+                                                                                                              <a class="btn btn-mini" data-bind="css: { disabled: (source == '' || source == null) }, attr: { href: source }" target="_blank">
+                                                                                                                  <span rel="tooltip" title="Link to Dataset Source Provider">
+                                                                                                                      SOURCE
+                                                                                                                  </span>
+                                                                                                              </a>
+                                                                                                          </span>
+                                                                                                          <span>
+                                                                                                              <a class="btn btn-mini" data-bind="css: { disabled: (tiles == '' || tiles == null) }, attr: { href: tiles }" target="_blank">
+                                                                                                                  <span rel="tooltip" title="Web Mapping Services">
+                                                                                                                      WMS
+                                                                                                                  </span>
+                                                                                                              </a>
+                                                                                                          </span>
+                                                                                                      </div>
+                                                                                                    </span>
+                                                                                                    <span class="span1"></span>
+                                                                                                  </div>
+                                                                                              </div>
+                                                                                          </div>
 
 
 
 
+
+
+
+                                                                                      </div>
+                                                                                  </li>
+                                                                              </ul>
 
 
 
                                                                           </div>
-                                                                      </li>
-                                                                  </ul>
+                                                                      </div>
+                                                                  </div>
+
                                                               </div>
                                                           </div>
                                                       </div>

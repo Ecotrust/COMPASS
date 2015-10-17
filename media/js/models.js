@@ -950,6 +950,9 @@ function themeModel(options) {
     self.learn_link = options.learn_link;
     self.is_toc_theme = options.is_toc_theme || false;
 
+    // array of subthemes
+    self.subthemes = ko.observableArray();
+
     // array of layers
     self.layers = ko.observableArray();
 
@@ -963,14 +966,12 @@ function themeModel(options) {
         if (self.isOpenTheme(theme)) {
             //app.viewModel.activeTheme(null);
             app.viewModel.openThemes.remove(theme);
-            app.viewModel.updateScrollBars();
         } else {
             app.viewModel.openThemes.push(theme);
             //setTimeout( app.viewModel.updateScrollBar(), 1000);
-            app.viewModel.updateScrollBars();
         }
+        app.viewModel.updateScrollBars();
     };
-
     //is in openThemes
     self.isOpenTheme = function() {
         var theme = this;
@@ -1003,6 +1004,42 @@ function themeModel(options) {
 
     return self;
 } // end of themeModel
+
+function subthemeModel(options) {
+  var self = this;
+  self.name = options.display_name;
+  self.id = options.id;
+  self.description = options.description;
+
+  // array of layers
+  self.layers = ko.observableArray();
+
+  //add to open subthemes
+  self.setOpenSubTheme = function() {
+    var subtheme = this;
+
+    $('#dataTab').tab('show');
+
+    if (self.isOpenSubTheme(subtheme)) {
+      app.viewModel.openSubThemes.remove(subtheme);
+    } else {
+      app.viewModel.openSubThemes.push(subtheme);
+    }
+    app.viewModel.updateScrollBars();
+  };
+
+
+  //is in openSubThemes
+  self.isOpenSubTheme = function() {
+    var subtheme = this;
+    if (app.viewModel.openSubThemes.indexOf(subtheme) !== -1) {
+        return true;
+    }
+    return false;
+  };
+
+  return self;
+} // end of subthemeModel
 
 function mapLinksModel() {
     var self = this;
@@ -1258,6 +1295,21 @@ function viewModel() {
 
     // list of theme models
     self.themes = ko.observableArray();
+
+    // reference to open subthemes in accordion
+    self.openSubThemes = ko.observableArray();
+
+    /*
+    self.openSubThemes.subscribe( function() {
+      app.updateUrl();
+    })
+    */
+
+    self.getOpenSubThemeIDs = function() {
+      return $.map(self.openSubThemes(), function(subtheme) {
+        return subtheme.id;
+      });
+    };
 
     // last clicked layer for editing, etc
     self.activeLayer = ko.observable();
@@ -2004,6 +2056,9 @@ function viewModel() {
         app.viewModel.closeAllThemes();
         app.viewModel.deactivateAllLayers();
         app.viewModel.themes()[0].setOpenTheme();
+
+        //TODO: Open a subtheme if available
+
         //app.setMapPosition(-73, 38.5, 7);
         app.initializeMapLocation();
         $('#dataTab').tab('show');
