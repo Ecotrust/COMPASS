@@ -1936,6 +1936,7 @@ function viewModel() {
         var found = self.layerSearchIndex[self.searchTerm()];
         //self.activeTheme(theme);
         self.openThemes.push(found.theme);
+        self.openSubThemes.push(found.subtheme);
         found.layer.activateLayer();
     };
     self.keySearch = function(_, event) {
