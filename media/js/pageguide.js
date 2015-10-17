@@ -68,34 +68,34 @@ var defaultGuideOverrides = {
   events: {
     open: function () {
       app.pageguide.defaultOpenStuff();
-      
+
       //open the basemaps buttons and keep them open
       $('#basemaps').addClass('open');
-      app.pageguide.preventBasemapsClose = true;      
-      
-      //adjust the pageguide icon so it is left of the open basemaps buttons 
+      app.pageguide.preventBasemapsClose = true;
+
+      //adjust the pageguide icon so it is left of the open basemaps buttons
       for (var i=0; i < defaultGuide.steps.length; i++) {
         if ( defaultGuide.steps[i].target === '#basemaps' ) {
             defaultGuide.steps[i].arrow.offsetX = 0;
         }
-      }      
+      }
       $('#dataTab').tab('show');
     },
     close: function () {
-      app.pageguide.defaultCloseStuff();    
-      
+      app.pageguide.defaultCloseStuff();
+
       //deactivate the prevention of the basemaps buttons closing
       app.pageguide.preventBasemapsClose = true;
       //close the basemaps buttons
       $('#basemaps').removeClass('open');
-      
+
       //return the offset of the pageguide icon so it doesn't move out of place as the guide closes
       for (var i=0; i < defaultGuide.steps.length; i++) {
         if ( defaultGuide.steps[i].target === '#basemaps' ) {
             defaultGuide.steps[i].arrow.offsetX = -95;
         }
       }
-      
+
     }
   },
   step: {
@@ -107,12 +107,13 @@ var defaultGuideOverrides = {
         //     app.viewModel.deactivateAllLayers();
         //     app.viewModel.closeAllThemes();
         //     // $('#pageGuideMessage').height(120);
-        // } else 
+        // } else
         if ($(this).data('idx') === 0) {
             app.viewModel.showLayers(true);
             $('#dataTab').tab('show');
             app.viewModel.closeAllThemes();
             app.viewModel.themes()[0].setOpenTheme();
+            //TODO: Adjust for subThemes!!!
             for (var i=0; i < app.viewModel.themes()[0].layers().length; i++) {
                 var layer = app.viewModel.themes()[0].layers()[i];
                 if ( layer.name === 'Regional Ocean Partnerships' ) {
@@ -296,9 +297,9 @@ var activeGuideOverrides = {
 };
 
 app.pageguide.defaultOpenStuff = function() {
-    app.pageguide.tourIsActive = true;  
+    app.pageguide.tourIsActive = true;
     app.viewModel.hideMapAttribution();
-    
+
     //increase the z-value of SimpleLayerSwitcher so it falls on top of the pageguide icon
     $('.SimpleLayerSwitcher').css('z-index', 1100);
 };
@@ -307,56 +308,55 @@ app.pageguide.defaultCloseStuff = function() {
     //if ( ! app.viewModel.showOverview() ) {
     app.viewModel.showMapAttribution();
     //}
-    
+
     //for some reason it seems that the following 4 lines are needed both here and in the 'tour' click event handler
     app.viewModel.deactivateAllLayers();
     app.viewModel.closeAllThemes();
-    
+
     //return the zindex of the SimpleLayerSwitcher to its original value
     $('.SimpleLayerSwitcher').css('z-index', 1005);
-    
+
     //only save state if tour is activated from a normal (non-tour) state)
     //if tour is closing to start another tour, then don't resave/reload original state (wait till tours are closing rather than toggling)
     if ( ! app.pageguide.togglingTours ) {
       app.loadState(app.pageguide.state);
       app.saveStateMode = true;
     }
-      
+
     $('#overview-overlay').height(186);
-      
+
     app.pageguide.tourIsActive = false;
-      
+
     $.pageguide(defaultGuide, defaultGuideOverrides);
 };
 
 $(function() {
-  // Load the default guide!  
+  // Load the default guide!
   $.pageguide(defaultGuide, defaultGuideOverrides);
-  
+
   $('#help-tab').on('click', function() {
     if ( $.pageguide('isOpen') ) { // activated when 'tour' is clicked
         // close the pageguide
         $.pageguide('close');
-        
+
         //restore the state to what it was before the tour
         app.loadState(app.pageguide.state);
         app.saveStateMode = true;
     } else {
-        // start the pageguide 
-        
+        // start the pageguide
+
         //show the data layers panel
         app.viewModel.showLayers(true);
-      
+
         //save state
         app.pageguide.state = app.getState();
         app.saveStateMode = false;
-         
+
         //start the tour
         setTimeout( function() { $.pageguide('open'); }, 200 );
-      
+
     }
   });
-  
-  
-});
 
+
+});
