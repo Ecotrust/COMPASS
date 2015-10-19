@@ -1194,6 +1194,28 @@ function viewModel() {
       }
     });
 
+    self.geosearch = function(searchForm) {
+      var searchVal = $("#geosearch-field").val();
+      $.ajax({
+          // async: false,
+          url: '/visualize/geo_search',
+          data: { query: searchVal },
+          type: 'GET',
+          dataType: 'json',
+          success: function(result) {
+            if (result.hasOwnProperty('result') &&
+                  result.result.hasOwnProperty('extent') &&
+                  result.result.extent !== null &&
+                  result.result.extent.length == 4) {
+              var bounds = new OpenLayers.Bounds(result.result.extent);
+              app.map.zoomToExtent(bounds);
+            } else {
+              alert("\"" + result.message + "\" not found. Please try another search.");
+            }
+          }
+        });
+    };
+
     // list of visible layermodels in same order as activeLayers
     self.visibleLayers = ko.computed(function() {
         return $.map(self.activeLayers(), function(layer) {

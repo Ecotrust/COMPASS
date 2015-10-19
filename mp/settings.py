@@ -168,4 +168,7 @@ ARC_URL_DOMAIN = ''
 import logging
 logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 
+#For geosearch/geocoding:
+POINT_BUFFER = 2500  # meters
+
 from settings_local import *

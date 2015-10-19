@@ -845,10 +845,10 @@
 
                       <div id="compass-search-header">
                         <div class="row-fluid">
-                          <form class="span8 search-wrap">
+                          <form data-bind="submit: geosearch" class="span8 search-wrap">
                             <div class='row-fluid'>
                               <div class="span9">
-                                <input action="/getLocation/" type="search" placeholder="Search the Map" id="geosearch-field" class="search-field" name="geoquery" value="">
+                                <input type="search" placeholder="Search the Map" id="geosearch-field" class="search-field" name="geoquery" value="">
                               </div>
                               <div class="span3 search-btn-wrapper">
                                 <button class="search-submit btn btn-default" type="submit">Search</button>
