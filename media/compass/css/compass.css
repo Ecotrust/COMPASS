@@ -624,8 +624,11 @@ body.print #map .olControlMousePosition {
 	top: 63px;
 }
 
-body.print #map-panel {
+body.print #map-panel,
+#map-panel.fullscreen-data {
 	top: 0;
+	max-width: none;
+	max-height: none;
 }
 
 #map-wrapper {

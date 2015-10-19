@@ -121,7 +121,7 @@
 
                       {% load in_group %}
                       <!-- Map Panel (center panel) -->
-                      <div id="map-panel" data-bind="visible: showMapPanel">
+                      <div id="map-panel" data-bind="visible: showMapPanel, css: {'fullscreen-data': isFullScreen()}">
                         <div id="map-wrapper">
                           <div id="map"></div>
                           <div>
