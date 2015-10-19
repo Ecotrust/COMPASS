@@ -117,6 +117,7 @@
               </div>
               <div class="container-fluid" id="primary-content">
                   <div class="row-fluid loaded-content">
+                    <div class="span12">
 
                       {% load in_group %}
                       <!-- Map Panel (center panel) -->
@@ -388,8 +389,8 @@
                       </div>
 
                       <!-- Data Panel (left panel) -->
-                      <div class="row-fluid" data-bind="visible: showLayers()">
-                      <div class="span4 tabs">
+                      <div data-bind="visible: showLayers()">
+                      <div class="tabs">
                           <div class="sidebar-nav" data-bind="css: {'fullscreen-data': isFullScreen()}">
 
                               <!-- Header -->
@@ -842,9 +843,12 @@
                       </div>
                       <!-- /Data Panel -->
 
-                      <div class="span5"></div>
+                      <div id="compass-search-header">
+                          <span>Some filler text for now...</span>
+                      </div>
 
                       </div>
+                    </div>
                   </div>
 
                   <span class="timestamp" data-bind="visible: mapTitle"><span data-bind="text: new Date().toString('M/d/yyyy HH:mm')"></span></span>

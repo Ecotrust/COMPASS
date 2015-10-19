@@ -622,10 +622,25 @@ body.print #map .olControlMousePosition {
 
 #map-wrapper {
 	margin-left: 370px;
+	/*position: absolute;*/
+	bottom: 0;
+	padding-top: 63px;
 }
 
 body.print #map-wrapper {
 	margin-left: 0;
+	padding-top: 0;
+}
+
+#compass-search-header {
+	height: 63px;
+	margin-left: 370px;
+	background-color: #D3E9D1;
+}
+
+body.print #compass-search-header {
+	visibility: none;
+	height: 0;
 }
 
 .overview-accordion span,

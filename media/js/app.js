@@ -10,7 +10,7 @@ app.onResize = function(percent) {
     //if (!app.embeddedMap) {
     if ( width > 767 && !app.embeddedMap ) {
         //$("#map").height(height);
-        //$("#map-wrapper").height(height);
+        $("#map-wrapper").height(height-$('#compass-search-header').height());
         // $(".tabs").height(height);
         //$("#legend-wrapper").height(height - 20);
         $("#data-accordion").height(height - (($.browser.msie && $.browser.version < 9)? 130: 96));
