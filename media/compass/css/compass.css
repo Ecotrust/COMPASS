@@ -268,8 +268,9 @@ body {
 
 .ofr #aggregated-attribute-overlay {
 	background: none;
-	top: 250px;
+	top: 210px;
 	right: 12px;
+	position: fixed;
 }
 
 body.print #aggregated-attribute-overlay {
@@ -702,6 +703,15 @@ input[type="search"],
 	background-color: #e6e6e6;
 	border-color: #adadad;
 	text-decoration: none;
+}
+
+#login-buttons {
+	position: fixed;
+}
+
+#basemaps {
+	top: 72px;
+	position: fixed;
 }
 
 .overview-accordion span,
