@@ -879,7 +879,7 @@ img + h3 {
 }
 
 .SimpleLayerSwitcher {
-  position:absolute;
+  position:fixed;
   top:60px;
   right:166px;
   background-color:whiteSmoke;

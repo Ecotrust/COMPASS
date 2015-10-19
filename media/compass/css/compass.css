@@ -210,7 +210,8 @@ body {
 	background: #404041; /* for IE8 */
 	background:	rgba(64,64,65,.95);
 	right: 165px;
-	top: 62px;
+	top: 77px;
+	position: fixed !important;
 	/*border-radius: 4px;*/
 }
 
