@@ -620,16 +620,21 @@ body.print #map .olControlMousePosition {
 	background-color: #A0A0A0 !important;
 }
 
+#map-panel {
+	top: 63px;
+}
+
+body.print #map-panel {
+	top: 0;
+}
+
 #map-wrapper {
 	margin-left: 370px;
-	/*position: absolute;*/
 	bottom: 0;
-	padding-top: 63px;
 }
 
 body.print #map-wrapper {
 	margin-left: 0;
-	padding-top: 0;
 }
 
 #compass-search-header {
@@ -641,6 +646,59 @@ body.print #map-wrapper {
 body.print #compass-search-header {
 	visibility: none;
 	height: 0;
+}
+
+.search-wrap {
+	display: inline-block;
+}
+
+form.search-wrap {
+	margin: 0;
+	padding: 0;
+	z-index: 100;
+}
+
+.search-wrap input {
+	background-color: #D3E9D1;
+	color: #404041;
+	font-family: "TradeGothicBold","Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 33px;
+	height: 59px;
+	letter-spacing: 0.02em;
+	line-height: 62px;
+	padding: 1px 15px 1px 41px;
+	outline: 0;
+}
+
+input[type="search"],
+ input[type="search"]:focus {
+	margin-bottom: 0;
+	border: 0;
+	box-shadow: none;
+}
+
+#geosearch-field {
+	width: 95%;
+}
+
+.ofr .search-btn-wrapper {
+	height: 63px;
+}
+
+.ofr .search-submit.btn {
+	background-color: #fff;
+	color: #333;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-family: HelveticaNeue-45Lt, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	margin-top: 16px;
+}
+
+.ofr .search-submit.btn:hover {
+	background-color: #e6e6e6;
+	border-color: #adadad;
+	text-decoration: none;
 }
 
 .overview-accordion span,
