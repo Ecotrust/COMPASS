@@ -71,6 +71,13 @@ body {
 	color: white;
 }
 
+#close-spinner {
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	font-size: 14px;
+}
+
 .ofr #create-new-button {
 	background-color: #10767D;  /* for IE */
 	background-color: rgba(16,118,125,1);
