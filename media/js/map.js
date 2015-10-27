@@ -744,6 +744,12 @@ app.getEsriJSONFieldName = function(fields, key){
     return null;
 };
 
+app.getTopOffset = function(element) {
+  var windowTop = $('window').scrollTop();
+  elementOffset = element.offset().top;
+  return (elementOffset - windowTop);
+};
+
 app.queryEsriDataLayer = function(evt){
     app.clickEvent(evt.x,evt.y);
     var self = this;
@@ -753,7 +759,7 @@ app.queryEsriDataLayer = function(evt){
     }
     var pixel_buffer = 1;
     var leftOffset = evt.object.map.div.offsetParent.offsetLeft;
-    var topOffset = evt.object.map.div.offsetParent.offsetTop;
+    var topOffset = app.getTopOffset($('#map-wrapper'));
     if (!evt.hasOwnProperty('x')) {
       evt.x = evt.clientX;
     }
