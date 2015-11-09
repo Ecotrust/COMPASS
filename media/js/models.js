@@ -841,8 +841,10 @@ function layerModel(options, parent) {
         app.viewModel.updateAggregatedAttributesOverlayScrollbar();
     };
 
-    self.zoomToFeature = function() {
-      event.stopPropagation();
+    self.zoomToFeature = function(event) {
+      if (event.hasOwnProperty('stopPropagation')) {
+        event.stopPropagation();
+      }
         //The below line would highlight the feature you were zooming to and open
             // its id report. This was found to be confusing.
       // self.toggleLayerAttribution();
