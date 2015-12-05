@@ -595,6 +595,9 @@ img + h3 {
 #active .btn:last-child {
 	padding: 4px 9px;
 }
+#active .btn-mini:last-child {
+	padding: 0px 6px;
+}
 #active .btn-group {
 	width: 90%;
 }
@@ -619,6 +622,10 @@ img + h3 {
 	/*height: inherit;*/
     height: 16px;
     vertical-align: middle;
+}
+
+#active .accordion-body {
+  background-color:inherit;
 }
 
 .theme .theme-context {

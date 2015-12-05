@@ -363,6 +363,7 @@ function layerModel(options, parent) {
     self.metadata = options.metadata || null;
     self.source = options.source || null;
     self.tiles = options.tiles || null;
+    self.ocs = options.ocs || null;
 
     if ( ! self.metadata ) {
         if ( self.url && (self.arcgislayers !== -1 && self.url.indexOf('/export') != -1))  {
@@ -875,8 +876,20 @@ function layerModel(options, parent) {
     self.toggleDescription = function(layer) {
         if ( ! $('#' + layer.id + '_overview').hasClass('in')) {
           $('#' + layer.id + '_overview').addClass('in');
+          $('#' + layer.id + '_overview_active').addClass('in');
         } else {
           $('#' + layer.id + '_overview').removeClass('in');
+          $('#' + layer.id + '_overview_active').removeClass('in');
+        }
+    };
+
+    self.toggleActiveDescription = function(layer) {
+        if ( ! $('#' + layer.id + '_overview_active').hasClass('in')) {
+          $('#' + layer.id + '_overview').addClass('in');
+          $('#' + layer.id + '_overview_active').addClass('in');
+        } else {
+          $('#' + layer.id + '_overview').removeClass('in');
+          $('#' + layer.id + '_overview_active').removeClass('in');
         }
     };
 
@@ -1828,6 +1841,16 @@ function viewModel() {
             return self.activeInfoSublayer().tiles;
         } else if (self.activeInfoLayer() ) {
             return self.activeInfoLayer().tiles;
+        } else {
+            return false;
+        }
+    };
+
+    self.activeOCSLink = function() {
+        if ( self.activeInfoSublayer() ) {
+            return self.activeInfoSublayer().ocs;
+        } else if (self.activeInfoLayer() ) {
+            return self.activeInfoLayer().ocs;
         } else {
             return false;
         }

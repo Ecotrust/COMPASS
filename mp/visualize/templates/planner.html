@@ -348,7 +348,7 @@
                                       </div>
 
                                       <div id="overview-overlay-links">
-                                        <span class="span11">
+                                        <span class="span12">
                                           <div class="text" style="margin-top: 5px">
                                               <span>
                                                   <a class="btn btn-mini" data-bind="css: { disabled: ! activeDataLink() }, attr: { href: activeDataLink() }" target="_blank">
@@ -378,9 +378,15 @@
                                                       </span>
                                                   </a>
                                               </span>
+                                              <span>
+                                                  <a class="btn btn-mini" data-bind="style: { visibility: ((! activeOCSLink()) ? 'hidden' : 'visible') }, attr: { href: activeOCSLink() }" target="_blank">
+                                                      <span rel="tooltip" title="View in Oregon Conservation Strategy">
+                                                          OCS
+                                                      </span>
+                                                  </a>
+                                              </span>
                                           </div>
                                         </span>
-                                        <span class="span1"></span>
                                       </div>
                                   </div>
                               </div>
@@ -524,7 +530,7 @@
                                                                             <!-- /ko -->
                                                                             <!-- /ko -->
                                                                             <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
-                                                                                <div class="span10  well overview-accordion-content">
+                                                                                <div class="span11  well overview-accordion-content">
                                                                                     <div class="overview-accordion-text" style="margin-top: 5px">
                                                                                         <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
                                                                                         <div class="notes">
@@ -539,7 +545,7 @@
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="overview-accordion-links">
-                                                                                      <span class="span11">
+                                                                                      <span class="span12">
                                                                                         <div class="text" style="margin-top: 5px">
                                                                                             <span>
                                                                                                 <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
@@ -569,9 +575,15 @@
                                                                                                     </span>
                                                                                                 </a>
                                                                                             </span>
+                                                                                            <span>
+                                                                                                <a class="btn btn-mini" data-bind="style: { visibility: ((ocs == '' || ocs == null) ? 'hidden' : 'visible') }, attr: { href: ocs }" target="_blank">
+                                                                                                    <span rel="tooltip" title="View in Oregon Conservation Strategy">
+                                                                                                        OCS
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </span>
                                                                                         </div>
                                                                                       </span>
-                                                                                      <span class="span1"></span>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -640,7 +652,7 @@
 
 
                                                                                           <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
-                                                                                              <div class="span10  well overview-accordion-content">
+                                                                                              <div class="span11 well overview-accordion-content">
                                                                                                   <div class="overview-accordion-text" style="margin-top: 5px">
                                                                                                       <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
                                                                                                       <div class="notes">
@@ -656,7 +668,7 @@
                                                                                                   </div>
 
                                                                                                   <div class="overview-accordion-links">
-                                                                                                    <span class="span11">
+                                                                                                    <span class="span12">
                                                                                                       <div class="text" style="margin-top: 5px">
                                                                                                           <span>
                                                                                                               <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
@@ -686,9 +698,15 @@
                                                                                                                   </span>
                                                                                                               </a>
                                                                                                           </span>
+                                                                                                          <span>
+                                                                                                              <a class="btn btn-mini" data-bind="style: { visibility: ((ocs == '' || ocs == null) ? 'hidden' : 'visible') }, attr: { href: ocs }" target="_blank">
+                                                                                                                  <span rel="tooltip" title="View in Oregon Conservation Strategy">
+                                                                                                                      OCS
+                                                                                                                  </span>
+                                                                                                              </a>
+                                                                                                          </span>
                                                                                                       </div>
                                                                                                     </span>
-                                                                                                    <span class="span1"></span>
                                                                                                   </div>
                                                                                               </div>
                                                                                           </div>
@@ -740,7 +758,7 @@
                                               <ul class="unstyled list" style="margin: 0px 5px 20px;" data-bind="sortable: { data: activeLayers, options: {  } }">
                                                   <li>
                                                       <div class="btn-group">
-                                                          <button class="btn btn-info-sign" data-bind="click: toggleDescription, css: { 'active': infoActive()}, visible: isLayerModel()"><i class="icon-info-sign icon-large"></i></button>
+                                                          <button class="btn btn-info-sign" data-bind="click: toggleActiveDescription, css: { 'active': infoActive()}, visible: isLayerModel()"><i class="icon-info-sign icon-large"></i></button>
                                                           <a class="btn btn-layer" data-bind="css: { 'active': visible(), 'design-layer': !isLayerModel() }, click: toggleVisible">
                                                               <div data-bind="text: name"></div>
                                                               <span rel="tooltip" data-bind="attr: {title: sharedBy}">
@@ -754,6 +772,66 @@
                                                               </i>
                                                           </button>
                                                       </div>
+                                                      <div data-bind="attr: {id: id + '_overview_active' }" class="row-fluid overview-accordion collapse accordion-body">
+                                                          <div class="span11  well overview-accordion-content">
+                                                              <div class="overview-accordion-text" style="margin-top: 5px">
+                                                                  <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
+                                                                  <div class="notes">
+                                                                      <div data-bind="visible: data_source">
+                                                                          Source:
+                                                                          <span data-bind="text: data_source"></span>
+                                                                      </div>
+                                                                      <div style="margin-top: 5px" data-bind="visible: data_notes">
+                                                                          Notes:
+                                                                          <span data-bind="text: data_notes"></span>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+
+                                                              <div class="overview-accordion-links">
+                                                                <span class="span12">
+                                                                  <div class="text" style="margin-top: 5px">
+                                                                      <span>
+                                                                          <a class="btn btn-mini" data-bind="css: { disabled: (data_download == '' || data_download == null) }, attr: { href: data_download }" target="_blank">
+                                                                              <span rel="tooltip" title="Download ESRI Formatted Dataset">
+                                                                                  DATA
+                                                                              </span>
+                                                                          </a>
+                                                                      </span>
+                                                                      <span>
+                                                                          <a class="btn btn-mini" data-bind="css: { disabled: (metadata == '' || metadata == null) }, attr: { href: metadata }" target="_blank">
+                                                                              <span rel="tooltip" title="View the Metadata">
+                                                                                  METADATA
+                                                                              </span>
+                                                                          </a>
+                                                                      </span>
+                                                                      <span>
+                                                                          <a class="btn btn-mini" data-bind="css: { disabled: (source == '' || source == null) }, attr: { href: source }" target="_blank">
+                                                                              <span rel="tooltip" title="Link to Dataset Source Provider">
+                                                                                  SOURCE
+                                                                              </span>
+                                                                          </a>
+                                                                      </span>
+                                                                      <span>
+                                                                          <a class="btn btn-mini" data-bind="css: { disabled: (tiles == '' || tiles == null) }, attr: { href: tiles }" target="_blank">
+                                                                              <span rel="tooltip" title="Web Mapping Services">
+                                                                                  WMS
+                                                                              </span>
+                                                                          </a>
+                                                                      </span>
+                                                                      <span>
+                                                                          <a class="btn btn-mini" data-bind="style: { visibility: ((ocs == '' || ocs == null) ? 'hidden' : 'visible') }, attr: { href: ocs }" target="_blank">
+                                                                              <span rel="tooltip" title="View in Oregon Conservation Strategy">
+                                                                                  OCS
+                                                                              </span>
+                                                                          </a>
+                                                                      </span>
+                                                                  </div>
+                                                                </span>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+
                                                   </li>
                                               </ul>
                                           </div>

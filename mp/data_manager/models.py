@@ -169,6 +169,7 @@ class Layer(models.Model):
     data_download = models.CharField(max_length=255, blank=True, null=True, help_text="Link to download the data")
     metadata = models.CharField(max_length=255, blank=True, null=True, help_text="Link to the metadata")
     source = models.CharField(max_length=255, blank=True, null=True, help_text="Link to the data providers")
+    ocs = models.CharField(max_length=255, blank=True, null=True, help_text="Link to OCS page")
 
     # geojson javascript attribution
     EVENT_CHOICES = (
@@ -352,7 +353,8 @@ class Layer(models.Model):
                 'color': layer.vector_color,
                 'fill_opacity': layer.vector_fill,
                 'graphic': layer.vector_graphic,
-                'opacity': layer.opacity
+                'opacity': layer.opacity,
+                'ocs': layer.ocs
             }
             for layer in self.sublayers.all()
         ]
@@ -390,7 +392,8 @@ class Layer(models.Model):
             'arc_rest_data_layer': self.arc_rest_data_layer,
             'arc_rest_instance_id': self.arc_rest_instance_id,
             'arc_rest_service_name': self.arc_rest_service_name,
-            'arc_rest_out_fields': self.arc_rest_out_fields
+            'arc_rest_out_fields': self.arc_rest_out_fields,
+            'ocs': self.ocs
         }
         return layers_dict
 
