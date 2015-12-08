@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from utils import get_domain
 from django.template.defaultfilters import slugify
 import settings
@@ -464,3 +465,40 @@ class DataNeed(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
+
+
+class ImportEvent(models.Model):
+
+    importStatusChoices = (
+        ('complete', 'Complete'),
+        ('failed', 'Failed'),
+        ('running', 'Running'),
+        ('pending', 'Pending'),
+        ('unknown', 'Unknown')
+    )
+
+    current = models.BooleanField(default=False)
+
+    date_created = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=255,
+        choices=importStatusChoices,
+        default='unknown',
+        blank=False
+    )
+    notes = models.TextField(null=True, blank=True, default=None)
+    user = models.ForeignKey(User)
+    data_file = models.FileField(upload_to='data_manager_uploads/%Y/%m/%d')
+
+    def to_dict(self):
+        datetz = self.date_created.replace(tzinfo=datetime.timezone.utc)
+        localdatetz = datetz.astimezone(tz=None)
+        date_string = localdatetz.strftime("%I:%M %p %b %d, %Y %Z")
+        return {
+            'user': str(self.user),
+            'date_created': date_string,
+            'current': str(self.current),
+            'file_location': str(self.data_file),
+            'status': str(self.status),
+            'notes': str(self.notes),
+        }
