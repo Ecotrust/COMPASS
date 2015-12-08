@@ -89,6 +89,9 @@ class LookupInfoAdmin(admin.ModelAdmin):
 class DataNeedAdmin(admin.ModelAdmin):
     list_display = ('name', 'description')
 
+class PortAdmin(admin.ModelAdmin):
+    list_display = ('data_file', 'user', 'status', 'current', 'date_created')
+
 admin.site.register(TOC, TOCAdmin)
 admin.site.register(TOCTheme, TOCThemeAdmin)
 admin.site.register(TOCSubTheme, TOCSubThemeAdmin)
@@ -97,3 +100,4 @@ admin.site.register(Layer, LayerAdmin)
 admin.site.register(AttributeInfo, AttributeInfoAdmin)
 admin.site.register(LookupInfo, LookupInfoAdmin)
 admin.site.register(DataNeed, DataNeedAdmin)
+admin.site.register(ImportEvent, PortAdmin)

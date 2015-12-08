@@ -22,7 +22,7 @@ v1_api.register(TocThemeResource())
 
 urlpatterns = patterns(
     '',
-    url(r'^admin/import/$', 'data_manager.views.import_export_admin'),
+    url(r'^admin/port_data_manager/$', 'data_manager.views.import_export_admin'),
     url('', include('social.apps.django_app.urls', namespace='social')),
     (r'^api/', include(v1_api.urls)),
     (r'^mp_profile/', include('mp_profile.urls')),
