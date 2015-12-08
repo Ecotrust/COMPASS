@@ -36,10 +36,11 @@ def get_json(request, project=None):
         return HttpResponse(simplejson.dumps(json))
     except:
         pass
+
     json = {
         "state": { "activeLayers": [] },
         "layers": [layer.toDict for layer in Layer.objects.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('name')],
-        "themes": [theme.toDict for theme in Theme.objects.all().order_by('display_name')],
+        "themes": [theme.toDict for theme in TOCTheme.objects.all().order_by('display_name')],
         "success": True
     }
     return HttpResponse(simplejson.dumps(json))
@@ -180,9 +181,6 @@ def import_export_admin(
     # return render_to_response(template_name, {'form': form})
     template = loader.get_template(template_name)
 
-    import ipdb
-    ipdb.set_trace()
-
     context = RequestContext(
         request, {
             'form': form,
@@ -202,7 +200,7 @@ def create_backup_fixture(user):
     from django.core import management
     backup_file = '/tmp/data_manager_backup.json'
     with open(backup_file, 'w') as f:
-        management.call_command('dumpdata', 'data_manager', format='json', indent=2, exclude=['data_manager.ImportEvent'], stdout=f)
+        management.call_command('dumpdata', 'mp_settings', 'data_manager', format='json', indent=2, exclude=['data_manager.ImportEvent'], stdout=f)
     return backup_file
 
 '''
@@ -222,12 +220,12 @@ def create_initial_contents(fixture, user):
 
 '''
 given a data_manager fixture file name, load the data into the database
+fixture must be a string of the file location.
 '''
 def load_contents_fixture(fixture):
     from django.core import management
     try:
-        with open(fixture, 'r') as f:
-            management.call_command('loaddata', f)
+        management.call_command('loaddata', fixture)
     except:
         return False
     return True
@@ -249,7 +247,6 @@ record the import event and attempt to load the data_manager data into the datab
 '''
 def handle_imported_content_file(import_file, user):
     import json
-    timestamp = datetime.datetime.now().timestamp()
     backup_file = create_backup_fixture(user)
 
     if len(ImportEvent.objects.all()) == 0:
@@ -261,7 +258,10 @@ def handle_imported_content_file(import_file, user):
         data_file=import_file
     )
     clean_data_manager_models()
-    import_success = load_contents_fixture(import_file)
+
+    uploaded_file_location = '../media/%s' % str(import_event.data_file)
+
+    import_success = load_contents_fixture(uploaded_file_location)
     if import_success:
         set_import_as_current(import_event)
         setattr(import_event, 'status', 'complete')
