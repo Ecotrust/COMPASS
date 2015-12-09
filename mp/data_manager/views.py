@@ -5,6 +5,8 @@ from django.template import RequestContext, loader
 from django.utils import simplejson
 from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.files.uploadedfile import UploadedFile
+import os, datetime, time
 from models import *
 from forms import *
 
@@ -168,15 +170,17 @@ def import_export_admin(
         form = UploadContentsForm(request.POST, request.FILES)
         if form.is_valid():
             handle_imported_content_file(request.FILES['file'], request.user)
-            return HttpResponseRedirect('/admin/data_manager/')    # success url
+            return HttpResponseRedirect('/admin/port_data_manager/')    # success url
     else:
         form = UploadContentsForm()
     if len(ImportEvent.objects.all()) == 0:
-        fixture = create_backup_fixture(request.user)
+        fixture = create_new_fixture(request.user, 'initial')
         initial_contents = create_initial_contents(fixture, request.user)
         set_import_as_current(initial_contents)
 
     current_fixture = ImportEvent.objects.filter(current=True)[0]
+
+    snapshots = [x for x in ImportEvent.objects.filter(status='complete').order_by('date_created')]
 
     # return render_to_response(template_name, {'form': form})
     template = loader.get_template(template_name)
@@ -184,7 +188,8 @@ def import_export_admin(
     context = RequestContext(
         request, {
             'form': form,
-            'current_fixture': str(current_fixture.data_file)
+            'current_fixture': str(current_fixture.data_file),
+            'snapshots': snapshots
         }
     )
 
@@ -196,12 +201,12 @@ import_export_admin = staff_member_required(import_export_admin)
 '''
 dump current data_manager data to a file to rebuild on import failure
 '''
-def create_backup_fixture(user):
+def create_new_fixture(user, filename):
     from django.core import management
-    backup_file = '/tmp/data_manager_backup.json'
-    with open(backup_file, 'w') as f:
+    fixture_file = '/tmp/data_manager_%s_%s.json' % (filename, str(int(time.time()*1000)))
+    with open(fixture_file, 'w') as f:
         management.call_command('dumpdata', 'mp_settings', 'data_manager', format='json', indent=2, exclude=['data_manager.ImportEvent'], stdout=f)
-    return backup_file
+    return fixture_file
 
 '''
 If no initial import event is available, create one so the user can revert back to a working original
@@ -224,6 +229,14 @@ fixture must be a string of the file location.
 '''
 def load_contents_fixture(fixture):
     from django.core import management
+    from django.db.models.fields.files import FieldFile
+
+    #fixture should be a string of the file location. If not...
+    if type(fixture) == ImportEvent:
+        fixture = fixture.data_file
+    if type(fixture) == FieldFile:
+        fixture = fixture.file.name     # doesn't work - need abs path to be sure.
+
     try:
         management.call_command('loaddata', fixture)
     except:
@@ -239,6 +252,7 @@ def clean_data_manager_models():
     AttributeInfo.objects.all().delete()
     Layer.objects.all().delete()
     Theme.objects.all().delete()
+    TOCTheme.objects.all().delete()
     TOCSubTheme.objects.all().delete()
     TOC.objects.all().delete()
 
@@ -247,7 +261,7 @@ record the import event and attempt to load the data_manager data into the datab
 '''
 def handle_imported_content_file(import_file, user):
     import json
-    backup_file = create_backup_fixture(user)
+    backup_file = create_new_fixture(user, 'backup')
 
     if len(ImportEvent.objects.all()) == 0:
         create_initial_contents(backup_file, user)
@@ -279,3 +293,40 @@ def set_import_as_current(import_event):
         event.save()
     setattr(import_event, 'current', True)
     import_event.save()
+
+def get_current_fixture(request):
+    now = datetime.datetime.now().date()
+    fixture = create_new_fixture(request.user, 'current')
+    fixture_file = open(fixture, 'r')
+    response = HttpResponse(content=fixture_file.read())
+    fixture_file.close()
+    response['X-Sendfile'] = fixture
+    response['Content-Type'] = 'application/json'
+    response['Content-Length'] = os.path.getsize(fixture)
+    response['Content-Disposition'] = 'attachment; filename="data_manager_current_%s_%s_%s.json"' % (str(now.year), str(now.month), str(now.day))# % fixture
+    return response
+
+def create_data_manager_snapshot(request):
+    fixture = create_new_fixture(request.user, 'snapshot')
+    fixture_file = UploadedFile(file(fixture))
+    handle_imported_content_file(fixture_file, request.user)
+    return HttpResponseRedirect('/admin/port_data_manager/')
+
+def data_manager_make_current(request, import_id):
+
+    try:
+        import_event = ImportEvent.objects.get(id=import_id)
+        backup_event = ImportEvent.objects.get(current=True)
+        clean_data_manager_models()
+        import_success = load_contents_fixture(import_event.data_file.file.name)
+        print import_event.data_file.file.name
+
+
+        if import_success:
+            set_import_as_current(import_event)
+        else:
+            load_contents_fixture(backup_event)
+            set_import_as_current(backup_event)
+    except:
+        return HttpResponse('Error 500: Internal Server Error - Failed to make given snapshot current.')
+    return HttpResponseRedirect('/admin/port_data_manager/')

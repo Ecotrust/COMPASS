@@ -23,6 +23,9 @@ v1_api.register(TocThemeResource())
 urlpatterns = patterns(
     '',
     url(r'^admin/port_data_manager/$', 'data_manager.views.import_export_admin'),
+    url(r'^admin/get_current_data_manager_fixture/$', 'data_manager.views.get_current_fixture'),
+    url(r'^admin/create_data_manager_snapshot/$', 'data_manager.views.create_data_manager_snapshot'),
+    url(r'^admin/data_manager_make_current/(?P<import_id>.*)$', 'data_manager.views.data_manager_make_current'),
     url('', include('social.apps.django_app.urls', namespace='social')),
     (r'^api/', include(v1_api.urls)),
     (r'^mp_profile/', include('mp_profile.urls')),

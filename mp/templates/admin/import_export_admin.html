@@ -11,7 +11,7 @@
 
 {% block content %}
 <div id="content-main">
-  <h1>Import Layer Data</h1>
+  <h1>Import Snapshot</h1>
   <form enctype="multipart/form-data" id="treatment_form" method="post" action="/admin/port_data_manager/">
 
     {% csrf_token %}
@@ -27,7 +27,49 @@
 
     <input type="submit" name="submit" value="Import Treatments" />
   </form>
-  <h1>Export Layer Data</h1>
-  <a href=/media/{{current_fixture}} download>Download current layer data</a>
+
+  <br />
+  <hr />
+  <br />
+
+  <h1>Export Snapshot</h1>
+  <a href=/admin/get_current_data_manager_fixture download>Download current snapshot</a>
+
+  <br />
+  <hr />
+  <br />
+
+  <h1>Snapshots</h1>
+  <table>
+    <tr>
+      <th>EDIT</th>
+      <th>DATE</th>
+      <th>IS CURRENT</th>
+      <th>NOTES</th>
+      <th>DOWNLOAD</th>
+    </tr>
+
+    {% for snapshot in snapshots %}
+    <tr>
+      <td><a href="/admin/data_manager/importevent/{{snapshot.id}}/">Edit</a>
+      <td>{{snapshot.date_created}}</td>
+      <td>{% if snapshot.current %}
+        <img src="/media/admin/img/icon-yes.gif" alt="True">
+        {% else %}
+        <a href='/admin/data_manager_make_current/{{snapshot.id}}'><button>Make Current</button></a>
+        {% endif %}
+      </td>
+      <td>{{snapshot.notes}}</td>
+      <td><a href="/media/{{snapshot.data_file}}" download>Snapshot File</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <br />
+  <hr />
+  <br />
+  
+  <h1>Create New Snapshot</h1>
+  <a href="/admin/create_data_manager_snapshot">Add current state to list of snapshots</a>
 </div>
 {% endblock %}
