@@ -236,6 +236,7 @@ body {
 .ofr div.olControlZoom {
 	background: transparent\9; /* for IE8 ? */
 	background: rgba(255,255,255,0);
+	visibility: visible;
 }
 
 .ofr div.olControlZoom a {
