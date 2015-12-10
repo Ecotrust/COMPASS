@@ -257,7 +257,7 @@ body {
 	border: 1px solid #999;
 }
 
-body.print div.olControlZoom {
+body.print #map .olControlZoom {
 	left: 20px;
 	top: 20px;
 	bottom: initial;
