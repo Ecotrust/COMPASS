@@ -253,6 +253,17 @@ body {
 	color: #EF3824;
 }
 
+.ofr div.olControlZoom>.olButton {
+	border: 1px solid #999;
+}
+
+body.print div.olControlZoom {
+	left: 20px;
+	top: 20px;
+	bottom: initial;
+	right: initial;
+}
+
 .ofr .olControlAttribution {
 	max-width: 46%;
 	width: auto;
