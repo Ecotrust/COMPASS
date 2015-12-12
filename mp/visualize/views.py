@@ -58,13 +58,33 @@ def show_planner(request, project=None, template='planner.html'):
         project_name = project_logo = project_icon = project_home_page = bitly_registered_domain = bitly_username = bitly_api_key = default_hash = ""
         latitude = longitude = zoom = min_zoom = max_zoom = None
         enable_drawing = False
+    try:
+        contents = Content.objects.all()
+        content_dict = {}
+        for content in contents:
+            content_dict[content.name] = {
+                "name": content.name,
+                "display_name": content.display_name,
+                "description": content.description,
+                "content": content.content
+            }
+    except:
+        content_dict = {
+            "disclaimer": {
+                "content": "<p>ODFW crucial habitat layers updated:</p>\r\n<p>&nbsp;February 26, 2014.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;ODFW Compass provides coarse-scale, non-regulatory fish and wildlife information, and the crucial habitat layers emphasize areas documented as containing important natural resources. This site is intended to support early planning for large-scale land-use, development, or conservation projects.&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><strong>&nbsp;By clicking \"Agree\", you are acknowledging the following statements:</strong>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<ul>\r\n<li>Data and analyses presented within Compass are based on best available information, and are expected to be updated regularly. Crucial habitat layers reflect documented resources at the time of data aggregation; and as such absence of crucial habitat prioritization does not necessarily indicate that no crucial species or habitats are present (or have been present in that location at one time.)</li>\r\n<li>Most layers within Compass do not provide detailed information on site-specific locations or streams and using this site does not replace or supersede site-specific consolation with appropriate agencies, including the Oregon Department of Fish and Wildlife.</li>\r\n<li>Some data layers may be summarized to preserve the confidentiality of sensitive information.</li>\r\n<li>Documentation for layers and methodologies should be used to better understand the results and methodologies presented.</li>\r\n</ul>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;I have read this disclaimer and understand the intent of this system, and therefore hold ODFW harmless from any liability arising from or related to using the ODFW Compass system.&nbsp;</p>",
+                "display_name": "Disclaimer",
+                "name": "disclaimer",
+                "description": "Text content for the disclaimer window all users see upon opening Compass."
+            }
+        }
     context = {
         'MEDIA_URL': settings.MEDIA_URL, 'SOCKET_URL': socket_url, 'login': 'true',
         'project_name': project_name, 'latitude': latitude, 'longitude': longitude, 'zoom': zoom,
         'default_hash': default_hash, 'min_zoom': min_zoom, 'max_zoom': max_zoom,
         'project_logo': project_logo, 'project_icon': project_icon, 'project_home_page': project_home_page,
         'enable_drawing': enable_drawing,
-        'bitly_registered_domain': bitly_registered_domain, 'bitly_username': bitly_username, 'bitly_api_key': bitly_api_key
+        'bitly_registered_domain': bitly_registered_domain, 'bitly_username': bitly_username, 'bitly_api_key': bitly_api_key,
+        'content': content_dict
     }
     if request.user.is_authenticated:
         context['session'] = request.session._session_key

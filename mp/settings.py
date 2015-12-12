@@ -36,7 +36,10 @@ INSTALLED_APPS += ('django_extensions',
                    'django.contrib.humanize',
                    'flatblocks',
                    'mp_proxy',
-                   'map_proxy'
+                   'map_proxy',
+                   'content',
+                   'tinymce',
+                   'django_wysiwyg'
                    )
 
 GEOMETRY_DB_SRID = 3857
@@ -170,5 +173,7 @@ logging.getLogger('django.db.backends').setLevel(logging.ERROR)
 
 #For geosearch/geocoding:
 POINT_BUFFER = 2500  # meters
+
+DJANGO_WYSIWYG_FLAVOR = "tinymce"    # or "tinymce_advanced"
 
 from settings_local import *

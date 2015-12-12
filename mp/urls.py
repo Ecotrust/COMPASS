@@ -32,6 +32,7 @@ urlpatterns = patterns(
     #(r'^sdc/', include('scenarios.urls')),
     (r'^drawing/', include('drawing.urls')),
     (r'^data_manager/', include('data_manager.urls')),
+    (r'^content/', include('content.urls')),
     #(r'^learn/', include('learn.urls')),
     (r'^scenario/', include('scenarios.urls')),
     (r'^explore/', include('explore.urls')),
@@ -53,6 +54,7 @@ urlpatterns = patterns(
            "django.views.static.serve",
            {"document_root": settings.ADMIN_MEDIA_PATH}),
     (r'', include('madrona.common.urls')),
+    (r'^tinymce/', include('tinymce.urls')),
 )
 
 

@@ -52,6 +52,16 @@ body {
 	top: 25%;
 }
 
+#disclaimer-modal {
+	top: 10%;
+	min-height: 167px;
+	max-height: 70vh;
+}
+
+#disclaimer-modal .modal-body {
+	height: calc(70vh - 140px);
+}
+
 /*.ofr a:hover, .ofr a:focus {
 	color: #EF3824;
 	text-decoration: none;

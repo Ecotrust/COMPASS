@@ -53,7 +53,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Add a Layer to Marine Planner</h3>
     </div>
-    <div class="modal-body" data-bind="if: newLayer">  
+    <div class="modal-body" data-bind="if: newLayer">
       <div class="row-fluid" data-bind="with: newLayer">
           <form class="form-horizontal" data-bind="submit: $root.createLayer">
             <div class="control-group">
@@ -95,7 +95,7 @@
                 <i class="icon-info-sign" data-content="The WMS layer slug."></i>
               </div>
             </div>
-            
+
             <div class="control-group">
                 <label class="control-label">Theme</label>
                 <div class="controls">
@@ -120,7 +120,7 @@
     <div class="modal-header" style="min-height: 20px;">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
-    <div class="modal-body" style="text-align: center">  
+    <div class="modal-body" style="text-align: center">
       <div class="row-fluid">
         <div class="span12" data-bind="style: {display: hideTours() ? 'none': 'block'}, css: {span12: !hideTours()}">
             <h4>Tour the Marine Planner</h4>
@@ -146,7 +146,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Sharing</h3>
     </div>
-    <div class="modal-body" style="height: 200px; text-align: center; overflow: hidden;">  
+    <div class="modal-body" style="height: 200px; text-align: center; overflow: hidden;">
         <div class="row-fluid">
             <h4 class="sharing-header">Share my design with the following:</h4>
             <ul class="unstyled" id="sharing-groups" style="margin-left: 1px; height: 165px; outline: none;">
@@ -157,8 +157,8 @@
                                 <!--<input type="checkbox" style="margin-top: 0px; margin-bottom: 2px; margin-right: 3px;">-->
                                 <i class="check icon-large icon-check" data-bind="visible: $parent.groupIsSelected(group_name)"></i>
                                 <i class="check icon-large icon-check-empty" data-bind="visible: !$parent.groupIsSelected(group_name)"></i>
-                                <span data-bind="text: group_name"></span> 
-                                <a class="group-members-popover" rel="popover" data-bind="attr: {'data-content': $parent.groupMembers(group_name)}" data-original-title="Members"> 
+                                <span data-bind="text: group_name"></span>
+                                <a class="group-members-popover" rel="popover" data-bind="attr: {'data-content': $parent.groupMembers(group_name)}" data-original-title="Members">
                                     <i class="icon-group"> </i>
                                 </a>
                             </div>
@@ -181,31 +181,31 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Map Links</h3>
     </div>
-    
-    <div class="modal-body" style="height: 165px; overflow: hidden"> 
+
+    <div class="modal-body" style="height: 165px; overflow: hidden">
         <div class="row-fluid" style="padding-top: 5px">
             <div>
-                Share this map with others  
+                Share this map with others
                 <span class="pull-right">
-                    <label data-bind="visible: showShrinkOption"> 
-                        <input class="short-url-checkbox" type="checkbox" data-bind="checked: shrinkURL" style="margin-top: 0px; margin-bottom: 3px"> 
-                        Short URL 
+                    <label data-bind="visible: showShrinkOption">
+                        <input class="short-url-checkbox" type="checkbox" data-bind="checked: shrinkURL" style="margin-top: 0px; margin-bottom: 3px">
+                        Short URL
                     </label>
                 </span>
             </div>
             <div>
-                <input id="short-url" type="text" style="width: 96%" data-bind="attr: {value: getURL()}"> 
+                <input id="short-url" type="text" style="width: 96%" data-bind="attr: {value: getURL()}">
             </div>
-            <div style="padding-top: 12px; padding-bottom: 5px"> 
-                Embed this map in your own webpage 
-            </div> 
-            <div> 
-                <input id="iframe-html" type="text" style="width: 96%" data-bind="attr: {value: getIFrameHTML}"> 
-            </div> 
-            <div style="margin-top: -4px"> 
-                <a href="#" data-bind="click: openIFrameExample"> 
-                    Preview embedded map 
-                </a> 
+            <div style="padding-top: 12px; padding-bottom: 5px">
+                Embed this map in your own webpage
+            </div>
+            <div>
+                <input id="iframe-html" type="text" style="width: 96%" data-bind="attr: {value: getIFrameHTML}">
+            </div>
+            <div style="margin-top: -4px">
+                <a href="#" data-bind="click: openIFrameExample">
+                    Preview embedded map
+                </a>
             </div>
         </div>
     </div>
@@ -214,6 +214,31 @@
     </div>
 </div>
 
+<!-- Disclaimer Modal -->
+<div id="disclaimer-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Disclaimer</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row-fluid">
+          <div class="span12">
+            <img src="/media/compass/img/CompassAndODFW_BW_green.png">
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="span12">
+              {{ content.disclaimer.content|safe|escape }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Agree</button>
+        <a href="http://www.dfw.state.or.us/" class="btn btn-default">Decline</a>
+      </div>
+    </div>
 
-
+  </div>
+</div>

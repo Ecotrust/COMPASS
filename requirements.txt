@@ -36,3 +36,5 @@ ipython==1.2.1
 python-social-auth==0.1.23
 
 geopy
+django-tinymce
+django-wysiwyg

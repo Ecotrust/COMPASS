@@ -255,6 +255,13 @@ app.borderLess = function () {
 
 app.loadState = function(state) {
     var loadTimer;
+    if (!state.print || state.print == "false") {
+      $('#disclaimer-modal').modal({
+        show: true,
+        keyboard: false,
+        backdrop: 'static'
+      });
+    }
     if (state.z || state.login || state.scope) {
         return app.loadCompressedState(state);
     } else {
