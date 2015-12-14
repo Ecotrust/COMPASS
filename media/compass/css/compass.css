@@ -498,6 +498,15 @@ body.print #map .olControlMousePosition {
 	z-index: 751 !important;
 }
 
+#pageGuideWrapper #pageGuideMessage {
+	z-index: 1008;
+}
+
+.pageguide-content {
+	overflow-y: auto;
+	max-height: 155px;
+}
+
 .header .brand {
 	background-color: #005130;
 
@@ -657,6 +666,7 @@ body.print #map .olControlMousePosition {
 
 #map-panel {
 	top: 63px;
+	height: calc(100vh - 63px);
 }
 
 body.print #map-panel,

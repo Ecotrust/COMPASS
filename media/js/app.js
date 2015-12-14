@@ -27,11 +27,7 @@ app.onResize = function(percent) {
 
   app.viewModel.updateAllScrollBars();
 
-  if (width < 946) {
-    app.viewModel.hideTours(true);
-  } else {
-    app.viewModel.hideTours(false);
-  }
+  app.viewModel.hideTours(false);
 
 };
 

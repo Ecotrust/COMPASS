@@ -1181,6 +1181,7 @@ function viewModel() {
     self.modernBrowser = ko.observable( !($.browser.msie && $.browser.version < 9.0) );
 
 
+    self.initialLoad = ko.observable(true);
     self.printMode = ko.observable(false);
 
 

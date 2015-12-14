@@ -3,6 +3,43 @@ app.pageguide = {};
 
 /* THE DEFAULT PAGE GUIDE */
 
+var setGuideIds = function(theme_index, subtheme_index) {
+  if (theme_index) {
+    st1_target = $('.accordion-heading').not('.subcategory-heading').eq(theme_index);
+    st1_target.attr('id','dataguide-st1-target');
+  }
+}
+
+var findValidLayer = function() {
+  var ret_layer = null;
+  for (var theme_index = 4; theme_index < app.viewModel.themes().length; theme_index++) {
+    if (app.viewModel.themes()[theme_index].layers().length > 0) {
+      setGuideIds(theme_index, false);
+      return {
+        'theme': app.viewModel.themes()[theme_index],
+        'theme_index': theme_index,
+        'subtheme': false,
+        'subtheme_index': false,
+        'layer': app.viewModel.themes()[theme_index].layers()[0]
+      };
+    }
+    for (var subtheme_index = 0; subtheme_index < app.viewModel.themes()[theme_index].subthemes().length; subtheme_index++) {
+      if (app.viewModel.themes()[theme_index].subthemes()[subtheme_index].layers().length > 0) {
+        setGuideIds(theme_index, subtheme_index);
+        return {
+          'theme': app.viewModel.themes()[theme_index],
+          'theme_index': theme_index,
+          'subtheme': app.viewModel.themes()[theme_index].subthemes()[subtheme_index],
+          'subtheme_index': subtheme_index,
+          'layer': app.viewModel.themes()[theme_index].subthemes()[subtheme_index].layers()[0]
+        };
+      }
+    }
+  }
+};
+
+// valid_layer_obj = findValidLayer();
+
 var defaultGuide = {
   id: 'default-guide',
   title: 'Default Guide',
@@ -108,26 +145,27 @@ var defaultGuideOverrides = {
         //     app.viewModel.closeAllThemes();
         //     // $('#pageGuideMessage').height(120);
         // } else
+        var valid_layer_obj = findValidLayer();
         if ($(this).data('idx') === 0) {
             app.viewModel.showLayers(true);
             $('#dataTab').tab('show');
             app.viewModel.closeAllThemes();
-            app.viewModel.themes()[0].setOpenTheme();
+            valid_layer_obj.theme.setOpenTheme();
             //TODO: Adjust for subThemes!!!
-            for (var i=0; i < app.viewModel.themes()[0].layers().length; i++) {
-                var layer = app.viewModel.themes()[0].layers()[i];
-                if ( layer.name === 'Regional Ocean Partnerships' ) {
-                    layer.activateLayer();
-                }
-            }
-            for (var i=0; i < app.viewModel.themes()[0].layers().length; i++) {
-                var layer = app.viewModel.themes()[0].layers()[i];
-                if ( layer.name === 'Marine Jurisdictions' ) {
-                    $.each(layer.subLayers, function(index, sublayer) {
-                        sublayer.activateLayer();
-                    });
-                }
-            }
+            // for (var i=0; i < app.viewModel.themes()[0].layers().length; i++) {
+            //     var layer = app.viewModel.themes()[0].layers()[i];
+            //     if ( layer.name === 'Regional Ocean Partnerships' ) {
+            //         layer.activateLayer();
+            //     }
+            // }
+            // for (var i=0; i < app.viewModel.themes()[0].layers().length; i++) {
+            //     var layer = app.viewModel.themes()[0].layers()[i];
+            //     if ( layer.name === 'Marine Jurisdictions' ) {
+            //         $.each(layer.subLayers, function(index, sublayer) {
+            //             sublayer.activateLayer();
+            //         });
+            //     }
+            // }
             // $('#pageGuideMessage').height(150);
         } else if ($(this).data('idx') === 2) {
             app.viewModel.showLayers(true);
@@ -162,7 +200,8 @@ var dataGuide = {
       arrow: {offsetX: 0, offsetY: 0}
     },
     {
-      target: '.accordion-heading',
+      // target: '.accordion-heading',
+      target: '#dataguide-st1-target',
       content: $('#help-text-data-tour-theme').html(),
       direction: 'right',
       arrow: {offsetX: -10, offsetY: 10}
@@ -185,6 +224,11 @@ var dataGuide = {
   ]
 };
 
+var setDataGuide = function(valid_layer_obj) {
+
+  dataGuide.steps[1].target = '#dataguide-st1-target';
+}
+
 var dataGuideOverrides = {
   events: {
     open: function () {
@@ -197,33 +241,48 @@ var dataGuideOverrides = {
   step: {
     events: {
       select: function() {
+        var valid_layer_obj = findValidLayer();
+        setDataGuide(valid_layer_obj);
         if ($(this).data('idx') === 0) {
             app.viewModel.closeDescription();
             app.viewModel.deactivateAllLayers();
-            //app.viewModel.closeAllThemes();
+            app.viewModel.closeAllThemes();
+            valid_layer_obj.theme.setOpenTheme();
+            if (valid_layer_obj.subtheme) {
+              valid_layer_obj.subtheme.setOpenSubTheme();
+            }
             //$('#pageGuideMessage').height(150);
         } else if ($(this).data('idx') === 1) {
             //alert("Step 2");
             app.viewModel.closeDescription();
             app.viewModel.deactivateAllLayers();
             app.viewModel.closeAllThemes();
-            app.viewModel.themes()[0].setOpenTheme();
+            valid_layer_obj.theme.setOpenTheme();
+            if (valid_layer_obj.subtheme) {
+              valid_layer_obj.subtheme.setOpenSubTheme();
+            }
             //$('#pageGuideMessage').css //can we adjust the height of the tour background as well as that of the description overlay?
             //$('#pageGuideMessage').height(150);
         } else if ($(this).data('idx') === 2) {
             //alert("Step 3");
             app.viewModel.closeDescription();
             app.viewModel.closeAllThemes();
-            app.viewModel.themes()[0].setOpenTheme();
-            var layer = app.viewModel.themes()[0].layers()[0];
-            layer.activateLayer();
+            valid_layer_obj.theme.setOpenTheme();
+            if (valid_layer_obj.subtheme) {
+              valid_layer_obj.subtheme.setOpenSubTheme();
+            }
+            valid_layer_obj.layer.activateLayer();
             //$('#pageGuideMessage').height(150);
         } else if ($(this).data('idx') === 3) {
             //$('#pageGuideMessage').height(150);
             app.viewModel.closeAllThemes();
-            app.viewModel.themes()[0].setOpenTheme();
-            var layer = app.viewModel.themes()[0].layers()[0];
-            layer.showDescription(layer);
+            valid_layer_obj.theme.setOpenTheme();
+            if (valid_layer_obj.subtheme) {
+              valid_layer_obj.subtheme.setOpenSubTheme();
+            }
+            if (! $('#' + valid_layer_obj.layer.id + '_overview').hasClass('in')) {
+              valid_layer_obj.layer.toggleDescription(valid_layer_obj.layer);
+            }
             //app.viewModel.themes()[0].layers()[3].showDescription(app.viewModel.themes()[0].layers()[3]);
             //$('#overview-overlay').height(236);
         }
