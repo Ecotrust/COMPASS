@@ -230,8 +230,8 @@
                                   <div id="aggregated-attribute-overlay" style="display: none" class="scrollpane" data-bind="visible: aggregatedAttributes, style: {width: aggregatedAttributesWidth}">
                                       <div id="aggregated-attribute-content" class="accordion">
                                           <div data-bind="foreach: attributeLayers()">
-                                              <div class="accordion-group">
-                                                  <div data-bind="if: $root.aggregatedAttributes()[name]">
+                                              <div data-bind="if: $root.aggregatedAttributes()[name]">
+                                                  <div class="accordion-group">
                                                       <div class="accordion-heading layer-attr-collapse" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
                                                           <a class="accordion-toggle container-fluid">
                                                             <div class="row-fluid layer-attr-display-ctrl">

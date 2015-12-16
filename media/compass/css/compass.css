@@ -194,10 +194,6 @@ body.print #disclaimer-modal {
 	text-decoration: underline;
 }
 
-#aggregated-attribute-content .accordion-group {
-	position: relative;
-}
-
 .ofr .btn.zoom-to-button {
 	position: absolute;
 	top: 3px;
@@ -325,6 +321,7 @@ body.print #map .olControlZoom {
 	top: 210px;
 	right: 12px;
 	position: fixed;
+	border-radius: 4px;
 }
 
 body.print #aggregated-attribute-overlay {
@@ -603,6 +600,12 @@ body.print #map .olControlMousePosition {
 	color: white;
 }
 
+#aggregated-attribute-content .accordion-group {
+	position: relative;
+	border: 1px solid #111;
+	border-radius: 0;
+}
+
 #aggregated-attribute-content .accordion-heading {
 	padding: 1px;
 	margin-top: 0;
@@ -611,6 +614,9 @@ body.print #map .olControlMousePosition {
 
 #aggregated-attribute-content .mCSB_container {
 	padding: 0;
+	margin: 0 5px 5px 5px;
+	position: relative;
+	top: 0;
 }
 
 #aggregated-attribute-content .accordion-body {
@@ -689,7 +695,6 @@ body.print #map .olControlMousePosition {
 	width: 175px;
 }
 #aggregated-attribute-overlay > div {
-	border-radius: 0;
 	padding: 30px 0 0 0;
 }
 
