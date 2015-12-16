@@ -257,7 +257,7 @@ app.loadState = function(state) {
     var loadTimer;
     if (app.viewModel.initialLoad()) {
       app.viewModel.initialLoad(false);
-      if (!app.viewModel.printMode()) {
+      if (!app.viewModel.printMode() && (!state.print || state.print == "false")) {
         $('#disclaimer-modal').modal({
           show: true,
           keyboard: false,
