@@ -677,6 +677,9 @@ body.print #map .olControlMousePosition {
 	padding: 10px 5px 0 0;
 }
 
+#aggregated-attribute-content h4.layer-attr-title {
+	width: 175px;
+}
 #aggregated-attribute-overlay > div {
 	border-radius: 0;
 	padding: 30px 0 0 0;
