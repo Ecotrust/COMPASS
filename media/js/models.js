@@ -2048,6 +2048,14 @@ function viewModel() {
         self.updateScrollBars();
     };
 
+    self.closeAllSubThemes = function() {
+        var numOpenSubThemes = self.openSubThemes().length;
+        for (var i=0; i< numOpenSubThemes; i++) {
+            self.openSubThemes.remove(self.openSubThemes()[0]);
+        }
+        self.updateScrollBars();
+    }
+
     // do this stuff when the visible layers change
     /*self.visibleLayers.subscribe(function() {
         if (!self.hasActiveLegends()) {
@@ -2098,14 +2106,21 @@ function viewModel() {
         //show the data layers panel
         app.viewModel.showLayers(true);
 
-        //switch pageguide from default guide to data guide
-        $.pageguide(dataGuide, dataGuideOverrides);
 
         //show the data tab, close all themes and deactivate all layers, and open the Admin theme
         app.viewModel.closeAllThemes();
         app.viewModel.deactivateAllLayers();
-        app.viewModel.themes()[0].setOpenTheme();
 
+        //switch pageguide from default guide to data guide
+        var valid_layer_obj = findValidLayer();
+        setGuideIds(valid_layer_obj.theme_index, valid_layer_obj.subtheme_index);
+        if (valid_layer_obj.theme && !(valid_layer_obj.theme.isOpenTheme())) {
+          valid_layer_obj.theme.setOpenTheme();
+          if (valid_layer_obj.subtheme && !(valid_layer_obj.subtheme.isOpenSubTheme())) {
+            valid_layer_obj.subtheme.setOpenSubTheme();
+          }
+        }
+        $.pageguide(dataGuide, dataGuideOverrides);
         //TODO: Open a subtheme if available
 
         //app.setMapPosition(-73, 38.5, 7);
