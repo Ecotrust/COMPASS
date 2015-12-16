@@ -668,8 +668,16 @@ body.print #map .olControlMousePosition {
 	color: #111;
 }
 
-#aggregated-attribute-content h5.layer-attr-subtitle {
-	margin-top: -5px;
+#aggregated-attribute-content .accordion-heading.layer-attr-init h5.layer-attr-subtitle {
+	margin: -5px 0 10px 0;
+	visibility: visible;
+	height: auto;
+}
+
+#aggregated-attribute-content .accordion-heading.layer-attr-collapse h5.layer-attr-subtitle {
+	visibility: hidden;
+	height: 0;
+	margin: -5px 0 0 0;
 }
 
 #aggregated-attribute-content i {
