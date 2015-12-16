@@ -62,6 +62,10 @@ body {
 	height: calc(70vh - 140px);
 }
 
+body.print #compass-search-header {
+	visibility: hidden;
+}
+
 body.print #disclaimer-modal {
 	visibility: hidden;
 }
