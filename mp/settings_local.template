@@ -53,3 +53,5 @@ EMAIL_HOST_PASSWORD = 'password'
 DEFAULT_FROM_EMAIL = 'developers@ecotrust.org'
 SERVER_EMAIL = 'developers@ecotrust.org'
 EMAIL_SUBJECT_PREFIX = "[OFR-production]"
+
+EXTERNAL_PORT = 80

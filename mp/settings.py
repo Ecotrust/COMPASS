@@ -176,4 +176,6 @@ POINT_BUFFER = 2500  # meters
 
 DJANGO_WYSIWYG_FLAVOR = "tinymce"    # or "tinymce_advanced"
 
+EXTERNAL_PORT = 80
+
 from settings_local import *
