@@ -216,6 +216,12 @@ function bookmarksModel(options) {
         */
     };
 
+    self.removeBookmarkRUS = function(bookmark) {
+      if (confirm('Are you sure?')) {
+        self.removeBookmark(bookmark);
+      }
+    }
+
     self.removeBookmark = function(bookmark) {
         self.bookmarksList.remove(bookmark);
 
