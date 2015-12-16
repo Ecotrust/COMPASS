@@ -28,6 +28,16 @@ body {
 	color: white;
 }
 
+.ofr #login-buttons {
+	z-index: 1021;
+	right: 0px;
+	top: 0px;
+}
+
+.ofr #login-buttons .btn-group > .btn-large {
+	font-size: 13px;
+}
+
 .ofr #login-buttons .btn {
 	border-radius: 4px;
 	color: #404041;
