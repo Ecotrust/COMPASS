@@ -5,6 +5,15 @@ from django.forms import CheckboxSelectMultiple
 class TOCAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
 
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple }
+    }
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "themes":
+            kwargs["queryset"] = TOCTheme.objects.all().order_by('name')
+        return super(TOCAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
 class TOCThemeAdmin(admin.ModelAdmin):
     list_display = ('display_name', 'name', 'TOC', 'id')
 
