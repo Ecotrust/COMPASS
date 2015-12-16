@@ -30,6 +30,12 @@ body {
 
 .ofr #login-buttons .btn {
 	border-radius: 4px;
+	color: #404041;
+	background: transparent;
+}
+
+.ofr #login-buttons .btn:hover {
+	background: transparent;
 }
 
 .ofr #login-buttons a {
