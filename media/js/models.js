@@ -813,10 +813,13 @@ function layerModel(options, parent) {
     self.toggleLayerAttribution = function() {
         var attributeHeads = $('#aggregated-attribute-content').find('.accordion-heading');
         var attributeBodies = $('#aggregated-attribute-content').find('.accordion-body');
+        var attributeIcons = $('#aggregated-attribute-content').find('i');
         attributeBodies.slideUp(0);
         attributeBodies.removeClass('in');
         attributeHeads.removeClass('layer-attr-init');
         attributeHeads.addClass('layer-attr-collapse');
+        attributeIcons.removeClass('icon-chevron-up');
+        attributeIcons.addClass('icon-chevron-down');
         for (var i = 0; i < attributeBodies.length; i++) {
           if (app.viewModel.convertToSlug(self.name) != attributeBodies[i].id) {
             for (var j = 0; j < app.map.layers.length; j++) {
@@ -829,12 +832,15 @@ function layerModel(options, parent) {
         }
         var layerID = '#' + app.viewModel.convertToSlug(self.name);
         var layerHeaderID = layerID + '-header';
+        var layerIconID = layerID + '-icon';
         if ( self.showingLayerAttribution() ) {
             self.showingLayerAttribution(false);
         } else {
             self.showingLayerAttribution(true);
             $(layerHeaderID).removeClass('layer-attr-collapse');
             $(layerHeaderID).addClass('layer-attr-init');
+            $(layerIconID).removeClass('icon-chevron-down');
+            $(layerIconID).addClass('icon-chevron-up');
             app.displaySelectedFeature(false, self.id);
             $(layerID).addClass('in');
             $(layerID).show(0);

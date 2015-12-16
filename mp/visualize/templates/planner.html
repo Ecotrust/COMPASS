@@ -233,9 +233,16 @@
                                               <div class="accordion-group">
                                                   <div data-bind="if: $root.aggregatedAttributes()[name]">
                                                       <div class="accordion-heading layer-attr-collapse" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
-                                                          <a class="accordion-toggle">
-                                                              <h4 data-bind="text: featureAttributionName"></h4>
-                                                              <h5 data-bind="text: description"></h5>
+                                                          <a class="accordion-toggle container-fluid">
+                                                            <div class="row-fluid layer-attr-display-ctrl">
+                                                              <div class="span1">
+                                                                <i class='icon-chevron-down' data-bind="attr: { id: $root.convertToSlug(name) + '-icon' }"></i>
+                                                              </div>
+                                                              <div class="span11">
+                                                                <h4 class="layer-attr-title" data-bind="text: featureAttributionName"></h4>
+                                                              </div>
+                                                            </div>
+                                                            <h5 class="layer-attr-subtitle" data-bind="text: description"></h5>
                                                           </a>
                                                           <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
                                                       </div>

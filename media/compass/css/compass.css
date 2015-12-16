@@ -662,8 +662,19 @@ body.print #map .olControlMousePosition {
 #aggregated-attribute-content .accordion-heading.layer-attr-init h4,
 .accordion-heading:hover h4,
 #aggregated-attribute-content .accordion-heading.layer-attr-init h5,
-.accordion-heading:hover h5 {
+.accordion-heading:hover h5,
+#aggregated-attribute-content .accordion-heading.layer-attr-init i,
+#aggregated-attribute-content .accordion-heading:hover i {
 	color: #111;
+}
+
+#aggregated-attribute-content h5.layer-attr-subtitle {
+	margin-top: -5px;
+}
+
+#aggregated-attribute-content i {
+	font-size: 20px;
+	padding: 10px 5px 0 0;
 }
 
 #aggregated-attribute-overlay > div {
