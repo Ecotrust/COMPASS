@@ -96,6 +96,12 @@ var defaultGuide = {
       content: $('#help-text-project-logo').html(),
       direction: 'right',
       arrow: {offsetX: 0, offsetY: 55}
+    },
+    {
+      target: '#geosearch-field',
+      content: $('#help-text-search-map').html(),
+      direction: 'bottom',
+      arrow: {offsetX: 0, OffsetY: 0}
     }
   ]
 };
