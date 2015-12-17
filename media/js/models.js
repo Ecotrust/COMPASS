@@ -887,6 +887,7 @@ function layerModel(options, parent) {
           $('#' + layer.id + '_overview').removeClass('in');
           $('#' + layer.id + '_overview_active').removeClass('in');
         }
+        app.viewModel.updateScrollBars();
     };
 
     self.toggleActiveDescription = function(layer) {
@@ -897,6 +898,7 @@ function layerModel(options, parent) {
           $('#' + layer.id + '_overview').removeClass('in');
           $('#' + layer.id + '_overview_active').removeClass('in');
         }
+        app.viewModel.updateScrollBars();
     };
 
     self.showDescription = function(layer) {
