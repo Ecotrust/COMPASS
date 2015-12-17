@@ -237,6 +237,10 @@ def load_contents_fixture(fixture):
     if type(fixture) == FieldFile:
         fixture = fixture.file.name     # doesn't work - need abs path to be sure.
 
+    # some models assume a relative path of '../media/'', though media_root is likely pointing at '../mediaroot/'
+    import string, settings
+    fixture = string.replace(fixture,'../media/',settings.MEDIA_ROOT)
+
     try:
         management.call_command('loaddata', fixture)
     except:
