@@ -585,6 +585,10 @@ body.print #map .olControlMousePosition {
 	color: #313031;
 }
 
+#active-content a {
+	color: white;
+}
+
 #data-accordion .accordion-inner {
 	padding: 0;
 }
