@@ -492,21 +492,23 @@
                                                           </div>
                                                           <div class="accordion-body collapse" data-bind="css: { 'in': isOpenTheme() }">
                                                               <div class="accordion-inner">
-                                                                <ul  class="unstyled" data-bind="foreach: layers ">
+                                                                <ul  class="unstyled theme-layer-list" data-bind="foreach: layers ">
                                                                     <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
                                                                         <div class="btn-group btn-group-layer" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
-                                                                            <a class="btn btn-info-sign" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
-                                                                                <i class="icon-info-sign icon-large"></i>
-                                                                            </a>
+                                                                            <div class="row-fluid">
+                                                                              <a class="btn btn-info-sign span1" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
+                                                                                  <i class="icon-info-sign icon-large"></i>
+                                                                              </a>
 
-                                                                            <a class="btn btn-layer" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
-                                                                                <div style="font-weight: normal">
-                                                                                    <span style="padding-left: 5px;" data-bind="text: name"></span>
-                                                                                    <span class="caret" style="display:none" data-bind="visible: subLayers.length > 0"></span>
-                                                                                    <i class="check icon-large icon-check" data-bind="visible: active() && visible()"></i>
-                                                                                    <i class="check icon-large icon-check-empty" data-bind="visible: active() && ! visible()"></i>
-                                                                                </div>
-                                                                            </a>
+                                                                              <a class="btn btn-layer span11" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
+                                                                                  <div style="font-weight: normal">
+                                                                                      <span style="padding-left: 5px;" data-bind="text: name"></span>
+                                                                                      <span class="caret" style="display:none" data-bind="visible: subLayers.length > 0"></span>
+                                                                                      <i class="check icon-large icon-check" data-bind="visible: active() && visible()"></i>
+                                                                                      <i class="check icon-large icon-check-empty" data-bind="visible: active() && ! visible()"></i>
+                                                                                  </div>
+                                                                              </a>
+                                                                            </div>
                                                                             <!-- ko if: subLayers.length > 0 -->
                                                                             <!-- ko if: !isCheckBoxLayer() -->
                                                                             <ul class="dropdown-menu layer-menu" data-bind="event: { mouseleave: closeMenu }">
@@ -537,7 +539,7 @@
                                                                             <!-- /ko -->
                                                                             <!-- /ko -->
                                                                             <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
-                                                                                <div class="span11  well overview-accordion-content">
+                                                                                <div class="span10 offset1 well overview-accordion-content">
                                                                                     <div class="overview-accordion-text" style="margin-top: 5px">
                                                                                         <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
                                                                                         <div class="notes">
@@ -598,7 +600,7 @@
                                                                     </li>
                                                                 </ul>
 
-
+                                                                <!-- ko if: subthemes().length -->
                                                                   <div class="accordion" data-bind="foreach: subthemes">
                                                                       <div class="accordion-group">
                                                                           <div class="accordion-heading subcategory-heading" data-bind="click: setOpenSubTheme, css:{ 'active': isOpenSubTheme() }">
@@ -608,18 +610,18 @@
                                                                                   </a>
                                                                               </div>
                                                                           </div>
-                                                                          <div class="accordion-botdy collapse" data-bind="css: { 'in': isOpenSubTheme() }">
+                                                                          <div class="accordion-body collapse" data-bind="css: { 'in': isOpenSubTheme() }">
 
 
 
-                                                                              <ul  class="unstyled" data-bind="foreach: layers ">
+                                                                              <ul class="unstyled subtheme-layer-list" data-bind="foreach: layers ">
                                                                                   <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
-                                                                                      <div class="btn-group btn-group-layer" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
-                                                                                          <a class="btn btn-info-sign" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
+                                                                                      <div class="btn-group btn-group-layer row-fluid" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
+                                                                                          <a class="btn btn-info-sign span1" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
                                                                                               <i class="icon-info-sign icon-large"></i>
                                                                                           </a>
 
-                                                                                          <a class="btn btn-layer" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
+                                                                                          <a class="btn btn-layer span11" data-bind="css: { 'active': active(), 'not-active': ! active() }, click: toggleActive">
                                                                                               <div style="font-weight: normal">
                                                                                                   <span style="padding-left: 5px;" data-bind="text: name"></span>
                                                                                                   <span class="caret" style="display:none" data-bind="visible: subLayers.length > 0"></span>
@@ -659,7 +661,7 @@
 
 
                                                                                           <div data-bind="attr: {id: id + '_overview' }" class="row-fluid overview-accordion collapse">
-                                                                                              <div class="span11 well overview-accordion-content">
+                                                                                              <div class="span10 offset1 well overview-accordion-content">
                                                                                                   <div class="overview-accordion-text" style="margin-top: 5px">
                                                                                                       <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
                                                                                                       <div class="notes">
@@ -733,6 +735,7 @@
                                                                           </div>
                                                                       </div>
                                                                   </div>
+                                                                  <!-- /ko -->
 
                                                               </div>
                                                           </div>
@@ -780,7 +783,7 @@
                                                           </button>
                                                       </div>
                                                       <div data-bind="attr: {id: id + '_overview_active' }" class="row-fluid overview-accordion collapse accordion-body">
-                                                          <div class="span11  well overview-accordion-content">
+                                                          <div class="span10 offset1 well overview-accordion-content">
                                                               <div class="overview-accordion-text" style="margin-top: 5px">
                                                                   <span class="text" data-bind="text: description" style="white-space: pre-wrap"></span>
                                                                   <div class="notes">

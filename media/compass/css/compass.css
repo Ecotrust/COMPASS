@@ -185,13 +185,14 @@ body.print #disclaimer-modal {
 	font-weight: inherit;
 	background-color: white;
 }
+
 .ofr .accordion-heading.active .accordion-toggle span,
 .ofr .accordion-heading.active .create-new-button * {
 	color: #111;
 }
 
-.ofr .accordion-heading.active:hover .accordion-toggle span {
-	text-decoration: underline;
+.ofr .accordion-heading.active:hover {
+	background-color: #DDD;
 }
 
 .ofr .btn.zoom-to-button {
@@ -209,7 +210,7 @@ body.print #disclaimer-modal {
 }
 
 .ofr .btn:hover, .ofr .btn:hover * {
-	text-decoration: underline;
+	/*text-decoration: underline;*/
 }
 
 .ofr .overview-accordion-links .btn:hover,
@@ -575,11 +576,43 @@ body.print #map .olControlMousePosition {
 }
 
 #myTabContent .accordion-inner {
-	background-color: #737562;
+	/*background-color: #737562;*/
+	background-color: #E6E7E8;
 }
 
 #myTabContent a {
-	color: white;
+	/*color: white;*/
+	color: #313031;
+}
+
+#data-accordion .accordion-inner {
+	padding: 0;
+}
+#data-accordion .accordion-inner .unstyled,
+#data-accordion .accordion-inner .unstyled .accordion {
+	margin-bottom: 0;
+}
+
+#data-accordion ul.theme-layer-list li.layer,
+#data-accordion ul.subtheme-layer-list li.layer {
+	margin: 0;
+	padding: 5px 0;
+	cursor: pointer;
+}
+#data-accordion ul.subtheme-layer-list li.layer {
+	margin-left: 30px;
+}
+
+#data-accordion ul.theme-layer-list li.layer:hover,
+#data-accordion ul.subtheme-layer-list li.layer:hover {
+	background-color: #9fa0a2;
+}
+#data-accordion ul.subtheme-layer-list a.btn-layer {
+	width: 93.5%;  /* borrow from bootstrap span11 */
+}
+
+.sidebar-nav .accordion {
+	margin-bottom: 0;
 }
 
 #legend-content .accordion-inner {
@@ -621,7 +654,11 @@ body.print #map .olControlMousePosition {
 
 #aggregated-attribute-content .accordion-body {
 	padding-left: 10px;
-	background-color: #737562;
+	background-color: #CCC;
+}
+
+#aggregated-attribute-content .accordion-body {
+	color: black;
 }
 
 
@@ -632,19 +669,18 @@ body.print #map .olControlMousePosition {
 .accordion-heading.active, .active .accordion-body {
 	/*margin-left: -1px;*/
 	/*font-weight: bold;*/
-	background-color: #737562;
+	background-color: transparent;
 	color: white;
 }
 
-#aggregated-attribute-content .accordion-heading.layer-attr-init:hover,
-#aggregated-attribute-content .accordion-heading.layer-attr-collapse {
-	/*background-color: #404041;*/
+#aggregated-attribute-content .accordion-heading.layer-attr-init:hover {
+	background-color: #DDD;
 }
 
 #aggregated-attribute-content .accordion-heading.layer-attr-init:hover h4,
 #aggregated-attribute-content .accordion-heading.layer-attr-init:hover h5 {
 	color: black;
-	text-decoration: underline;
+	/*text-decoration: underline;*/
 }
 
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse h4,
@@ -653,25 +689,45 @@ body.print #map .olControlMousePosition {
 }
 
 .ofr #map .olButton:hover,
-#aggregated-attribute-content .accordion-heading.layer-attr-init,
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse:hover,
-.accordion-heading:hover,
+.accordion-heading:hover{
+	background-color: #272727;
+}
+#aggregated-attribute-content .accordion-heading.layer-attr-init,
 .layer-attr-init {
 	background-color: white;
 }
+
+.subcategory-heading {
+	background-color: #777;
+}
+.subcategory-heading a.accordion-toggle{
+	margin-left: 30px;
+}
+
+/*#aggregated-attribute-content .subcategory-heading:hover {
+	background-color:
+}*/
+
 
 .ofr #map .olButton:hover,
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse:hover h4,
 #aggregated-attribute-content .accordion-heading.layer-attr-collapse:hover h5,
 .accordion-heading:hover .accordion-toggle span,
 .accordion-heading:hover .create-new-button *,
-#aggregated-attribute-content .accordion-heading.layer-attr-init h4,
 .accordion-heading:hover h4,
-#aggregated-attribute-content .accordion-heading.layer-attr-init h5,
 .accordion-heading:hover h5,
-#aggregated-attribute-content .accordion-heading.layer-attr-init i,
 #aggregated-attribute-content .accordion-heading:hover i {
-	color: #111;
+	color: white;
+}
+#aggregated-attribute-content .accordion-heading.layer-attr-init h4,
+#aggregated-attribute-content .accordion-heading.layer-attr-init h5,
+#aggregated-attribute-content .accordion-heading.layer-attr-init i {
+	color: black;
+}
+
+#data-accordion a:hover {
+	text-decoration: none;
 }
 
 #aggregated-attribute-content .accordion-heading.layer-attr-init h5.layer-attr-subtitle {
@@ -803,6 +859,14 @@ input[type="search"],
 #basemaps {
 	top: 72px;
 	position: fixed;
+}
+
+i.check {
+	right: 15px;
+}
+
+.overview-accordion-content {
+	border: 1px solid #AAA;
 }
 
 .overview-accordion span,
