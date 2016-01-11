@@ -505,6 +505,7 @@ app.addLayerToMap = function(layer) {
     }
 
     layer.layer.layerModelId = layer.id;
+    layer.layer.attribution = layer.data_source;
     app.map.addLayer(layer.layer);
     layer.layer.opacity = layer.opacity();
     layer.layer.setVisibility(true);
