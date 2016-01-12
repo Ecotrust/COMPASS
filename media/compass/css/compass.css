@@ -291,8 +291,10 @@ body.print #disclaimer-modal {
 body.print #map .olControlZoom {
 	left: 20px;
 	top: 20px;
-	bottom: initial;
-	right: initial;
+	/*bottom: initial;*/
+	/*right: initial;*/
+	width: 35px;
+	height: 65px;
 }
 
 .ofr .olControlAttribution {
