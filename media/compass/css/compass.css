@@ -936,14 +936,17 @@ i.check {
 #data-panel-footer {
 	background-color: #00371A;
 	display: table;
+	padding-left: 30px;
+	margin: 0 0 -1px 0;
 }
 
 #data-panel-footer img {
 	display: block;
 	height: 57px;
 	width: auto;
-	margin: 5px auto 5px auto;
-	float: none;
+	margin: 5px 2px 5px 2px;
+	float: left;
+	border-radius: 5px;
 }
 
 img.olTileImage {
