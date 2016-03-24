@@ -209,8 +209,12 @@ body.print #disclaimer-modal {
 	color: white; /* 0, 68, 109 */
 }
 
-.ofr .btn:hover, .ofr .btn:hover * {
+#disclaimer-modal .modal-footer .btn:hover,
+#help-button.btn:hover,
+#active-content .btn-group .btn:hover {
 	/*text-decoration: underline;*/
+	background-color: #777;
+	border-radius: 4px;
 }
 
 .ofr .overview-accordion-links .btn:hover,
@@ -237,6 +241,22 @@ body.print #disclaimer-modal {
 .ofr .dropdown-menu > li > a:hover {
 	color: #EF3824;
 	background: inherit;
+}
+
+#myTabContent .dropdown-menu > li > a {
+	color: #EEE;
+}
+
+#myTabContent #data .dropdown-menu > li > a:hover,
+#myTabContent #data .dropdown-menu > li > a:focus {
+	color: #FFF;
+	background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
 }
 
 .ofr .SimpleLayerSwitcher {
