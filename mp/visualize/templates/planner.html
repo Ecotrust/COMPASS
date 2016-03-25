@@ -150,7 +150,7 @@
                                   </span>
                                   {% else %}
                                   <span class="btn-group">
-                                    <a id="#sign-in-button" class="btn btn-large" href="#sign-in-modal" data-toggle="modal">Admin</a>
+                                    <a id="#sign-in-button" class="btn btn-large" href="#sign-in-modal" data-toggle="modal"><img src="/media/compass/img/oregon_public_green.png" /></a>
                                   </span>
                                   {% endif %}
                                 </div>
@@ -933,17 +933,22 @@
                       <!-- /Data Panel -->
 
                       <div id="compass-search-header">
-                        <div class="row-fluid">
-                          <form data-bind="submit: geosearch" class="span8 search-wrap">
+                        <div class="compass-search-header-content row-fluid">
+                          <form data-bind="submit: geosearch" class="span12 search-wrap">
                             <div class='row-fluid'>
-                              <div class="span9">
+                              <div class="compass-search-header-searchbar">
                                 <input type="search" placeholder="Search the Map" id="geosearch-field" class="search-field" name="geoquery" value="">
                               </div>
-                              <div class="span3 search-btn-wrapper">
-                                <button class="search-submit btn btn-default" type="submit">Search</button>
+                              <div class="compass-search-header-searchbutton search-btn-wrapper">
+                                <button class="search-submit" type="submit">
+                                  <span>Search</span>
+                                </button>
                               </div>
                             </div>
                           </form>
+                        </div>
+                        <div class="compass-search-header-login">
+                          <span>Login</span>
                         </div>
                       </div>
 

@@ -825,6 +825,72 @@ body.print #compass-search-header {
 	height: 0;
 }
 
+.compass-search-header-content {
+	width: calc(100vw - 436px); /* 370px for left panel, 66px for oregon logo */
+}
+
+.compass-search-header-searchbar {
+	width: calc(100vw - 498px); /* 370px for left panel, 66px for oregon logo, 62 for search button */
+}
+
+.compass-search-header-searchbutton {
+	width: 62px;
+	position: absolute;
+	top: 0px;
+	right: 66px;
+}
+
+.compass-search-header-content button {
+	line-height: 62px;
+	text-align: center;
+	background-image: url("/media/compass/img/icons-nav.png");
+  background-position-x: 100%;
+  background-position-y: -806px;
+  background-size: initial;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+	display: block;
+  margin: 0;
+  padding: 0;
+  text-indent: -999em;
+  /*width: auto!important;*/
+	width: 62px;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 62px;
+  -ms-flex: 0 0 62px;
+  flex: 0 0 62px;
+	background-color: transparent;
+	border: none;
+}
+
+.compass-search-header-login {
+	line-height: 62px;
+	text-align: center;
+	background-image: url("/media/compass/img/icons-nav.png");
+  background-position-x: 100%;
+  background-position-y: -928px;
+  background-size: initial;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+	display: block;
+  margin: 0;
+  padding: 0;
+  text-indent: -999em;
+	width: 66px;
+	-webkit-box-flex: 0;
+  -webkit-flex: 0 0 66px;
+  -ms-flex: 0 0 66px;
+  flex: 0 0 66px;
+	background-color: #00381A;
+	border: none;
+}
+
 .search-wrap {
 	display: inline-block;
 }
