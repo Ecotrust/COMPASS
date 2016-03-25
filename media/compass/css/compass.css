@@ -52,6 +52,7 @@ body {
 	color: white;
 	background: #404041;  /* for IE */
 	/*background:	rgba(255,255,255,.95);*/
+	display: flex;
 }
 
 .ofr #login-buttons a:hover {
@@ -867,11 +868,12 @@ body.print #compass-search-header {
 }
 
 .compass-search-header-login {
-	line-height: 62px;
+	line-height: 63px;
+	height: 63px;
 	text-align: center;
 	background-image: url("/media/compass/img/icons-nav.png");
-  background-position-x: 100%;
-  background-position-y: -928px;
+  background-position-x: 0;
+  background-position-y: -871px;
   background-size: initial;
   background-repeat-x: no-repeat;
   background-repeat-y: no-repeat;
@@ -889,6 +891,30 @@ body.print #compass-search-header {
   flex: 0 0 66px;
 	background-color: #00381A;
 	border: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.login-btn-group,
+#login-buttons > .login-btn-group > a,
+#login-buttons > .login-btn-group > .dropdown-toggle,
+.admin-menue-toggle-fill {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 63px;
+	width: 66px;
+	padding: 0;
+}
+
+.login-btn-group li > a {
+	text-indent: initial;
+}
+
+.login-btn-group li > a > i {
+	padding-top: 4px;
+	padding-right: 4px;
 }
 
 .search-wrap {

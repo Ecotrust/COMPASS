@@ -126,35 +126,7 @@
                         <div id="map-wrapper">
                           <div id="map"></div>
                           <div>
-                              <div id="login-buttons">
-                                <div>
-                                  {% if user.is_authenticated %}
-                                  <span class="btn-group">
-                                    <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">
-                                      {% if picture %}
-                                      <img src="{{picture}}"/>
-                                      {% else %}
-                                      <i class="icon-user"></i>
-                                      {% endif %}
-                                      {{user.username}}
-                                    </a>
-                                    <ul id="username" class="dropdown-menu">
-                                      {% if user.is_staff %}
-                                      <li><a href="/admin" style="padding-left: 10px"><i class="icon-cogs"></i> Admin</a></li>
-                                      {% endif %}
-                                      <li><a href="#profile-modal" data-toggle="modal" style="padding-left: 10px"><i class="icon-pencil"></i> Profile</a></li>
-                                      <li><a href="#reset-password-modal" data-toggle="modal" style="padding-left: 10px"><i class="icon-lock"></i> Password</a></li>
-                                      <li class="divider"></li>
-                                      <li><a href="{% url 'user_signout' %}" style="padding-left: 15px"><i class="i"></i>Log Out</a></li>
-                                    </ul>
-                                  </span>
-                                  {% else %}
-                                  <span class="btn-group">
-                                    <a id="#sign-in-button" class="btn btn-large" href="#sign-in-modal" data-toggle="modal"><img src="/media/compass/img/oregon_public_green.png" /></a>
-                                  </span>
-                                  {% endif %}
-                                </div>
-                              </div>
+
                               <div id="basemaps" > <!-- Basemaps, Legends, Layers, Bookmarks, and FullScreen buttons -->
                                   <div class="btn-group btn-group-vertical">
                                     <!--Basemaps Button-->
@@ -948,7 +920,28 @@
                           </form>
                         </div>
                         <div class="compass-search-header-login">
-                          <span>Login</span>
+                          <div id="login-buttons">
+                            {% if user.is_authenticated %}
+                            <span class="btn-group login-btn-group">
+                              <a class="btn btn-large dropdown-toggle" data-toggle="dropdown" href="#">
+                                <div class="admin-menue-toggle-fill"></div>
+                              </a>
+                              <ul id="username" class="dropdown-menu">
+                                {% if user.is_staff %}
+                                <li><a href="/admin" style="padding-left: 10px"><i class="icon-cogs"></i> Admin</a></li>
+                                {% endif %}
+                                <li><a href="#profile-modal" data-toggle="modal" style="padding-left: 10px"><i class="icon-pencil"></i> Profile</a></li>
+                                <li><a href="#reset-password-modal" data-toggle="modal" style="padding-left: 10px"><i class="icon-lock"></i> Password</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{% url 'user_signout' %}" style="padding-left: 15px"><i class="i"></i>Log Out</a></li>
+                              </ul>
+                            </span>
+                            {% else %}
+                            <span class="btn-group login-btn-group">
+                              <a id="#sign-in-button" class="btn btn-large" href="#sign-in-modal" data-toggle="modal"><span></span></a>
+                            </span>
+                            {% endif %}
+                          </div>
                         </div>
                       </div>
 
