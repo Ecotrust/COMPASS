@@ -873,15 +873,24 @@
                                                                   </div>
                                                               </div>
                                                               <div data-bind="if: legend['colors']">
-                                                                  <div data-bind="foreach: legend['colors']">
-                                                                      <div>
-                                                                          <svg style="width: 150px; height: 15px;">
-                                                                              <rect width="15" height="15" data-bind="style: { fill: color }"></rect>
-                                                                              <text x="25" y="12" style="font-size: 11px; fill: #555;" data-bind="text: label"></text>
-                                                                          </svg>
-                                                                          <!-- <span data-bind="text: label" style="font-size: 11px; margin-left: 5px"></span> -->
-                                                                      </div>
+                                                                <div data-bind="foreach: legend['colors']">
+                                                                  <div data-bind="if: color">
+                                                                    <div>
+                                                                        <svg style="width: 150px; height: 15px;">
+                                                                            <rect width="15" height="15" data-bind="style: { fill: color }"></rect>
+                                                                            <text x="25" y="12" style="font-size: 11px; fill: #555;" data-bind="text: label"></text>
+                                                                        </svg>
+                                                                    </div>
                                                                   </div>
+                                                                  <div data-bind="ifnot: color">
+                                                                    <div>
+                                                                        <svg style="width: 150px; height: 15px;">
+                                                                            <rect width="15" height="15" data-bind="attr: {y: (15-strokeWidth)/2}, style: { height: strokeWidth, fill: strokeColor }"></rect>
+                                                                            <text x="25" y="12" style="font-size: 11px; fill: #555;" data-bind="text: label"></text>
+                                                                        </svg>
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
                                                               </div>
                                                               <div data-bind="if: !legend['elements'] && !legend['colors'] && !legend['layers']">
                                                                   <div data-bind="css: { 'in': legendVisibility }" style="padding-top: 5px;">
@@ -1037,12 +1046,22 @@
                                     </div>
                                     <div data-bind="if: legend['colors']">
                                         <div data-bind="foreach: legend['colors']">
+                                          <div data-bind="if: color">
                                             <div>
                                                 <svg class="legend-svg">
                                                     <rect width="15" height="15" data-bind="style: { fill: color }"></rect>
                                                     <text x="25" y="12" class="legend-svg-text" data-bind="text: label"></text>
                                                 </svg>
                                             </div>
+                                          </div>
+                                          <div data-bind="ifnot: color">
+                                            <div>
+                                                <svg class="legend-svg">
+                                                    <rect width="15" height="15" data-bind="attr: {y: (15-strokeWidth)/2}, style: { height: strokeWidth, fill: strokeColor }"></rect>
+                                                    <text x="25" y="12" class="legend-svg-text" data-bind="text: label"></text>
+                                                </svg>
+                                            </div>
+                                          </div>
                                         </div>
                                     </div>
                                     <div data-bind="if: !legend['elements'] && !legend['colors'] && !legend['layers']">

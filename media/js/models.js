@@ -212,7 +212,9 @@ function layerModel(options, parent) {
         // for 'simple'
         legendObj.colors.push({
             'label': self.name,
-            'color': style.defaultStyle.fillColor
+            'color': style.defaultStyle.fillColor,
+            'strokeWidth': style.defaultStyle.strokeWidth,
+            'strokeColor': style.defaultStyle.strokeColor
         });
       } else {
         for ( var ruleIndex in style.rules) {
