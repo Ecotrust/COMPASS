@@ -845,8 +845,7 @@ body.print #compass-search-header {
 	line-height: 62px;
 	text-align: center;
 	background-image: url("/media/compass/img/icons-nav.png");
-  background-position-x: 100%;
-  background-position-y: -806px;
+  background-position: 100% -806px;
   background-size: initial;
   background-repeat-x: no-repeat;
   background-repeat-y: no-repeat;
@@ -872,8 +871,7 @@ body.print #compass-search-header {
 	height: 63px;
 	text-align: center;
 	background-image: url("/media/compass/img/icons-nav.png");
-  background-position-x: 0;
-  background-position-y: -871px;
+  background-position: 0 -871px;
   background-size: initial;
   background-repeat-x: no-repeat;
   background-repeat-y: no-repeat;
