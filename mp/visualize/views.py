@@ -59,6 +59,7 @@ def show_planner(request, project=None, template='planner.html'):
         latitude = longitude = zoom = min_zoom = max_zoom = None
         enable_drawing = False
     try:
+        from content.models import Content
         contents = Content.objects.all()
         content_dict = {}
         for content in contents:
