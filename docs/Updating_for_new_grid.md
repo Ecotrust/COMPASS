@@ -2,7 +2,7 @@
 
 ## Inspect shapefile
 
- Check out the delivered shapefile with `ogrinfo` and/or `qgis` to make sure everything is in web mercator and generally checks out. Cross check that with the [OFR Grid Attributes](https://docs.google.com/spreadsheets/d/1LOT9xl6_iiUSCI09_al7phZDF50HSnPPZRp768R1Xyg/edit?pli=1#gid=0) spreadsheet and identify changes marked in red.
+ Check out the delivered shapefile with `ogrinfo` and/or `qgis` to make sure everything is in web mercator (EPSG: 3857 - 'Pseudo Mercator') and generally checks out. Cross check that with the [OFR Grid Attributes](https://docs.google.com/spreadsheets/d/1LOT9xl6_iiUSCI09_al7phZDF50HSnPPZRp768R1Xyg/edit?pli=1#gid=0) spreadsheet and identify changes marked in red.
 
 ## Edit files to reflect the new schema
 
