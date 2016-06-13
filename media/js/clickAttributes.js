@@ -52,6 +52,19 @@ app.clickAttributes = (function() {
     var getGridAttributes = function (data) {
         attrs = [];
 
+        if ('OBJECTID' in data) {
+            attrs.push({'display': 'Hex ID', 'data': data['OBJECTID'].toLocaleString()});
+        }
+        if ('ECOREGION' in data) {
+            attrs.push({'display': 'Ecoregion', 'data': data['ECOREGION'].toLocaleString()});
+        }
+        if ('TCD_Mean' in data) {
+            attrs.push({'display': 'Anchoring Density', 'data': data['TCD_Mean'].toFixed(5) + ' things'});
+        }
+
+
+        /*
+
         if ('AcervAreaM' in data) {
             attrs.push({'display': 'Mapped Dense Acropora cervicornis', 'data': data['AcervAreaM'].toLocaleString() + ' m&sup2;'});
         }
@@ -194,6 +207,8 @@ app.clickAttributes = (function() {
         if ('SpngPtCov' in data) {
             attrs.push({'display': 'Sponge Percent Cover', 'data': data['SpngPtCov']});
         }
+
+        */
 
         return attrs;
     };

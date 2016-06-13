@@ -6,8 +6,8 @@
 thisdir=`dirname $BASH_SOURCE`
 
 # Variables that change frequently/on every import
-SHP="$thisdir/../_ofr_data/ofr_final_grid_20150406/OFR_OffshorePlanningGrid_200m_DSTbuild14_EPSG3857.shp"
-FINAL="$thisdir/../_ofr_data/ofr_planning_grid_20150406.sql"
+SHP="$thisdir/../docs/Notes/fist_sample/ExampleHexagonSelection_3857.shp"
+FINAL="$thisdir/../docs/Notes/fist_sample/ExampleHexagonSelection_3857.sql"
 
 ################################################################################
 # Probably no need to touch anything below here
@@ -17,7 +17,7 @@ FINAL="$thisdir/../_ofr_data/ofr_planning_grid_20150406.sql"
 FIELDMAP="$thisdir/field_map.json"
 
 # Probably won't need to touch these if running from root project dir
-TMP="/tmp/ofr_planning_grid.sql"
+TMP="/tmp/compass_planning_grid.sql"
 TRANSLATE="python $thisdir/translate.py"
 VALIDATE="python $thisdir/validate_fields.py"
 
