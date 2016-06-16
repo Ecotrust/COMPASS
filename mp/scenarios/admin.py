@@ -23,8 +23,3 @@ admin.site.register(Scenario, ScenarioAdmin)
 #     ordering = ('ordering_id',)
 #     fields = ['ordering_id', 'name', 'shortname', 'objectives']
 # admin.site.register(Parameter, ParameterAdmin)
-
-
-
-
-

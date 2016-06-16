@@ -428,6 +428,11 @@
                                   <li class="active" data-tab="data">
                                       <a href="#data" data-toggle="tab" id="dataTab">Data</a>
                                   </li>
+                                  {% if user.is_authenticated %}
+                                  <li data-tab="designs" data-bind="visible: enableDrawing()">
+                                      <a href="#designs" id="designsTab" data-toggle="tab">Designs</a>
+                                  </li>
+                                  {% endif %}
                                   <li data-tab="active" >
                                       <a href="#active" data-toggle="tab" id="activeTab">Active</a>
                                   </li>
@@ -719,6 +724,12 @@
                                       </div>
                                   </div>
                                   <!-- END DATA TAB -->
+
+                                  <!-- DESIGNS TAB -->
+                                  {% if user.is_authenticated %}
+                                    {% include "scenarios.html" %}
+                                  {% endif %}
+                                  <!-- END DESIGNS TAB -->
 
                                   <!-- ACTIVE TAB -->
                                   <div class="tab-pane fade" id="active">

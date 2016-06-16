@@ -601,6 +601,7 @@ body.print #map .olControlMousePosition {
 #myTabContent .accordion-inner {
 	/*background-color: #737562;*/
 	background-color: #E6E7E8;
+  color: #313031;
 }
 
 #myTabContent a {
