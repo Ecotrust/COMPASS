@@ -19,7 +19,6 @@ app.onResize = function(percent) {
         //$("#legend-wrapper").height(height - 20);
         $("#data-accordion").height(height - (($.browser.msie && $.browser.version < 9)? 130: 96));
         $("#designs-accordion").height(height - (($.browser.msie && $.browser.version < 9)? 130: 232));
-        //$("#designs-accordion").height(height - 20 - (($.browser.msie && $.browser.version < 9)? 130: 96));
         //$("#active").height(height + 20 - (($.browser.msie && $.browser.version < 9)? 130: 96));
         $('#myTabContent').height(height - 270);
     }
