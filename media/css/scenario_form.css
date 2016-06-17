@@ -5,6 +5,12 @@
   background-color: #404041;
   width: 100%;
 }
+
+#designs-slide {
+  margin-top: 10px;
+  height: 100%;
+}
+
 #scenario-form h4, #drawing-form h4 {
     margin-left: 15px;
 }
@@ -60,6 +66,7 @@
 }
 #wind-design-form .parameter-label {
     font-size: 16px;
+    color: black;
 }
 #wind-design-form .info-icon {
     font-size: 16px;
@@ -114,7 +121,7 @@
 #wind-design-form .jspContainer {
     /*width: 97% !important;*/
     width: 370px !important;
-    height: 308px !important;
+    /*height: 308px !important;*/
     padding-right: 10px;
 }
 #wind-design-form .jspPane {

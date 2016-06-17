@@ -609,6 +609,10 @@ body.print #map .olControlMousePosition {
 	color: #313031;
 }
 
+#myTabContent a.create-new-button {
+	color: white;
+}
+
 #active-content a {
 	color: white;
 }
@@ -1062,6 +1066,33 @@ i.check {
 
 img.olTileImage {
 	max-width: none !important;
+}
+
+#drawing-form div .step {
+  padding: 15px;
+  margin-left: 15px;
+}
+
+.step-text {
+  color: #005130;
+}
+
+.step .well {
+  color: #272727;
+}
+
+p.instructions {
+  color: #333333;
+}
+
+  /*revert to Bootstrap defaults*/
+.step > div > .btn,
+.step > div > div > .btn {
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #F5F5F5;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
 }
 
 @font-face {
