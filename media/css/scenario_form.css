@@ -24,7 +24,7 @@
 
 #wind-design-form, #polygon-design-form {
     border-top-width: 0px;
-    width: 370px !important;
+    max-width: 100%;
     border-radius: 0px;
     border-right: 0;
     border-left: 0;
@@ -317,6 +317,7 @@ div .step {
     background-color: white;
     background-repeat: no-repeat;
     min-height: 270px;
+    margin-right: 15px;
 }
 span.form-image { float: left; margin-left: -66px; }
 span.form-image > img { width:46px; height:46px; }
