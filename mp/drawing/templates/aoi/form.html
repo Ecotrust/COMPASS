@@ -153,7 +153,7 @@
                 </p>
             </div>
         </div>
-        <div style="position: absolute; bottom: 66px; left-margin: 1px">
+        <div style="bottom: 66px; left-margin: 1px">
             <label id="planning-grid-layer-toggle" data-bind="click: togglePlanningGridLayer">
                 <input id="planning-grid-layer-checkbox" data-bind="checked: planningGridLayer.active()" type="checkbox" name="checkbox" value="value">
                 Show Planning Grid</input>
@@ -164,7 +164,7 @@
 
     <div class="step" id="step2">
         <p class="step-text"><i>Step 2 of 2 </i></p>
-        <p class="instructions" style="margin-top: 10px">Please name your drawing by the Management Action Code, the date (YYYYMMDD), and your first name and last initial. (N143_20151231_JohnD) </p>
+        <p class="instructions" style="margin-top: 10px">Provide a <b>name</b> to identify your drawing.</p>
         <div class="step3-inputs">
             <div class="step3-param">
                 {{ form.name.errors }}
@@ -173,7 +173,7 @@
                     <span class="help-inline">The <b>Name</b> field is required.</span>
                 </div>
             </div>
-            <p class="instructions">Please provide any pertinent information about this drawing here</b> <!--and/or attach a file--> </p>
+            <p class="instructions">Optionally, you may add a <b>description</b></p>
             <div class="step3-param">
                 {{ form.description.errors }}
                 {{ form.description }}

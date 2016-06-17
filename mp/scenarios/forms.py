@@ -147,13 +147,15 @@ class ScenarioForm(FeatureForm):
         return self._get_fields(names)
 
     def get_steps(self):
-        return self.get_step_1_fields(), \
-               self.get_step_2_fields(), \
-               self.get_step_3_fields(), \
-               self.get_step_4_fields(), \
-               self.get_step_5_fields()
+        return (self.get_step_1_fields(),)
+        # return self.get_step_1_fields(), \
+        #        self.get_step_2_fields(), \
+        #        self.get_step_3_fields(), \
+        #        self.get_step_4_fields(), \
+        #        self.get_step_5_fields()
 
     def _get_fields(self, names):
+
         fields = []
         for name_list in names:
             group = []

@@ -8,7 +8,7 @@ madrona.onShow(function(){
     madrona.setupForm($('#wind-design-form'));
 
     var step = 1;
-    var max_step = 6;
+    var max_step = 2;
 
     function validate(step) {
         return true;
@@ -159,24 +159,18 @@ madrona.onShow(function(){
     <div id="error_bar"></div>
 
     {% for step in form.get_steps %}
+    <h3>STAP: {{ step }}</h3>
     <div id="step{{ forloop.counter }}" class="step">
         <!-- <p class="step-text"><i> </i></p>         -->
         <p class="step-text">
             {% if forloop.counter == 1 %}
-              Habitat
-            {% elif forloop.counter == 2 %}
-              Coral
-            {% elif forloop.counter == 3 %}
-              Fish
-            {% elif forloop.counter == 4 %}
-              People
-            {% elif forloop.counter == 5 %}
-              Management
+              Filter
             {% endif %}
         </p>
-          <i>( page {{ forloop.counter }} of 6 )</i>
+          <i>( page {{ forloop.counter }} of 2 )</i>
         <p class="instructions">Select features to filter Planning Units</p>
         <div id="step{{ forloop.counter }}_inputs">
+            <!-- <h3>Step: {{ step }}, Field: {{ step.field }}, Min: {{ step.field_min }}, Max: {{ step.field_max }}, Input: {{ step.field_input }}</h3> -->
             <ul class="parameters">
                 {% for field, field_min, field_max, field_input in step %}
                 <li>
@@ -184,7 +178,7 @@ madrona.onShow(function(){
                         <div class="accordion-heading" data-bind="click: function() { toggleParameter('{{ field.html_name }}'); }">
                             <label class="accordion-toggle">
                                 {{ field.as_widget }}
-                                <i class="check icon-large icon-check" data-bind="visible: {{ field.html_name }}()"></i>
+                                <i class="check icon-large icon-check" data-bind="visible: ({{ field.html_name }} || {{ field.html_name }}())"></i>
                                 <i class="check icon-large icon-check-empty"></i>
                                 <span class="parameter-label" style="margin-left: 5px">{{ field.label }}</span>
                                 <i class="info-icon icon-info-sign"
@@ -300,10 +294,10 @@ madrona.onShow(function(){
     {% endfor %}
 
 
-    <div id="step6" class="step">
+    <div id="step2" class="step">
         <p class="step-text">
            Describe
-           <i style="font-size:75%">( page 6 of 6 )</i>
+           <i style="font-size:75%">( page 2 of 2 )</i>
         </p>
         <div data-bind="css: { 'disabled': gridCellsRemaining()==0 }">
             <p class="instructions">Please name your design by the Management Action Code, the date, and your first name and last initial. (N143_20151231_JohnD) </p>
