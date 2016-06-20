@@ -2,7 +2,7 @@
 
 ## Inspect shapefile
 
- Check out the delivered shapefile with `ogrinfo` and/or `qgis` to make sure everything is in web mercator and generally checks out. Cross check that with the [OFR Grid Attributes](https://docs.google.com/spreadsheets/d/1LOT9xl6_iiUSCI09_al7phZDF50HSnPPZRp768R1Xyg/edit?pli=1#gid=0) spreadsheet and identify changes marked in red.
+ Check out the delivered shapefile with `ogrinfo` and/or `qgis` to make sure everything is in web mercator (EPSG: 3857 - 'Pseudo Mercator') and generally checks out. Cross check that with the [OFR Grid Attributes](https://docs.google.com/spreadsheets/d/1LOT9xl6_iiUSCI09_al7phZDF50HSnPPZRp768R1Xyg/edit?pli=1#gid=0) spreadsheet and identify changes marked in red.
 
 ## Edit files to reflect the new schema
 
@@ -18,7 +18,7 @@
 * `mp/scenarios/forms.py`: modify the appropriate `get_step_*_fields` and ensure the attribute shows up on the correct page in the proper order.
 * `mp/scenarios/views.py`: add filtering logic for all fields to `run_filter_query`
 * `media/js/scenarios.js`: add knockout observables to the `ScenarioFormModel`
-* `media/js/scenarios.js`: add the internal names to the `parameters` Array
+* `media/js/scenarios.js`: add the internal names to the `parameters` Array in `editScenario`
 
 #### If the attribute is to be reported on the gridcell click info:
 * `media/js/clickAttributes.js`: modify the `getGridAttributes` function for UTFGrid callbacks. Keep in mind that this uses the case-sensitive field name from the original shapefile!
