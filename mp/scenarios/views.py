@@ -235,150 +235,27 @@ def run_filter_query(filters):
     # by name, and what kinds of filters they were. For now, hard code.
     query = GridCell.objects.all()
 
-    if 'acropora_pa' in filters.keys() and filters['acropora_pa']:
-        query = query.filter(acropora_pa=filters['acropora_pa_input'])
-
-    # Special case, anchor_desc is not exclusive category but an ordinal category
-    if 'anchor_desc' in filters.keys() and filters['anchor_desc']:
-        levels = ['Low', 'Medium', 'High', 'Very High']
-        levelsin = levels[levels.index(filters['anchor_desc_input']):]
-        query = query.filter(anchor_desc__in=levelsin)
-
-    if 'anchorage' in filters.keys() and filters['anchorage']:
-        query = query.filter(anchorage=filters['anchorage_input'])
-
-    if 'boat_use' in filters.keys() and filters['boat_use']:
-        query = query.filter(boat_use__gte=filters['boat_use_min'])
-        query = query.filter(boat_use__lte=filters['boat_use_max'])
-
-    if 'coral_bleach' in filters.keys() and filters['coral_bleach']:
-        query = query.filter(coral_bleach__gte=filters['coral_bleach_min'])
-        query = query.filter(coral_bleach__lte=filters['coral_bleach_max'])
-
-    if 'coral_cover' in filters.keys() and filters['coral_cover']:
-        query = query.filter(coral_cover__gte=filters['coral_cover_min'])
-        query = query.filter(coral_cover__lte=filters['coral_cover_max'])
-
-    if 'coral_density' in filters.keys() and filters['coral_density']:
-        query = query.filter(coral_density__gte=filters['coral_density_min'])
-        query = query.filter(coral_density__lte=filters['coral_density_max'])
-
-    if 'coral_disease' in filters.keys() and filters['coral_disease']:
-        query = query.filter(coral_disease__gte=filters['coral_disease_min'])
-        query = query.filter(coral_disease__lte=filters['coral_disease_max'])
-
-    if 'coral_resilience' in filters.keys() and filters['coral_resilience']:
-        query = query.filter(coral_resilience__gte=filters['coral_resilience_min'])
-        query = query.filter(coral_resilience__lte=filters['coral_resilience_max'])
-
-    if 'coral_richness' in filters.keys() and filters['coral_richness']:
-        query = query.filter(coral_richness__gte=filters['coral_richness_min'])
-        query = query.filter(coral_richness__lte=filters['coral_richness_max'])
-
-    if 'coral_soft' in filters.keys() and filters['coral_soft']:
-        query = query.filter(coral_soft__gte=filters['coral_soft_min'])
-        query = query.filter(coral_soft__lte=filters['coral_soft_max'])
-
-    if 'depth_mean' in filters.keys() and filters['depth_mean']:
-        query = query.filter(depth_mean__gte=filters['depth_mean_min'])
-        query = query.filter(depth_mean__lte=filters['depth_mean_max'])
-
-    if 'divefish_overlap' in filters.keys() and filters['divefish_overlap']:
-        query = query.filter(divefish_overlap__gte=filters['divefish_overlap_min'])
-        query = query.filter(divefish_overlap__lte=filters['divefish_overlap_max'])
-
-    if 'extdive_use' in filters.keys() and filters['extdive_use']:
-        query = query.filter(extdive_use__gte=filters['extdive_use_min'])
-        query = query.filter(extdive_use__lte=filters['extdive_use_max'])
-
-    if 'impacted' in filters.keys() and filters['impacted']:
-        query = query.filter(impacted=filters['impacted_input'])
-
-    if 'injury_site' in filters.keys() and filters['injury_site']:
-        query = query.filter(injury_site=filters['injury_site_input'])
-
-    if 'inlet_distance' in filters.keys() and filters['inlet_distance']:
-        query = query.filter(inlet_distance__gte=filters['inlet_distance_min'])
-        query = query.filter(inlet_distance__lte=filters['inlet_distance_max'])
-
-    if 'large_live_coral' in filters.keys() and filters['large_live_coral']:
-        query = query.filter(large_live_coral=filters['large_live_coral_input'])
-
-    if 'mooring_buoy' in filters.keys() and filters['mooring_buoy']:
-        query = query.filter(mooring_buoy=filters['mooring_buoy_input'])
+    # if 'acropora_pa' in filters.keys() and filters['acropora_pa']:
+    #     query = query.filter(acropora_pa=filters['acropora_pa_input'])
+    #
+    # # Special case, anchor_desc is not exclusive category but an ordinal category
+    # if 'anchor_desc' in filters.keys() and filters['anchor_desc']:
+    #     levels = ['Low', 'Medium', 'High', 'Very High']
+    #     levelsin = levels[levels.index(filters['anchor_desc_input']):]
+    #     query = query.filter(anchor_desc__in=levelsin)
+    #
+    # if 'anchorage' in filters.keys() and filters['anchorage']:
+    #     query = query.filter(anchorage=filters['anchorage_input'])
+    #
+    # if 'boat_use' in filters.keys() and filters['boat_use']:
+    #     query = query.filter(boat_use__gte=filters['boat_use_min'])
+    #     query = query.filter(boat_use__lte=filters['boat_use_max'])
 
     # Special case, mooring_desc is not exclusive category but an ordinal range
-    if 'mooring_desc' in filters.keys() and filters['mooring_desc']:
-        levels = ['Low', 'Medium', 'High', 'Very High']
-        levelsin = levels[levels.index(filters['mooring_desc_input']):]
-        query = query.filter(mooring_desc__in=levelsin)
-
-    if 'outfall_distance' in filters.keys() and filters['outfall_distance']:
-        query = query.filter(outfall_distance__gte=filters['outfall_distance_min'])
-        query = query.filter(outfall_distance__lte=filters['outfall_distance_max'])
-
-    if 'pier_distance' in filters.keys() and filters['pier_distance']:
-        query = query.filter(pier_distance__gte=filters['pier_distance_min'])
-        query = query.filter(pier_distance__lte=filters['pier_distance_max'])
-
-    if 'pillar_presence'in filters.keys() and filters['pillar_presence']:
-        query = query.filter(pillar_presence=filters['pillar_presence_input'])
-
-    if 'prcnt_art' in filters.keys() and filters['prcnt_art']:
-        query = query.filter(prcnt_art__gte=filters['prcnt_art_min'])
-        query = query.filter(prcnt_art__lte=filters['prcnt_art_max'])
-
-    if 'prcnt_reef' in filters.keys() and filters['prcnt_reef']:
-        query = query.filter(prcnt_reef__gte=filters['prcnt_reef_min'])
-        query = query.filter(prcnt_reef__lte=filters['prcnt_reef_max'])
-
-    if 'prcnt_sand' in filters.keys() and filters['prcnt_sand']:
-        query = query.filter(prcnt_sand__gte=filters['prcnt_sand_min'])
-        query = query.filter(prcnt_sand__lte=filters['prcnt_sand_max'])
-
-    if 'prcnt_sg' in filters.keys() and filters['prcnt_sg']:
-        query = query.filter(prcnt_sg__gte=filters['prcnt_sg_min'])
-        query = query.filter(prcnt_sg__lte=filters['prcnt_sg_max'])
-
-    if 'reccom_fish' in filters.keys() and filters['reccom_fish']:
-        query = query.filter(reccom_fish__gte=filters['reccom_fish_min'])
-        query = query.filter(reccom_fish__lte=filters['reccom_fish_max'])
-
-    if 'recfish_use' in filters.keys() and filters['recfish_use']:
-        query = query.filter(recfish_use__gte=filters['recfish_use_min'])
-        query = query.filter(recfish_use__lte=filters['recfish_use_max'])
-
-    if 'reef_fish_density' in filters.keys() and filters['reef_fish_density']:
-        query = query.filter(reef_fish_density__gte=filters['reef_fish_density_min'])
-        query = query.filter(reef_fish_density__lte=filters['reef_fish_density_max'])
-
-    if 'reef_fish_richness' in filters.keys() and filters['reef_fish_richness']:
-        query = query.filter(reef_fish_richness__gte=filters['reef_fish_richness_min'])
-        query = query.filter(reef_fish_richness__lte=filters['reef_fish_richness_max'])
-
-    if 'scuba_use' in filters.keys() and filters['scuba_use']:
-        query = query.filter(scuba_use__gte=filters['scuba_use_min'])
-        query = query.filter(scuba_use__lte=filters['scuba_use_max'])
-
-    if 'shore_distance' in filters.keys() and filters['shore_distance']:
-        query = query.filter(shore_distance__gte=filters['shore_distance_min'])
-        query = query.filter(shore_distance__lte=filters['shore_distance_max'])
-
-    if 'spear_use' in filters.keys() and filters['spear_use']:
-        query = query.filter(spear_use__gte=filters['spear_use_min'])
-        query = query.filter(spear_use__lte=filters['spear_use_max'])
-
-    if 'sponge' in filters.keys() and filters['sponge']:
-        query = query.filter(sponge__gte=filters['sponge_min'])
-        query = query.filter(sponge__lte=filters['sponge_max'])
-
-    if 'total_use' in filters.keys() and filters['total_use']:
-        query = query.filter(total_use__gte=filters['total_use_min'])
-        query = query.filter(total_use__lte=filters['total_use_max'])
-
-    if 'watersport_use' in filters.keys() and filters['watersport_use']:
-        query = query.filter(watersport_use__gte=filters['watersport_use_min'])
-        query = query.filter(watersport_use__lte=filters['watersport_use_max'])
+    # if 'mooring_desc' in filters.keys() and filters['mooring_desc']:
+    #     levels = ['Low', 'Medium', 'High', 'Very High']
+    #     levelsin = levels[levels.index(filters['mooring_desc_input']):]
+    #     query = query.filter(mooring_desc__in=levelsin)
 
     return query
 
@@ -435,4 +312,3 @@ def get_leaseblocks(request):
             # 'coral_size': grid_cell.coral_size
         })
     return HttpResponse(dumps(json))
-

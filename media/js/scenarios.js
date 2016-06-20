@@ -108,43 +108,10 @@ var madrona = {
 function scenarioFormModel(options) {
     var self = this;
 
-    self.acropora_pa = ko.observable(false);
-    self.anchor_desc = ko.observable(false);
-    self.anchorage = ko.observable(false);
-    self.boat_use = ko.observable(false);
-    self.coral_bleach = ko.observable(false);
-    self.coral_cover = ko.observable(false);
-    self.coral_density = ko.observable(false);
-    self.coral_disease = ko.observable(false);
-    self.coral_resilience = ko.observable(false);
-    self.coral_richness = ko.observable(false);
-    self.coral_soft = ko.observable(false);
-    self.depth_mean = ko.observable(false);
-    self.divefish_overlap = ko.observable(false);
-    self.extdive_use = ko.observable(false);
-    self.impacted = ko.observable(false);
-    self.injury_site = ko.observable(false);
-    self.inlet_distance = ko.observable(false);
-    self.large_live_coral = ko.observable(false);
-    self.mooring_buoy = ko.observable(false);
-    self.mooring_desc = ko.observable(false);
-    self.outfall_distance = ko.observable(false);
-    self.pier_distance = ko.observable(false);
-    self.pillar_presence = ko.observable(false);
-    self.prcnt_art = ko.observable(false);
-    self.prcnt_reef = ko.observable(false);
-    self.prcnt_sand = ko.observable(false);
-    self.prcnt_sg = ko.observable(false);
-    self.reccom_fish = ko.observable(false);
-    self.recfish_use = ko.observable(false);
-    self.reef_fish_density = ko.observable(false);
-    self.reef_fish_richness = ko.observable(false);
-    self.scuba_use = ko.observable(false);
-    self.shore_distance = ko.observable(false);
-    self.spear_use = ko.observable(false);
-    self.sponge = ko.observable(false);
-    self.total_use = ko.observable(false);
-    self.watersport_use = ko.observable(false);
+    self.habitat = ko.observable(false);
+    self.fish = ko.observable(false);
+    self.obs_spec = ko.observable(false);
+    self.mod_spec = ko.observable(false);
 
     self.lastChange = (new Date()).getTime();
 
@@ -583,43 +550,10 @@ function scenarioModel(options) {
                 ko.applyBindings(model, document.getElementById('scenario-form'));
 
                 var parameters = [
-                    'acropora_pa',
-                    'anchor_desc',
-                    'anchorage',
-                    'boat_use',
-                    'coral_bleach',
-                    'coral_cover',
-                    'coral_density',
-                    'coral_disease',
-                    'coral_resilience',
-                    'coral_richness',
-                    'coral_soft',
-                    'depth_mean',
-                    'divefish_overlap',
-                    'extdive_use',
-                    'impacted',
-                    'injury_site',
-                    'inlet_distance',
-                    'large_live_coral',
-                    'mooring_buoy',
-                    'mooring_desc',
-                    'outfall_distance',
-                    'pier_distance',
-                    'pillar_presence',
-                    'prcnt_art',
-                    'prcnt_reef',
-                    'prcnt_sand',
-                    'prcnt_sg',
-                    'reccom_fish',
-                    'recfish_use',
-                    'reef_fish_density',
-                    'reef_fish_richness',
-                    'scuba_use',
-                    'shore_distance',
-                    'spear_use',
-                    'sponge',
-                    'total_use',
-                    'watersport_use'
+                    'habitat',
+                    'fish',
+                    'obs_spec',
+                    'mod_spec'
                 ];
 
                 for (var i = 0; i < parameters.length; i++) {

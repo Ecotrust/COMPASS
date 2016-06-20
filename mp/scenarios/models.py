@@ -20,144 +20,25 @@ from django.forms.models import model_to_dict
 @register
 class Scenario(Analysis):
 
-    acropora_pa = models.BooleanField()
-    acropora_pa_input = models.TextField(null=True, blank=True)
+    habitat = models.BooleanField()
+    # habitat_input = models.TextField(null=True, blank=True)
+    # habitat_min = models.FloatField(null=True, blank=True)
+    # habitat_max = models.FloatField(null=True, blank=True)
 
-    anchor_desc = models.BooleanField()
-    anchor_desc_input = models.TextField(null=True, blank=True)
+    fish = models.BooleanField()
+    # fish_input = models.TextField(null=True, blank=True)
+    # fish_min = models.FloatField(null=True, blank=True)
+    # fish_max = models.FloatField(null=True, blank=True)
 
-    anchorage = models.BooleanField()
-    anchorage_input = models.TextField(null=True, blank=True)
+    obs_spec = models.BooleanField()
+    # obs_spec_input = models.TextField(null=True, blank=True)
+    # obs_spec_min = models.FloatField(null=True, blank=True)
+    # obs_spec_max = models.FloatField(null=True, blank=True)
 
-    boat_use = models.BooleanField()
-    boat_use_min = models.FloatField(null=True, blank=True)
-    boat_use_max = models.FloatField(null=True, blank=True)
-
-    coral_bleach = models.BooleanField()
-    coral_bleach_min = models.FloatField(null=True, blank=True)
-    coral_bleach_max = models.FloatField(null=True, blank=True)
-
-    coral_cover = models.BooleanField()
-    coral_cover_min = models.FloatField(null=True, blank=True)
-    coral_cover_max = models.FloatField(null=True, blank=True)
-
-    coral_density = models.BooleanField()
-    coral_density_min = models.FloatField(null=True, blank=True)
-    coral_density_max = models.FloatField(null=True, blank=True)
-
-    coral_disease = models.BooleanField()
-    coral_disease_min = models.FloatField(null=True, blank=True)
-    coral_disease_max = models.FloatField(null=True, blank=True)
-
-    coral_resilience = models.BooleanField()
-    coral_resilience_min = models.FloatField(null=True, blank=True)
-    coral_resilience_max = models.FloatField(null=True, blank=True)
-
-    coral_richness = models.BooleanField()
-    coral_richness_min = models.FloatField(null=True, blank=True)
-    coral_richness_max = models.FloatField(null=True, blank=True)
-
-    coral_soft = models.BooleanField()
-    coral_soft_min = models.FloatField(null=True, blank=True)
-    coral_soft_max = models.FloatField(null=True, blank=True)
-
-    depth_mean = models.BooleanField()
-    depth_mean_min = models.FloatField(null=True, blank=True)
-    depth_mean_max = models.FloatField(null=True, blank=True)
-
-    divefish_overlap = models.BooleanField()
-    divefish_overlap_min = models.FloatField(null=True, blank=True)
-    divefish_overlap_max = models.FloatField(null=True, blank=True)
-
-    extdive_use = models.BooleanField()
-    extdive_use_min = models.FloatField(null=True, blank=True)
-    extdive_use_max = models.FloatField(null=True, blank=True)
-
-    impacted = models.BooleanField()
-    impacted_input = models.TextField(null=True, blank=True)
-
-    injury_site = models.BooleanField()
-    injury_site_input = models.TextField(null=True, blank=True)
-
-    inlet_distance = models.BooleanField()
-    inlet_distance_min = models.FloatField(null=True, blank=True)
-    inlet_distance_max = models.FloatField(null=True, blank=True)
-
-    large_live_coral = models.BooleanField()
-    large_live_coral_input = models.TextField(null=True, blank=True)
-
-    mooring_buoy = models.BooleanField()
-    mooring_buoy_input = models.TextField(null=True, blank=True)
-
-    mooring_desc = models.BooleanField()
-    mooring_desc_input = models.TextField(null=True, blank=True)
-
-    outfall_distance = models.BooleanField()
-    outfall_distance_min = models.FloatField(null=True, blank=True)
-    outfall_distance_max = models.FloatField(null=True, blank=True)
-
-    pier_distance = models.BooleanField()
-    pier_distance_min = models.FloatField(null=True, blank=True)
-    pier_distance_max = models.FloatField(null=True, blank=True)
-
-    pillar_presence = models.BooleanField()
-    pillar_presence_input = models.TextField(null=True, blank=True)
-
-    prcnt_art = models.BooleanField()
-    prcnt_art_min = models.FloatField(null=True, blank=True)
-    prcnt_art_max = models.FloatField(null=True, blank=True)
-
-    prcnt_reef = models.BooleanField()
-    prcnt_reef_min = models.FloatField(null=True, blank=True)
-    prcnt_reef_max = models.FloatField(null=True, blank=True)
-
-    prcnt_sand = models.BooleanField()
-    prcnt_sand_min = models.FloatField(null=True, blank=True)
-    prcnt_sand_max = models.FloatField(null=True, blank=True)
-
-    prcnt_sg = models.BooleanField()
-    prcnt_sg_min = models.FloatField(null=True, blank=True)
-    prcnt_sg_max = models.FloatField(null=True, blank=True)
-
-    reccom_fish = models.BooleanField()
-    reccom_fish_min = models.FloatField(null=True, blank=True)
-    reccom_fish_max = models.FloatField(null=True, blank=True)
-
-    recfish_use = models.BooleanField()
-    recfish_use_min = models.FloatField(null=True, blank=True)
-    recfish_use_max = models.FloatField(null=True, blank=True)
-
-    reef_fish_density = models.BooleanField()
-    reef_fish_density_min = models.FloatField(null=True, blank=True)
-    reef_fish_density_max = models.FloatField(null=True, blank=True)
-
-    reef_fish_richness = models.BooleanField()
-    reef_fish_richness_min = models.FloatField(null=True, blank=True)
-    reef_fish_richness_max = models.FloatField(null=True, blank=True)
-
-    scuba_use = models.BooleanField()
-    scuba_use_min = models.FloatField(null=True, blank=True)
-    scuba_use_max = models.FloatField(null=True, blank=True)
-
-    shore_distance = models.BooleanField()
-    shore_distance_min = models.FloatField(null=True, blank=True)
-    shore_distance_max = models.FloatField(null=True, blank=True)
-
-    spear_use = models.BooleanField()
-    spear_use_min = models.FloatField(null=True, blank=True)
-    spear_use_max = models.FloatField(null=True, blank=True)
-
-    sponge = models.BooleanField()
-    sponge_min = models.FloatField(null=True, blank=True)
-    sponge_max = models.FloatField(null=True, blank=True)
-
-    total_use = models.BooleanField()
-    total_use_min = models.FloatField(null=True, blank=True)
-    total_use_max = models.FloatField(null=True, blank=True)
-
-    watersport_use = models.BooleanField()
-    watersport_use_min = models.FloatField(null=True, blank=True)
-    watersport_use_max = models.FloatField(null=True, blank=True)
+    mod_spec = models.BooleanField()
+    # mod_spec_input = models.TextField(null=True, blank=True)
+    # mod_spec_min = models.FloatField(null=True, blank=True)
+    # mod_spec_max = models.FloatField(null=True, blank=True)
 
     description = models.TextField(null=True, blank=True)
     satisfied = models.BooleanField(default=True, help_text="Am I satisfied?")
@@ -174,171 +55,28 @@ class Scenario(Analysis):
         """
         attributes = []
 
-        if self.acropora_pa:
-            if self.acropora_pa_input == 'Y':
-                title = 'Intersects with at least one known dense Acropora patch'
-            else:
-                title = 'Does not intersect with any known dense Acropora patches'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.anchor_desc:
-            attributes.append({'title': 'Anchorage',
-                               'data': self.anchor_desc_input})
-
-        if self.anchorage:
-            if self.acropora_pa_input == 'Y':
-                title = 'Intersects with a designated anchorage'
-            else:
-                title = 'Does not intersect with any designated anchorages'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.boat_use:
-            d = "%s to %s" % (self.boat_use_min, self.boat_use_max)
-            attributes.append({'title': 'Boater Use Intensity (OFR 2015)', 'data': d})
-
-        if self.coral_bleach:
-            d = "%s to %s" % (self.coral_bleach_min, self.coral_bleach_max)
-            attributes.append({'title': 'Coral Bleaching', 'data': d})
-
-        if self.coral_cover:
-            d = "%s to %s" % (self.coral_cover_min, self.coral_cover_max)
-            attributes.append({'title': 'Coral Percent Cover', 'data': d})
-
-        if self.coral_density:
-            attributes.append({'title': 'Minimum estimated coral organisms per sq meter',
-                               'data':  str(int(self.coral_density_max))})
-
-        if self.coral_disease:
-            d = "%s to %s" % (self.coral_disease_min, self.coral_disease_max)
-            attributes.append({'title': 'Coral Disease', 'data': d})
-
-        if self.coral_resilience:
-            d = "%s to %s" % (self.coral_resilience_min, self.coral_resilience_max)
-            attributes.append({'title': 'Coral resilience', 'data': d})
-
-        if self.coral_richness:
-            attributes.append({'title': 'Minimum estimated coral species per survey area',
-                               'data':  str(int(self.coral_richness_max))})
-
-        if self.coral_soft:
-            d = "%s to %s" % (self.coral_soft_min, self.coral_soft_max)
-            attributes.append({'title': 'Soft Coral Percent Cover', 'data': d})
-
-        if self.depth_mean:
-            attributes.append({'title': 'Depth Range',
-                               'data':  str(int(self.depth_mean_min)) + ' to ' + str(int(self.depth_mean_max)) + ' meters'})
-
-        if self.divefish_overlap:
-            d = "%s to %s" % (self.divefish_overlap_min, self.divefish_overlap_max)
-            attributes.append({'title': 'Diving and Fishing use overlap (OFR 2015)', 'data': d})
-
-        if self.extdive_use:
-            d = "%s to %s" % (self.extdive_use_min, self.extdive_use_max)
-            attributes.append({'title': 'Extractive Diving Use Intensity (OFR 2015)', 'data': d})
-
-        if self.impacted:
-            if self.acropora_pa_input == 'Y':
-                title = 'Intersects with a mapped impact source (artificial reefs, dredged areas, cables, reef injuries, anchorages, burials, etc.)'
-            else:
-                title = 'Does not intersect with any mapped impact sources (artificial reefs, dredged areas, cables, reef injuries, anchorages, burials, etc.)'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.injury_site:
-            if self.injury_site_input == 'Y':
-                title = 'Contains at least one recorded grounding or anchoring event in the DEP database'
-            else:
-                title = 'Does not contain any recorded grounding or anchoring events'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.inlet_distance:
-            attributes.append({'title': 'Minimum Distance to Coastal Inlet',
-                               'data':  str(self.inlet_distance_min) + ' km'})
-
-        if self.large_live_coral:
-            if self.large_live_coral_input == 'Y':
-                title = 'Contains at least one known live coral greater than 2 meters in width'
-            else:
-                title = 'Does not contain any known live coral greater than 2 meters in width'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.mooring_buoy:
-            if self.acropora_pa_input == 'Y':
-                title = 'Contains at least one Mooring buoy'
-            else:
-                title = 'Does not contain any Mooring buoys'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.mooring_desc:
-            attributes.append({'title': 'Mooring',
-                               'data': self.mooring_desc_input})
-
-        if self.outfall_distance:
-            attributes.append({'title': 'Minimum Distance to Outfall',
-                               'data':  str(self.outfall_distance_min) + ' km'})
-
-        if self.pier_distance:
-            attributes.append({'title': 'Distance to Pier',
-                               'data':  str(self.pier_distance_min) + ' to ' + str(self.pier_distance_max) + ' km'})
-
-        if self.pillar_presence:
-            if self.acropora_pa_input == 'P':
-                title = 'Contains at least one recorded Pillar Coral'
-            else:
-                title = 'Does not contain any recorded Pillar Corals'
-            attributes.append({'title': title, 'data':  ''})
-
-        if self.prcnt_art:
-            attributes.append({'title': 'Minimum amount of Artificial Substrate',
-                               'data':  str(int(self.prcnt_art_min)) + '%'})
-        if self.prcnt_reef:
-            attributes.append({'title': 'Minimum amount of Reef',
-                               'data':  str(int(self.prcnt_reef_min)) + '%'})
-        if self.prcnt_sand:
-            attributes.append({'title': 'Minimum amount of Sand',
-                               'data':  str(int(self.prcnt_sand_min)) + '%'})
-        if self.prcnt_sg:
-            attributes.append({'title': 'Minimum amount of Seagrass',
-                               'data':  str(int(self.prcnt_sg_min)) + '%'})
-
-        if self.reccom_fish:
-            d = "%s to %s" % (self.reccom_fish_min, self.reccom_fish_max)
-            attributes.append({'title': 'Recreationally and commercially important fishes', 'data': d})
-
-        if self.recfish_use:
-            d = "%s to %s" % (self.recfish_use_min, self.recfish_use_max)
-            attributes.append({'title': 'Recreational Fishing Use Intensity (OFR 2015)', 'data': d})
-
-        if self.reef_fish_density:
-            d = "%s to %s" % (self.reef_fish_density_min, self.reef_fish_density_max)
-            attributes.append({'title': 'Relative Reef Fish Density', 'data': d})
-
-        if self.reef_fish_richness:
-            d = "%s to %s" % (self.reef_fish_richness_min, self.reef_fish_richness_max)
-            attributes.append({'title': 'Number of Reef Fish Species', 'data': d})
-
-        if self.scuba_use:
-            d = "%s to %s" % (self.scuba_use_min, self.scuba_use_max)
-            attributes.append({'title': 'Scuba Diving Use Intensity (OFR 2015)', 'data': d})
-
-        if self.shore_distance:
-            attributes.append({'title': 'Distance to Shore',
-                               'data':  str(self.shore_distance_min) + ' to ' + str(self.shore_distance_max) + ' km'})
-
-        if self.spear_use:
-            d = "%s to %s" % (self.spear_use_min, self.spear_use_max)
-            attributes.append({'title': 'Spearfishing Use Intensity (OFR 2015)', 'data': d})
-
-        if self.sponge:
-            d = "%s to %s" % (self.sponge_min, self.sponge_max)
-            attributes.append({'title': 'Sponge Percent Cover', 'data': d})
-
-        if self.total_use:
-            d = "%s to %s" % (self.total_use_min, self.total_use_max)
-            attributes.append({'title': 'Total Use Intensity (OFR 2015)', 'data': d})
-
-        if self.watersport_use:
-            d = "%s to %s" % (self.watersport_use_min, self.watersport_use_max)
-            attributes.append({'title': 'Water Sports (OFR 2015)', 'data': d})
+        # if self.acropora_pa:
+        #     if self.acropora_pa_input == 'Y':
+        #         title = 'Intersects with at least one known dense Acropora patch'
+        #     else:
+        #         title = 'Does not intersect with any known dense Acropora patches'
+        #     attributes.append({'title': title, 'data':  ''})
+        #
+        # if self.anchor_desc:
+        #     attributes.append({'title': 'Anchorage',
+        #                        'data': self.anchor_desc_input})
+        #
+        # if self.anchorage:
+        #     if self.acropora_pa_input == 'Y':
+        #         title = 'Intersects with a designated anchorage'
+        #     else:
+        #         title = 'Does not intersect with any designated anchorages'
+        #     attributes.append({'title': title, 'data':  ''})
+        #
+        # if self.boat_use:
+        #     d = "%s to %s" % (self.boat_use_min, self.boat_use_max)
+        #     attributes.append({'title': 'Boater Use Intensity (OFR 2015)', 'data': d})
+        #
 
         attributes.append({'title': 'Number of Grid Cells',
                            'data': '{:,}'.format(self.grid_cells.count(',')+1)})
@@ -544,61 +282,14 @@ class Scenario(Analysis):
 
 class GridCell(models.Model):
 
-    acerv_area = models.IntegerField(null=True, blank=True)
-    acropora_pa = models.TextField(null=True, blank=True)
-    anchor_density = models.FloatField(null=True, blank=True)
-    anchor_desc = models.TextField(null=True, blank=True)
-    anchorage = models.TextField(null=True, blank=True)
-    art_area = models.IntegerField(null=True, blank=True)
-    boat_use = models.IntegerField(null=True, blank=True)
-    comfish_use = models.IntegerField(null=True, blank=True)
-    coral_bleach = models.FloatField(null=True, blank=True)
-    coral_cover = models.FloatField(null=True, blank=True)
-    coral_density = models.FloatField(null=True, blank=True)
-    coral_disease = models.FloatField(null=True, blank=True)
-    coral_resilience = models.IntegerField(null=True, blank=True)
-    coral_richness = models.FloatField(null=True, blank=True)
-    coral_soft = models.FloatField(null=True, blank=True)
-    county = models.TextField(null=True, blank=True)
-    depth_max = models.FloatField(null=True, blank=True)
-    depth_mean = models.FloatField(null=True, blank=True)
-    depth_min = models.FloatField(null=True, blank=True)
-    divefish_overlap = models.IntegerField(null=True, blank=True)
-    extdive_use = models.IntegerField(null=True, blank=True)
-    impacted = models.TextField(null=True, blank=True)
-    injury_site = models.TextField(null=True, blank=True)
-    inlet_distance = models.FloatField(null=True, blank=True)
-    large_live_coral = models.TextField(null=True, blank=True)
-    mooring_buoy = models.TextField(null=True, blank=True)
-    mooring_density = models.FloatField(null=True, blank=True)
-    mooring_desc = models.TextField(null=True, blank=True)
-    outfall_distance = models.FloatField(null=True, blank=True)
-    pier_distance = models.FloatField(null=True, blank=True)
-    pillar_presence = models.TextField(null=True, blank=True)
-    prcnt_art = models.IntegerField(null=True, blank=True)
-    prcnt_reef = models.IntegerField(null=True, blank=True)
-    prcnt_sand = models.IntegerField(null=True, blank=True)
-    prcnt_sg = models.IntegerField(null=True, blank=True)
-    reccom_fish = models.FloatField(null=True, blank=True)
-    recfish_use = models.IntegerField(null=True, blank=True)
-    reef_area = models.IntegerField(null=True, blank=True)
-    reef_fish_density = models.FloatField(null=True, blank=True)
-    reef_fish_richness = models.FloatField(null=True, blank=True)
-    region = models.TextField(null=True, blank=True)
-    research_use = models.IntegerField(null=True, blank=True)
-    sand_area = models.IntegerField(null=True, blank=True)
-    scuba_use = models.IntegerField(null=True, blank=True)
-    sg_area = models.IntegerField(null=True, blank=True)
-    shore_distance = models.FloatField(null=True, blank=True)
-    spear_use = models.IntegerField(null=True, blank=True)
-    sponge = models.FloatField(null=True, blank=True)
-    total_use = models.IntegerField(null=True, blank=True)
-    unique_id = models.IntegerField(null=True, blank=True)
-    watersport_use = models.IntegerField(null=True, blank=True)
+    objectid = models.IntegerField(null=True, blank=True)
+    habitat = models.TextField(null=True, blank=True)
+    fish = models.TextField(null=True, blank=True)
+    obs_spec = models.TextField(null=True, blank=True)
+    mod_spec = models.TextField(null=True, blank=True)
 
     centroid = models.PointField(srid=settings.GEOMETRY_DB_SRID, null=True, blank=True)
     geometry = models.MultiPolygonField(srid=settings.GEOMETRY_DB_SRID,
                                     null=True, blank=True,
                                     verbose_name="Grid Cell Geometry")
     objects = models.GeoManager()
-
