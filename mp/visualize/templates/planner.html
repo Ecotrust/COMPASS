@@ -216,7 +216,9 @@
                                                             </div>
                                                             <h5 class="layer-attr-subtitle" data-bind="text: description"></h5>
                                                           </a>
+                                                          <!-- ko if: $root.aggregatedAttributes()[name].hasOwnProperty('subLayers') -->
                                                           <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
+                                                          <!-- /ko -->
                                                       </div>
                                                       <div class="accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }" >
                                                           <div class="accordion-inner">
@@ -224,20 +226,23 @@
                                                               <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">
                                                                 <div data-bind="foreach: { data: Object.keys(_sublayer), as: '_key'}">
                                                                   <dl data-bind="foreach: { data: _sublayer[_key], afterAdd:$root.updateMarker }">
-
-                                                                      <dt>
-                                                                          <!-- ko if: $data.hasOwnProperty("tab") -->
-
-                                                                          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-                                                                          <!-- /ko -->
-
-                                                                          <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span>
-                                                                          <span style="font-weight: normal" data-bind="html: data"></span>
-                                                                      </dt>
+                                                                    <dt>
+                                                                      <span data-bind="text: $data.hasOwnProperty('tab')?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':''"></span>
+                                                                      <span data-bind="text: display"></span>
+                                                                      <span data-bind="visible: display && data ? true : data===0">:</span>
+                                                                      <span style="font-weight: normal" data-bind="html: data"></span>
+                                                                    </dt>
                                                                   </dl>
                                                                 </div>
                                                               </div>
+                                                              <dl>
+                                                                <dt>
+                                                                  <span data-bind="text: $data.hasOwnProperty('tab')?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':''"></span>
+                                                                  <span data-bind="text: display"></span>
+                                                                  <span data-bind="visible: display && data ? true : data===0">:</span>
+                                                                  <span style="font-weight: normal" data-bind="html: data"></span>
+                                                                </dt>
+                                                              </dl>
                                                             </div>
                                                           </div>
                                                       </div>

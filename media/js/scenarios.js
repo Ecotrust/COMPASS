@@ -443,18 +443,53 @@ function scenarioModel(options) {
     self.attributes = [];
     self.scenarioAttributes = options.attributes ? options.attributes.attributes : [];
 
-    self.showingLayerAttribution = ko.observable(true);
+    self.showingLayerAttribution = ko.observable(false);
     self.toggleLayerAttribution = function() {
+
+
+        var attributeHeads = $('#aggregated-attribute-content').find('.accordion-heading');
+        var attributeBodies = $('#aggregated-attribute-content').find('.accordion-body');
+        var attributeIcons = $('#aggregated-attribute-content').find('i');
+        attributeBodies.slideUp(0);
+        attributeBodies.removeClass('in');
+        attributeHeads.removeClass('layer-attr-init');
+        attributeHeads.addClass('layer-attr-collapse');
+        attributeIcons.removeClass('icon-chevron-up');
+        attributeIcons.addClass('icon-chevron-down');
+        for (var i = 0; i < attributeBodies.length; i++) {
+          if (app.viewModel.convertToSlug(self.name) != attributeBodies[i].id) {
+            for (var j = 0; j < app.map.layers.length; j++) {
+              if (app.viewModel.convertToSlug(app.map.layers[j].name) == attributeBodies[i].id) {
+                app.viewModel.layerIndex[app.map.layers[j].layerModelId.toString()].showingLayerAttribution(false);
+                break;
+              }
+            }
+            var drawingList = app.viewModel.scenarios.drawingList();
+            for (var k = 0; k < drawingList.length; k++) {
+              if (drawingList[k].name == attributeBodies[i].id) {
+                drawingList[k].showingLayerAttribution(false);
+                break;
+              }
+            }
+          }
+        }
         var layerID = '#' + app.viewModel.convertToSlug(self.name);
+        var layerHeaderID = layerID + '-header';
+        var layerIconID = layerID + '-icon';
         if ( self.showingLayerAttribution() ) {
             self.showingLayerAttribution(false);
-            $(layerID).css('display', 'none');
         } else {
             self.showingLayerAttribution(true);
-            $(layerID).css('display', 'block');
+            $(layerHeaderID).removeClass('layer-attr-collapse');
+            $(layerHeaderID).addClass('layer-attr-init');
+            $(layerIconID).removeClass('icon-chevron-down');
+            $(layerIconID).addClass('icon-chevron-up');
+            // app.displaySelectedFeature(false, self.id);
+            $(layerID).addClass('in');
+            $(layerID).show(0);
         }
-        //update scrollbar
         app.viewModel.updateAggregatedAttributesOverlayScrollbar();
+
     };
 
     //self.overview = self.description || 'no description was provided';

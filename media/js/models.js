@@ -830,6 +830,13 @@ function layerModel(options, parent) {
                 break;
               }
             }
+            var drawingList = app.viewModel.scenarios.drawingList();
+            for (var k = 0; k < drawingList.length; k++) {
+              if (drawingList[k].name == attributeBodies[i].id) {
+                drawingList[k].showingLayerAttribution(false);
+                break;
+              }
+            }
           }
         }
         var layerID = '#' + app.viewModel.convertToSlug(self.name);
