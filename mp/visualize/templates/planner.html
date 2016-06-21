@@ -235,6 +235,7 @@
                                                                   </dl>
                                                                 </div>
                                                               </div>
+                                                              <!-- ko ifnot: _layer.hasOwnProperty('subLayers') -->
                                                               <dl>
                                                                 <dt>
                                                                   <span data-bind="text: $data.hasOwnProperty('tab')?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':''"></span>
@@ -243,6 +244,7 @@
                                                                   <span style="font-weight: normal" data-bind="html: data"></span>
                                                                 </dt>
                                                               </dl>
+                                                              <!-- /ko -->
                                                             </div>
                                                           </div>
                                                       </div>
