@@ -50,7 +50,7 @@ app.clickAttributes = (function() {
     //    not the internal names used elsewhere. The order is alphabetical based
     //    on the original field name as well.
 
-    # species-id look up table
+    // species-id look up table
     var species_lut = {
       1: "one",
       2: "two",
@@ -64,7 +64,7 @@ app.clickAttributes = (function() {
     };
 
     // taken directly from TLindig and nus at http://stackoverflow.com/questions/1960473/unique-values-in-an-array#answer-14438954
-    var onlyUnique(value, index, self) {
+    var onlyUnique = function(value, index, self) {
       return self.indexOf(value) === index;
     }
 
@@ -96,7 +96,7 @@ app.clickAttributes = (function() {
         if ('MOD_SPEC' in data) {
             attrs.push({'display': 'Habitats', 'data': speciesLookup(data['MOD_SPEC']).toLocaleString()});
         }
-        
+
 
         return attrs;
     };

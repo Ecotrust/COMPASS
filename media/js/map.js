@@ -393,6 +393,53 @@ app.init = function() {
       }
     }
 
+    app.map.events.register("featureclick", null, function(e) {
+      var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
+      var attrs;
+      if (layer) {
+          var text = [],
+              title = layer.name;
+
+          if (layer.scenarioAttributes && layer.scenarioAttributes.length) {
+              attrs = layer.scenarioAttributes;
+              for (var i = 0; i < attrs.length; i++) {
+                  text.push({
+                      'display': attrs[i].title,
+                      'data': attrs[i].data
+                  });
+              }
+          // } else if (layer.id === 374 || layer.id === 375 || layer.id === 377 || layer.id === 378) { // special case for Survey Results
+          } else if (app.surveyResults.surveyLayerNames.indexOf(layer.name) !== -1) { // is Survey Results layer
+              text = app.clickAttributes.getSurveyAttributes(e.feature.data, layer.name);
+          } else if (layer.attributes.length) {
+              attrs = layer.attributes;
+
+              for (var idx=0; idx < attrs.length; idx++) {
+                  if (e.feature.data[attrs[idx].field]) {
+                      text.push({
+                          'display': attrs[idx].display,
+                          'data': e.feature.data[attrs[idx].field]
+                      });
+                  }
+              }
+          }
+
+          // the following delay prevents the #map click-event-attributes-clearing from taking place after this has occurred
+          setTimeout(function() {
+              if (!app.map.clickOutput.attributes[title]) {
+                  app.map.clickOutput.attributes[title] = text;
+              }
+              app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
+              app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
+              //if (app.marker) {
+              //    app.marker.display(true);
+              //app.viewModel.updateMarker(lonlat);
+              //}
+          }, 100);
+
+      }
+    });
+
     app.featureClick = function(evt){
       app.clickEvent(evt.event.x, evt.event.y);
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
