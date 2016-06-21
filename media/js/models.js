@@ -1271,7 +1271,7 @@ function viewModel() {
     };
     self.disableFeatureAttribution = function() {
         self.featureAttribution(false);
-        app.markers.clearMarkers();
+        // app.markers.clearMarkers();
         if ( app.embeddedMap ) {
             self.showMapAttribution();
         }
@@ -1432,7 +1432,7 @@ function viewModel() {
 
     self.closeAttribution = function() {
         self.aggregatedAttributes(false);
-        app.markers.clearMarkers();
+        // app.markers.clearMarkers();
         app.viewModel.clearSelectedLayer();
         if ( app.embeddedMap ) {
             self.showMapAttribution();
@@ -1442,16 +1442,17 @@ function viewModel() {
     self.getTopZIndex = function() {
       var topZIndex = 0;
       for (var lyrIdx in app.map.layers) {
-        if (app.map.layers[lyrIdx] !== app.markers) {
+        // if (app.map.layers[lyrIdx] !== app.markers) {
           var lyrZIndex = app.map.layers[lyrIdx].getZIndex();
           if (lyrZIndex > topZIndex) {
             topZIndex = lyrZIndex;
           }
-        }
+        // }
       }
       return topZIndex;
     }
 
+    /*
     self.updateMarker = function(lonlat) {
         //at some point this function is being called without an appropriate lonlat object...
         if (lonlat.lon && lonlat.lat) {
@@ -1474,6 +1475,7 @@ function viewModel() {
             }
         }
     };
+    */
 
     self.updateSelectionHighlight = function() {
       var topZIndex = self.getTopZIndex();

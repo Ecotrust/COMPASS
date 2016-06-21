@@ -184,7 +184,7 @@
                                       <div data-bind="css: {display: $root.aggregatedAttributes()[name] ? 'block' : 'none'}">
                                         <h4 data-bind="text: featureAttributionName"></h4>
                                         <div data-bind="foreach: { data: $root.aggregatedAttributes()[name]}">
-                                          <dl data-bind="foreach: { data: $root.aggregatedAttributes()[$parent.name].subLayers, afterAdd:$root.updateMarker }">
+                                          <dl data-bind="foreach: { data: $root.aggregatedAttributes()[$parent.name].subLayers}">
                                             <dt>
                                                 <!-- <span data-bind="text: display"></span><span data-bind="visible: display && data ? true : data===0">:</span> -->
                                                 <span >Lorem ipsum</span><span data-bind="visible:  data ? true : data===0">:</span>
@@ -225,7 +225,7 @@
                                                             <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">
                                                               <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">
                                                                 <div data-bind="foreach: { data: Object.keys(_sublayer), as: '_key'}">
-                                                                  <dl data-bind="foreach: { data: _sublayer[_key], afterAdd:$root.updateMarker }">
+                                                                  <dl data-bind="foreach: { data: _sublayer[_key] }">
                                                                     <dt>
                                                                       <span data-bind="text: $data.hasOwnProperty('tab')?'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;':''"></span>
                                                                       <span data-bind="text: display"></span>

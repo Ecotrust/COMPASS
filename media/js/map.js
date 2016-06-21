@@ -279,16 +279,16 @@ app.init = function() {
             app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
         });
 
-        app.viewModel.updateMarker(lonlat);
+        // app.viewModel.updateMarker(lonlat);
 
     }; //end utfGridClickHandling
 
-    app.markers = new OpenLayers.Layer.Markers("Markers");
-    var size = new OpenLayers.Size(18, 28);
-    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-    app.markers.icon = new OpenLayers.Icon('/media/img/red-pin.png', size, offset);
-
-    app.map.addLayer(app.markers);
+    // app.markers = new OpenLayers.Layer.Markers("Markers");
+    // var size = new OpenLayers.Size(18, 28);
+    // var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    // app.markers.icon = new OpenLayers.Icon('/media/img/red-pin.png', size, offset);
+    //
+    // app.map.addLayer(app.markers);
 
     app.map.extentWithinExtent = function (innerExtent, outerExtent) {
       if (outerExtent.contains(innerExtent.left, innerExtent.top) && outerExtent.contains(innerExtent.right, innerExtent.bottom)) {
@@ -430,7 +430,7 @@ app.init = function() {
                   app.map.clickOutput.attributes[title] = text;
               }
               app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
-              app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
+              // app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
               //if (app.marker) {
               //    app.marker.display(true);
               //app.viewModel.updateMarker(lonlat);
@@ -752,7 +752,7 @@ app.addArcRestLayerToMap = function(layer) {
                       if (selectedFeature) {
                         app.displaySelectedFeature(selectedFeature, layer.id);
                       } else {
-                        app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
+                        // app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(responseText.xy));
                       }
                   }
               }
