@@ -253,6 +253,8 @@ function polygonFormModel(options) {
             }
         }
 
+        app.viewModel.enableFeatureAttribution();
+
     };
 
     self.togglePlanningGridLayer = function(formModel, event) {

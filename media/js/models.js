@@ -1298,7 +1298,7 @@ function viewModel() {
     };
 
     self.toggleFeatureLayer = function(show) {
-      if(!show && !self.featureClick()) {
+      if(!show && !self.featureClick() && self.featureAttribution()) {
         app.map.getLayersByName('Selected Features')[0].removeAllFeatures();
       }
     };

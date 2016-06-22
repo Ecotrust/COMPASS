@@ -396,7 +396,7 @@ app.init = function() {
     app.map.events.register("featureclick", null, function(e) {
       var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
       var attrs;
-      if (layer) {
+      if (layer && app.viewModel.featureAttribution()) {
           var text = [],
               title = layer.name;
 
@@ -455,8 +455,11 @@ app.init = function() {
       app.clickEvent(evt.x, evt.y);
       for (var layerIndex=0; layerIndex < app.map.layers.length; layerIndex++) {
         var layer = app.map.layers[layerIndex];
-        if (layer.hasOwnProperty('layerModelId') &&
-            app.viewModel.layerIndex[layer.layerModelId].visible()) {
+        if (
+          layer.hasOwnProperty('layerModelId') &&
+          app.viewModel.layerIndex[layer.layerModelId].visible() &&
+          app.viewModel.featureAttribution()
+        ) {
           layer.events.triggerEvent('click', evt);
         }
       }
