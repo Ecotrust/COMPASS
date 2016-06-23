@@ -212,7 +212,8 @@ body.print #disclaimer-modal {
 
 #disclaimer-modal .modal-footer .btn:hover,
 #help-button.btn:hover,
-#button_next.btn:hover,
+#scenario_next.btn:hover,
+#drawing_next.btn:hover,
 #drawing_cancel.btn:hover,
 #active-content .btn-group .btn:hover {
 	/*text-decoration: underline;*/
@@ -1060,8 +1061,14 @@ a#drawing_cancel {
   border: 1px solid #777;
   color: #777;
 }
-#button_next.disabled:hover {
+#scenario_next.disabled:hover,
+#drawing_next.disabled:hover {
   background-color: transparent;
+}
+
+.enabled-grid-button i,
+.enabled-grid-button span {
+  color: white;
 }
 
 #compass-footer>span {
