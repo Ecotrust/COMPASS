@@ -473,6 +473,11 @@ app.init = function() {
 
     // takes GeoJSON of a single feature and adds it to 'selected' layer on map.
     app.displaySelectedFeature = function(feature, layerModelId) {
+      if (!app.viewModel.featureAttribution()) {
+        //Don't do anything if we're not showing attributions
+        // Causes a bug sometimes while drawing otherwise.
+        return false;
+      }
       if (! feature ) {
         feature = app.viewModel.clickEvent.features[layerModelId.toString()];
       } else {
