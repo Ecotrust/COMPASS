@@ -212,6 +212,8 @@ body.print #disclaimer-modal {
 
 #disclaimer-modal .modal-footer .btn:hover,
 #help-button.btn:hover,
+#button_next.btn:hover,
+#drawing_cancel.btn:hover,
 #active-content .btn-group .btn:hover {
 	/*text-decoration: underline;*/
 	background-color: #777;
@@ -1035,11 +1037,31 @@ i.check {
 	text-decoration: none;
 }
 
-#help-button {
+#help-button,
+a#scenario_next,
+a#drawing_next,
+a#scenario_prev,
+a#drawing_prev,
+a#drawing_save,
+a#scenario_save,
+a#scenario_cancel,
+a#drawing_cancel {
 	outline: none;
 	margin: 10px;
 	border: solid 1px white;
 	border-radius: 4px;
+  color: white;
+}
+
+#scenario_next.disabled,
+#drawing_next.disabled,
+#drawing_save.disabled,
+#scenario_save.disabled {
+  border: 1px solid #777;
+  color: #777;
+}
+#button_next.disabled:hover {
+  background-color: transparent;
 }
 
 #compass-footer>span {
