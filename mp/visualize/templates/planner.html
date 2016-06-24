@@ -219,6 +219,10 @@
                                                           <!-- ko if: $root.aggregatedAttributes()[name].hasOwnProperty('subLayers') -->
                                                           <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
                                                           <!-- /ko -->
+                                                          <!-- ko ifnot: $root.aggregatedAttributes()[name].hasOwnProperty('subLayers') -->
+                                                          <div class="btn zoom-to-button" data-bind="click: exportAggregateCSV">Export Data</div>
+                                                          <!-- /ko -->
+
                                                       </div>
                                                       <div class="accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }" >
                                                           <div class="accordion-inner">
@@ -489,7 +493,7 @@
                                                                     <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
                                                                         <div class="btn-group btn-group-layer" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
                                                                             <div class="row-fluid">
-                                                                              <a class="btn btn-info-sign span1" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
+                                                                              <a class="btn btn-info-sign span1" data-bind="click: toggleActiveDescription, css: { 'active': infoActive() }">
                                                                                   <i class="icon-info-sign icon-large"></i>
                                                                               </a>
 
@@ -610,7 +614,7 @@
                                                                               <ul class="unstyled subtheme-layer-list" data-bind="foreach: layers ">
                                                                                   <li class="layer" data-bind="css: { nosublayers: subLayers.length === 0 }">
                                                                                       <div class="btn-group btn-group-layer row-fluid" data-bind="css: {'open': showSublayers() }, attr: {name: name}">
-                                                                                          <a class="btn btn-info-sign span1" data-bind="click: toggleDescription, css: { 'active': infoActive() }">
+                                                                                          <a class="btn btn-info-sign span1" data-bind="click: toggleActiveDescription, css: { 'active': infoActive() }">
                                                                                               <i class="icon-info-sign icon-large"></i>
                                                                                           </a>
 

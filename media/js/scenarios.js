@@ -679,7 +679,7 @@ function scenarioModel(options) {
     });
 
     // display descriptive text below the map
-    self.toggleDescription = function(scenario) {
+    self.toggleActiveDescription = function(scenario) {
         if ( ! scenario.infoActive() ) {
             self.showDescription(scenario);
         } else {

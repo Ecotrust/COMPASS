@@ -888,7 +888,7 @@ function layerModel(options, parent) {
     };
 
     // display descriptive text below the map
-    self.toggleDescription = function(layer) {
+    self.toggleActiveDescription = function(layer) {
         if ( ! $('#' + layer.id + '_overview').hasClass('in')) {
           $('#' + layer.id + '_overview').addClass('in');
           $('#' + layer.id + '_overview_active').addClass('in');
@@ -942,7 +942,7 @@ function layerModel(options, parent) {
         }
     };
 
-    self.toggleDescriptionMenu = function(layer) {
+    self.toggleActiveDescriptionMenu = function(layer) {
         //console.dir(layer);
     };
 

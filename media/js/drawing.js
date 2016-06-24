@@ -91,6 +91,12 @@ function drawingModel(options) {
             }
         });
     };
+
+    self.exportAggregateCSV = function(event) {
+      //TODO: send request to server to generate CSV of drawing data.
+      console.log(self.name);
+    }
+
 }
 
 

@@ -214,7 +214,7 @@ var dataGuideOverrides = {
         if (step < 4) {
           app.viewModel.closeDescription();
           if ($('#' + valid_layer_obj.layer.id + '_overview').hasClass('in')) {
-            valid_layer_obj.layer.toggleDescription(valid_layer_obj.layer);
+            valid_layer_obj.layer.toggleActiveDescription(valid_layer_obj.layer);
           }
           app.viewModel.closeAllSubThemes();
         }
@@ -236,7 +236,7 @@ var dataGuideOverrides = {
         /// Step 5
         if (step > 3) {
             if (! $('#' + valid_layer_obj.layer.id + '_overview').hasClass('in')) {
-              valid_layer_obj.layer.toggleDescription(valid_layer_obj.layer);
+              valid_layer_obj.layer.toggleActiveDescription(valid_layer_obj.layer);
             }
         }
       }
