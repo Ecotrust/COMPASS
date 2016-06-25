@@ -92,9 +92,45 @@ function drawingModel(options) {
         });
     };
 
-    self.exportAggregateCSV = function(event) {
-      //TODO: send request to server to generate CSV of drawing data.
-      console.log(self.name);
+    self.exportAggregateCSV = function(obj, event) {
+      if (event.hasOwnProperty('stopPropagation')) {
+        event.stopPropagation();
+      } else {
+        if (window.hasOwnProperty('event')) {
+          window.event.cancelBubble = true;
+        }
+      }
+
+      aoi_id = parseInt(self.id.replace('drawing_aoi_',''));
+      if (aoi_id) {
+        $.ajax({
+            url: '/drawing/get_csv',
+            type: 'POST',
+            // data: {'target_shape': self.polygonLayer},
+            data: { id: aoi_id },
+            // dataType: json
+            success: function(response, status, request) {
+              //Crazy workaround to trigger download dialog from AJAX as shown here:
+              // http://stackoverflow.com/questions/16086162/handle-file-download-from-ajax-post
+              var disp = request.getResponseHeader('Content-Disposition');
+              if (disp && disp.search('attachment') != -1) {
+                var form = $('<form method="POST" action="' + url + '">');
+                $.each(params, function(k,v) {
+                  form.append($('<input type="hidden" name="' + k +'" value="' + v +'">'));
+                });
+                $('body').append(form);
+                form.submit();
+              }
+              window.alert('Drawing request successfully sent/received!');
+            },
+            error: function (result) {
+              window.alert('Drawing request failed!');
+            }
+          });
+      } else {
+        window.alert('Drawing ID: ' + self.id + ' not recognized.');
+      }
+
     }
 
 }

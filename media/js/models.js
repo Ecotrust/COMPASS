@@ -860,6 +860,10 @@ function layerModel(options, parent) {
     self.zoomToFeature = function(event) {
       if (event.hasOwnProperty('stopPropagation')) {
         event.stopPropagation();
+      } else {
+        if (window.hasOwnProperty('event')) {
+          window.event.cancelBubble = true;
+        }
       }
         //The below line would highlight the feature you were zooming to and open
             // its id report. This was found to be confusing.

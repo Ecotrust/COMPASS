@@ -201,7 +201,7 @@
                               <div data-bind="visible: showFeatureAttribution">
                                   <div id="aggregated-attribute-overlay" style="display: none" class="scrollpane" data-bind="visible: aggregatedAttributes, style: {width: aggregatedAttributesWidth}">
                                       <div id="aggregated-attribute-content" class="accordion">
-                                          <div data-bind="foreach: attributeLayers()">
+                                          <div data-bind="foreach: { data: attributeLayers(), as: 'attr_layer'}">
                                               <div data-bind="if: $root.aggregatedAttributes()[name]">
                                                   <div class="accordion-group">
                                                       <div class="accordion-heading layer-attr-collapse" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
@@ -220,7 +220,8 @@
                                                           <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
                                                           <!-- /ko -->
                                                           <!-- ko ifnot: $root.aggregatedAttributes()[name].hasOwnProperty('subLayers') -->
-                                                          <div class="btn zoom-to-button" data-bind="click: exportAggregateCSV">Export Data</div>
+                                                          <!-- <div class="btn zoom-to-button" data-bind="click: exportAggregateCSV">Export Data</div> -->
+                                                          <a class="btn zoom-to-button" data-bind="attr:{href: '/drawing/get_csv/'+ attr_layer.uid }, clickBubble: false">Export Data</a>
                                                           <!-- /ko -->
 
                                                       </div>

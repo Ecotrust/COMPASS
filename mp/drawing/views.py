@@ -10,7 +10,6 @@ from ofr_manipulators import clip_to_grid
 from simplejson import dumps
 
 
-
 '''
 '''
 def get_drawings(request):
@@ -86,7 +85,6 @@ def get_clipped_shape(request):
 
     # return HttpResponse(dumps({"clipped_wkt": wkt}), status=200)
 
-
 '''
 '''
 def aoi_analysis(request, aoi_id):
@@ -130,7 +128,6 @@ def get_geometry_orig(request, uid):
 
     return HttpResponse(dumps({"geometry_orig": wkt}), status=200)
 
-
 '''
 '''
 # def wind_analysis(request, wind_id):
@@ -142,3 +139,39 @@ def get_geometry_orig(request, uid):
 #         return response
 #     return display_wind_analysis(request, wind_obj)
 #     # Create your views here.
+
+'''
+'''
+def get_csv(request, uid):
+    import csv
+    if 'drawing_aoi_' in uid:
+        aoi_id = str(int(filter(str.isdigit, str(uid))))
+    else:
+        aoi_id = int(uid)
+    response = HttpResponse(content_type='text/csv')
+    # aoi_id = int(request.POST['id'])
+    try:
+        drawing = AOI.objects.get(id=aoi_id)
+    except:
+        return HttpResponse(
+            dumps(
+                {
+                    'message': 'Could not find drawing with id = %d' % aoi_id
+                }
+            ),
+            status=500
+        )
+    response['Content-Disposition'] = 'attachment; filename=%s_%d_drawing.csv' % (drawing.name, drawing.id)
+    summaryReports = drawing.summary_reports()
+    writer = csv.writer(response)
+    writer.writerow(['%s' % drawing.name])
+    writer.writerow(['attribute', 'value(s)'])
+    for attribute in summaryReports:
+        row = [attribute['title']]
+        if type(attribute['data']) is (list or tuple):
+            for val in attribute['data']:
+                row.append[val]
+        else:
+            row.append(attribute['data'])
+        writer.writerow(row)
+    return response
