@@ -162,7 +162,7 @@ def get_csv(request, uid):
             status=500
         )
     response['Content-Disposition'] = 'attachment; filename=%s_%d_drawing.csv' % (drawing.name, drawing.id)
-    summaryReports = drawing.summary_reports()
+    summaryReports = drawing.summary_reports({'list_style':'list'})
     writer = csv.writer(response)
     writer.writerow(['%s' % drawing.name])
     writer.writerow(['attribute', 'value(s)'])
@@ -170,7 +170,7 @@ def get_csv(request, uid):
         row = [attribute['title']]
         if type(attribute['data']) is (list or tuple):
             for val in attribute['data']:
-                row.append[val]
+                row.append(val)
         else:
             row.append(attribute['data'])
         writer.writerow(row)

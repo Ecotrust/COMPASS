@@ -81,7 +81,7 @@ species_lookup = {
     "0": "zero"
 }
 
-def get_summary_reports(grid_cells):
+def get_summary_reports(grid_cells, list_style='unordered'):
     """
     List of attributes for drawing summary reports
     """
@@ -105,18 +105,30 @@ def get_summary_reports(grid_cells):
     if len(habitats) == 1:
         attributes.append({'title': 'Habitat', 'data': habitats[0]})
     elif len(habitats) > 1:
-        attributes.append({'title': 'Habitats', 'data': unordered_list(habitats)})
+        if list_style=='unordered':
+            attributes.append({'title': 'Habitats', 'data': unordered_list(habitats)})
+        else:
+            attributes.append({'title': 'Habitats', 'data': habitats})
 
     fish = apply_lookup(get_unique_list_values(grid_cells, 'fish'), species_lookup)
     fish.sort()
-    attributes.append({'title': 'Fish', 'data': unordered_list(fish)})
+    if list_style=='unordered':
+        attributes.append({'title': 'Fish', 'data': unordered_list(fish)})
+    else:
+        attributes.append({'title': 'Fish', 'data': fish})
 
     obs_spec = apply_lookup(get_unique_list_values(grid_cells, 'obs_spec'), species_lookup)
     obs_spec.sort()
-    attributes.append({'title': 'Observed Species', 'data': unordered_list(obs_spec)})
+    if list_style=='unordered':
+        attributes.append({'title': 'Observed Species', 'data': unordered_list(obs_spec)})
+    else:
+        attributes.append({'title': 'Observed Species', 'data': obs_spec})
 
     mod_spec = apply_lookup(get_unique_list_values(grid_cells, 'mod_spec'), species_lookup)
     mod_spec.sort()
-    attributes.append({'title': 'Modeled Species', 'data': unordered_list(mod_spec)})
+    if list_style=='unordered':
+        attributes.append({'title': 'Modeled Species', 'data': unordered_list(mod_spec)})
+    else:
+        attributes.append({'title': 'Modeled Species', 'data': mod_spec})
 
     return attributes
