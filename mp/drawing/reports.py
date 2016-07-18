@@ -50,7 +50,10 @@ def get_unique_list_values(grid_cells, field):
     values = []
     for gc in grid_cells:
         value = getattr(gc, field)
-        input_list = ast.literal_eval(value)
+        try:
+            input_list = ast.literal_eval(value)
+        except:
+            input_list = []
         for item in input_list:
             str_item = str(item)
             if str_item not in values:
@@ -60,7 +63,11 @@ def get_unique_list_values(grid_cells, field):
 def apply_lookup(id_list, lookup):
     values = []
     for id in id_list:
-        values.append(lookup[id])
+        try:
+            values.append(lookup[id])
+        except:
+            print("NO VALUE MATCH FOUND FOR ID %s" % id)
+            values.append(str(id))
     return values
 
 def unordered_list(list):

@@ -1,5 +1,9 @@
 {
   "objectid" : "objectid",
+  "hex_id" : "hex_id",
+  "auspatid" : "auspatid",
+  "ecoregion" : "ecoregion",
+  "coa_name" : "coa_name",
   "habitat"  : "habitat",
   "fish"  : "fish",
   "obs_spec"  : "obs_spec",

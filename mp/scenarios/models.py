@@ -283,6 +283,10 @@ class Scenario(Analysis):
 class GridCell(models.Model):
 
     objectid = models.IntegerField(null=True, blank=True)
+    hex_id = models.IntegerField(null=True, blank=True, default=None)
+    auspatid = models.IntegerField(null=True, blank=True, default=None)
+    ecoregion = models.TextField(null=True, blank=True, default=None)
+    coa_name = models.TextField(null=True, blank=True, default=None)
     habitat = models.TextField(null=True, blank=True)
     fish = models.TextField(null=True, blank=True)
     obs_spec = models.TextField(null=True, blank=True)

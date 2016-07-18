@@ -6,8 +6,23 @@
 thisdir=`dirname $BASH_SOURCE`
 
 # Variables that change frequently/on every import
-SHP="$thisdir/../docs/Notes/Converted_sample/FieldsHexagonSelection_3857.shp"
-FINAL="$thisdir/../docs/Notes/Converted_sample/compass_planning_grid_20160620.sql"
+# SHP="$thisdir/../docs/Notes/Converted_sample/FieldsHexagonSelection_3857.shp"
+if [ -n "$1" ]
+  then
+    SHP=$1
+  else
+    echo "Input shapefile is not defined. Using default..."
+    SHP="$thisdir/../docs/Notes/mike_processed/FieldsHexagonSelection_3857.shp"
+fi
+
+if [ -n "$2" ]
+  then
+    FINAL=$2
+  else
+    echo "Final output is not defined. Using default..."
+    FINAL="$thisdir/../docs/Notes/Converted_sample/compass_planning_grid_20160620.sql"
+fi
+
 
 ################################################################################
 # Probably no need to touch anything below here
