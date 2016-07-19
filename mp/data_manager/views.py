@@ -6,7 +6,7 @@ from django.utils import simplejson
 from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.uploadedfile import UploadedFile
-import os, datetime, time
+import os, datetime, time, zipfile
 from models import *
 from forms import *
 
@@ -199,6 +199,40 @@ def import_export_admin(
 import_export_admin = staff_member_required(import_export_admin)
 
 '''
+import zipped shapefile in EPSG:3857 to be new planning unit layer
+'''
+def import_report_hex(
+    request,
+    template_name='admin/import_planning_units_admin.html',
+    extra_context={}):
+
+    if request.method == 'POST':
+        form = UploadContentsForm(request.POST, request.FILES)
+        if form.is_valid():
+            import_status = handle_imported_planning_units_file(request.FILES['file'], request.user)
+            print(import_status['message'])
+            return HttpResponseRedirect('/admin/import_report_hex/')    # success url
+    else:
+        form = UploadContentsForm()
+    # if len(ImportEvent.objects.all()) == 0:
+    #     fixture = create_new_fixture(request.user, 'initial')
+    #     initial_contents = create_initial_contents(fixture, request.user)
+    #     set_import_as_current(initial_contents)
+
+    template = loader.get_template(template_name)
+
+    context = RequestContext(
+        request, {
+            'form': form
+        }
+    )
+
+    context.update(extra_context)
+    return HttpResponse(template.render(context))
+
+import_report_hex = staff_member_required(import_report_hex)
+
+'''
 dump current data_manager data to a file to rebuild on import failure
 '''
 def create_new_fixture(user, filename):
@@ -334,3 +368,53 @@ def data_manager_make_current(request, import_id):
     except:
         return HttpResponse('Error 500: Internal Server Error - Failed to make given snapshot current.')
     return HttpResponseRedirect('/admin/port_data_manager/')
+
+def handle_imported_planning_units_file(import_file, user):
+    error_message = "Unknown error importing zipfile. Please contact site administrator at ksdev@ecotrust.org"
+
+    #   * test if it is unzippable
+    if not zipfile.is_zipfile(import_file):
+        error_message = "File is not a zipfile (.zip)"
+        return {'state': False, 'message': error_message}
+
+    #   * unzip
+    try:
+        with zipfile.ZipFile(import_file) as shapezip:
+            shapezip.extractall("../media/extracted/")
+    except:
+        error_message = "Failed to unzip zipfile."
+        return {'state': False, 'message': error_message}
+
+    #   * test if right files exist
+    if not (
+        os.path.isfile('../media/extracted/%s.cpg' % settings.PLANNING_UNIT_FILENAME) and
+        os.path.isfile('../media/extracted/%s.dbf' % settings.PLANNING_UNIT_FILENAME) and
+        os.path.isfile('../media/extracted/%s.prj' % settings.PLANNING_UNIT_FILENAME) and
+        os.path.isfile('../media/extracted/%s.qpj' % settings.PLANNING_UNIT_FILENAME) and
+        os.path.isfile('../media/extracted/%s.shp' % settings.PLANNING_UNIT_FILENAME) and
+        os.path.isfile('../media/extracted/%s.shx' % settings.PLANNING_UNIT_FILENAME)
+    ):
+        error_message = "Zipfile does not contail all required filetypes: cpg, dbf, prj, qpj, shp, shx"
+        return {'state': False, 'message': error_message}
+
+    #   * test if EPSG:3857
+    from osgeo import gdal, ogr, osr
+    source_3857 = osr.SpatialReference()
+    source_3857.ImportFromEPSG(3857)
+    driver = ogr.GetDriverByName('ESRI Shapefile')
+    dataset = driver.Open(r'../media/extracted/%s.shp' % settings.PLANNING_UNIT_FILENAME)
+    layer = dataset.GetLayer()
+    spatialRef = layer.GetSpatialRef()
+    if not spatialRef.IsSame(source_3857):
+        error_message = "Imported shapefile is not projected as EPSG:3857"
+        return {'state': False, 'message': error_message}
+
+    #   * test if correct attributes
+    #   * test if correct data types
+    #   * store backup sql
+    #   * run process_grid
+    #   * run sql load
+    #   * if success, groovy, if not restore from backup
+    #   *
+
+    return {'state': True, 'message': 'Planning Units Updated'}

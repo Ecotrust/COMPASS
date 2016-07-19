@@ -178,4 +178,6 @@ DJANGO_WYSIWYG_FLAVOR = "tinymce"    # or "tinymce_advanced"
 
 EXTERNAL_PORT = 80
 
+PLANNING_UNIT_FILENAME = "PU_grid"
+
 from settings_local import *
