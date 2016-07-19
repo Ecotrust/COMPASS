@@ -211,13 +211,13 @@ def import_report_hex(
         if form.is_valid():
             import_status = handle_imported_planning_units_file(request.FILES['file'], request.user)
             print(import_status['message'])
-            return HttpResponseRedirect('/admin/import_report_hex/')    # success url
+            extra_context = {
+                'status': import_status['state'],
+                'message': import_status['message']
+            }
+
     else:
         form = UploadContentsForm()
-    # if len(ImportEvent.objects.all()) == 0:
-    #     fixture = create_new_fixture(request.user, 'initial')
-    #     initial_contents = create_initial_contents(fixture, request.user)
-    #     set_import_as_current(initial_contents)
 
     template = loader.get_template(template_name)
 
@@ -370,7 +370,7 @@ def data_manager_make_current(request, import_id):
     return HttpResponseRedirect('/admin/port_data_manager/')
 
 def handle_imported_planning_units_file(import_file, user):
-    error_message = "Unknown error importing zipfile. Please contact site administrator at ksdev@ecotrust.org"
+    error_message = "Unknown error importing zipfile. Please contact site administrator at %s" % settings.HELP_EMAIL
 
     #   * test if it is unzippable
     if not zipfile.is_zipfile(import_file):
@@ -410,11 +410,56 @@ def handle_imported_planning_units_file(import_file, user):
         return {'state': False, 'message': error_message}
 
     #   * test if correct attributes
+    geom = layer[0]
+    try:
+        if not (cmp(geom.keys().sort(),settings.PU_FIELDS.keys().sort())==0):
+            error_message = "Incorrect attribute names. Must match: %s" % str(settings.PU_FIELDS.keys())
+            return {'state': False, 'message': error_message}
+    except:
+        import ipdb
+        ipdb.set_trace()
+
     #   * test if correct data types
+    for field in settings.PU_FIELDS.keys():
+        fieldType = settings.PU_FIELDS[field]
+        if not testFieldType(layer, field, fieldType):
+            error_message = "Field type mismatch: %s should be %s" % (field, fieldType)
+            return {'state': False, 'message': error_message}
+
     #   * store backup sql
+    try:
+        if os.path.isfile('%s' % settings.PU_SQL_LIVE):
+            from shutil import copyfile
+            copyfile(settings.PU_SQL_LIVE,settings.PU_SQL_BACKUP)
+    except:
+        error_message = "Unknown error while backing up original SQL file. Contact %s for assistance" % settings.HELP_EMAIL
+        return {'state': False, 'message': error_message}
+
     #   * run process_grid
+    try:
+        import subprocess
+        subprocess.call("%s ../media/extracted/%s.shp %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE), shell=True)
+    except:
+        error_message = "Unknown error while processing grid. Contact %s for assistance" % settings.HELP_EMAIL
+        return {'state': False, 'message': error_message}
+
     #   * run sql load
-    #   * if success, groovy, if not restore from backup
-    #   *
+    try:
+        subprocess.call("psql -U %s -d %s -f %s" % (settings.DATABASES['default']['USER'],settings.DATABASES['default']['NAME'],settings.PU_SQL_LIVE), shell=True)
+    except:
+        #   * if success, groovy, if not restore from backup
+        from shutil import copyfile
+        copyfile(settings.PU_SQL_BACKUP,settings.PU_SQL_LIVE)
+        error_message = "Unknown error while loading new planning units into database. Contact %s for assistance" % settings.HELP_EMAIL
+        return {'state': False, 'message': error_message}
 
     return {'state': True, 'message': 'Planning Units Updated'}
+
+def testFieldType(layer, field, fieldType):
+    for geom in layer:
+        if geom[field]:
+            if type(geom[field]) == fieldType:
+                return True
+            else:
+                return False
+    return True #all values are None. While not promising it is technically valid

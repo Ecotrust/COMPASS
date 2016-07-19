@@ -180,4 +180,22 @@ EXTERNAL_PORT = 80
 
 PLANNING_UNIT_FILENAME = "PU_grid"
 
+PU_FIELDS = {
+    'OBJECTID': int,
+    'Hex_ID': int,
+    'AUSPATID': int,
+    'ECOREGION': str,
+    'COA_Name': str,
+    'habitat': str,
+    'fish': str,
+    'obs_spec': str,
+    'mod_spec': str
+}
+
+PU_SQL_LOC = "../media/planning_unit_sql/"
+PU_SQL_LIVE = PU_SQL_LOC + "pu_sql.sql"
+PU_SQL_BACKUP = PU_SQL_LOC + "pu_sql_backup.sql"
+
+PROCESS_GRID_SCRIPT = "../scripts/process_grid.sh"
+
 from settings_local import *

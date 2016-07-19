@@ -40,8 +40,9 @@ printing/shots/*
 /media/data_manager/geojson/archive
 /media/crop/*
 scripts/cookbooks/node_*.json
-/media/crop/*
 deps/
+/media/extracted/*
+/media/planning_unit_sql/*
 
 mp/data_manager/fixtures/datadump_2013_11_20.json
 
