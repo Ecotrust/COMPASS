@@ -58,6 +58,7 @@ def get_unique_list_values(grid_cells, field):
             str_item = str(item)
             if str_item not in values:
                 values.append(str_item)
+
     return values
 
 def apply_lookup(id_list, lookup):
@@ -75,18 +76,7 @@ def unordered_list(list):
 
 #TODO: Populate species lookup when you get it from Mike
 
-species_lookup = {
-    "1": "one",
-    "2": "two",
-    "3": "three",
-    "4": "four",
-    "5": "five",
-    "6": "six",
-    "7": "seven",
-    "8": "eight",
-    "9": "nine",
-    "0": "zero"
-}
+species_lookup = settings.SPECIES_LOOKUP
 
 def get_summary_reports(grid_cells, list_style='unordered'):
     """

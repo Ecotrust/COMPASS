@@ -390,11 +390,10 @@ def handle_imported_planning_units_file(import_file, user):
         os.path.isfile('../media/extracted/%s.cpg' % settings.PLANNING_UNIT_FILENAME) and
         os.path.isfile('../media/extracted/%s.dbf' % settings.PLANNING_UNIT_FILENAME) and
         os.path.isfile('../media/extracted/%s.prj' % settings.PLANNING_UNIT_FILENAME) and
-        os.path.isfile('../media/extracted/%s.qpj' % settings.PLANNING_UNIT_FILENAME) and
         os.path.isfile('../media/extracted/%s.shp' % settings.PLANNING_UNIT_FILENAME) and
         os.path.isfile('../media/extracted/%s.shx' % settings.PLANNING_UNIT_FILENAME)
     ):
-        error_message = "Zipfile does not contail all required filetypes: cpg, dbf, prj, qpj, shp, shx"
+        error_message = "Zipfile does not contail all required filetypes: cpg, dbf, prj, shp, shx"
         return {'state': False, 'message': error_message}
 
     #   * test if EPSG:3857
@@ -405,8 +404,9 @@ def handle_imported_planning_units_file(import_file, user):
     dataset = driver.Open(r'../media/extracted/%s.shp' % settings.PLANNING_UNIT_FILENAME)
     layer = dataset.GetLayer()
     spatialRef = layer.GetSpatialRef()
-    if not spatialRef.IsSame(source_3857):
-        error_message = "Imported shapefile is not projected as EPSG:3857"
+    arcgis_web_merc_wkt = 'PROJCS["WGS_1984_Web_Mercator_Auxiliary_Sphere",GEOGCS["GCS_WGS_1984",DATUM["WGS_1984",SPHEROID["WGS_84",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Mercator_Auxiliary_Sphere"],PARAMETER["False_Easting",0.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",0.0],PARAMETER["Standard_Parallel_1",0.0],PARAMETER["Auxiliary_Sphere_Type",0.0],UNIT["Meter",1.0]]'
+    if not (spatialRef.IsSame(source_3857) or spatialRef.ExportToWkt() == arcgis_web_merc_wkt):
+        error_message = "Imported shapefile is not projected as EPSG:3857 or as ArcGIS:'WGS 1984 Web Mercator (Auxiliary Sphere)'"
         return {'state': False, 'message': error_message}
 
     #   * test if correct attributes
