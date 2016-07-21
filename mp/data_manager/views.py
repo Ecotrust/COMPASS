@@ -6,7 +6,7 @@ from django.utils import simplejson
 from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.uploadedfile import UploadedFile
-import os, datetime, time, zipfile, sys
+import os, datetime, time, zipfile, sys, glob, settings
 from models import *
 from forms import *
 
@@ -272,7 +272,7 @@ def load_contents_fixture(fixture):
         fixture = fixture.file.name     # doesn't work - need abs path to be sure.
 
     # some models assume a relative path of '../media/'', though media_root is likely pointing at '../mediaroot/'
-    import string, settings
+    import string
     fixture = string.replace(fixture,'../media/',settings.MEDIA_ROOT)
 
     try:
@@ -435,15 +435,31 @@ def handle_imported_planning_units_file(import_file, user):
     process_success = 0
     try:
         import subprocess
-        import os
-        import sys
+        print("")
+        print("")
+        print("")
         if 'python' in sys.executable:
+            print("----- python is in sys.executable -----")
             python_exec = sys.executable
         elif os.environ.has_key('VIRTUAL_ENV'):
+            print("----- os.environ has VIRTUAL_ENV -----")
             python_exec = "%s/bin/python" % os.environ['VIRTUAL_ENV']
         else:
+            print("----- hunting for python binaries on path -----")
             python_exec = "python"
-        process_success = subprocess.call("%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec), shell=True)
+            for osPath in settings.os.environ['PATH'].split(":"):
+                pyBins = glob.glob(osPath+'/python')
+                if len(pyBins) > 0:
+                    python_exec = pyBins[0]
+                    break
+        print("===== python_exec: %s =====" % python_exec)
+        grid_subprocess = "%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec)
+        print("===== grid_subprocess: `%s`" % grid_subprocess)
+        process_success = subprocess.call(grid_subprocess, shell=True)
+        print("===== grid processing complete =====")
+        print("")
+        print("")
+        print("")
 
     except:
         process_success = 1
