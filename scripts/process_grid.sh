@@ -23,6 +23,14 @@ if [ -n "$2" ]
     FINAL="$thisdir/../docs/Notes/Converted_sample/compass_planning_grid_20160620.sql"
 fi
 
+if [ -n "$3" ]
+  then
+    PYTHON_BIN=$3
+  else
+    echo "Python binary is not defined. Using default..."
+    PYTHON_BIN="python"
+fi
+
 
 ################################################################################
 # Probably no need to touch anything below here
@@ -33,8 +41,8 @@ FIELDMAP="$thisdir/field_map.json"
 
 # Probably won't need to touch these if running from root project dir
 TMP="/tmp/compass_planning_grid.sql"
-TRANSLATE="python $thisdir/translate.py"
-VALIDATE="python $thisdir/validate_fields.py"
+TRANSLATE="$PYTHON_BIN $thisdir/translate.py"
+VALIDATE="$PYTHON_BIN $thisdir/validate_fields.py"
 
 # Do some sanity checks on the fieldnames
 $VALIDATE $SHP $FIELDMAP

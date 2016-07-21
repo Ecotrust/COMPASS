@@ -6,7 +6,7 @@ from django.utils import simplejson
 from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.uploadedfile import UploadedFile
-import os, datetime, time, zipfile
+import os, datetime, time, zipfile, sys
 from models import *
 from forms import *
 
@@ -411,13 +411,9 @@ def handle_imported_planning_units_file(import_file, user):
 
     #   * test if correct attributes
     geom = layer[0]
-    try:
-        if not (cmp(geom.keys().sort(),settings.PU_FIELDS.keys().sort())==0):
-            error_message = "Incorrect attribute names. Must match: %s" % str(settings.PU_FIELDS.keys())
-            return {'state': False, 'message': error_message}
-    except:
-        import ipdb
-        ipdb.set_trace()
+    if not (cmp(geom.keys().sort(),settings.PU_FIELDS.keys().sort())==0):
+        error_message = "Incorrect attribute names. Must match: %s" % str(settings.PU_FIELDS.keys())
+        return {'state': False, 'message': error_message}
 
     #   * test if correct data types
     for field in settings.PU_FIELDS.keys():
@@ -436,17 +432,23 @@ def handle_imported_planning_units_file(import_file, user):
         return {'state': False, 'message': error_message}
 
     #   * run process_grid
+    process_success = 0
     try:
         import subprocess
-        subprocess.call("%s ../media/extracted/%s.shp %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE), shell=True)
+        process_success = subprocess.call("%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,sys.executable), shell=True)
     except:
+        process_success = 1
+    if process_success == 1:
         error_message = "Unknown error while processing grid. Contact %s for assistance" % settings.HELP_EMAIL
         return {'state': False, 'message': error_message}
 
     #   * run sql load
+    load_success = 0
     try:
-        subprocess.call("psql -U %s -d %s -f %s" % (settings.DATABASES['default']['USER'],settings.DATABASES['default']['NAME'],settings.PU_SQL_LIVE), shell=True)
+        load_success = subprocess.call("psql -U %s -d %s -f %s" % (settings.DATABASES['default']['USER'],settings.DATABASES['default']['NAME'],settings.PU_SQL_LIVE), shell=True)
     except:
+        load_success = 1
+    if load_success == 1:
         #   * if success, groovy, if not restore from backup
         from shutil import copyfile
         copyfile(settings.PU_SQL_BACKUP,settings.PU_SQL_LIVE)
