@@ -55,3 +55,6 @@ SERVER_EMAIL = 'developers@ecotrust.org'
 EMAIL_SUBJECT_PREFIX = "[OFR-production]"
 
 EXTERNAL_PORT = 80
+
+#Set this with location of virtual environment python binary file.
+VIRTUAL_ENV_PYTHON = False

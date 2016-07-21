@@ -438,7 +438,9 @@ def handle_imported_planning_units_file(import_file, user):
         print("")
         print("")
         print("")
-        if 'python' in sys.executable:
+        if settings.has_key('VIRTUAL_ENV_PYTHON') and settings.VIRTUAL_ENV_PYTHON:
+            python_exec = settings.VIRTUAL_ENV_PYTHON
+        elif 'python' in sys.executable:
             print("----- python is in sys.executable -----")
             python_exec = sys.executable
         elif os.environ.has_key('VIRTUAL_ENV'):
@@ -464,7 +466,10 @@ def handle_imported_planning_units_file(import_file, user):
     except:
         process_success = 1
     if process_success == 1:
-        error_message = "Unknown error while processing grid. Contact %s for assistance" % settings.HELP_EMAIL
+        if settings.has_key('VIRTUAL_ENV_PYTHON'):
+            error_message = "Unknown error while processing grid. Contact %s for assistance." % settings.HELP_EMAIL
+        else:
+            error_message = "VIRTUAL_ENV_PYTHON setting not defined. Request %s configure this." % settings.HELP_EMAIL
         return {'state': False, 'message': error_message}
 
     #   * run sql load

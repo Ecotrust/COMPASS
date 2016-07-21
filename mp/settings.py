@@ -198,6 +198,9 @@ PU_SQL_BACKUP = PU_SQL_LOC + "pu_sql_backup.sql"
 
 PROCESS_GRID_SCRIPT = "../scripts/process_grid.sh"
 
+#Set this in local settings
+VIRTUAL_ENV_PYTHON = False
+
 SPECIES_LOOKUP = {
     '216': u'Olive-sided Flycatcher',
     '217': u'Willow Flycatcher',
