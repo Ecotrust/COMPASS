@@ -435,7 +435,16 @@ def handle_imported_planning_units_file(import_file, user):
     process_success = 0
     try:
         import subprocess
-        process_success = subprocess.call("%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,sys.executable), shell=True)
+        import os
+        import sys
+        if 'python' in sys.executable:
+            python_exec = sys.executable
+        elif os.environ.has_key('VIRTUAL_ENV'):
+            python_exec = "%s/bin/python" % os.environ['VIRTUAL_ENV']
+        else:
+            python_exec = "python"
+        process_success = subprocess.call("%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec), shell=True)
+
     except:
         process_success = 1
     if process_success == 1:
