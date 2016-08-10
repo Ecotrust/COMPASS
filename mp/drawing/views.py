@@ -164,14 +164,31 @@ def get_csv(request, uid):
     response['Content-Disposition'] = 'attachment; filename=%s_%d_drawing.csv' % (drawing.name, drawing.id)
     summaryReports = drawing.summary_reports({'list_style':'list'})
     writer = csv.writer(response)
-    writer.writerow(['%s' % drawing.name])
-    writer.writerow(['attribute', 'value(s)'])
+    headers = ['Name']
+    report_data = {'Name':drawing.name}
+    max_row_count = 1
     for attribute in summaryReports:
-        row = [attribute['title']]
+        headers.append(attribute['title'])
         if type(attribute['data']) is (list or tuple):
-            for val in attribute['data']:
-                row.append(val)
-        else:
-            row.append(attribute['data'])
+            attr_length = len(attribute['data'])
+            if attr_length > max_row_count:
+                max_row_count = attr_length
+        report_data[attribute['title']] = attribute['data']
+    writer.writerow(headers)
+    for index in range(max_row_count):
+        row = []
+        for header in headers:
+            data = report_data[header]
+            if type(data) is (list or tuple):
+                if index+1 > len(data):
+                    row.append("")
+                else:
+                    row.append(data[index])
+            else:
+                if index < 1:
+                    row.append(data)
+                else:
+                    row.append("")
         writer.writerow(row)
+
     return response
