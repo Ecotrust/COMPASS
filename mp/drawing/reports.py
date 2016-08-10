@@ -53,7 +53,10 @@ def get_unique_list_values(grid_cells, field):
         try:
             input_list = ast.literal_eval(value)
         except:
-            input_list = []
+            if field=='coa_name' and value=='NA':
+                input_list=[]
+            else:
+                input_list = [value]
         for item in input_list:
             str_item = str(item)
             if str_item not in values:
@@ -96,6 +99,20 @@ def get_summary_reports(grid_cells, list_style='unordered'):
     attributes.append({'title': 'Total Area', 'data': str(format_precision(total_area, 2)) + ' sq km'})
 
     # ------- attributes -------
+
+    ecoregions = get_unique_list_values(grid_cells, 'ecoregion')
+    ecoregions.sort()
+    if list_style=='unordered':
+        attributes.append({'title': 'Ecoregions', 'data': unordered_list(ecoregions)})
+    else:
+        attributes.append({'title': 'Ecoregions', 'data': ecoregions})
+
+    coas = get_unique_list_values(grid_cells, 'coa_name')
+    coas.sort()
+    if list_style=='unordered':
+        attributes.append({'title': 'Conservation Opportunity Areas', 'data': unordered_list(coas)})
+    else:
+        attributes.append({'title': 'Conservation Opportunity Areas', 'data': coas})
 
     habitats = apply_lookup(get_unique_list_values(grid_cells, 'habitat'), species_lookup)
     habitats.sort()

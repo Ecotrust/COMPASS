@@ -435,33 +435,23 @@ def handle_imported_planning_units_file(import_file, user):
     process_success = 0
     try:
         import subprocess
-        print("")
-        print("")
-        print("")
+
         if settings.VIRTUAL_ENV_PYTHON:
             python_exec = settings.VIRTUAL_ENV_PYTHON
         elif 'python' in sys.executable:
-            print("----- python is in sys.executable -----")
             python_exec = sys.executable
         elif os.environ.has_key('VIRTUAL_ENV'):
-            print("----- os.environ has VIRTUAL_ENV -----")
             python_exec = "%s/bin/python" % os.environ['VIRTUAL_ENV']
         else:
-            print("----- hunting for python binaries on path -----")
             python_exec = "python"
             for osPath in settings.os.environ['PATH'].split(":"):
                 pyBins = glob.glob(osPath+'/python')
                 if len(pyBins) > 0:
                     python_exec = pyBins[0]
                     break
-        print("===== python_exec: %s =====" % python_exec)
+
         grid_subprocess = "%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec)
-        print("===== grid_subprocess: `%s`" % grid_subprocess)
         process_success = subprocess.call(grid_subprocess, shell=True)
-        print("===== grid processing complete =====")
-        print("")
-        print("")
-        print("")
 
     except:
         process_success = 1
