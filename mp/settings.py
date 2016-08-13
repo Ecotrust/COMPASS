@@ -205,7 +205,7 @@ LOOKUP_FIELD_MAP = {
     'sci_name': 'SciName',
     'common_name': 'ComName',
     'taxonomy': 'Tax_Group',
-    'ocs_id': 'OCS_Wordpress_ID'
+    'spcs_id': 'TGTID'
 }
 
 from settings_lookup import *
