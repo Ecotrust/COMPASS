@@ -450,8 +450,13 @@ def handle_imported_planning_units_file(import_file, user):
                     python_exec = pyBins[0]
                     break
 
+        start_time = os.stat(settings.PU_SQL_LIVE).st_mtime
         grid_subprocess = "%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec)
         process_success = subprocess.call(grid_subprocess, shell=True)
+        mod_time = os.stat(settings.PU_SQL_LIVE).st_mtime
+        if not start_time < mod_time:
+            error_message = "Unable to write to SQL file. Please contact %s to fix write permissions for this file" % settings.HELP_EMAIL
+            return {'state': False, 'message': error_message}
 
     except:
         process_success = 1
