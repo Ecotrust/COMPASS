@@ -1,0 +1,25 @@
+ON PAGE LOAD:
+  /drawing/get_drawings/:
+======================================================================
+        [{
+            "description": "",
+            "id": 5,
+            "uid": "drawing_aoi_5",
+            "attributes": {
+                "attributes": [
+                    {"data": "1,754", "title": "Number of Grid Cells"},
+                    {"data": "8830.93 sq km", "title": "Total Area"},
+                    {"data": "<ul><li>Willamette Valley</li></ul>", "title": "Ecoregions"},
+                    {"data": "<ul><li>Calapooia River</li><li>Coburg Ridge</li><li>Corvallis Area Forests and Balds</li><li>Crawfordsville Oak-Washburn Butte</li><li>Finley-Muddy Creek Area</li><li>Kings Valley-Woods Creek Oak Woodlands</li><li>McKenzie River Area</li><li>Mohawk River</li><li>One Horse Slough-Beaver Creek</li><li>Santiam Confluences</li><li>Upper Siuslaw</li><li>Upper Willamette River Floodplain</li><li>West Eugene Area</li></ul>", "title": "Conservation Opportunity Areas"},
+                    {"data": "<ul><li>Flowing Water and Riparian Habitats</li><li>Grasslands</li><li>Natural Lakes</li><li>Oak Woodlands</li><li>Wetland, high conservation significance</li><li>Wetlands</li></ul>", "title": "Habitats"},
+                    {"data": "<ul><li>Bull Trout</li><li>Chinook Salmon - Fall Run</li><li>Chinook Salmon - Spring Run</li><li>Coastal Cutthroat Trout</li><li>Coho Salmon</li><li>Oregon Chub</li><li>Winter Steelhead / Coastal Rainbow Trout</li></ul>", "title": "Fish"},
+                    {"data": "<ul><li>Acorn Woodpecker</li><li>California Myotis</li><li>Chipping Sparrow</li><li>Clouded Salamander</li><li>Common Nighthawk</li><li>Fringed Myotis</li><li>Grasshopper Sparrow</li><li>Northern Red-legged Frog</li><li>Northern Spotted Owl</li><li>Olive-sided Flycatcher</li><li>Oregon Vesper Sparrow</li><li>Purple Martin</li><li>Short-Eared Owl</li><li>Silver-haired Bat</li><li>Southern Torrent Salamander</li><li>Townsend's Big-eared Bat</li><li>Western Bluebird</li><li>Western Meadowlark</li><li>Western Painted Turtle</li><li>Western Pond Turtle</li><li>Willow Flycatcher</li><li>Yellow-Breasted Chat</li></ul>", "title": "Observed Species"},
+                    {"data": "<ul><li>Acorn Woodpecker</li><li>California Myotis</li><li>Cascade Torrent Salamander</li><li>Chipping Sparrow</li><li>Clouded Salamander</li><li>Common Nighthawk</li><li>Foothill Yellow-legged Frog</li><li>Fringed Myotis</li><li>Grasshopper Sparrow</li><li>Hoary Bat</li><li>Northern Spotted Owl</li><li>Olive-sided Flycatcher</li><li>Oregon Slender Salamander</li><li>Oregon Vesper Sparrow</li><li>Purple Martin</li><li>Short-Eared Owl</li><li>Silver-haired Bat</li><li>Southern Torrent Salamander</li><li>Townsend's Big-eared Bat</li><li>Western Bluebird</li><li>Western Gray Squirrel</li><li>Western Meadowlark</li><li>Western Painted Turtle</li><li>Western Pond Turtle</li><li>Western Rattlesnake</li><li>Willow Flycatcher</li><li>Yellow-Breasted Chat</li></ul>", "title": "Modeled Species"}
+                ],
+                "event": "click"
+            }, 
+            "sharing_groups": [],
+            "name": "WOOOOOOOO!!!"
+          }, ...
+        ]
+======================================================================
