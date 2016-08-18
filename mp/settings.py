@@ -5,6 +5,23 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TIME_ZONE = 'America/Vancouver'
 ROOT_URLCONF = 'urls'
 LOGIN_REDIRECT_URL = '/visualize'
+INSTALLED_APPS += ('django_extensions',
+                   'social.apps.django_app.default',
+                   'general',
+                   'scenarios',
+                   'data_manager',
+                   'mp_settings',
+                   'drawing',
+                   'explore',
+                   'visualize',
+                   'django.contrib.humanize',
+                   'flatblocks',
+                   'mp_proxy',
+                   'map_proxy',
+                   'content',
+                   'tinymce',
+                   'django_wysiwyg'
+                   )
 
 DATABASES = {
     'default': {
@@ -24,23 +41,6 @@ LOG_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), 'logs'))
 
 ADMIN_MEDIA_PATH = "/usr/local/venv/marine-planner/lib/python2.7/site-packages/django/contrib/admin/static/admin/"
 
-INSTALLED_APPS += ('django_extensions',
-                   'social.apps.django_app.default',
-                   'general',
-                   'scenarios',
-                   'data_manager',
-                   'mp_settings',
-                   'drawing',
-                   'explore',
-                   'visualize',
-                   'django.contrib.humanize',
-                   'flatblocks',
-                   'mp_proxy',
-                   'map_proxy',
-                   'content',
-                   'tinymce',
-                   'django_wysiwyg'
-                   )
 
 GEOMETRY_DB_SRID = 3857
 GEOMETRY_CLIENT_SRID = 3857  # for latlon
@@ -207,6 +207,8 @@ LOOKUP_FIELD_MAP = {
     'taxonomy': 'Tax_Group',
     'spcs_id': 'TGTID'
 }
+
+ALLOW_PUBLIC_DRAWING = True
 
 from settings_lookup import *
 
