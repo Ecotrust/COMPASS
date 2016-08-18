@@ -73,7 +73,10 @@ def delete_design(request, uid):
 def get_scenarios(request):
     json = []
 
-    scenarios = Scenario.objects.filter(user=request.user, active=True).order_by('date_created')
+    if request.user.is_authenticated():
+        scenarios = Scenario.objects.filter(user=request.user, active=True).order_by('date_created')
+    else:
+        scenarios = Scenario.objects.filter(user=None)
     for scenario in scenarios:
         sharing_groups = [group.name for group in scenario.sharing_groups.all()]
         json.append({

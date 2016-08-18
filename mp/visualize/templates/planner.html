@@ -440,11 +440,11 @@
                                   <li class="active" data-tab="data">
                                       <a href="#data" data-toggle="tab" id="dataTab">Data</a>
                                   </li>
-                                  {% if user.is_authenticated %}
+
                                   <li data-tab="designs" data-bind="visible: enableDrawing()">
                                       <a href="#designs" id="designsTab" data-toggle="tab">Designs</a>
                                   </li>
-                                  {% endif %}
+
                                   <li data-tab="active" >
                                       <a href="#active" data-toggle="tab" id="activeTab">Active</a>
                                   </li>
@@ -467,7 +467,7 @@
                                                       <span style="border-radius: 4px;">
                                                         <input type="search" class="field search-box" data-provide="typeahead" data-bind="value: searchTerm, event: { keyup: keySearch }" name="s" id="s" placeholder="Search Data" style="border-radius: 4px;" autocomplete="off">
                                                       </span>
-                                                      <input type="submit" class="search" name="submit" id="searchsubmit" value="Search" style="background: url(http://ourfloridareefs.org/wp-content/themes/OurFloridaReefs/images/search.png) no-repeat 0 0; width: 26px; height: 30px; border: none; padding: 0; cursor: pointer; font-size: 0; margin-top: 9px; border-radius: 0px">
+                                                      <input type="submit" class="search" name="submit" id="searchsubmit" value="Search" style="background: url(/media/img/search.png) no-repeat 0 0; width: 26px; height: 30px; border: none; padding: 0; cursor: pointer; font-size: 0; margin-top: 9px; border-radius: 0px">
                                                       <!-- <input type="text" class="search-box" data-provide="typeahead" data-bind="value: searchTerm, event: { keyup: keySearch }" style="overflow: hidden; text-overflow: ellipsis; width: 80%;" placeholder="Search">
                                                       <a class="btn">
                                                           <i class="icon-remove icon-large"></i>
@@ -738,9 +738,7 @@
                                   <!-- END DATA TAB -->
 
                                   <!-- DESIGNS TAB -->
-                                  {% if user.is_authenticated %}
                                     {% include "scenarios.html" %}
-                                  {% endif %}
                                   <!-- END DESIGNS TAB -->
 
                                   <!-- ACTIVE TAB -->
@@ -1182,11 +1180,11 @@
         <script src="{{MEDIA_URL}}/js/state.js"></script>
         <script src="{{MEDIA_URL}}/js/surveyResults.js"></script>
         <script src="{{MEDIA_URL}}/js/bookmarks.js"></script>
-        {% if user.is_authenticated %}
+
         <script src="{{MEDIA_URL}}/js/scenarios.js"></script>
         <!-- <script src="{{MEDIA_URL}}/js/reports.js"></script> -->
         <script src="{{MEDIA_URL}}/js/drawing.js"></script>
-        {% endif %}
+
         <script src="{{MEDIA_URL}}/js/server.js"></script>
         <script src="{{MEDIA_URL}}/js/printing.js"></script>
         {% if user.is_staff %}

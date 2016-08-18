@@ -18,6 +18,7 @@ portal/*.sql
 /mp.log
 /grassdata
 /mp/clipping/fixtures/clipping_layers.json
+/madrona
 /docs/mockups/archive
 /docs/mockups/assets
 /docs/mockups/SDC_WireFrames_updated.pdf

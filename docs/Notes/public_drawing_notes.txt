@@ -106,3 +106,23 @@ Trace:
 Trace:
   success (scenarios.js 1131)
     /drawing/get_geometry_orig/drawing_aoi_11/, scenarios.js addScenarioToMap (1065)
+
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+Removed instances of 'if user.is_authenticated' from planner.html:
+  - show 'designs' tab
+  - download 'scenarios' and 'drawings' javascript filters
+  - scenarios.html
+
+Encountering assumed users in
+  - scenarios views
+    - delete_design(75)
+  - drawings views
+    - get_drawings(18)
+
+Removed authorization restrictions:
+  - features/aoi/form
+
+Madrona updates:
+  - create form shouldn't require authorization in views create_form(271)
