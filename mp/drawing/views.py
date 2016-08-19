@@ -15,7 +15,7 @@ from simplejson import dumps
 def get_drawings(request):
     json = []
     if request.user.is_authenticated():
-        drawings = AOI.objects.filter(user=user).order_by('date_created')
+        drawings = AOI.objects.filter(user=request.user).order_by('date_created')
     else:
         drawings = AOI.objects.filter(user=None)
     for drawing in drawings:

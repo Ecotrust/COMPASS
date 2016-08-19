@@ -53,7 +53,9 @@ Trace:
 
     /drawing/get_geometry_orig/drawing_aoi_11/, scenarios.js addScenarioToMap (1065)
 ======================================================================
-    {"geometry_orig": "POLYGON ((-13927655.4705940000712872 5664663.8270420003682375, -13497162.1273519992828369 5653656.8949704002588987, -13539966.8631849996745586 5582723.3327316995710135, -13892188.6894739996641874 5601068.2195175997912884, -13927655.4705940000712872 5664663.8270420003682375))"}
+    {
+      "geometry_orig": "POLYGON ((-13927655.4705940000712872 5664663.8270420003682375, -13497162.1273519992828369 5653656.8949704002588987, -13539966.8631849996745586 5582723.3327316995710135, -13892188.6894739996641874 5601068.2195175997912884, -13927655.4705940000712872 5664663.8270420003682375))"
+    }
 ======================================================================
 Trace:
   success (scenarios.js 1064)
@@ -126,3 +128,29 @@ Removed authorization restrictions:
 
 Madrona updates:
   - create form shouldn't require authorization in views create_form(271)
+
+---   EOD 2016-08-17 ---
+--- Start 2016-08-18 ---
+
+On form save - post form: success,
+    immediate call for GeoJSON fails
+    Triggers:
+      /features/aoi/form/: (scenarios.js 989)
+          {
+            "status": 201,
+            "X-Madrona-Select": "drawing_aoi_22",
+            "Location": "/features/aoi/drawing_aoi_22/",
+            "X-Madrona-Show": "drawing_aoi_22"
+          }
+
+      /features/generic-links/links/geojson/drawing_aoi_#/: (scenarios.js 1052)
+
+
+Approach:
+  Once form successfully saves, return should have:
+      original feature
+      clipped Feature
+      report Data
+      attributes:
+          - name
+          - description

@@ -84,7 +84,13 @@ var madrona = {
                 type: 'POST',
                 dataType: 'json',
                 success: function(result) {
-                    app.viewModel.scenarios.addScenarioToMap(null, {uid: result['X-Madrona-Show']});
+                    if (app.is_authenticated()) {
+                        app.viewModel.scenarios.addScenarioToMap(null, {uid: result['X-Madrona-Show']});
+                    } else {
+                        result['public'] = true;
+                        result['uid'] = result['X-Madrona-Show'];
+                        app.viewModel.scenarios.addScenarioToMap(null, result)
+                    }
                     app.viewModel.scenarios.loadingMessage(false);
                     clearInterval(barTimer);
                 },
@@ -1048,152 +1054,192 @@ function scenariosModel(options) {
 
         //perhaps much of this is not necessary once a scenario has been added to app.map.layers initially...?
         //(add check for scenario.layer, reset the style and move on?)
-        $.ajax( {
-            url: '/features/generic-links/links/geojson/' + scenarioId + '/',
-            type: 'GET',
-            dataType: 'json',
-            success: function(feature) {
-                if ( scenario ) {
-                    opacity = scenario.opacity();
-                    stroke = scenario.opacity();
-                }
-                if ( isDrawingModel ) {
-                    // Note: original colors were:
-                    // var fillColor = "#C9BE62";
-                    // var strokeColor = "#A99E42";
-                    $.ajax( {
-                        url: '/drawing/get_geometry_orig/' + scenarioId + '/',
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            var format = new OpenLayers.Format.WKT(),
-                                wkt = data.geometry_orig,
-                                feature = format.read(wkt);
-                            scenario.geometry_orig = feature;
-                        },
-                        error: function(result) {
-                            debugger;
-                        }
-                    });
-                }
-                var layer = new OpenLayers.Layer.Vector(
-                    scenarioId,
-                    {
-                        projection: new OpenLayers.Projection('EPSG:3857'),
-                        displayInLayerSwitcher: false,
-                        styleMap: new OpenLayers.StyleMap({
-                            fillColor: fillColor,
-                            fillOpacity: opacity,
-                            strokeColor: strokeColor,
-                            strokeOpacity: stroke
-                        }),
-                        //style: OpenLayers.Feature.Vector.style['default'],
-                        scenarioModel: scenario
+
+        if (app.is_authenticated) {
+            $.ajax( {
+                url: '/features/generic-links/links/geojson/' + scenarioId + '/',
+                type: 'GET',
+                dataType: 'json',
+                success: function(feature) {
+                    if ( scenario ) {
+                        opacity = scenario.opacity();
+                        stroke = scenario.opacity();
                     }
-                );
-
-                layer.addFeatures(new OpenLayers.Format.GeoJSON().read(feature));
-
-                if ( scenario ) {
-                    //reasigning opacity here, as opacity wasn't 'catching' on state load for scenarios
-                    scenario.opacity(opacity);
-                    scenario.layer = layer;
-                } else { //create new scenario
-                    //only do the following if creating a scenario
-                    var properties = feature.features[0].properties;
-                    if (isDrawingModel) {
-                        scenario = new drawingModel({
-                            id: properties.uid,
-                            uid: properties.uid,
-                            name: properties.name,
-                            description: properties.description,
-                            features: layer.features
-                        });
-                        self.toggleDrawingsOpen('open');
-                        self.zoomToScenario(scenario);
-                    } else {
-                        scenario = new scenarioModel({
-                            id: properties.uid,
-                            uid: properties.uid,
-                            name: properties.name,
-                            description: properties.description,
-                            features: layer.features
-                        });
-                        self.toggleScenariosOpen('open');
-                        self.zoomToScenario(scenario);
-                    }
-                    scenario.layer = layer;
-                    scenario.layer.scenarioModel = scenario;
-                    scenario.active(true);
-                    scenario.visible(true);
-
-                    //get attributes
-                    $.ajax( {
-                        url: '/drawing/get_attributes/' + scenarioId + '/',
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(result) {
-                            scenario.scenarioAttributes = result.attributes;
-                        },
-                        error: function (result) {
-                            //debugger;
-                        }
-
-                    });
-
-                    //in case of edit, removes previously stored scenario
-                    //self.scenarioList.remove(function(item) { return item.uid === scenario.uid } );
-
                     if ( isDrawingModel ) {
-                        var previousDrawing = ko.utils.arrayFirst(self.drawingList(), function(oldDrawing) {
-                            return oldDrawing.uid === scenario.uid;
+                        // Note: original colors were:
+                        // var fillColor = "#C9BE62";
+                        // var strokeColor = "#A99E42";
+                        $.ajax( {
+                            url: '/drawing/get_geometry_orig/' + scenarioId + '/',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                var format = new OpenLayers.Format.WKT(),
+                                    wkt = data.geometry_orig,
+                                    feature = format.read(wkt);
+                                scenario.geometry_orig = feature;
+                            },
+                            error: function(result) {
+                                debugger;
+                            }
                         });
-                        if ( previousDrawing ) {
-                            self.drawingList.replace( previousDrawing, scenario );
-                        } else {
-                            self.drawingList.push(scenario);
-                        }
-                        self.drawingList.sort(self.alphabetizeByName);
-                    } else {
-                        var previousScenario = ko.utils.arrayFirst(self.scenarioList(), function(oldScenario) {
-                            return oldScenario.uid === scenario.uid;
-                        });
-                        if ( previousScenario ) {
-                            self.scenarioList.replace( previousScenario, scenario );
-                        } else {
-                            self.scenarioList.push(scenario);
-                        }
-                        self.scenarioList.sort(self.alphabetizeByName);
                     }
 
-                    //self.scenarioForm(false);
-                    self.reset();
-                }
+                    self.processScenario (scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo);
+                    // scenario = proc_scenario['scenario'];
+                    // layer = proc_scenario['layer'];
 
-                //app.addVectorAttribution(layer);
-                //in case of edit, removes previously displayed scenario
-                for (var i=0; i<app.map.layers.length; i++) {
-                    if (app.map.layers[i].name === scenario.uid) {
-                        app.map.removeLayer(app.map.layers[i]);
-                        i--;
-                    }
-                }
-                app.map.addLayer(scenario.layer);
-                //add scenario to Active tab
-                app.viewModel.activeLayers.remove(function(item) { return item.uid === scenario.uid; } );
-                app.viewModel.activeLayers.unshift(scenario);
 
-                if (zoomTo) {
-                    self.zoomToScenario(scenario);
+                },
+                error: function(result) {
+                    //debugger;
+                    app.viewModel.scenarios.errorMessage(result.responseText.split('\n\n')[0]);
                 }
+            });
+        } else {
+            if (options.hasOwnProperty('public') && options.public == true) {
+                // TODO: generate "feature" for call below
+                var format = new OpenLayers.Format.WKT()
+                feature = null;
+                var wkt = options.orig,
+                    feature = format.read(wkt);
+                scenario.geometry_orig = feature;
+                self.processScenario (scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo);
 
-            },
-            error: function(result) {
-                //debugger;
-                app.viewModel.scenarios.errorMessage(result.responseText.split('\n\n')[0]);
-            }
-        });
+            // debugger;
+            console.log('user not authenticated - should have ephemeral orig/final polygon now.');
+
+          } else {
+            window.alert("Error: user not authenticated and public drawing disallowed.");
+          }
+
+        }
     }; // end addScenarioToMap
+
+    self.processScenario = function(scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo) {
+      var layer = new OpenLayers.Layer.Vector(
+          scenarioId,
+          {
+              projection: new OpenLayers.Projection('EPSG:3857'),
+              displayInLayerSwitcher: false,
+              styleMap: new OpenLayers.StyleMap({
+                  fillColor: fillColor,
+                  fillOpacity: opacity,
+                  strokeColor: strokeColor,
+                  strokeOpacity: stroke
+              }),
+              //style: OpenLayers.Feature.Vector.style['default'],
+              scenarioModel: scenario
+          }
+      );
+
+      layer.addFeatures(new OpenLayers.Format.GeoJSON().read(feature));
+
+      if ( scenario ) {
+          //reasigning opacity here, as opacity wasn't 'catching' on state load for scenarios
+          scenario.opacity(opacity);
+          scenario.layer = layer;
+      } else { //create new scenario
+          //only do the following if creating a scenario
+          var properties = feature.features[0].properties;
+          if (isDrawingModel) {
+              scenario = new drawingModel({
+                  id: properties.uid,
+                  uid: properties.uid,
+                  name: properties.name,
+                  description: properties.description,
+                  features: layer.features
+              });
+              self.toggleDrawingsOpen('open');
+              self.zoomToScenario(scenario);
+          } else {
+              scenario = new scenarioModel({
+                  id: properties.uid,
+                  uid: properties.uid,
+                  name: properties.name,
+                  description: properties.description,
+                  features: layer.features
+              });
+              self.toggleScenariosOpen('open');
+              self.zoomToScenario(scenario);
+          }
+          scenario.layer = layer;
+          scenario.layer.scenarioModel = scenario;
+          scenario.active(true);
+          scenario.visible(true);
+
+          //get attributes
+          if (app.is_authenticated()) {
+              $.ajax( {
+                  url: '/drawing/get_attributes/' + scenarioId + '/',
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(result) {
+                      scenario.scenarioAttributes = result.attributes;
+                  },
+                  error: function (result) {
+                      //debugger;
+                  }
+
+              });
+          } else {
+            //TODO: set scenario attributeHeads
+
+          }
+
+          //in case of edit, removes previously stored scenario
+          //self.scenarioList.remove(function(item) { return item.uid === scenario.uid } );
+
+          if ( isDrawingModel ) {
+              var previousDrawing = ko.utils.arrayFirst(self.drawingList(), function(oldDrawing) {
+                  return oldDrawing.uid === scenario.uid;
+              });
+              if ( previousDrawing ) {
+                  self.drawingList.replace( previousDrawing, scenario );
+              } else {
+                  self.drawingList.push(scenario);
+              }
+              self.drawingList.sort(self.alphabetizeByName);
+          } else {
+              var previousScenario = ko.utils.arrayFirst(self.scenarioList(), function(oldScenario) {
+                  return oldScenario.uid === scenario.uid;
+              });
+              if ( previousScenario ) {
+                  self.scenarioList.replace( previousScenario, scenario );
+              } else {
+                  self.scenarioList.push(scenario);
+              }
+              self.scenarioList.sort(self.alphabetizeByName);
+          }
+
+
+          //self.scenarioForm(false);
+          self.reset();
+      }
+
+      //app.addVectorAttribution(layer);
+      //in case of edit, removes previously displayed scenario
+      for (var i=0; i<app.map.layers.length; i++) {
+          if (app.map.layers[i].name === scenario.uid) {
+              app.map.removeLayer(app.map.layers[i]);
+              i--;
+          }
+      }
+      app.map.addLayer(scenario.layer);
+      //add scenario to Active tab
+      app.viewModel.activeLayers.remove(function(item) { return item.uid === scenario.uid; } );
+      app.viewModel.activeLayers.unshift(scenario);
+
+      if (zoomTo) {
+          self.zoomToScenario(scenario);
+      }
+
+          // return {
+          //   'scenario': scenario,
+          //   'layer':layer
+          // }
+
+    };
 
     self.alphabetizeByName = function(a, b) {
         var name1 = a.name.toLowerCase(),
@@ -1390,7 +1436,7 @@ function scenariosModel(options) {
     }
 
     return self;
-} // end scenariosModel
+}; // end scenariosModel
 
 
 app.viewModel.scenarios = new scenariosModel();
