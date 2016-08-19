@@ -84,7 +84,7 @@ var madrona = {
                 type: 'POST',
                 dataType: 'json',
                 success: function(result) {
-                    if (app.is_authenticated()) {
+                    if (app.is_authenticated) {
                         app.viewModel.scenarios.addScenarioToMap(null, {uid: result['X-Madrona-Show']});
                     } else {
                         result['public'] = true;
@@ -284,7 +284,6 @@ function scenarioFormModel(options) {
         }
     };
 
-    // TODO: CHANGE TO A GET
     self.getUpdatedFilterCount = function() {
         (function() {
             var request = $.ajax({
@@ -306,7 +305,6 @@ function scenarioFormModel(options) {
         })();
     };
 
-    // TODO: CHANGE TO A GET
     self.getUpdatedFilterResults = function() {
         self.updatedFilterResultsLayer.setVisibility(false);
         self.showButtonSpinner(true);
@@ -829,7 +827,7 @@ function scenariosModel(options) {
                 app.map.zoomOut();
             }
         } else {
-            self.addScenarioToMap(scenario, {zoomTo: true});
+            self.addScenarioToMap(scenario, {zoomTo: true, public:!app.is_authenticated});
         }
     };
 
@@ -1065,6 +1063,7 @@ function scenariosModel(options) {
                         opacity = scenario.opacity();
                         stroke = scenario.opacity();
                     }
+                    self.processScenario (scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo, isDrawingModel, false);
                     if ( isDrawingModel ) {
                         // Note: original colors were:
                         // var fillColor = "#C9BE62";
@@ -1085,7 +1084,6 @@ function scenariosModel(options) {
                         });
                     }
 
-                    self.processScenario (scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo);
                     // scenario = proc_scenario['scenario'];
                     // layer = proc_scenario['layer'];
 
@@ -1098,25 +1096,50 @@ function scenariosModel(options) {
             });
         } else {
             if (options.hasOwnProperty('public') && options.public == true) {
-                // TODO: generate "feature" for call below
-                var format = new OpenLayers.Format.WKT()
-                feature = null;
-                var wkt = options.orig,
-                    feature = format.read(wkt);
-                scenario.geometry_orig = feature;
-                self.processScenario (scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo);
+                date = new Date(Date.now());
+                print_date = date.getFullYear()+"-"+('0'+date.getMonth()).slice(-2)+"-"+('0'+date.getDate()).slice(-2)+
+                    "T"+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":"+('0'+date.getSeconds()).slice(-2)+"."+date.getMilliseconds()
+                feature = {
+                  "type": "FeatureCollection",
+                  "crs": { "type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::3857"}},
+                  "features": [
+                    {
+                      "type": "Feature",
+                      "geometry": options.final,
+                      "properties": {
+                        "description": options.description,
+                        "manipulators": "",
+                        "date_modified": print_date,
+                        "user": null,
+                        "uid": options.uid,
+                        "date_created": print_date,
+                        "sharing_groups": [],
+                        "name": options.name
+                      }
+                    }
+                  ]
+                }
+                if (options && options.hasOwnProperty('orig')) {
+                  var format = new OpenLayers.Format.WKT()
+                  var wkt = options.orig;
+                  var orig_geom = format.read(wkt);
+                } else {
+                  orig_geom = false;
+                }
+                self.processScenario(scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo, isDrawingModel, orig_geom);
 
-            // debugger;
-            console.log('user not authenticated - should have ephemeral orig/final polygon now.');
+                // debugger;
+                console.log('user not authenticated - should have ephemeral orig/final polygon now.');
 
-          } else {
-            window.alert("Error: user not authenticated and public drawing disallowed.");
-          }
+            } else {
+              window.alert("Error: user not authenticated and public drawing disallowed.");
+            }
 
         }
     }; // end addScenarioToMap
 
-    self.processScenario = function(scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo) {
+    self.processScenario = function(scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo, isDrawingModel, orig_geom) {
+
       var layer = new OpenLayers.Layer.Vector(
           scenarioId,
           {
@@ -1165,11 +1188,14 @@ function scenariosModel(options) {
           }
           scenario.layer = layer;
           scenario.layer.scenarioModel = scenario;
+          if(orig_geom){
+              scenario.geometry_orig = orig_geom;
+          }
           scenario.active(true);
           scenario.visible(true);
 
           //get attributes
-          if (app.is_authenticated()) {
+          if (app.is_authenticated) {
               $.ajax( {
                   url: '/drawing/get_attributes/' + scenarioId + '/',
                   type: 'GET',
