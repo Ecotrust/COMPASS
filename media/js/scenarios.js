@@ -1026,7 +1026,7 @@ function scenariosModel(options) {
         var scenarioId,
             opacity = 0.8,
             stroke = 0,
-            zoomTo = (options && options.zoomTo) || false;
+            zoomTo = (options && options.zoomTo) || true;
 
         if ( scenario ) {
             scenarioId = scenario.uid;
@@ -1114,7 +1114,9 @@ function scenariosModel(options) {
                         "uid": options.uid,
                         "date_created": print_date,
                         "sharing_groups": [],
-                        "name": options.name
+                        "name": options.name,
+                        "attributes": options.attributes,
+                        "anonymous": true
                       }
                     }
                   ]
@@ -1210,6 +1212,7 @@ function scenariosModel(options) {
               });
           } else {
             //TODO: set scenario attributeHeads
+            scenario.scenarioAttributes = feature.features[0].properties.attributes.attributes;
 
           }
 
@@ -1253,8 +1256,12 @@ function scenariosModel(options) {
       }
       app.map.addLayer(scenario.layer);
       //add scenario to Active tab
-      app.viewModel.activeLayers.remove(function(item) { return item.uid === scenario.uid; } );
-      app.viewModel.activeLayers.unshift(scenario);
+      try {
+          app.viewModel.activeLayers.remove(function(item) { return item.uid === scenario.uid; } );
+          app.viewModel.activeLayers.unshift(scenario);
+      } catch(err) {
+          console.log(err);
+      }
 
       if (zoomTo) {
           self.zoomToScenario(scenario);
