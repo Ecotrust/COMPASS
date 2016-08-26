@@ -541,7 +541,7 @@ function scenarioModel(options) {
         //app.viewModel.unloadedDesigns = [];
 
         //app.viewModel.activeLayer(layer);
-        if (self.features[0].attributes.hasOwnProperty('anonymous') && self.features[0].attributes.anonymous){
+        if (self.features && self.features[0].attributes.hasOwnProperty('anonymous') && self.features[0].attributes.anonymous){
           if (scenario.active() && self.opacity() > 0) {
             self.original_opacity = self.opacity();
             self.opacity(0);
