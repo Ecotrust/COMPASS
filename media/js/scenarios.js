@@ -541,11 +541,25 @@ function scenarioModel(options) {
         //app.viewModel.unloadedDesigns = [];
 
         //app.viewModel.activeLayer(layer);
-        if (scenario.active()) { // if layer is active, then deactivate
-            scenario.deactivateLayer();
-        } else { // otherwise layer is not currently active, so activate
-            scenario.activateLayer();
-            //app.viewModel.scenarios.addScenarioToMap(scenario);
+        if (self.features[0].attributes.hasOwnProperty('anonymous') && self.features[0].attributes.anonymous){
+          if (scenario.active() && self.opacity() > 0) {
+            self.original_opacity = self.opacity();
+            self.opacity(0);
+          } else {
+            if (self.hasOwnProperty('original_opacity')){
+              self.opacity(self.original_opacity);
+              delete self.original_opacity;
+            } else {
+              self.opacity(0.8); //TODO: DON'T HARDCODE THIS!!!
+            }
+          }
+        } else {
+            if (scenario.active()) { // if layer is active, then deactivate
+                scenario.deactivateLayer();
+            } else { // otherwise layer is not currently active, so activate
+                scenario.activateLayer();
+                //app.viewModel.scenarios.addScenarioToMap(scenario);
+            }
         }
     };
 
