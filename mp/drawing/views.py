@@ -144,13 +144,12 @@ def get_geometry_orig(request, uid):
 
 '''
 '''
-def get_csv(request, uid):
+def get_csv(request, uid, download=True):
     import csv
     if 'drawing_aoi_' in uid:
         aoi_id = str(int(filter(str.isdigit, str(uid))))
     else:
         aoi_id = int(uid)
-    response = HttpResponse(content_type='text/csv')
     # aoi_id = int(request.POST['id'])
     try:
         drawing = AOI.objects.get(id=aoi_id)
@@ -163,9 +162,16 @@ def get_csv(request, uid):
             ),
             status=500
         )
-    response['Content-Disposition'] = 'attachment; filename=%s_%d_drawing.csv' % (drawing.name, drawing.id)
+    filename = '%s_%d_drawing.csv' % (drawing.name, drawing.id)
     summaryReports = drawing.summary_reports({'list_style':'list'})
-    writer = csv.writer(response)
+    if download:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=%s' % (filename)
+        writer = csv.writer(response)
+    else:
+        import settings
+        csv_file = open('%s%s' % (settings.PUBLIC_CSV_DIR,filename), 'w')
+        writer = csv.writer(csv_file)
     headers = ['Name']
     report_data = {'Name':drawing.name}
     max_row_count = 1
@@ -193,4 +199,8 @@ def get_csv(request, uid):
                     row.append("")
         writer.writerow(row)
 
-    return response
+    if download:
+        return response
+    else:
+        csv_file.close()
+        return '%s%s' % (settings.PUBLIC_CSV_URL,filename)

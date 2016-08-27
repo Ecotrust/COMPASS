@@ -220,8 +220,14 @@
                                                           <div class="btn zoom-to-button" data-bind="click: zoomToFeature">Zoom To</div>
                                                           <!-- /ko -->
                                                           <!-- ko ifnot: $root.aggregatedAttributes()[name].hasOwnProperty('subLayers') -->
-                                                          <!-- <div class="btn zoom-to-button" data-bind="click: exportAggregateCSV">Export Data</div> -->
-                                                          <a class="btn zoom-to-button" data-bind="attr:{href: '/drawing/get_csv/'+ attr_layer.uid }, click: function(){ return true }, clickBubble: false">Export Data</a>
+                                                              <!-- ko if: app.is_authenticated -->
+                                                              <a class="btn zoom-to-button" data-bind="attr:{href: '/drawing/get_csv/'+ attr_layer.uid }, click: function(){ return true }, clickBubble: false">Export Data</a>
+                                                              <!-- /ko -->
+                                                              <!-- ko ifnot: app.is_authenticated -->
+                                                              <a class="btn zoom-to-button" data-bind="attr:{href: '/media/csvs/'+ attr_layer.name + '_' + attr_layer.uid + '_drawing.csv' }, click: function(){ return true }, clickBubble: false">Export Data</a>
+                                                              <!-- <div class="btn zoom-to-button" data-bind="click: exportAggregateCSV">Export Data</div> -->
+                                                              <!-- <a class="btn zoom-to-button" data-bind="attr:{href: '/drawing/get_csv/'+ attr_layer.uid }, click: function(){ return true }, clickBubble: false">Export Data</a> -->
+                                                              <!-- /ko -->
                                                           <!-- /ko -->
 
                                                       </div>
@@ -1175,7 +1181,8 @@
         <script src="{{MEDIA_URL}}/js/models.js"></script>
         <script src="{{MEDIA_URL}}/js/fixtures.js"></script>
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"></script> -->
-        <script src="http://svn.osgeo.org/metacrs/proj4js/branches/proj4js-1.0/lib/proj4js-combined.js"></script>
+        <!-- <script src="http://svn.osgeo.org/metacrs/proj4js/branches/proj4js-1.0/lib/proj4js-combined.js"></script> -->
+        <script src="{{MEDIA_URL}}compass/osgeo/proj4js-combined.js"></script>
         <script src="{{MEDIA_URL}}/js/map.js"></script>
         <script src="{{MEDIA_URL}}/js/state.js"></script>
         <script src="{{MEDIA_URL}}/js/surveyResults.js"></script>

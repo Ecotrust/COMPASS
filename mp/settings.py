@@ -210,6 +210,9 @@ LOOKUP_FIELD_MAP = {
 
 ALLOW_PUBLIC_DRAWING = True
 
+PUBLIC_CSV_URL = 'media/csvs/'
+PUBLIC_CSV_DIR = './mediaroot/csvs/'
+
 from settings_lookup import *
 
 from settings_local import *

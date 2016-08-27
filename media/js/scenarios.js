@@ -1113,6 +1113,12 @@ function scenariosModel(options) {
                 date = new Date(Date.now());
                 print_date = date.getFullYear()+"-"+('0'+date.getMonth()).slice(-2)+"-"+('0'+date.getDate()).slice(-2)+
                     "T"+('0'+date.getHours()).slice(-2)+":"+('0'+date.getMinutes()).slice(-2)+":"+('0'+date.getSeconds()).slice(-2)+"."+date.getMilliseconds()
+                if (options.uid && options.uid.split('drawing_aoi_').length>1) {
+                  uid = options.uid.split('drawing_aoi_')[1];
+                } else {
+                  uid = options.uid;
+                }
+
                 feature = {
                   "type": "FeatureCollection",
                   "crs": { "type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::3857"}},
@@ -1125,7 +1131,7 @@ function scenariosModel(options) {
                         "manipulators": "",
                         "date_modified": print_date,
                         "user": null,
-                        "uid": options.uid,
+                        "uid": uid,
                         "date_created": print_date,
                         "sharing_groups": [],
                         "name": options.name,
