@@ -146,6 +146,7 @@
                                         <span data-bind="text: showLayersText()"></span>
                                     </a> -->
                                     <!--Bookmarks Button-->
+                                    <!-- ko if: app.is_authenticated -->
                                     <a id="bookmarks-button" class="btn" data-bind="click: showBookmarks, visible: !isFullScreen()">
                                         <i class="icon-map-marker icon-large"></i>
                                         <span>Bookmarks</span>
@@ -153,6 +154,7 @@
                                             (<span data-bind="text: bookmarks.bookmarksList().length"></span>)
                                         </span>
                                     </a>
+                                    <!-- /ko -->
                                     <!--Map Links Button-->
                                     <a id="basemap-button" class="btn" href="#map-links-modal" data-toggle="modal" data-bind="click: resetMapLinks, visible: !isFullScreen()">
                                         <i class="icon-link icon-large"></i>

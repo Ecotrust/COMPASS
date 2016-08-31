@@ -52,9 +52,8 @@ function bookmarkModel(options) {
     // get the url from a bookmark
     self.getBookmarkUrl = function() {
         var host = window.location.href.split('#')[0];
-        host = 'http://52.25.124.64/visualize/';
+        // host = 'http://52.25.124.64/visualize/';   //Great if you want to test prod from dev
         return host + "#" + self.getBookmarkHash();
-        //return host + "#" + self.state;
     };
 
     self.getBookmarkState = function() {

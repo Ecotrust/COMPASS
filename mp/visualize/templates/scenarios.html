@@ -153,7 +153,9 @@
                                                         <span class="caret"></span>
                                                     </a>
                                                     <ul class="dropdown-menu">
+                                                        <!-- ko if: app.is_authenticated -->
                                                         <li><a data-bind="visible: ! shared(), click: editDrawing">Edit</a></li>
+                                                        <!-- /ko -->
                                                         <li><a id="share-option" data-bind="visible: ! shared() && $parent.hasSharingGroups, click: $parent.showSharingModal">Share</a></li>
                                                         <li><a data-bind="click: $parent.zoomToScenario">Zoom To</a></li>
                                                         <li class="divider"></li>

@@ -245,6 +245,7 @@
                                           <span data-bind="visible: showLegend()">Hide Legend</span>
                                           <span data-bind="visible: ! showLegend()">Show Legend</span>
                                         </button></p>
+                                      <!-- ko if: app.is_authenticated -->
                                       <p><button id="bookmarks-button" class="btn pull-right" data-bind="click: showBookmarks">
                                           <i class="icon-flag">
                                           </i>
@@ -254,6 +255,7 @@
                                               </span>
                                           </span>
                                       </button></p>
+                                      <!-- /ko -->
                                       <p><button class="btn pull-right">
                                           Coordinates &amp; Depth
                                       </button></p>
