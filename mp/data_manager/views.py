@@ -461,7 +461,7 @@ def handle_imported_planning_units_file(import_file, user):
     except:
         process_success = 1
     if process_success == 1:
-        if settingsVIRTUAL_ENV_PYTHON:
+        if settings.VIRTUAL_ENV_PYTHON:
             error_message = "Unknown error while processing grid. Contact %s for assistance." % settings.HELP_EMAIL
         else:
             error_message = "VIRTUAL_ENV_PYTHON setting not defined. Request %s configure this." % settings.HELP_EMAIL
