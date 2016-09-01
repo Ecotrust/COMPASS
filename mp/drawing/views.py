@@ -174,7 +174,7 @@ def get_csv(request, uid, download=True):
         writer = csv.writer(csv_file)
     headers = ['Name']
     report_data = {'Name':drawing.name}
-    max_row_count = 1
+    max_row_count = 2   #for disclaimer
     for attribute in summaryReports:
         headers.append(attribute['title'])
         if type(attribute['data']) is (list or tuple):
@@ -182,6 +182,15 @@ def get_csv(request, uid, download=True):
             if attr_length > max_row_count:
                 max_row_count = attr_length
         report_data[attribute['title']] = attribute['data']
+
+    # Move Observed Species to end of list to be next to disclaimer
+    if 'Observed Species' in headers:
+        headers.insert(len(headers)-1, headers.pop(headers.index('Observed Species')))
+    headers.append('Disclaimer')
+    report_data['Disclaimer'] = [
+    "Data used to generate this report has been summarized.",
+    "See http://dfw.state.or.us/maps/compass/reportingtool"
+    ]
     writer.writerow(headers)
     for index in range(max_row_count):
         row = []
