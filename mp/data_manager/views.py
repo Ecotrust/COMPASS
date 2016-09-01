@@ -450,7 +450,10 @@ def handle_imported_planning_units_file(import_file, user):
                     python_exec = pyBins[0]
                     break
 
-        start_time = os.stat(settings.PU_SQL_LIVE).st_mtime
+        if os.path.isfile('%s' % settings.PU_SQL_LIVE):
+            start_time = os.stat(settings.PU_SQL_LIVE).st_mtime
+        else:
+            start_time = float(datetime.datetime.now().strftime("%s"))
         grid_subprocess = "%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec)
         process_success = subprocess.call(grid_subprocess, shell=True)
         mod_time = os.stat(settings.PU_SQL_LIVE).st_mtime
