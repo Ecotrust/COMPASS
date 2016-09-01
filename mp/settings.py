@@ -205,7 +205,7 @@ LOOKUP_FIELD_MAP = {
     'sci_name': 'SciName',
     'common_name': 'ComName',
     'taxonomy': 'Tax_Group',
-    'spcs_id': 'TGTID'
+    'spcs_id': 'CompassID'
 }
 
 ALLOW_PUBLIC_DRAWING = True
