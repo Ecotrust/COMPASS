@@ -157,14 +157,19 @@ function polygonFormModel(options) {
     self.editControl = new OpenLayers.Control.ModifyFeature(self.polygonLayer);
     app.map.addControl(self.editControl);
 
-    self.planningGridLayer = app.viewModel.getLayerById(442);
-    if (self.planningGridLayer.active()) {
-        self.planningGridLayerWasActive = true;
-        if ( !self.planningGridLayer.visible() ) {
-            self.planningGridLayer.setVisible();
+    try {
+        self.planningGridLayer = app.viewModel.getLayerById(44200);
+        if (self.planningGridLayer.active()) {
+            self.planningGridLayerWasActive = true;
+            if ( !self.planningGridLayer.visible() ) {
+                self.planningGridLayer.setVisible();
+            }
+        } else {
+            self.planningGridLayer.activateLayer();
         }
-    } else {
-        self.planningGridLayer.activateLayer();
+    }
+    catch(err) {
+      self.planningGridLayer = false;
     }
 
     //self.selectFeature = new OpenLayers.Control.SelectFeature(self.polygonLayer);
@@ -289,7 +294,7 @@ function polygonFormModel(options) {
             app.map.removeLayerByName("Clipped Drawing");
         }
 
-        if ( ! self.planningGridLayerWasActive ) {
+        if ( self.planningGridLayer && !self.planningGridLayerWasActive ) {
             if ( self.planningGridLayer.active() ) {
                 self.planningGridLayer.deactivateLayer();
             }
@@ -300,7 +305,7 @@ function polygonFormModel(options) {
     };
 
     self.togglePlanningGridLayer = function(formModel, event) {
-        if ( event.target.type === "checkbox" ) {
+        if ( self.planningGridLayer && event.target.type === "checkbox" ) {
             if ($('#planning-grid-layer-toggle input').is(":checked")) {
                 self.planningGridLayer.activateLayer();
             } else {
