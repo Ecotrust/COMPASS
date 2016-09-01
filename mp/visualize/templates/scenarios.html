@@ -100,11 +100,11 @@
                         <!-- DRAWINGS -->
                         <div style="padding: 10px; font-size: 10px;">
                           <p>
-                            This is a reporting tool for the Oregon Conservation Strategy (OCS).<br />
-                            Drawings you create here will generate aggregate report values of OCS data.<br />
+                            The Oregon Conservation Strategy reporting tool provides an aggregate report of Strategy data within a user submitted area.<br />
                             <!-- ko ifnot: app.is_authenticated -->
-                            Report spreadsheets may be downloaded, but your drawings will need to be recreated if you leave or refresh this page.<br />
+                            Report table may be downloaded, but drawings will need to be recreated if you leave or refresh this page.<br />
                             <!-- /ko -->
+                            Data has been summarized, see <a style="color:white" href="http://dfw.state.or.us/maps/compass/reportingtool">http://dfw.state.or.us/maps/compass/reportingtool.</a><br />
                           </p>
                         </div>
                         <div id="planning-unit-drawing">
@@ -134,10 +134,12 @@
                                                 <p>
                                                     Click the plus sign (<i class="icon-plus icon-large" style="color: #064669"></i>) above to create a Drawing.
                                                 </p>
+                                                <!-- ko if: app.is_authenticated -->
                                                 <p>
                                                     Note:  You may, at any time, edit, share, or remove any of the drawings that you have created.
                                                     Any drawings shared with you can be copied so that they too can be edited, shared, or removed.
                                                 </p>
+                                                <!-- /ko -->
                                             </div>
                                         </div>
 
