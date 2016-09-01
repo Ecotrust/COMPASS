@@ -99,50 +99,58 @@ def get_summary_reports(grid_cells, list_style='unordered'):
     # attributes.append({'title': 'Total Area', 'data': str(format_precision(total_area, 2)) + ' sq km'})
 
     # ------- attributes -------
+    report_attr_names = {
+        'ecoregions': 'Ecoregions',
+        'coas': 'Conservation Opportunity Areas',
+        'habitat': 'Strategy Habitats',
+        'fish': 'Documented Fish',
+        'modeled': 'Modeled Wildlife Habitat',
+        'observed': 'Observed Wildlife'
+    }
 
     ecoregions = get_unique_list_values(grid_cells, 'ecoregion')
     ecoregions.sort()
     if list_style=='unordered':
-        attributes.append({'title': 'Ecoregions', 'data': unordered_list(ecoregions)})
+        attributes.append({'title': report_attr_names['ecoregions'], 'data': unordered_list(ecoregions)})
     else:
-        attributes.append({'title': 'Ecoregions', 'data': ecoregions})
+        attributes.append({'title': report_attr_names['ecoregions'], 'data': ecoregions})
 
     coas = get_unique_list_values(grid_cells, 'coa_name')
     coas.sort()
     if list_style=='unordered':
-        attributes.append({'title': 'Conservation Opportunity Areas', 'data': unordered_list(coas)})
+        attributes.append({'title': report_attr_names['coas'], 'data': unordered_list(coas)})
     else:
-        attributes.append({'title': 'Conservation Opportunity Areas', 'data': coas})
+        attributes.append({'title': report_attr_names['coas'], 'data': coas})
 
     habitats = apply_lookup(get_unique_list_values(grid_cells, 'habitat'), species_lookup)
     habitats.sort()
     if len(habitats) == 1:
-        attributes.append({'title': 'Habitat', 'data': habitats[0]})
+        attributes.append({'title': report_attr_names['habitat'], 'data': habitats[0]})
     elif len(habitats) > 1:
         if list_style=='unordered':
-            attributes.append({'title': 'Habitats', 'data': unordered_list(habitats)})
+            attributes.append({'title': report_attr_names['habitat'], 'data': unordered_list(habitats)})
         else:
-            attributes.append({'title': 'Habitats', 'data': habitats})
+            attributes.append({'title': report_attr_names['habitat'], 'data': habitats})
 
     fish = apply_lookup(get_unique_list_values(grid_cells, 'fish'), species_lookup)
     fish.sort()
     if list_style=='unordered':
-        attributes.append({'title': 'Fish', 'data': unordered_list(fish)})
+        attributes.append({'title': report_attr_names['fish'], 'data': unordered_list(fish)})
     else:
-        attributes.append({'title': 'Fish', 'data': fish})
+        attributes.append({'title': report_attr_names['fish'], 'data': fish})
 
     obs_spec = apply_lookup(get_unique_list_values(grid_cells, 'obs_spec'), species_lookup)
     obs_spec.sort()
     if list_style=='unordered':
-        attributes.append({'title': 'Observed Species', 'data': unordered_list(obs_spec)})
+        attributes.append({'title': report_attr_names['observed'], 'data': unordered_list(obs_spec)})
     else:
-        attributes.append({'title': 'Observed Species', 'data': obs_spec})
+        attributes.append({'title': report_attr_names['observed'], 'data': obs_spec})
 
     mod_spec = apply_lookup(get_unique_list_values(grid_cells, 'mod_spec'), species_lookup)
     mod_spec.sort()
     if list_style=='unordered':
-        attributes.append({'title': 'Modeled Species', 'data': unordered_list(mod_spec)})
+        attributes.append({'title': report_attr_names['modeled'], 'data': unordered_list(mod_spec)})
     else:
-        attributes.append({'title': 'Modeled Species', 'data': mod_spec})
+        attributes.append({'title': report_attr_names['modeled'], 'data': mod_spec})
 
     return attributes
