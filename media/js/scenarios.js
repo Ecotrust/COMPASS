@@ -1150,9 +1150,6 @@ function scenariosModel(options) {
                 }
                 self.processScenario(scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo, isDrawingModel, orig_geom);
 
-                // debugger;
-                console.log('user not authenticated - should have ephemeral orig/final polygon now.');
-
             } else {
               window.alert("Error: user not authenticated and public drawing disallowed.");
             }
