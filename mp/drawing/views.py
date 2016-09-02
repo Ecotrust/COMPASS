@@ -184,8 +184,9 @@ def get_csv(request, uid, download=True):
         report_data[attribute['title']] = attribute['data']
 
     # Move Observed Species to end of list to be next to disclaimer
-    if 'Observed Species' in headers:
-        headers.insert(len(headers)-1, headers.pop(headers.index('Observed Species')))
+    observed = 'Observed Wildlife'
+    if observed in headers:
+        headers.insert(len(headers)-1, headers.pop(headers.index(observed)))
     headers.append('Disclaimer')
     report_data['Disclaimer'] = [
     "Data used to generate this report has been summarized.",
