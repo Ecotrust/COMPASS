@@ -190,7 +190,7 @@ def get_csv(request, uid, download=True):
     headers.append('Disclaimer')
     report_data['Disclaimer'] = [
     "Data used to generate this report has been summarized.",
-    "See http://dfw.state.or.us/maps/compass/reportingtool"
+    "See http://dfw.state.or.us/maps/compass/reportingtool.asp"
     ]
     writer.writerow(headers)
     for index in range(max_row_count):
