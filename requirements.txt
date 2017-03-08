@@ -4,6 +4,7 @@ django<1.6
 # copied from https://github.com/point97/madrona/blob/master/requirements.txt
 boto>=2.3.0
 django-compress>=1.0.1
+celery==3.1.23
 django-celery==3.1.17
 django-flatblocks>=0.6.0
 django-kombu>=0.9.2
