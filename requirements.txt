@@ -4,7 +4,7 @@ django<1.6
 # copied from https://github.com/point97/madrona/blob/master/requirements.txt
 boto>=2.3.0
 django-compress>=1.0.1
-django-celery>=2.5.1
+django-celery==3.1.17
 django-flatblocks>=0.6.0
 django-kombu>=0.9.2
 django-picklefield>=0.1.9
@@ -12,7 +12,7 @@ django-registration==0.8
 -e git+https://github.com/springmeyer/djmapnik.git#egg=djmapnik
 --allow-external elementtree
 --allow-unverified elementtree
-elementtree>=1.2.6
+#elementtree>=1.2.6
 numpy>=1.5.1
 psycopg2>=2.4.1
 python-openid>=2.2.5
@@ -36,5 +36,5 @@ ipython==1.2.1
 python-social-auth==0.1.23
 
 geopy
-django-tinymce
+django-tinymce==2.0.4
 django-wysiwyg

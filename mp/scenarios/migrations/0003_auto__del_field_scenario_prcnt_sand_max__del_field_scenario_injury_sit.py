@@ -338,7 +338,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'scenarios_gridcell', 'prcnt_art')
 
         # Deleting field 'GridCell.reccom_fish'
-        db.delete_column(u'scenarios_gridcell', 'reccom_fish')
+        # db.delete_column(u'scenarios_gridcell', 'reccom_fish')
 
         # Deleting field 'GridCell.depth_mean'
         db.delete_column(u'scenarios_gridcell', 'depth_mean')
@@ -377,7 +377,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'scenarios_gridcell', 'pillar_presence')
 
         # Deleting field 'GridCell.divefish_overlap'
-        db.delete_column(u'scenarios_gridcell', 'divefish_overlap')
+        # db.delete_column(u'scenarios_gridcell', 'divefish_overlap')
 
         # Deleting field 'GridCell.coral_resilience'
         db.delete_column(u'scenarios_gridcell', 'coral_resilience')
@@ -395,7 +395,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'scenarios_gridcell', 'pier_distance')
 
         # Deleting field 'GridCell.coral_soft'
-        db.delete_column(u'scenarios_gridcell', 'coral_soft')
+        # db.delete_column(u'scenarios_gridcell', 'coral_soft')
 
         # Deleting field 'GridCell.prcnt_reef'
         db.delete_column(u'scenarios_gridcell', 'prcnt_reef')
@@ -407,7 +407,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'scenarios_gridcell', 'mooring_buoy')
 
         # Deleting field 'GridCell.comfish_use'
-        db.delete_column(u'scenarios_gridcell', 'comfish_use')
+        # db.delete_column(u'scenarios_gridcell', 'comfish_use')
 
         # Deleting field 'GridCell.impacted'
         db.delete_column(u'scenarios_gridcell', 'impacted')
@@ -428,10 +428,10 @@ class Migration(SchemaMigration):
         db.delete_column(u'scenarios_gridcell', 'coral_disease')
 
         # Deleting field 'GridCell.watersport_use'
-        db.delete_column(u'scenarios_gridcell', 'watersport_use')
+        # db.delete_column(u'scenarios_gridcell', 'watersport_use')
 
         # Deleting field 'GridCell.sponge'
-        db.delete_column(u'scenarios_gridcell', 'sponge')
+        # db.delete_column(u'scenarios_gridcell', 'sponge')
 
         # Deleting field 'GridCell.acropora_pa'
         db.delete_column(u'scenarios_gridcell', 'acropora_pa')
@@ -443,7 +443,7 @@ class Migration(SchemaMigration):
         db.delete_column(u'scenarios_gridcell', 'coral_cover')
 
         # Deleting field 'GridCell.research_use'
-        db.delete_column(u'scenarios_gridcell', 'research_use')
+        # db.delete_column(u'scenarios_gridcell', 'research_use')
 
         # Deleting field 'GridCell.reef_fish_richness'
         db.delete_column(u'scenarios_gridcell', 'reef_fish_richness')
