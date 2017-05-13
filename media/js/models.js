@@ -1246,6 +1246,9 @@ function viewModel() {
                   result.result.extent.length == 4) {
               var bounds = new OpenLayers.Bounds(result.result.extent);
               app.map.zoomToExtent(bounds);
+              var lonlat = new OpenLayers.LonLat(result.result.latlon[1], result.result.latlon[0]);
+              lonlat.transform("EPSG:4326","EPSG:3857");
+              self.updateMarker(lonlat);
             } else {
               alert("\"" + result.message + "\" not found. Please try another search.");
             }
@@ -1456,7 +1459,6 @@ function viewModel() {
       return topZIndex;
     }
 
-    /*
     self.updateMarker = function(lonlat) {
         //at some point this function is being called without an appropriate lonlat object...
         if (lonlat.lon && lonlat.lat) {
@@ -1464,13 +1466,13 @@ function viewModel() {
             app.viewModel.clearSelectedLayer();
             app.marker = new OpenLayers.Marker(lonlat, app.markers.icon);
             app.marker.map = app.map;
-            //app.marker.display(true);
-            if (app.marker && !$.isEmptyObject(self.aggregatedAttributes()) && self.featureAttribution()) {
+            app.marker.display(true);
+            if (app.marker && !self.aggregatedAttributes() && self.featureAttribution()) {
                 app.markers.addMarker(app.marker);
-                app.map.setLayerIndex(app.markers, 99);
-                if (app.embeddedMap) {
-                    self.hideMapAttribution();
-                }
+                app.map.setLayerIndex(app.markers, 999);
+                // if (app.embeddedMap) {
+                //     self.hideMapAttribution();
+                // }
                 // Increase marker Z-index if needed.
                 var topZIndex = self.getTopZIndex();
                 if (topZIndex > app.markers.getZIndex()) {
@@ -1479,7 +1481,6 @@ function viewModel() {
             }
         }
     };
-    */
 
     self.updateSelectionHighlight = function() {
       var topZIndex = self.getTopZIndex();

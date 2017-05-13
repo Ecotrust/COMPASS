@@ -283,12 +283,12 @@ app.init = function() {
 
     }; //end utfGridClickHandling
 
-    // app.markers = new OpenLayers.Layer.Markers("Markers");
-    // var size = new OpenLayers.Size(18, 28);
-    // var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
-    // app.markers.icon = new OpenLayers.Icon('/media/img/red-pin.png', size, offset);
-    //
-    // app.map.addLayer(app.markers);
+    app.markers = new OpenLayers.Layer.Markers("Markers");
+    var size = new OpenLayers.Size(18, 28);
+    var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+    app.markers.icon = new OpenLayers.Icon('/media/img/red-pin.png', size, offset);
+
+    app.map.addLayer(app.markers);
 
     app.map.extentWithinExtent = function (innerExtent, outerExtent) {
       if (outerExtent.contains(innerExtent.left, innerExtent.top) && outerExtent.contains(innerExtent.right, innerExtent.bottom)) {
