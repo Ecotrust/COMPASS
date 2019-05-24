@@ -487,7 +487,7 @@ class ImportEvent(models.Model):
         blank=False
     )
     notes = models.TextField(null=True, blank=True, default=None)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete="CASCADE")
     data_file = models.FileField(upload_to='data_manager_uploads/%Y/%m/%d')
 
     def to_dict(self):

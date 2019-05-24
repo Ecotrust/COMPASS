@@ -1,7 +1,7 @@
 import httplib2
 from urllib import urlencode
 from urlparse import urlparse
-from django.conf.urls.defaults import *
+from django.conf.urls import url, include
 from django.conf import settings
 from django.http import HttpResponse
 from proxy.views import proxy_view

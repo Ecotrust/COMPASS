@@ -996,10 +996,10 @@
 
                 {% include "printing.html" %}
                 {% if not user.is_authenticated %}
-                <form id="google-plus" method="post" action="{% url 'social:complete' "google-plus" %}">{% csrf_token %}
+                <!-- <form id="google-plus" method="post" action="{ % url 'social:complete' "google-plus" %}">{% csrf_token %}
                     <input id="at" type="hidden" name="access_token" value="" />
                     <input id="code" type="hidden" name="code" value="" />
-                </form>
+                </form> -->
                 {% endif %}
               </div>
             </div>

@@ -1,5 +1,5 @@
 from django.views.generic.base import TemplateView
-from django.conf.urls.defaults import *
+from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from registration import views as reg_views
@@ -10,9 +10,10 @@ try:
 except:
     use_openid = False
 
-urlpatterns = patterns('',
-    url(r'^password/reset/$', 
-        auth_views.password_reset, {'email_template_name': 'registration/mp_password_reset_email.html', 
+urlpatterns = [
+    '',
+    url(r'^password/reset/$',
+        auth_views.password_reset, {'email_template_name': 'registration/mp_password_reset_email.html',
                                     'from_email': settings.DEFAULT_FROM_EMAIL,
                                     'post_reset_redirect': '/mp_profile/password/reset/done/' }),
     url(r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
@@ -27,7 +28,7 @@ urlpatterns = patterns('',
 
     url(r'^signup/$',
         reg_views.register,
-        {'backend': 'registration.backends.default.DefaultBackend', 
+        {'backend': 'registration.backends.default.DefaultBackend',
          #'disallowed_url': '',
          'success_url': 'registration/complete/',
          'template_name': 'registration/mp_registration_username_retry.html'},
@@ -37,10 +38,10 @@ urlpatterns = patterns('',
     url(r'^signup/registration/complete/$',
         TemplateView.as_view(template_name='registration/mp_registration_complete.html'),
         name='mp_registration_complete'),
-    
+
     url(r'^forgot_username/$', send_username),
     url(r'^update_profile/(?P<username>\w+)/$', update_profile, {'use_openid': use_openid}),
-    
+
     url(r'^duplicate_username$', duplicate_username),
     url(r'^verify_password$', verify_password),
-)
+]

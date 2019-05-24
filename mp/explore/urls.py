@@ -1,7 +1,8 @@
-from django.conf.urls.defaults import *
-from views import *
+from django.conf.urls import url, include
+from explore.views import *
 
-urlpatterns = patterns('',
+urlpatterns = [
+    '',
     (r'^catalog', data_catalog),
     (r'^needs', data_needs),
     (r'^map_tile_example/([\w-]*)', map_tile_example),
@@ -9,4 +10,4 @@ urlpatterns = patterns('',
     (r'^map_tile_leaflet_example/([\w-]*)', map_tile_leaflet_example),
     (r'^arcrest_example/([\w-]*)', arcrest_example),
     (r'^([\w-]*)', tiles_page)
-)
+]

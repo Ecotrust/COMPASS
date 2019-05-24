@@ -6,7 +6,7 @@ TIME_ZONE = 'America/Vancouver'
 ROOT_URLCONF = 'urls'
 LOGIN_REDIRECT_URL = '/visualize'
 INSTALLED_APPS += ('django_extensions',
-                   'social.apps.django_app.default',
+                   # 'social.apps.django_app.default',
                    'general',
                    'scenarios',
                    'data_manager',
@@ -15,12 +15,13 @@ INSTALLED_APPS += ('django_extensions',
                    'explore',
                    'visualize',
                    'django.contrib.humanize',
-                   'flatblocks',
+                   # 'flatblocks',
                    'mp_proxy',
                    'map_proxy',
                    'content',
                    'tinymce',
-                   'django_wysiwyg'
+                   'django_wysiwyg',
+                   # 'djcelery',
                    )
 
 DATABASES = {
@@ -84,8 +85,8 @@ AUTHENTICATION_BACKENDS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
+    # 'social.apps.django_app.context_processors.backends',
+    # 'social.apps.django_app.context_processors.login_redirect',
 )
 
 MIDDLEWARE_CLASSES += (
@@ -140,7 +141,7 @@ LOGGING = {
             # 'filters': ['require_debug_true'],
         },
         'null': {
-            "class": 'django.utils.log.NullHandler',
+            "class": 'logging.NullHandler',
         }
     },
     'loggers': {

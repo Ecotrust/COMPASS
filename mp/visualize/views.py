@@ -10,12 +10,12 @@ from querystring_parser import parser
 import simplejson
 
 from simplejson import dumps
-from social.backends.google import GooglePlusAuth
+# from social.backends.google import GooglePlusAuth
 from madrona.features import get_feature_by_uid
 
 import settings
 
-from models import *
+from visualize.models import *
 from data_manager.models import *
 from mp_settings.models import *
 
@@ -89,11 +89,11 @@ def show_planner(request, project=None, template='planner.html'):
     }
     if request.user.is_authenticated:
         context['session'] = request.session._session_key
-    if request.user.is_authenticated() and request.user.social_auth.all().count() > 0:
-        context['picture'] = request.user.social_auth.all()[0].extra_data.get('picture')
-    if settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY:
-        context['plus_scope'] = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)
-        context['plus_id'] = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
+    # if request.user.is_authenticated() and request.user.social_auth.all().count() > 0:
+    #     context['picture'] = request.user.social_auth.all()[0].extra_data.get('picture')
+    # if settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY:
+    #     context['plus_scope'] = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)
+    #     context['plus_id'] = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
     if settings.UNDER_MAINTENANCE_TEMPLATE:
         return render_to_response('under_maintenance.html',
                                   RequestContext(request, context))

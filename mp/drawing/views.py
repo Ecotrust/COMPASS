@@ -5,8 +5,8 @@ from madrona.features.models import Feature
 from madrona.features import get_feature_by_uid
 from madrona.common.utils import LargestPolyFromMulti
 from scenarios.models import GridCell
-from models import *
-from ofr_manipulators import clip_to_grid
+from drawing.models import *
+from drawing.ofr_manipulators import clip_to_grid
 from simplejson import dumps
 
 

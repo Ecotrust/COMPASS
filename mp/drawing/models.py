@@ -4,8 +4,8 @@ from madrona.features import register
 from madrona.features.models import PolygonFeature
 from madrona.common.utils import LargestPolyFromMulti
 from general.utils import sq_meters_to_sq_miles, format_precision
-from ofr_manipulators import clip_to_grid, intersecting_cells
-from reports import get_summary_reports
+from drawing.ofr_manipulators import clip_to_grid, intersecting_cells
+from drawing.reports import get_summary_reports
 
 @register
 class AOI(PolygonFeature):

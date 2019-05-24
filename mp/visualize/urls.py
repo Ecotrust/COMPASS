@@ -1,7 +1,8 @@
-from django.conf.urls.defaults import *
-from views import *
+from django.conf.urls import url, include
+from visualize.views import *
 
-urlpatterns = patterns('',
+urlpatterns = [
+    '',
     url(r'^geo_search$', geo_search),
     url(r'^get_bookmarks$', get_bookmarks),
     url(r'^remove_bookmark$', remove_bookmark),
@@ -11,4 +12,4 @@ urlpatterns = patterns('',
     (r'^map', show_embedded_map),
     (r'^mobile', show_mobile_map),
     (r'', show_planner),
-)
+]

@@ -1,7 +1,8 @@
-from django.conf.urls.defaults import *
-from views import *
+from django.conf.urls import url, include
+from feedback.views import *
 
-urlpatterns = patterns('', 
+urlpatterns = [
+    '',
     (r'^send', send_feedback),
     # (r'^bookmark', send_bookmark),
-)
+]

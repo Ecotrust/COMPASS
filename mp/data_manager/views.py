@@ -7,8 +7,8 @@ from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.uploadedfile import UploadedFile
 import os, datetime, time, zipfile, sys, glob, settings
-from models import *
-from forms import *
+from data_manager.models import *
+from data_manager.forms import *
 
 
 #@cache_page(60 * 60 * 24, key_prefix="data_manager_get_json")

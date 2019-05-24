@@ -8,8 +8,8 @@ from django.utils.safestring import mark_safe
 from django.contrib.gis.geos import fromstr
 from os.path import splitext, split
 from madrona.analysistools.widgets import SliderWidget, DualSliderWidget
-from models import *
-from widgets import AdminFileWidget, SliderWidgetWithTooltip, DualSliderWidgetWithTooltip, CheckboxSelectMultipleWithTooltip, CheckboxSelectMultipleWithObjTooltip
+from scenarios.models import *
+from scenarios.widgets import AdminFileWidget, SliderWidgetWithTooltip, DualSliderWidgetWithTooltip, CheckboxSelectMultipleWithTooltip, CheckboxSelectMultipleWithObjTooltip
 
 # http://www.neverfriday.com/sweetfriday/2008/09/-a-long-time-ago.html
 class FileValidationError(forms.ValidationError):

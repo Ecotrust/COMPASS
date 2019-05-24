@@ -6,6 +6,7 @@ import json
 from picklefield import PickledObjectField
 from django.conf import settings
 from django.contrib.gis.db import models
+from django.db.models import Manager as GeoManager
 from django.utils.html import escape
 from madrona.common.utils import asKml
 from madrona.common.jsonutils import get_properties_json, get_feature_json
@@ -90,7 +91,7 @@ class Scenario(Analysis):
 
     def run(self):
         # placing this import here to avoid circular dependency with views.py
-        from views import run_filter_query
+        from scenarios.views import run_filter_query
         query = run_filter_query(model_to_dict(self))
 
         if len(query) == 0:
@@ -296,4 +297,4 @@ class GridCell(models.Model):
     geometry = models.MultiPolygonField(srid=settings.GEOMETRY_DB_SRID,
                                     null=True, blank=True,
                                     verbose_name="Grid Cell Geometry")
-    objects = models.GeoManager()
+    objects = GeoManager()

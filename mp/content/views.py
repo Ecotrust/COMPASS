@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext, loader
 from django.utils import simplejson
-from models import *
+from content.models import *
 
 def get_content(request):
     contents = Content.objects.all()
