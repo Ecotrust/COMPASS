@@ -24,14 +24,14 @@ def data_catalog(request, project=None, template='catalog.html'):
         #     if project_logo:
         #         url_validator = URLValidator(verify_exists=False)
         #         url_validator(project_logo)
-        # except ValidationError, e:
+        # except ValidationError as e:
         #     project_logo = os.path.join(settings.MEDIA_URL, project_logo)
 
         project_icon = activeSettings.project_icon
         # try:
         #     url_validator = URLValidator(verify_exists=False)
         #     url_validator(project_icon)
-        # except ValidationError, e:
+        # except ValidationError as e:
         #     project_icon = os.path.join(settings.MEDIA_URL, project_icon)
 
         project_home_page = activeSettings.project_home_page
@@ -114,7 +114,7 @@ def tiles_page(request, slug=None, template='tiles_page.html'):
 def map_tile_example(request, slug=None, template='map_tile_example.html'):
     map_settings = getMapSettings()
     layer = get_object_or_404(Layer, slug_name=slug)
-    print map_settings
+    print(map_settings)
     context = {'layer': layer, 'MEDIA_URL': settings.MEDIA_URL, 'map_settings': map_settings}
     return render_to_response(template, RequestContext(request, context))
 

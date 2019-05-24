@@ -7,7 +7,7 @@
 # {% load debug %}
 # {% pdb %}
 # and did something similar to the following in the debugging environment
-# for d in context.dicts: print d.keys()
+# for d in context.dicts: print(d.keys())
 # context['asdf'].adsf.asdf
 
 import pdb as pdb_module

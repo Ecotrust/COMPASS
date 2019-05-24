@@ -1,6 +1,5 @@
 import httplib2
-from urllib import urlencode
-from urlparse import urlparse
+from urllib.parse import urlencode, urlparse
 from django.conf.urls import url, include
 from django.conf import settings
 from django.http import HttpResponse
@@ -32,7 +31,7 @@ def getLegendJSON(request, url):
           results = requests.get(getUrl)
           if(results.status_code == 200):
             return HttpResponse(results.text)
-        except Exception,e:
+        except Exception as e:
           if(logger):
             logger.exception(e)
         return(HttpResponse('{}'))

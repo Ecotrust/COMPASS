@@ -8,7 +8,7 @@ Replace this with more appropriate tests for your application.
 from django.test import TestCase
 from django.test.client import Client
 from data_manager.models import Theme, Layer
-import simplejson
+import json
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
@@ -32,7 +32,7 @@ class LayerManagerTest(TestCase):
 	response = self.client.get(url)
 	self.assertEqual(response.status_code, 200, response.status_code)
 	res_str = response.content + ','
-	obj = simplejson.loads('[%s]' % res_str[:-1])
+	obj = json.loads('[%s]' % res_str[:-1])
 	self.assertEqual(obj[0]["themes"][0]["layers"][0], 1, obj[0]["themes"][0]["layers"][0])
 	self.assertEqual(obj[0]["state"]["activeLayers"], [], obj[0]["state"]["activeLayers"])
 	self.assertEqual(obj[0]["themes"][0]["name"], "Theme1", obj[0]["themes"][0]["name"])

@@ -7,7 +7,7 @@ from madrona.common.utils import LargestPolyFromMulti
 from scenarios.models import GridCell
 from drawing.models import *
 from drawing.ofr_manipulators import clip_to_grid
-from simplejson import dumps
+from json import dumps
 
 
 '''

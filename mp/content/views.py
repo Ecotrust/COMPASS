@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext, loader
-from django.utils import simplejson
+import json
 from content.models import *
 
 def get_content(request):
@@ -14,4 +14,4 @@ def get_content(request):
             "description": content.description,
             "content": content.content
         }
-    return HttpResponse(simplejson.dumps(content_dict))
+    return HttpResponse(json.dumps(content_dict))

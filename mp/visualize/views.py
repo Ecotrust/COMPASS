@@ -7,9 +7,9 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 import os
 from querystring_parser import parser
-import simplejson
+import json
 
-from simplejson import dumps
+from json import dumps
 # from social.backends.google import GooglePlusAuth
 from madrona.features import get_feature_by_uid
 
@@ -41,13 +41,13 @@ def show_planner(request, project=None, template='planner.html'):
             if project_logo:
                 url_validator = URLValidator()
                 url_validator(project_logo)
-        except ValidationError, e:
+        except ValidationError as e:
             project_logo = os.path.join(settings.MEDIA_URL, project_logo)
         project_icon = mp_settings.project_icon
         try:
             url_validator = URLValidator()
             url_validator(project_icon)
-        except ValidationError, e:
+        except ValidationError as e:
             project_icon = os.path.join(settings.MEDIA_URL, project_icon)
         project_home_page = mp_settings.project_home_page
         enable_drawing = mp_settings.enable_drawing
@@ -111,7 +111,7 @@ def show_embedded_map(request, project=None, template='map.html'):
             if project_logo:
                 url_validator = URLValidator(verify_exists=False)
                 url_validator(project_logo)
-        except ValidationError, e:
+        except ValidationError as e:
             project_logo = os.path.join(settings.MEDIA_URL, project_logo)
         project_home_page = mp_settings.project_home_page
     except:
@@ -131,30 +131,30 @@ def show_mobile_map(request, project=None, template='mobile-map.html'):
             mp_settings = MarinePlannerSettings.objects.get(slug_name=project)
         else:
             mp_settings = MarinePlannerSettings.objects.get(active=True)
-        print 'so far so good'
+        print('so far so good')
         project_name = mp_settings.project_name
         project_logo = mp_settings.project_logo
-        print project_name
-        print project_logo
+        print(project_name)
+        print(project_logo)
         # try:
         #     if project_logo:
         #         url_validator = URLValidator(verify_exists=False)
         #         url_validator(project_logo)
-        # except ValidationError, e:
+        # except ValidationError as e:
         #     project_logo = os.path.join(settings.MEDIA_URL, project_logo)
-        print 'almost there...'
+        print('almost there...')
         project_home_page = mp_settings.project_home_page
-        print 'here we go...'
+        print('here we go...')
         latitude = mp_settings.latitude
-        print latitude
+        print(latitude)
         longitude = mp_settings.longitude
-        print longitude
+        print(longitude)
         zoom = mp_settings.zoom
-        print zoom
+        print(zoom)
         min_zoom = mp_settings.min_zoom
         max_zoom = mp_settings.max_zoom
-        print min_zoom
-        print max_zoom
+        print(min_zoom)
+        print(max_zoom)
     except:
         project_name = project_logo = project_home_page = None
     context = {
@@ -346,7 +346,7 @@ def get_bookmarks(request):
                 continue
 
         #grab all bookmarks belonging to this user
-        #serialize bookmarks into 'name', 'hash' objects and return simplejson dump
+        #serialize bookmarks into 'name', 'hash' objects and return json dump
         content = []
         bookmark_list = Bookmark.objects.filter(user=request.user)
         for bookmark in bookmark_list:
@@ -371,7 +371,7 @@ def get_bookmarks(request):
                     'shared_by_username': username,
                     'shared_by_name': actual_name
                 })
-        return HttpResponse(simplejson.dumps(content), mimetype="application/json", status=200)
+        return HttpResponse(json.dumps(content), mimetype="application/json", status=200)
     except:
         return HttpResponse(status=304)
 
@@ -401,7 +401,7 @@ def add_bookmark(request):
             'hash': bookmark.url_hash,
             'sharing_groups': sharing_groups
         })
-        print 'returning content'
-        return HttpResponse(simplejson.dumps(content), mimetype="application/json", status=200)
+        print('returning content')
+        return HttpResponse(json.dumps(content), mimetype="application/json", status=200)
     except:
         return HttpResponse(status=304)

@@ -135,7 +135,7 @@ class Scenario(Analysis):
                     for f in Scenario.input_fields():
                         # Is original value different from form value?
                         if getattr(orig, f.name) != getattr(self, f.name):
-                            #print 'input_field, %s, has changed' %f.name
+                            #print('input_field, %s, has changed' %f.name)
                             rerun = True
                             break
                 if not rerun:

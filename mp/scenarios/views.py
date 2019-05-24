@@ -6,7 +6,7 @@ from madrona.features.models import Feature
 from madrona.features import get_feature_by_uid
 from general.utils import meters_to_feet
 from scenarios.models import *
-from simplejson import dumps
+from json import dumps
 from django.contrib.gis.db.models.aggregates import Union
 
 

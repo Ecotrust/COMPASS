@@ -2,7 +2,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext, loader
-from django.utils import simplejson
+import json
 from django.views.decorators.cache import cache_page
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.files.uploadedfile import UploadedFile
@@ -13,7 +13,7 @@ from data_manager.forms import *
 
 #@cache_page(60 * 60 * 24, key_prefix="data_manager_get_json")
 def get_json(request, project=None):
-    from mp_settings.models import *
+    from mp_settings.models import MarinePlannerSettings, Layer, TOCTheme
     try:
         if project:
             activeSettings = MarinePlannerSettings.objects.get(slug_name=project)
@@ -35,7 +35,7 @@ def get_json(request, project=None):
             "themes": [theme.toDict for theme in themes.order_by('display_name')],
             "success": True
         }
-        return HttpResponse(simplejson.dumps(json))
+        return HttpResponse(json.dumps(json))
     except:
         pass
 
@@ -45,7 +45,7 @@ def get_json(request, project=None):
         "themes": [theme.toDict for theme in TOCTheme.objects.all().order_by('display_name')],
         "success": True
     }
-    return HttpResponse(simplejson.dumps(json))
+    return HttpResponse(json.dumps(json))
 
 
 def create_layer(request):
@@ -64,11 +64,11 @@ def create_layer(request):
                 layer.themes.add(theme)
             layer.save()
 
-        except Exception, e:
-            return HttpResponse(e.message, status=500)
+        except Exception as e:
+            return HttpResponse(e, status=500)
 
         result = layer_result(layer, message="Saved Successfully")
-        return HttpResponse(simplejson.dumps(result))
+        return HttpResponse(json.dumps(result))
 
 
 def update_layer(request, layer_id):
@@ -88,11 +88,11 @@ def update_layer(request, layer_id):
                 layer.themes.add(theme)
             layer.save()
 
-        except Exception, e:
-            return HttpResponse(e.message, status=500)
+        except Exception as e:
+            return HttpResponse(e, status=500)
 
         result = layer_result(layer, message="Edited Successfully")
-        return HttpResponse(simplejson.dumps(result))
+        return HttpResponse(json.dumps(result))
 
 
 def get_layer_components(request_dict, url='', name='', type='XYZ', themes=[]):
@@ -357,7 +357,7 @@ def data_manager_make_current(request, import_id):
         backup_event = ImportEvent.objects.get(current=True)
         clean_data_manager_models()
         import_success = load_contents_fixture(import_event.data_file.file.name)
-        print import_event.data_file.file.name
+        print(import_event.data_file.file.name)
 
 
         if import_success:
