@@ -597,7 +597,7 @@ body.print #map .olControlMousePosition {
 }
 
 #myTabContent {
-	background-image: url('/media/img/ajax-loader.gif');
+	background-image: url('/static/img/ajax-loader.gif');
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -855,7 +855,7 @@ body.print #compass-search-header {
 .compass-search-header-content button {
 	line-height: 62px;
 	text-align: center;
-	background-image: url("/media/compass/img/icons-nav.png");
+	background-image: url("/static/compass/img/icons-nav.png");
   background-position: 100% -806px;
   background-size: initial;
   background-repeat-x: no-repeat;
@@ -881,7 +881,7 @@ body.print #compass-search-header {
 	line-height: 63px;
 	height: 63px;
 	text-align: center;
-	background-image: url("/media/compass/img/icons-nav.png");
+	background-image: url("/static/compass/img/icons-nav.png");
   background-position: 0 -871px;
   background-size: initial;
   background-repeat-x: no-repeat;

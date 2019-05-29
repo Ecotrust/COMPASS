@@ -33,6 +33,7 @@ urlpatterns = [
     re_path(r'^admin/get_current_data_manager_fixture/$', get_current_fixture),
     re_path(r'^admin/create_data_manager_snapshot/$', create_data_manager_snapshot),
     re_path(r'^admin/data_manager_make_current/(?P<import_id>.*)$', data_manager_make_current),
+    url(r'^admin/', admin.site.urls),
     # url('', include('social.apps.django_app.urls', namespace='social')),
     re_path(r'^api/', include(v1_api.urls)),
     re_path(r'^mp_profile/', include('mp_profile.urls')),
