@@ -13,7 +13,7 @@ from data_manager.forms import *
 
 #@cache_page(60 * 60 * 24, key_prefix="data_manager_get_json")
 def get_json(request, project=None):
-    from mp_settings.models import MarinePlannerSettings, Layer, TOCTheme
+    from mp_settings.models import MarinePlannerSettings
     try:
         if project:
             activeSettings = MarinePlannerSettings.objects.get(slug_name=project)
@@ -29,23 +29,23 @@ def get_json(request, project=None):
                 for layer in subtheme.layers.all().order_by('name'):
                     layer_list.append(layer.toDict)
 
-        json = {
+        json_response = {
             "state": { "activeLayers": [] },
             "layers": layer_list,
             "themes": [theme.toDict for theme in themes.order_by('display_name')],
             "success": True
         }
-        return HttpResponse(json.dumps(json))
+        return HttpResponse(json.dumps(json_response))
     except:
         pass
 
-    json = {
+    json_response = {
         "state": { "activeLayers": [] },
         "layers": [layer.toDict for layer in Layer.objects.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('name')],
         "themes": [theme.toDict for theme in TOCTheme.objects.all().order_by('display_name')],
         "success": True
     }
-    return HttpResponse(json.dumps(json))
+    return HttpResponse(json.dumps(json_response))
 
 
 def create_layer(request):
