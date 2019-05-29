@@ -147,7 +147,7 @@ def get_geometry_orig(request, uid):
 def get_csv(request, uid, download=True):
     import csv
     if 'drawing_aoi_' in uid:
-        aoi_id = str(int(filter(str.isdigit, str(uid))))
+        aoi_id = str(int(''.join([x for x in filter(str.isdigit, str(uid))])))
     else:
         aoi_id = int(uid)
     # aoi_id = int(request.POST['id'])

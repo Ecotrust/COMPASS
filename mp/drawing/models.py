@@ -22,7 +22,7 @@ class AOI(PolygonFeature):
     def summary_reports(self, attributes=None):
         # Call get_summary_reports with intersecting Grid Cells
         grid_cells = intersecting_cells(self.geometry_orig)
-        if attributes and attributes.has_key('list_style'):
+        if attributes and 'list_style' in attributes.keys():
             return get_summary_reports(grid_cells, attributes['list_style'])
         else:
             return get_summary_reports(grid_cells)
