@@ -1,5 +1,4 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 #from madrona.raster_stats.models import RasterDataset, zonal_stats
 from settings import *
 from general.utils import default_value, sq_meters_to_sq_miles
@@ -9,7 +8,7 @@ from drawing.models import *
 '''
 def display_aoi_analysis(request, aoi, template='aoi/reports/aoi_report.html'):
     context = get_wind_analysis(aoi)
-    return render_to_response(template, RequestContext(request, context))
+    return render(request, template, context)
 
 '''
 Run the analysis, create the cache, and return the results as a context dictionary so they may be rendered with template

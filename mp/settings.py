@@ -25,12 +25,28 @@ more_installed_apps = [
                    'tinymce',
                    'django_wysiwyg',
                    # 'djcelery',
+                   # 'django_registration',
                   ]
 
 if INSTALLED_APPS and len(INSTALLED_APPS) > 0:
     INSTALLED_APPS = list(INSTALLED_APPS) + more_installed_apps
 else:
     INSTALLED_APPS = more_installed_apps
+
+ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+
+new_static_dirs = [
+    "%s%s" % (os.path.join(ROOT_DIR, 'media'), os.sep),
+    # "%s%s" % (os.path.join(ROOT_DIR, 'lot', 'lot', 'static'), os.sep),
+]
+
+if STATICFILES_DIRS and len(STATICFILES_DIRS) > 0:
+    STATICFILES_DIRS += new_static_dirs
+else:
+    STATICFILES_DIRS = new_static_dirs
+
+
+STATIC_ROOT = os.path.realpath(os.path.join(os.path.dirname(__file__), 'static'))
 
 
 DATABASES = {
@@ -71,6 +87,8 @@ FEEDBACK_RECIPIENT = "Compass Team <odfwcompass@ecotrust.org>"
 HELP_EMAIL = "odfwcompass@ecotrust.org"
 DEFAULT_FROM_EMAIL = "Compass Team <odfwcompass@ecotrust.org>"
 
+
+
 # url for socket.io printing
 # SOCKET_URL = 'http://ofr.marineplanner.io:8080'
 SOCKET_URL = False
@@ -92,7 +110,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug', 
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages'

@@ -3,8 +3,7 @@ from django.contrib.auth.models import Group
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render
 import os
 from querystring_parser import parser
 import json
@@ -95,9 +94,8 @@ def show_planner(request, project=None, template='planner.html'):
     #     context['plus_scope'] = ' '.join(GooglePlusAuth.DEFAULT_SCOPE)
     #     context['plus_id'] = settings.SOCIAL_AUTH_GOOGLE_PLUS_KEY
     if settings.UNDER_MAINTENANCE_TEMPLATE:
-        return render_to_response('under_maintenance.html',
-                                  RequestContext(request, context))
-    return render_to_response(template, RequestContext(request, context))
+        return render(request, 'under_maintenance.html', context)
+    return render(request, template, context)
 
 def show_embedded_map(request, project=None, template='map.html'):
     try:
@@ -123,7 +121,7 @@ def show_embedded_map(request, project=None, template='map.html'):
         'project_home_page': project_home_page
     }
     #context = {'MEDIA_URL': settings.MEDIA_URL}
-    return render_to_response(template, RequestContext(request, context))
+    return render(request, template, context)
 
 def show_mobile_map(request, project=None, template='mobile-map.html'):
     try:
@@ -167,7 +165,7 @@ def show_mobile_map(request, project=None, template='mobile-map.html'):
         'zoom': zoom
     }
     #context = {'MEDIA_URL': settings.MEDIA_URL}
-    return render_to_response(template, RequestContext(request, context))
+    return render(request, template, context)
 
 def get_sharing_groups(request):
     from madrona.features import user_sharing_groups

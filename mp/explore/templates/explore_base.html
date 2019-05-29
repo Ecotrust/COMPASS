@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <!--[if IEMobile 7 ]>
     <html dir="ltr" lang="en-US" class="no-js iem7">
     <![endif]-->
@@ -39,7 +40,7 @@
 
                               }
                             </style>
-                            <script src="{{MEDIA_URL}}mp/js/respond.min.js"></script>
+                            <script src="{% static 'mp/js/respond.min.js' %}"></script>
                         <![endif]-->
                         <!-- html5.js -->
                         <!--[if lt IE 9]>
@@ -47,16 +48,16 @@
                             </script>
                         <![endif]-->
                         <!--[if IE]>
-                                <link rel="stylesheet" href="{{MEDIA_URL}}css/mp_style.ie.css">
+                                <link rel="stylesheet" href="{% static 'css/mp_style.ie.css' %}">
                         <![endif]-->
 
-                        <link rel="stylesheet" href="{{MEDIA_URL}}assets/bootstrap/bootstrap.css">
-                        <link rel="stylesheet" href="{{MEDIA_URL}}assets/bootstrap/bootstrap-responsive.css">
+                        <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap.css' %}">
+                        <link rel="stylesheet" href="{% static 'assets/bootstrap/bootstrap-responsive.css' %}">
 
                         <!-- marine planner stylesheet -->
-                        <link rel="stylesheet" href="{{MEDIA_URL}}css/mp_style.css">
+                        <link rel="stylesheet" href="{% static 'css/mp_style.css' %}">
                         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css">
-                        <link rel="shortcut icon" href="{{MEDIA_URL}}ico/favicon.ico">
+                        <link rel="shortcut icon" href="{% static 'ico/favicon.ico' %}">
                         <style>
                             body {
                                 /*margin-top: 110px;*/
@@ -70,7 +71,7 @@
                             }
                         </style>
                         <!--[if IE 7]>
-                          <link rel="stylesheet" href="{{MEDIA_URL}}mp/css/font/font-awesome-ie7.css">
+                          <link rel="stylesheet" href="{% static 'mp/css/font/font-awesome-ie7.css' %}">
                         <![endif]-->
 
                     </head>
@@ -162,14 +163,14 @@
                             </div>
                             <!-- end #container -->
                             <!-- scripts are now optimized via Modernizr.load -->
-                            <script src="{{MEDIA_URL}}assets/jquery/jquery.js"></script>
-                            <script src="{{MEDIA_URL}}assets/jquery/jquery-ui.js"></script>
-                            <script src="{{MEDIA_URL}}assets/bootstrap/bootstrap-transition.js"></script>
-                            <script src="{{MEDIA_URL}}assets/bootstrap/bootstrap-typeahead.js"></script>
-                            <script src="{{MEDIA_URL}}assets/bootstrap/bootstrap-tooltip.js"></script>
-                            <script src="{{MEDIA_URL}}assets/bootstrap/bootstrap-popover.js"></script>
-                            <script src="{{MEDIA_URL}}assets/bootstrap/bootstrap-modal.js"></script>
-                            <script src="{{MEDIA_URL}}assets/bootstrap/bootstrap-collapse.js"></script>
+                            <script src="{% static 'assets/jquery/jquery.js' %}"></script>
+                            <script src="{% static 'assets/jquery/jquery-ui.js' %}"></script>
+                            <script src="{% static 'assets/bootstrap/bootstrap-transition.js' %}"></script>
+                            <script src="{% static 'assets/bootstrap/bootstrap-typeahead.js' %}"></script>
+                            <script src="{% static 'assets/bootstrap/bootstrap-tooltip.js' %}"></script>
+                            <script src="{% static 'assets/bootstrap/bootstrap-popover.js' %}"></script>
+                            <script src="{% static 'assets/bootstrap/bootstrap-modal.js' %}"></script>
+                            <script src="{% static 'assets/bootstrap/bootstrap-collapse.js' %}"></script>
                             <script>
                             if (!Array.prototype.indexOf) {
 
