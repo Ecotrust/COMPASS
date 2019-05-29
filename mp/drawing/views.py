@@ -1,6 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.contrib.gis.geos import GEOSGeometry
+from django.core.exceptions import ObjectDoesNotExist
 from madrona.features.models import Feature
 from madrona.features import get_feature_by_uid
 from madrona.common.utils import LargestPolyFromMulti
@@ -52,7 +53,9 @@ def get_drawings(request):
 def delete_drawing(request, uid):
     try:
         drawing_obj = get_feature_by_uid(uid)
-    except Feature.DoesNotExist:
+    except ObjectDoesNotExist:
+        raise Http404
+    except AttributeError:
         raise Http404
 
     #check permissions
