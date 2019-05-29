@@ -73,7 +73,7 @@ def delete_design(request, uid):
 def get_scenarios(request):
     json = []
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         scenarios = Scenario.objects.filter(user=request.user, active=True).order_by('date_created')
     else:
         scenarios = Scenario.objects.filter(user=None)

@@ -149,6 +149,12 @@ MIDDLEWARE_CLASSES += (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+
+if MIDDLEWARE and len(MIDDLEWARE) > 0:
+    MIDDLEWARE = list(MIDDLEWARE) + list(MIDDLEWARE_CLASSES)
+else:
+    MIDDLEWARE = list(MIDDLEWARE_CLASSES)
+    
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

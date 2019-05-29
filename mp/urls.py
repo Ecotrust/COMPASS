@@ -60,6 +60,7 @@ urlpatterns = [
     re_path(r"^media/admin/(?P<path>.*)$",
            static.serve,
            {"document_root": settings.ADMIN_MEDIA_PATH}),
+    re_path(r'^accounts/', include('madrona.openid.urls')),
     re_path(r'', include('madrona.openid.urls')),
     # (r'', include('madrona.common.urls')),
     re_path(r'^tinymce/', include('tinymce.urls')),
