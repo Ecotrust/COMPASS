@@ -8,7 +8,7 @@ import settings
 
 class TOC(models.Model):
     name = models.CharField(max_length=100)
-    themes = models.ManyToManyField("TOCTheme", blank=True, null=True)
+    themes = models.ManyToManyField("TOCTheme", blank=True)
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
@@ -17,8 +17,8 @@ class TOCTheme(models.Model):
     display_name = models.CharField(max_length=100)
     name = models.CharField(max_length=100, help_text="This field should be a 'slugified' version of Display Name (must start with a letter and should only contain letters (a-z or A-Z), digits (0-9), hyphens(-), and underscores(_))")
     description = models.TextField(blank=True, null=True)
-    subthemes = models.ManyToManyField("TOCSubTheme", blank=True, null=True)
-    layers = models.ManyToManyField("Layer", blank=True, null=True)
+    subthemes = models.ManyToManyField("TOCSubTheme", blank=True)
+    layers = models.ManyToManyField("Layer", blank=True)
 
     def TOC(self):
         #return self.toc_set.all()[0]
@@ -45,7 +45,7 @@ class TOCSubTheme(models.Model):
     display_name = models.CharField(max_length=150)
     name = models.CharField(max_length=255, help_text="This field should be a 'slugified' version of Display Name (must start with a letter and should only contain letters (a-z or A-Z), digits (0-9), hyphens(-), and underscores(_))")
     description = models.TextField(blank=True, null=True)
-    layers = models.ManyToManyField("Layer", blank=True, null=True)
+    layers = models.ManyToManyField("Layer", blank=True)
 
     def TOCTheme(self):
         return "\n".join([toctheme.name for toctheme in self.toctheme_set.all()])
@@ -134,8 +134,8 @@ class Layer(models.Model):
     proxy_url = models.BooleanField(default=False, help_text="proxy layer url through marine planner")
     arcgis_layers = models.CharField(max_length=255, blank=True, null=True, help_text="IDs separated by commas (no spaces)")
     wms_slug = models.CharField(max_length=255, blank=True, null=True)
-    sublayers = models.ManyToManyField('self', blank=True, null=True)
-    themes = models.ManyToManyField("Theme", blank=True, null=True)
+    sublayers = models.ManyToManyField('self', blank=True)
+    themes = models.ManyToManyField("Theme", blank=True)
     is_sublayer = models.BooleanField(default=False)
     legend = models.CharField(max_length=255, blank=True, null=True, help_text="Path to Legend Image file (http://somewhere.com/legend.png)")
     legend_title = models.CharField(max_length=255, blank=True, null=True, help_text="If no value is entered, the layer name will be used as the Legend Title")
@@ -178,11 +178,11 @@ class Layer(models.Model):
         ('mouseover', 'mouseover')
     )
     attribute_title = models.CharField(max_length=255, blank=True, null=True, help_text="If no value is entered, the layer name will be used as the header for the Attribute list (triggered on click events)")
-    attribute_fields = models.ManyToManyField('AttributeInfo', blank=True, null=True)
+    attribute_fields = models.ManyToManyField('AttributeInfo', blank=True)
     compress_display = models.BooleanField(default=False)
     attribute_event = models.CharField(max_length=35, choices=EVENT_CHOICES, default='click', help_text="Only 'click' is available at this time")
     lookup_field = models.CharField(max_length=255, blank=True, null=True)
-    lookup_table = models.ManyToManyField('LookupInfo', blank=True, null=True)
+    lookup_table = models.ManyToManyField('LookupInfo', blank=True)
     vector_color = models.CharField(max_length=7, blank=True, null=True, help_text="Outline color represented in a hex format (e.g. #00ff00)")
     vector_fill = models.FloatField(blank=True, null=True, help_text="Fill opacity represented by a floating point value (e.g. '.8')")
     vector_graphic = models.CharField(max_length=255, blank=True, null=True)
@@ -457,7 +457,7 @@ class DataNeed(models.Model):
     contact_email = models.CharField(max_length=255, blank=True, null=True)
     expected_date = models.CharField(max_length=255, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
-    themes = models.ManyToManyField("Theme", blank=True, null=True)
+    themes = models.ManyToManyField("Theme", blank=True)
 
     @property
     def html_name(self):
