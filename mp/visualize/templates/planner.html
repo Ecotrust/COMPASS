@@ -102,7 +102,7 @@
                   <h2>Loading...</h2>
                   <div id='spinner'>
                     <button type="button" id="close-spinner" class="close" data-bind="click: function() {$('#loading').hide();}" aria-hidden="true">x</button>
-                    <img src="/media/img/ajax-loader.gif"/>
+                    <img src="{% static 'img/ajax-loader.gif' %}"/>
                   </div>
               </div>
               <div class="container-fluid" id="primary-content">
@@ -414,16 +414,16 @@
                                             <a id="help-button" class="btn" href="#help-modal" data-toggle="modal">Tutorial</a>
                                             <div id="data-panel-footer" class="row-fluid footer span12">
                                               <a href="http://www.dfw.state.or.us/maps/compass/" target="_blank">
-                                                <img src="/media/compass/img/Compass_BW.png" />
+                                                <img src="{% static 'compass/img/Compass_BW.png' %}" />
                                               </a>
                                               <a href="http://oregonconservationstrategy.com" target="_blank">
-                                                <img src="/media/compass/img/OCSLogo.png" />
+                                                <img src="{% static 'compass/img/OCSLogo.png' %}" />
                                               </a>
                                               <a href="http://dfw.state.or.us/" target="_blank">
-                                                <img src="/media/compass/img/ODFW_BW.png" />
+                                                <img src="{% static 'compass/img/ODFW_BW.png' %}" />
                                               </a>
                                               <a href="http://www.wafwachat.org/" target="_blank">
-                                                <img src="/media/compass/img/CHAT_BW.png" />
+                                                <img src="{% static 'compass/img/CHAT_BW.png' %}" />
                                               </a>
                                             </div>
                                           </span>
@@ -465,7 +465,7 @@
                                                       <span style="border-radius: 4px;">
                                                         <input type="search" class="field search-box" data-provide="typeahead" data-bind="value: searchTerm, event: { keyup: keySearch }" name="s" id="s" placeholder="Search Data" style="border-radius: 4px;" autocomplete="off">
                                                       </span>
-                                                      <input type="submit" class="search" name="submit" id="searchsubmit" value="Search" style="background: url(/media/img/search.png) no-repeat 0 0; width: 26px; height: 30px; border: none; padding: 0; cursor: pointer; font-size: 0; margin-top: 9px; border-radius: 0px">
+                                                      <input type="submit" class="search" name="submit" id="searchsubmit" value="Search" style="background: url(/static/img/search.png) no-repeat 0 0; width: 26px; height: 30px; border: none; padding: 0; cursor: pointer; font-size: 0; margin-top: 9px; border-radius: 0px">
                                                       <!-- <input type="text" class="search-box" data-provide="typeahead" data-bind="value: searchTerm, event: { keyup: keySearch }" style="overflow: hidden; text-overflow: ellipsis; width: 80%;" placeholder="Search">
                                                       <a class="btn">
                                                           <i class="icon-remove icon-large"></i>
