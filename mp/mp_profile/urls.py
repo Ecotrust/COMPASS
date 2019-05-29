@@ -11,7 +11,7 @@ except:
     use_openid = False
 
 urlpatterns = [
-    '',
+    # '',
     # url(r'^password/reset/$',
     #     auth_views.password_reset, {'email_template_name': 'registration/mp_password_reset_email.html',
     #                                 'from_email': settings.DEFAULT_FROM_EMAIL,

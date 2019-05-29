@@ -5,7 +5,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TIME_ZONE = 'America/Vancouver'
 ROOT_URLCONF = 'urls'
 LOGIN_REDIRECT_URL = '/visualize'
-INSTALLED_APPS += ('django_extensions',
+
+more_installed_apps = [
+                   'django_extensions',
+                   'django.contrib.messages',
                    # 'social.apps.django_app.default',
                    'general',
                    'scenarios',
@@ -22,7 +25,13 @@ INSTALLED_APPS += ('django_extensions',
                    'tinymce',
                    'django_wysiwyg',
                    # 'djcelery',
-                   )
+                  ]
+
+if INSTALLED_APPS and len(INSTALLED_APPS) > 0:
+    INSTALLED_APPS = list(INSTALLED_APPS) + more_installed_apps
+else:
+    INSTALLED_APPS = more_installed_apps
+
 
 DATABASES = {
     'default': {
@@ -70,10 +79,32 @@ SOCKET_URL = False
 # to display the 'under maintenance' template
 UNDER_MAINTENANCE_TEMPLATE = False
 
-TEMPLATE_DIRS = (
-    os.path.realpath(os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/')),
-    os.path.realpath(os.path.join(os.path.dirname(__file__), 'mp_profile/templates').replace('\\', '/')),
-)
+# TEMPLATES = [
+#     'django.template.backends.django.DjangoTemplates',
+# ]
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.realpath(os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/')),
+            os.path.realpath(os.path.join(os.path.dirname(__file__), 'mp_profile/templates').replace('\\', '/')),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug', 
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages'
+            ]
+        },
+    },
+]
+
+# TEMPLATE_DIRS = (
+#     os.path.realpath(os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/')),
+#     os.path.realpath(os.path.join(os.path.dirname(__file__), 'mp_profile/templates').replace('\\', '/')),
+# )
 
 
 AUTHENTICATION_BACKENDS = (
