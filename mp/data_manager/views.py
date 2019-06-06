@@ -23,10 +23,10 @@ def get_json(request, project=None):
         layer_list = []
         themes = activeSettings.table_of_contents.themes.all()
         for theme in themes:
-            for layer in theme.layers.all().order_by('name'):
+            for layer in theme.layers.all().order_by('name').order_by('order'):
                 layer_list.append(layer.toDict)
             for subtheme in theme.subthemes.all():
-                for layer in subtheme.layers.all().order_by('name'):
+                for layer in subtheme.layers.all().order_by('name').order_by('order'):
                     layer_list.append(layer.toDict)
 
         json_response = {
@@ -41,7 +41,7 @@ def get_json(request, project=None):
 
     json_response = {
         "state": { "activeLayers": [] },
-        "layers": [layer.toDict for layer in Layer.objects.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('name')],
+        "layers": [layer.toDict for layer in Layer.objects.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('name').order_by('order')],
         "themes": [theme.toDict for theme in TOCTheme.objects.all().order_by('display_name')],
         "success": True
     }

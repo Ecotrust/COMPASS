@@ -32,10 +32,8 @@ app.viewModel.loadLayers = function(data) {
 			layer.themes.push(theme);
 			if (subtheme) {
 				subtheme.layers.push(layer);
-				subtheme.layers().sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase())});
 			} else {
 				theme.layers.push(layer);
-				theme.layers().sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase())});
 			}
 
 			if (!layer.subLayers.length) { //if the layer does not have sublayers

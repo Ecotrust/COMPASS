@@ -29,7 +29,7 @@ class TOCTheme(models.Model):
 
     @property
     def toDict(self):
-        layers = [layer.id for layer in self.layers.filter(is_sublayer=False).exclude(layer_type='placeholder')]
+        layers = [layer.id for layer in self.layers.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('order')]
         subthemes = [subtheme.toDict for subtheme in self.subthemes.all()]
         themes_dict = {
             'id': self.id,
@@ -55,7 +55,7 @@ class TOCSubTheme(models.Model):
 
     @property
     def toDict(self):
-        layers = [layer.id for layer in self.layers.filter(is_sublayer=False).exclude(layer_type='placeholder')]
+        layers = [layer.id for layer in self.layers.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('order')]
         subthemes_dict = {
             'id': self.id,
             'display_name': self.display_name,
@@ -93,7 +93,7 @@ class Theme(models.Model):
 
     @property
     def toDict(self):
-        layers = [layer.id for layer in self.layer_set.filter(is_sublayer=False).exclude(layer_type='placeholder')]
+        layers = [layer.id for layer in self.layer_set.filter(is_sublayer=False).exclude(layer_type='placeholder').order_by('order')]
         themes_dict = {
             'id': self.id,
             'display_name': self.display_name,
@@ -144,6 +144,7 @@ class Layer(models.Model):
     utfjsonp = models.BooleanField(default=False, help_text="For MBTiles, check this box")
     summarize_to_grid = models.BooleanField(default=False)
     filterable = models.BooleanField(default=False)
+    order = models.IntegerField(default=999)
 
     PROJ_CHOICES = (
         ('EPSG:3643', 'Oregon Lambert (ODFW Default) [3643]'),
@@ -210,7 +211,7 @@ class Layer(models.Model):
     @property
     def sublayer_list(self):
         if self.is_parent:
-            return self.sublayers.all().order_by('name')
+            return self.sublayers.all().order_by('name').order_by('order')
         else:
             return None
 
