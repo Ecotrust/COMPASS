@@ -13,6 +13,9 @@ class TOC(models.Model):
     def __unicode__(self):
         return unicode('%s' % (self.name))
 
+    def __str__(self):
+        return '%s' % self.name
+
 class TOCTheme(models.Model):
     display_name = models.CharField(max_length=100)
     name = models.CharField(max_length=100, help_text="This field should be a 'slugified' version of Display Name (must start with a letter and should only contain letters (a-z or A-Z), digits (0-9), hyphens(-), and underscores(_))")
@@ -27,6 +30,9 @@ class TOCTheme(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
+
+    def __str__(self):
+        return '%s' % self.display_name
 
     @property
     def toDict(self):
@@ -54,6 +60,9 @@ class TOCSubTheme(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
+
+    def __str__(self):
+        return '%s' % self.display_name
 
     @property
     def toDict(self):
@@ -89,6 +98,9 @@ class Theme(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
+
+    def __str__(self):
+        return '%s' % self.display_name
 
     @property
     def learn_link(self):
@@ -201,6 +213,9 @@ class Layer(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
+
+    def __str__(self):
+        return '%s' % self.name
 
     @property
     def is_parent(self):
@@ -433,6 +448,9 @@ class AttributeInfo(models.Model):
     def __unicode__(self):
         return unicode('%s' % (self.field_name))
 
+    def __str__(self):
+        return '%s' % self.field_name
+
 class LookupInfo(models.Model):
     DASH_CHOICES = (
         ('dot', 'dot'),
@@ -450,6 +468,9 @@ class LookupInfo(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.value))
+
+    def __str__(self):
+        return '%s' % self.value
 
 
 class DataNeed(models.Model):
@@ -470,6 +491,9 @@ class DataNeed(models.Model):
 
     def __unicode__(self):
         return unicode('%s' % (self.name))
+
+    def __str__(self):
+        return '%s' % self.name
 
 
 class ImportEvent(models.Model):

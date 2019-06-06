@@ -1,12 +1,12 @@
 from django.contrib import admin
 from data_manager.models import *
-from django.forms import CheckboxSelectMultiple
+from django.forms import CheckboxSelectMultiple, ModelForm
 
 class TOCAdmin(admin.ModelAdmin):
     list_display = ('name', 'id')
 
     formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple }
+        models.ManyToManyField: {'widget': admin.widgets.FilteredSelectMultiple('Themes', False) }
     }
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
@@ -14,12 +14,19 @@ class TOCAdmin(admin.ModelAdmin):
             kwargs["queryset"] = TOCTheme.objects.all().order_by('name')
         return super(TOCAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
-class TOCThemeAdmin(admin.ModelAdmin):
-    list_display = ('display_name', 'name', 'TOC', 'id')
+class TOCThemeForm(ModelForm):
+    # fields = ['display_name','name','description','subthemes','layers','order']
+    class Meta:
+        model = TOCTheme
+        fields = '__all__'
+        widgets = {
+            'subthemes': admin.widgets.FilteredSelectMultiple('Subthemes', False),
+            'layers': admin.widgets.FilteredSelectMultiple('Layers', False)
+        }
 
-    formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple }
-    }
+class TOCThemeAdmin(admin.ModelAdmin):
+    list_display = ('display_name', 'name', 'TOC', 'order', 'id')
+    form = TOCThemeForm
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "layers":
