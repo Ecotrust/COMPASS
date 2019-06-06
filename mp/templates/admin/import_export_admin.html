@@ -1,4 +1,9 @@
 {% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/import.css" %}">
+{% endblock %}
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
@@ -53,8 +58,8 @@
     <tr>
       <td><a href="/admin/data_manager/importevent/{{snapshot.id}}/">Edit</a>
       <td>{{snapshot.date_created}}</td>
-      <td>{% if snapshot.current %}
-        <img src="/media/admin/img/icon-yes.gif" alt="True">
+      <td class="is_current_cell">{% if snapshot.current %}
+        <img src="{% static 'admin/img/icon-yes.svg' %}" alt="True">
         {% else %}
         <a href='/admin/data_manager_make_current/{{snapshot.id}}'><button>Make Current</button></a>
         {% endif %}
