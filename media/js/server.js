@@ -53,7 +53,6 @@ app.viewModel.loadLayers = function(data) {
                     };
                 }
 						});
-            layer.subLayers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
 				}
 		}
 
@@ -61,14 +60,10 @@ app.viewModel.loadLayers = function(data) {
 		$.each(themeFixture.subthemes, function (j, subtheme) {
 				var subthemeMod = new subthemeModel(subtheme);
 				theme.subthemes.push(subthemeMod);
-				theme.subthemes().sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
 				for (var layer_idx = 0; layer_idx < subtheme.layers.length; layer_idx++) {
 					updateLayerSearchIndex(layer_idx, subtheme.layers[layer_idx], subthemeMod);
 				}
 		});
-
-    //sort by name
-    theme.layers.sort( function(a,b) { return a.name.toUpperCase().localeCompare(b.name.toUpperCase()); } );
 
 		self.themes.push(theme);
 	});

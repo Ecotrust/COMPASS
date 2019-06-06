@@ -23,19 +23,19 @@ class TOCThemeAdmin(admin.ModelAdmin):
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "layers":
-            kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name')
+            kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name').order_by('order')
         return super(TOCThemeAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
 class TOCSubThemeAdmin(admin.ModelAdmin):
-    list_display = ('display_name', 'name', 'TOCTheme', 'id')
+    list_display = ('display_name', 'name', 'TOCTheme', 'order', 'id')
 
     formfield_overrides = {
-        models.ManyToManyField: {'widget': CheckboxSelectMultiple }
+        models.ManyToManyField: {'widget': admin.widgets.FilteredSelectMultiple('Layers', False) }
     }
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "layers":
-            kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name')
+            kwargs["queryset"] = Layer.objects.filter(is_sublayer=False).order_by('name').order_by('order')
         return super(TOCSubThemeAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
 class ThemeAdmin(admin.ModelAdmin):
@@ -82,9 +82,9 @@ class LayerAdmin(admin.ModelAdmin):
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "sublayers":
-            kwargs["queryset"] = Layer.objects.order_by('name')
+            kwargs["queryset"] = Layer.objects.order_by('name').order_by('order')
         if db_field.name == "themes":
-            kwargs["queryset"] = Theme.objects.order_by('name')
+            kwargs["queryset"] = Theme.objects.order_by('name').order_by('order')
         if db_field.name == "attribute_fields":
             kwargs["queryset"] = AttributeInfo.objects.order_by('field_name')
         return super(LayerAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)

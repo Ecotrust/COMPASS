@@ -32,7 +32,7 @@ def get_json(request, project=None):
         json_response = {
             "state": { "activeLayers": [] },
             "layers": layer_list,
-            "themes": [theme.toDict for theme in themes.order_by('display_name')],
+            "themes": [theme.toDict for theme in themes.order_by('display_name').order_by('order')],
             "success": True
         }
         return HttpResponse(json.dumps(json_response))
