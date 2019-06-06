@@ -6,15 +6,7 @@ import settings
 #from sorl.thumbnail import ImageField
 
 
-class TOC(models.Model):
-    name = models.CharField(max_length=100)
-    themes = models.ManyToManyField("TOCTheme", blank=True)
 
-    def __unicode__(self):
-        return unicode('%s' % (self.name))
-
-    def __str__(self):
-        return '%s' % self.name
 
 class TOCTheme(models.Model):
     display_name = models.CharField(max_length=100)
@@ -516,7 +508,7 @@ class ImportEvent(models.Model):
         blank=False
     )
     notes = models.TextField(null=True, blank=True, default=None)
-    user = models.ForeignKey(User, on_delete="CASCADE")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     data_file = models.FileField(upload_to='data_manager_uploads/%Y/%m/%d')
 
     def to_dict(self):
@@ -531,3 +523,14 @@ class ImportEvent(models.Model):
             'status': str(self.status),
             'notes': str(self.notes),
         }
+
+
+class TOC(models.Model):
+    name = models.CharField(max_length=100)
+    themes = models.ManyToManyField("TOCTheme", blank=True)
+
+    def __unicode__(self):
+        return unicode('%s' % (self.name))
+
+    def __str__(self):
+        return '%s' % self.name

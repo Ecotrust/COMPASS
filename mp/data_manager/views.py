@@ -1,6 +1,6 @@
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render_to_response, render
 from django.template import RequestContext, loader
 import json
 from django.views.decorators.cache import cache_page
@@ -182,19 +182,14 @@ def import_export_admin(
 
     snapshots = [x for x in ImportEvent.objects.filter(status='complete').order_by('date_created')]
 
-    # return render_to_response(template_name, {'form': form})
-    template = loader.get_template(template_name)
-
-    context = RequestContext(
-        request, {
-            'form': form,
-            'current_fixture': str(current_fixture.data_file),
-            'snapshots': snapshots
-        }
-    )
+    context = {
+        'form': form,
+        'current_fixture': str(current_fixture.data_file),
+        'snapshots': snapshots
+    }
 
     context.update(extra_context)
-    return HttpResponse(template.render(context))
+    return render(request, template_name, context)
 
 import_export_admin = staff_member_required(import_export_admin)
 
@@ -219,16 +214,12 @@ def import_report_hex(
     else:
         form = UploadContentsForm()
 
-    template = loader.get_template(template_name)
-
-    context = RequestContext(
-        request, {
-            'form': form
-        }
-    )
+    context = {
+        'form': form
+    }
 
     context.update(extra_context)
-    return HttpResponse(template.render(context))
+    return render(request, template_name, context)
 
 import_report_hex = staff_member_required(import_report_hex)
 
@@ -272,8 +263,7 @@ def load_contents_fixture(fixture):
         fixture = fixture.file.name     # doesn't work - need abs path to be sure.
 
     # some models assume a relative path of '../media/'', though media_root is likely pointing at '../mediaroot/'
-    import string
-    fixture = string.replace(fixture,'../media/',settings.MEDIA_ROOT)
+    fixture = str.replace(fixture,'../media/',settings.MEDIA_ROOT)
 
     try:
         management.call_command('loaddata', fixture)
