@@ -444,16 +444,22 @@ function scenarioModel(options) {
 
     self.isLayerModel = ko.observable(false);
 
+    self.auto_open = ko.observable(true);
+
     self.attributes = [];
     self.scenarioAttributes = options.attributes ? options.attributes.attributes : [];
 
     self.showingLayerAttribution = ko.observable(false);
     self.toggleLayerAttribution = function() {
-
-
+        var layerID = '#' + app.viewModel.convertToSlug(self.name);
+        var layerHeaderID = layerID + '-header';
+        var layerIconID = layerID + '-icon';
         var attributeHeads = $('#aggregated-attribute-content').find('.accordion-heading');
         var attributeBodies = $('#aggregated-attribute-content').find('.accordion-body');
         var attributeIcons = $('#aggregated-attribute-content').find('i');
+        if ($(layerIconID + '.icon-chevron-up').length > 0) {
+          self.showingLayerAttribution(true);
+        }
         attributeBodies.slideUp(0);
         attributeBodies.removeClass('in');
         attributeHeads.removeClass('layer-attr-init');
@@ -477,9 +483,6 @@ function scenarioModel(options) {
             }
           }
         }
-        var layerID = '#' + app.viewModel.convertToSlug(self.name);
-        var layerHeaderID = layerID + '-header';
-        var layerIconID = layerID + '-icon';
         if ( self.showingLayerAttribution() ) {
             self.showingLayerAttribution(false);
         } else {
@@ -1090,7 +1093,10 @@ function scenariosModel(options) {
                                 var format = new OpenLayers.Format.WKT(),
                                     wkt = data.geometry_orig,
                                     feature = format.read(wkt);
-                                scenario.geometry_orig = feature;
+                                if (scenario) {
+                                  scenario.geometry_orig = feature;
+                                  app.map.activateAndShowFeatureAttribution(scenario);
+                                }
                             },
                             error: function(result) {
                                 debugger;

@@ -393,8 +393,7 @@ app.init = function() {
       }
     }
 
-    app.map.events.register("featureclick", null, function(e) {
-      var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
+    app.map.activateAndShowFeatureAttribution = function(layer) {
       var attrs;
       if (layer && app.viewModel.featureAttribution()) {
           var text = [],
@@ -438,7 +437,15 @@ app.init = function() {
           }, 100);
 
       }
-    });
+    }
+
+    app.map.layerClicked = function(e){
+      // app.map.events.register("featureclick", null, function(e) {
+      var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
+      app.map.activateAndShowFeatureAttribution(layer);
+    }
+
+    app.map.events.register("featureclick", null, app.map.layerClicked);
 
     app.featureClick = function(evt){
       app.clickEvent(evt.event.x, evt.event.y);
