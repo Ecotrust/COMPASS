@@ -153,6 +153,7 @@ class Layer(models.Model):
     summarize_to_grid = models.BooleanField(default=False)
     filterable = models.BooleanField(default=False)
     order = models.IntegerField(default=999)
+    auto_ident_open = models.BooleanField(default=False, verbose_name="Auto-Open Identify Window")
 
     PROJ_CHOICES = (
         ('EPSG:3643', 'Oregon Lambert (ODFW Default) [3643]'),
@@ -406,7 +407,8 @@ class Layer(models.Model):
             'arc_rest_instance_id': self.arc_rest_instance_id,
             'arc_rest_service_name': self.arc_rest_service_name,
             'arc_rest_out_fields': self.arc_rest_out_fields,
-            'ocs': self.ocs
+            'ocs': self.ocs,
+            'auto_open': self.auto_ident_open
         }
         return layers_dict
 

@@ -51,7 +51,7 @@ class ThemeAdmin(admin.ModelAdmin):
 
 
 class LayerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'order', 'layer_type', 'url')
+    list_display = ('name', 'order', 'layer_type', 'auto_ident_open', 'url')
     search_fields = ['name', 'layer_type', 'url']
     ordering = ('name',)
     exclude = (

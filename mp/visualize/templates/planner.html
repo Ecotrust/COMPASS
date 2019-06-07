@@ -195,11 +195,11 @@
                                           <div data-bind="foreach: { data: attributeLayers(), as: 'attr_layer'}">
                                               <div data-bind="if: $root.aggregatedAttributes()[name]">
                                                   <div class="accordion-group">
-                                                      <div class="accordion-heading layer-attr-collapse" data-bind="click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
+                                                      <div class="accordion-heading" data-bind="css: {'layer-attr-init': auto_open && $('.layer-attr-init').length == 0, 'layer-attr-collapse': !auto_open || $('.layer-attr-init').length > 0}, click: toggleLayerAttribution, attr: { id: $root.convertToSlug(name) + '-header' }">
                                                           <a class="accordion-toggle container-fluid">
                                                             <div class="row-fluid layer-attr-display-ctrl">
                                                               <div class="span1">
-                                                                <i class='icon-chevron-down' data-bind="attr: { id: $root.convertToSlug(name) + '-icon' }"></i>
+                                                                <i class='attr-toggle-chevron' data-bind="attr: { id: $root.convertToSlug(name) + '-icon' }, css: { 'icon-chevron-up': auto_open  && $('.attr-toggle-chevron.icon-chevron-up').length == 0, 'icon-chevron-down': !auto_open || $('.attr-toggle-chevron.icon-chevron-up').length > 0}"></i>
                                                               </div>
                                                               <div class="span11">
                                                                 <h4 class="layer-attr-title" data-bind="text: featureAttributionName"></h4>
@@ -222,7 +222,7 @@
                                                           <!-- /ko -->
 
                                                       </div>
-                                                      <div class="accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }" >
+                                                      <div class="attr-window-content accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }, css: {'in': auto_open && $('.attr-window-content.accordion-body.collapse.in').length == 0}" >
                                                           <div class="accordion-inner">
                                                             <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">
                                                               <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">

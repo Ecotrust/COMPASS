@@ -40,6 +40,8 @@ function layerModel(options, parent) {
 
     self.isLayerModel = ko.observable(true);
 
+    self.auto_open = options.auto_open || false;
+
     if (self.featureAttributionName === 'OCS Lease Blocks') {
         self.featureAttributionName = 'OCS Lease Blocks -- DRAFT Report';
     } else if (self.featureAttributionName === 'Party & Charter Boat') {
@@ -813,9 +815,15 @@ function layerModel(options, parent) {
 
     self.showingLayerAttribution = ko.observable(false);
     self.toggleLayerAttribution = function() {
+        var layerID = '#' + app.viewModel.convertToSlug(self.name);
+        var layerHeaderID = layerID + '-header';
+        var layerIconID = layerID + '-icon';
         var attributeHeads = $('#aggregated-attribute-content').find('.accordion-heading');
         var attributeBodies = $('#aggregated-attribute-content').find('.accordion-body');
         var attributeIcons = $('#aggregated-attribute-content').find('i');
+        if ($(layerIconID + '.icon-chevron-up').length > 0) {
+          self.showingLayerAttribution(true);
+        }
         attributeBodies.slideUp(0);
         attributeBodies.removeClass('in');
         attributeHeads.removeClass('layer-attr-init');
@@ -839,9 +847,7 @@ function layerModel(options, parent) {
             }
           }
         }
-        var layerID = '#' + app.viewModel.convertToSlug(self.name);
-        var layerHeaderID = layerID + '-header';
-        var layerIconID = layerID + '-icon';
+
         if ( self.showingLayerAttribution() ) {
             self.showingLayerAttribution(false);
         } else {
