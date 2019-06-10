@@ -232,7 +232,7 @@ def geocode(txt):
     searches = [
         # geocoders.GeoNames(),
         geocoders.ArcGIS(),
-        geocoders.OpenMapQuest(),
+        # geocoders.OpenMapQuest(),
         geocoders.Nominatim(),
         # geocoders.YahooPlaceFinder(),
         # geocoders.Bing(api_key=settings.BING_API_KEY),

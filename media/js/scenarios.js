@@ -525,6 +525,15 @@ function scenarioModel(options) {
     self.opacity = ko.observable(self.defaultOpacity);
     self.type = 'Vector';
 
+    //pretend model is a layer when adding to Active Tab:
+    self.data_source = false;
+    self.data_notes = null;
+    self.data_download = null;
+    self.metadata = null;
+    self.source = null;
+    self.tiles = null;
+    self.ocs = null;
+
     self.opacity.subscribe( function(newOpacity) {
         if ( self.layer ) {
             self.layer.styleMap.styles['default'].defaultStyle.strokeOpacity = newOpacity;
@@ -1163,6 +1172,7 @@ function scenariosModel(options) {
         }
     }; // end addScenarioToMap
 
+
     self.processScenario = function(scenario, scenarioId, feature, fillColor, opacity, strokeColor, stroke, zoomTo, isDrawingModel, orig_geom) {
 
       var layer = new OpenLayers.Layer.Vector(
@@ -1279,12 +1289,11 @@ function scenariosModel(options) {
       }
       app.map.addLayer(scenario.layer);
       //add scenario to Active tab
-      try {
-          app.viewModel.activeLayers.remove(function(item) { return item.uid === scenario.uid; } );
-          app.viewModel.activeLayers.unshift(scenario);
-      } catch(err) {
-          console.log(err);
-      }
+
+      app.viewModel.activeLayers.remove(function(item) {
+        return item.hasOwnProperty('uid') && item.uid === scenario.uid;
+      } );
+      app.viewModel.activeLayers.unshift(scenario);
 
       if (zoomTo) {
           self.zoomToScenario(scenario);

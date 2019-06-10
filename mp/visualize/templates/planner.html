@@ -324,13 +324,13 @@
                                       <div id="overview-overlay-text" style="margin-top: 5px">
                                           <span class="text" data-bind="text: getOverviewText()" style="white-space: pre-wrap"></span>
                                           <div class="notes">
-                                              <div data-bind="visible: activeInfoSublayer() ? activeInfoSublayer().data_source : activeInfoLayer().data_source">
+                                              <div data-bind="visible: activeInfoSublayer() ? activeInfoSublayer().data_source : activeInfoLayer() && activeInfoLayer().data_source">
                                                   Source:
-                                                  <span data-bind="text: activeInfoSublayer() ? activeInfoSublayer().data_source : activeInfoLayer().data_source"></span>
+                                                  <span data-bind="text: activeInfoSublayer() ? activeInfoSublayer().data_source : activeInfoLayer() ? activeInfoLayer().data_source : ''"></span>
                                               </div>
-                                              <div style="margin-top: 5px" data-bind="visible: activeInfoSublayer() ? activeInfoSublayer().data_notes : activeInfoLayer().data_notes">
+                                              <div style="margin-top: 5px" data-bind="visible: activeInfoSublayer() ? activeInfoSublayer().data_notes : activeInfoLayer() && activeInfoLayer().data_notes">
                                                   Notes:
-                                                  <span data-bind="text: activeInfoSublayer() ? activeInfoSublayer().data_notes : activeInfoLayer().data_notes"></span>
+                                                  <span data-bind="text: activeInfoSublayer() ? activeInfoSublayer().data_notes : activeInfoLayer() ? activeInfoLayer().data_notes : ''"></span>
                                               </div>
                                           </div>
                                       </div>
@@ -541,11 +541,11 @@
                                                                                         <div class="notes">
                                                                                             <div data-bind="visible: data_source">
                                                                                                 Source:
-                                                                                                <span data-bind="text: data_source"></span>
+                                                                                                <span data-bind="text: data_source ? data_source : false"></span>
                                                                                             </div>
                                                                                             <div style="margin-top: 5px" data-bind="visible: data_notes">
                                                                                                 Notes:
-                                                                                                <span data-bind="text: data_notes"></span>
+                                                                                                <span data-bind="text: data_notes ? data_notes : ''"></span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -664,11 +664,11 @@
                                                                                                     <div class="notes">
                                                                                                         <div data-bind="visible: data_source">
                                                                                                             Source:
-                                                                                                            <span data-bind="text: data_source"></span>
+                                                                                                            <span data-bind="text: data_source ? data_source: ''"></span>
                                                                                                         </div>
                                                                                                         <div style="margin-top: 5px" data-bind="visible: data_notes">
                                                                                                             Notes:
-                                                                                                            <span data-bind="text: data_notes"></span>
+                                                                                                            <span data-bind="text: data_notes ? data_notes : ''"></span>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -780,11 +780,11 @@
                                                                   <div class="notes">
                                                                       <div data-bind="visible: data_source">
                                                                           Source:
-                                                                          <span data-bind="text: data_source"></span>
+                                                                          <span data-bind="text: data_source ? data_source : ''"></span>
                                                                       </div>
                                                                       <div style="margin-top: 5px" data-bind="visible: data_notes">
                                                                           Notes:
-                                                                          <span data-bind="text: data_notes"></span>
+                                                                          <span data-bind="text: data_notes ? data_notes : ''"></span>
                                                                       </div>
                                                                   </div>
                                                               </div>

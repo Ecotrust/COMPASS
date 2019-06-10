@@ -1254,7 +1254,7 @@ function viewModel() {
               app.map.zoomToExtent(bounds);
               var lonlat = new OpenLayers.LonLat(result.result.latlon[1], result.result.latlon[0]);
               lonlat.transform("EPSG:4326","EPSG:3857");
-              self.updateMarker(lonlat);
+              self.updateSearchMarker(lonlat);
             } else {
               alert("\"" + result.message + "\" not found. Please try another search.");
             }
@@ -1465,7 +1465,15 @@ function viewModel() {
       return topZIndex;
     }
 
-    self.updateMarker = function(lonlat) {
+    self.updateClickMarker = function(lonlat) {
+      self.updateMarker(lonlat, true);
+    }
+
+    self.updateSearchMarker = function(lonlat) {
+      self.updateMarker(lonlat, false);
+    }
+
+    self.updateMarker = function(lonlat, is_feature) {
         //at some point this function is being called without an appropriate lonlat object...
         if (lonlat.lon && lonlat.lat) {
             app.markers.clearMarkers();
@@ -1473,7 +1481,8 @@ function viewModel() {
             app.marker = new OpenLayers.Marker(lonlat, app.markers.icon);
             app.marker.map = app.map;
             app.marker.display(true);
-            if (app.marker && !self.aggregatedAttributes() && self.featureAttribution()) {
+            // if there is a marker, and it's either for a search or for a selected feature with no attributes
+            if (app.marker && (!is_feature || (!self.aggregatedAttributes() && self.featureAttribution()))) {
                 app.markers.addMarker(app.marker);
                 app.map.setLayerIndex(app.markers, 999);
                 // if (app.embeddedMap) {
