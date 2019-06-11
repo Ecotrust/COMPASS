@@ -899,18 +899,8 @@ function layerModel(options, parent) {
 
     // display descriptive text below the map
     self.toggleActiveDescription = function(layer) {
-        if ( ! $('#' + layer.id + '_overview').hasClass('in')) {
-          $('#' + layer.id + '_overview').addClass('in');
-          $('#' + layer.id + '_overview_active').addClass('in');
-        } else {
-          $('#' + layer.id + '_overview').removeClass('in');
-          $('#' + layer.id + '_overview_active').removeClass('in');
-        }
-        app.viewModel.updateScrollBars();
-    };
-
-    self.toggleActiveDescription = function(layer) {
-        if ( ! $('#' + layer.id + '_overview_active').hasClass('in')) {
+      if (($('#' + layer.id + '_overview_active').length > 0 && ! $('#' + layer.id + '_overview_active').hasClass('in')) ||
+                  ($('#' + layer.id + '_overview').length > 0 && ! $('#' + layer.id + '_overview').hasClass('in'))){
           $('#' + layer.id + '_overview').addClass('in');
           $('#' + layer.id + '_overview_active').addClass('in');
         } else {
