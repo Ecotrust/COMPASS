@@ -16,5 +16,6 @@ urlpatterns = [
     re_path(r'get_selections$', get_selections),
     re_path(r'get_leaseblock_features$', get_leaseblock_features),
     re_path(r'get_filter_count$', get_filter_count),
-    re_path(r'get_filter_results$', get_filter_results)
+    re_path(r'get_filter_results$', get_filter_results),
+    re_path(r'get_report_html/(?P<uid>[\w_]+)/$', get_report_html),
 ]
