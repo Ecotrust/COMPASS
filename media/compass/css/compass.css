@@ -60,6 +60,14 @@ body {
 
 }
 
+.report-spinner {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  display: table;
+}
+
 .ofr .report-description.btn:hover {
   /* Copied straight from Bootstrap's .btn css - credit to Twitter */
   background-color: #e6e6e6;

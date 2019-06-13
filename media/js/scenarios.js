@@ -1104,7 +1104,7 @@ function scenariosModel(options) {
                                     feature = format.read(wkt);
                                 if (scenario) {
                                   scenario.geometry_orig = feature;
-                                  app.map.activateAndShowFeatureAttribution(scenario);
+                                  app.map.activateAndShowFeatureAttribution(scenario, isDrawingModel);
                                 }
                             },
                             error: function(result) {

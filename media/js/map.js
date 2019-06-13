@@ -393,7 +393,7 @@ app.init = function() {
       }
     }
 
-    app.map.activateAndShowFeatureAttribution = function(layer) {
+    app.map.activateAndShowFeatureAttribution = function(layer, isDrawingModel) {
       var attrs;
       if (layer && app.viewModel.featureAttribution()) {
           var text = [],
@@ -428,6 +428,11 @@ app.init = function() {
               if (!app.map.clickOutput.attributes[title]) {
                   app.map.clickOutput.attributes[title] = text;
               }
+              if (layer instanceof drawingModel) {
+                app.map.clickOutput.attributes['is_html'] = true;
+              } else {
+                app.map.clickOutput.attributes['is_html'] = false;
+              }
               app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
               // app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
               //if (app.marker) {
@@ -442,7 +447,7 @@ app.init = function() {
     app.map.layerClicked = function(e){
       // app.map.events.register("featureclick", null, function(e) {
       var layer = e.feature.layer.layerModel || e.feature.layer.scenarioModel;
-      app.map.activateAndShowFeatureAttribution(layer);
+      app.map.activateAndShowFeatureAttribution(layer, false);
     }
 
     app.map.events.register("featureclick", null, app.map.layerClicked);
