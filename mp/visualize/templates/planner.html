@@ -225,7 +225,7 @@
                                                       <div class="attr-window-content accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }, css: {'in': auto_open && $('.attr-window-content.accordion-body.collapse.in').length == 0}" >
                                                           <div class="accordion-inner">
                                                             <!-- ko if: $root.aggregatedAttributes()[$data.name]['is_html'] -->
-                                                            <div>
+                                                            <div data-bind="attr: { id: $root.convertToSlug(name)+'-report'}">
                                                               <span class='report-spinner'>
                                                                 <p>Loading report...</p>
                                                                 <img src="{% static 'img/ajax-loader.gif' %}">

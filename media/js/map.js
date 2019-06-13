@@ -430,6 +430,8 @@ app.init = function() {
               }
               if (layer instanceof drawingModel) {
                 app.map.clickOutput.attributes[title]['is_html'] = true;
+                // TODO: Ajax request to django asking for HTML report. Populate report div
+                var report_div_uid = layer.name + '-report';
               } else {
                 app.map.clickOutput.attributes[title]['is_html'] = false;
               }
