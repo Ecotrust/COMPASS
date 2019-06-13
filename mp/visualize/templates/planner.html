@@ -224,7 +224,7 @@
                                                       </div>
                                                       <div class="attr-window-content accordion-body collapse" data-bind="attr: { id: $root.convertToSlug(name) }, css: {'in': auto_open && $('.attr-window-content.accordion-body.collapse.in').length == 0}" >
                                                           <div class="accordion-inner">
-                                                            <!-- ko if: $root.aggregatedAttributes()['is_html'] -->
+                                                            <!-- ko if: $root.aggregatedAttributes()[$data.name]['is_html'] -->
                                                             <div>
                                                               <span class='report-spinner'>
                                                                 <p>Loading report...</p>
@@ -232,7 +232,7 @@
                                                               </span>
                                                             </div>
                                                             <!-- /ko -->
-                                                            <!-- ko ifnot: $root.aggregatedAttributes()['is_html'] -->
+                                                            <!-- ko ifnot: $root.aggregatedAttributes()[$data.name]['is_html'] -->
                                                             <div data-bind="foreach: { data: $root.aggregatedAttributes()[$data.name], as: '_layer'}">
                                                               <div data-bind="foreach: { data: _layer.subLayers, as: '_sublayer'}">
                                                                 <div data-bind="foreach: { data: Object.keys(_sublayer), as: '_key'}">

@@ -429,9 +429,9 @@ app.init = function() {
                   app.map.clickOutput.attributes[title] = text;
               }
               if (layer instanceof drawingModel) {
-                app.map.clickOutput.attributes['is_html'] = true;
+                app.map.clickOutput.attributes[title]['is_html'] = true;
               } else {
-                app.map.clickOutput.attributes['is_html'] = false;
+                app.map.clickOutput.attributes[title]['is_html'] = false;
               }
               app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
               // app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
