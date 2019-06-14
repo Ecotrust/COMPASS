@@ -189,20 +189,6 @@ def get_attributes(request, uid):
 
     return HttpResponse(dumps(scenario_obj.serialize_attributes))
 
-def get_report_html(request, uid):
-    try:
-        scenario_obj = get_feature_by_uid(uid)
-    except Scenario.DoesNotExist:
-        raise Http404
-
-    #check permissions
-    viewable, response = scenario_obj.is_viewable(request.user)
-    if not viewable:
-        return response
-
-    # return HttpResponse(scenario_obj.report)
-    return HttpResponse("<h3>Foo</h3><p>A paragraph</p>")
-
 '''
 '''
 def get_sharing_groups(request):

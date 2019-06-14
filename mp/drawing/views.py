@@ -1,5 +1,5 @@
 from django.http import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.contrib.gis.geos import GEOSGeometry
 from django.core.exceptions import ObjectDoesNotExist
 from madrona.features.models import Feature
@@ -116,6 +116,21 @@ def get_attributes(request, uid):
         return response
 
     return HttpResponse(dumps(scenario_obj.serialize_attributes))
+
+def get_report_html(request, uid, template='aoi/reports/report.html'):
+    try:
+        scenario_obj = get_feature_by_uid(uid)
+    except Scenario.DoesNotExist:
+        raise Http404
+
+    #check permissions
+    viewable, response = scenario_obj.is_viewable(request.user)
+    if not viewable:
+        return response
+
+    context = scenario_obj.serialize_attributes
+    return render(request, template, context)
+
 
 '''
 '''

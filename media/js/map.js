@@ -430,16 +430,16 @@ app.init = function() {
               }
               if (layer instanceof drawingModel) {
                 app.map.clickOutput.attributes[title]['is_html'] = true;
-                // TODO: Ajax request to django asking for HTML report. Populate report div
                 $.ajax( {
-                    url: "/scenario/get_report_html/" + layer.id + "/",
+                    url: "/drawing/get_report_html/" + layer.id + "/",
                     type: 'GET',
                     success: function(result) {
                       var report_div_uid = layer.name + '-report';
                       $('#' + report_div_uid).html(result);
                     },
                     error: function(result) {
-
+                      var report_div_uid = layer.name + '-report';
+                      $('#' + report_div_uid).html(result);
                     }
                   });
               } else {

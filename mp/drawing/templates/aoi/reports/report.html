@@ -1,0 +1,14 @@
+<div class="strategy-report">
+    <dl>
+      {% for attr in attributes %}
+        <dt>
+          {% if attr.title == "tab" %}
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          {% else %}
+            <span>{{ attr.title }}:</span>
+          {% endif %}
+          <span style="font-weight: normal">{{ attr.data|safe }}</span>
+        </dt>
+      {% endfor %}
+    </dl>
+</div>
