@@ -117,18 +117,31 @@ def get_attributes(request, uid):
 
     return HttpResponse(dumps(scenario_obj.serialize_attributes))
 
-def get_report_html(request, uid, template='aoi/reports/report.html'):
+def get_report_html(request, uid=None, template='aoi/reports/report.html'):
     try:
         scenario_obj = get_feature_by_uid(uid)
-    except Scenario.DoesNotExist:
+        #check permissions
+        viewable, response = scenario_obj.is_viewable(request.user)
+        if not viewable:
+            return response
+
+            context = scenario_obj.serialize_attributes
+    except AttributeError as e:
+        attributes = []
+        context = {'event': 'click', 'attributes': []}
+        if request.method == 'POST':
+            data = request.POST.dict()
+            for key in data.keys():
+                if key not in ['layer', 'Description']:
+                    attributes.append({
+                        'title': key,
+                        'data': data[key]
+                    })
+            context['attributes'] = attributes
+
+    except Exception as e:
         raise Http404
 
-    #check permissions
-    viewable, response = scenario_obj.is_viewable(request.user)
-    if not viewable:
-        return response
-
-    context = scenario_obj.serialize_attributes
     return render(request, template, context)
 
 

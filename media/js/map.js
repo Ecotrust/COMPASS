@@ -430,22 +430,28 @@ app.init = function() {
               }
               if (layer instanceof drawingModel) {
                 app.map.clickOutput.attributes[title]['is_html'] = true;
-                $.ajax( {
+                app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
+                if (app.is_authenticated) {
+
+                  $.ajax( {
                     url: "/drawing/get_report_html/" + layer.id + "/",
                     type: 'GET',
                     success: function(result) {
-                      var report_div_uid = layer.name + '-report';
+                      var report_div_uid = layer.name.split(' ').join('-') + '-report';
                       $('#' + report_div_uid).html(result);
                     },
                     error: function(result) {
-                      var report_div_uid = layer.name + '-report';
+                      var report_div_uid = layer.name.split(' ').join('-') + '-report';
                       $('#' + report_div_uid).html(result);
                     }
                   });
+                } else {
+                  getHtmlReport(layer.name);
+                }
               } else {
                 app.map.clickOutput.attributes[title]['is_html'] = false;
+                app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
               }
-              app.viewModel.aggregatedAttributes(app.map.clickOutput.attributes);
               // app.viewModel.updateMarker(app.map.getLonLatFromViewPortPx(e.event.xy));
               //if (app.marker) {
               //    app.marker.display(true);

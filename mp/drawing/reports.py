@@ -75,7 +75,10 @@ def apply_lookup(id_list, lookup):
     return values
 
 def unordered_list(list):
-    return "<ul><li>%s</li></ul>" % ("</li><li>".join(list))
+    if len(list)> 0:
+        return "<ul><li>%s</li></ul>" % ("</li><li>".join(list))
+    else:
+        return "<ul><li>None</li></ul>"
 
 #TODO: Populate species lookup when you get it from Mike
 

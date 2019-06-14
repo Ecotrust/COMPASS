@@ -1,4 +1,30 @@
 
+function getHtmlReport(layer_name) {
+  if (app.viewModel.aggregatedAttributes()) {
+    layer_attrs = app.viewModel.aggregatedAttributes()[layer_name];
+    var attributes = {};
+    data = {
+      'layer': layer_name,
+    }
+    for (var i=0; i<layer_attrs.length; i++) {
+      data[layer_attrs[i].display] = layer_attrs[i].data;
+    }
+    $.ajax({
+        url: '/drawing/get_report_html/',
+        type: 'POST',
+        data: data,
+        success: function(response, status, request) {
+          var report_div_uid = layer_name.split(' ').join('-') + '-report';
+          $('#' + report_div_uid).html(response);
+        },
+        error: function(response) {
+          var report_div_uid = layer_name.split(' ').join('-') + '-report';
+          $('#' + report_div_uid).html(response);
+        }
+    });
+  }
+}
+
 function drawingModel(options) {
     var self = this;
 
