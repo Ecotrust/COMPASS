@@ -92,7 +92,7 @@ def get_summary_reports(grid_cells, list_style='unordered'):
 
     # Number of Grid Cells
     cell_count = grid_cells.count()
-    attributes.append({'title': 'Area (sq. Miles)', 'data': format(cell_count, ',d')})
+    attributes.append({'title': 'Area mi<sup>2</sup>', 'data': format(cell_count, ',d')})
 
     # Total Area
     # total_area = sum([gc.geometry.area for gc in grid_cells]) / 1000000  # sq m to sq km

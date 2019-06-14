@@ -1420,7 +1420,7 @@ function viewModel() {
     };
     self.updateAggregatedAttributesOverlayWidthAndScrollbar = function() {
         setTimeout( function() {
-            var overlayWidth = (document.getElementById('aggregated-attribute-overlay-test').clientWidth+75),
+            var overlayWidth = (document.getElementById('aggregated-attribute-content').clientWidth+75),
                 width = overlayWidth < 380 ? overlayWidth : 380;
             self.aggregatedAttributesWidth(width + 'px');
             self.updateCustomScrollbar('#aggregated-attribute-content');

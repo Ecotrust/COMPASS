@@ -765,7 +765,7 @@ app.addArcRestLayerToMap = function(layer) {
                   }
 
                   var layerName = layer.name;
-                  if (layer.legend && layer.legend.layers.length >= layerIdIndex){
+                  if (layer.legend && layer.legend.layers.length > layerIdIndex){
                     layerName = layer.legend.layers[layerIdIndex].layer.title;
                   } else if (returnJSON.hasOwnProperty("displayFieldName")) {
                     layerName = returnJSON.displayFieldName;
