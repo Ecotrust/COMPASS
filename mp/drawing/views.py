@@ -117,33 +117,57 @@ def get_attributes(request, uid):
 
     return HttpResponse(dumps(scenario_obj.serialize_attributes))
 
+def get_report_data(request, uid=None):
+        try:
+            scenario_obj = get_feature_by_uid(uid)
+            #check permissions
+            viewable, response = scenario_obj.is_viewable(request.user)
+            if not viewable:
+                return response
+
+                context = scenario_obj.serialize_attributes
+        except AttributeError as e:
+            attributes = []
+            context = {'event': 'click', 'attributes': []}
+            if request.method == 'POST':
+                if 'parameter' in request.POST.dict().keys():
+                    data = eval(request.POST.get('parameter'))
+                    for item in data:
+                        attributes.append({
+                            'title': item['display'],
+                            'data': item['data'],
+                        })
+                else:
+                    data = request.POST.dict()
+                    for key in data.keys():
+                        attributes.append({
+                            'title': key,
+                            'data': data[key]
+                        })
+                context['attributes'] = attributes
+
+        except Exception as e:
+            raise Http404
+
+        return context
+
 def get_report_html(request, uid=None, template='aoi/reports/report.html'):
-    try:
-        scenario_obj = get_feature_by_uid(uid)
-        #check permissions
-        viewable, response = scenario_obj.is_viewable(request.user)
-        if not viewable:
-            return response
-
-            context = scenario_obj.serialize_attributes
-    except AttributeError as e:
-        attributes = []
-        context = {'event': 'click', 'attributes': []}
-        if request.method == 'POST':
-            data = request.POST.dict()
-            for key in data.keys():
-                if key not in ['layer', 'Description']:
-                    attributes.append({
-                        'title': key,
-                        'data': data[key]
-                    })
-            context['attributes'] = attributes
-
-    except Exception as e:
-        raise Http404
+    context = get_report_data(request, uid)
 
     return render(request, template, context)
 
+def get_report_print(request, uid=None, template='aoi/reports/report_print.html'):
+    context = get_report_data(request, uid)
+    context['title'] = 'Report'
+    context['description'] = None
+
+    for attr in context['attributes']:
+        if attr['title'] == 'layer':
+            context['title'] = attr['data']
+        if attr['title'] == 'Description':
+            context['description'] = attr['data']
+
+    return render(request, template, context)
 
 '''
 '''

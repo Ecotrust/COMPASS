@@ -15,14 +15,24 @@ function getHtmlReport(layer_name) {
         data: data,
         success: function(response, status, request) {
           var report_div_uid = layer_name.split(' ').join('-') + '-report';
+          report_div_uid = report_div_uid.replace(/[^A-Za-z0-9-_]/g, '')
           $('#' + report_div_uid).html(response);
         },
         error: function(response) {
           var report_div_uid = layer_name.split(' ').join('-') + '-report';
+          report_div_uid = report_div_uid.replace(/[^A-Za-z0-9-_]/g, '')
           $('#' + report_div_uid).html(response);
         }
     });
   }
+}
+
+function getAnonReport(drawingModel, evt){
+    evt.stopPropagation();
+    $('#strategy-report-export-title').html(drawingModel.name);
+    $('#strategy-report-export-csv-button').attr('href', '/media/csvs/'+ drawingModel.name + '_' + drawingModel.uid + '_drawing.csv');
+    $('#report_data_field').val(JSON.stringify(app.viewModel.aggregatedAttributes()[drawingModel.name]));
+    $('#exportModal').modal('show');
 }
 
 function drawingModel(options) {

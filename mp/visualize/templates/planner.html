@@ -227,14 +227,7 @@
                                                               <!-- /ko -->
                                                               <!-- ko ifnot: app.is_authenticated -->
                                                               <!-- <a class="btn zoom-to-button" data-bind="attr:{href: '/media/csvs/'+ attr_layer.name + '_' + attr_layer.uid + '_drawing.csv' }, click: function(){ return true }, clickBubble: false">Export</a> -->
-                                                              <a class="btn zoom-to-button" role="button" data-toggle="modal" data-bind="attr:{href: '#exportModal'}, click: function(drawingModel, evt){
-                                                                  evt.stopPropagation();
-                                                                  $('#strategy-report-export-title').html(attr_layer.name);
-                                                                  $('#strategy-report-export-csv-button').attr('href', '/media/csvs/'+ attr_layer.name + '_' + attr_layer.uid + '_drawing.csv');
-                                                                  $('#strategy-report-export-printable-button').attr('href', '/drawing/get_report_html/'+ attr_layer.uid + '/');
-                                                                  $('#strategy-report-export-printable-button').attr('target', '_blank');
-                                                                  $('#exportModal').modal('show');
-                                                                }">Export</a>
+                                                              <a class="btn zoom-to-button" role="button" data-toggle="modal" data-bind="attr:{href: '#exportModal'}, click: getAnonReport">Export</a>
                                                               <!-- /ko -->
                                                           <!-- /ko -->
 

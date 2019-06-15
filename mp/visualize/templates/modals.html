@@ -263,7 +263,11 @@
     <h3 id="strategy-report-export-title"></h3>
     <p>Export your Strategy Report:</p>
     <a class="btn" id="strategy-report-export-csv-button">Download Spreadsheet</a>
-    <a class="btn" id="strategy-report-export-printable-button">View Printable Report</a>
+    <form id="invisible_form" action="/drawing/get_report_print/" method="post" target="_blank">
+      {% csrf_token %}
+      <input id="report_data_field" name="parameter" type="hidden" value="default">
+      <input type='submit' value='View Printable Report' class="btn" id="strategy-report-export-printable-button">
+    </form>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
