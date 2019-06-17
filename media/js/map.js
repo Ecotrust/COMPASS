@@ -437,13 +437,11 @@ app.init = function() {
                     url: "/drawing/get_report_html/" + layer.id + "/",
                     type: 'GET',
                     success: function(result) {
-                      var report_div_uid = layer.name.split(' ').join('-') + '-report';
-                      report_div_uid = report_div_uid.replace(/[^A-Za-z0-9-_]/g, '')
+                      var report_div_uid = app.viewModel.convertToSlug(layer.name) + '-report';
                       $('#' + report_div_uid).html(result);
                     },
                     error: function(result) {
-                      var report_div_uid = layer.name.split(' ').join('-') + '-report';
-                      report_div_uid = report_div_uid.replace(/[^A-Za-z0-9-_]/g, '')
+                      var report_div_uid = app.viewModel.convertToSlug(layer.name) + '-report';
                       $('#' + report_div_uid).html(result);
                     }
                   });

@@ -158,12 +158,12 @@ def get_report_html(request, uid=None, template='aoi/reports/report.html'):
 
 def get_report_print(request, uid=None, template='aoi/reports/report_print.html'):
     context = get_report_data(request, uid)
-    context['title'] = 'Report'
+    context['title'] = 'Strategy Report'
     context['description'] = None
 
     for attr in context['attributes']:
         if attr['title'] == 'layer':
-            context['title'] = attr['data']
+            context['title'] = "Strategy Report: %s" % attr['data']
         if attr['title'] == 'Description':
             context['description'] = attr['data']
 
