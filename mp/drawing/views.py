@@ -125,7 +125,8 @@ def get_report_data(request, uid=None):
             if not viewable:
                 return response
 
-                context = scenario_obj.serialize_attributes
+            context = scenario_obj.serialize_attributes
+            context['title'] = 'Strategy Report: %s' % scenario_obj.name
         except AttributeError as e:
             attributes = []
             context = {'event': 'click', 'attributes': []}

@@ -1,7 +1,17 @@
+{% load static %}
 <HTML>
+  <head>
+    <link href="{% static 'assets/bootstrap/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'compass/css/strategy_report.css' %}" rel="stylesheet">
+    <link href="{% static 'compass/css/print_report.css' %}" rel="stylesheet">
+  </head>
   <body>
-    <h1>{{ title }}</h1>
-    <h3>{{ description }}</h3>
-    {% include 'aoi/reports/report.html' %}
+    <div class='container'>
+      <h1>{{ title }}</h1>
+      {% if description %}
+        <h3>{{ description }}</h3>
+      {% endif %}
+      {% include 'aoi/reports/report.html' %}
+    </div>
   </body>
 </HTML>

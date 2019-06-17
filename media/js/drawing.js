@@ -25,6 +25,14 @@ function getHtmlReport(layer_name) {
   }
 }
 
+function getRegisteredReport(drawingModal, evt) {
+    evt.stopPropagation();
+    $('#strategy-report-export-title').html(drawingModal.name);
+    $('#strategy-report-export-csv-button').attr('href', '/drawing/get_csv/'+ drawingModal.uid);
+    $('#invisible_form').attr('action', '/drawing/get_report_print/'+ drawingModal.uid + '/');
+    $('#exportModal').modal('show');
+}
+
 function getAnonReport(drawingModel, evt){
     evt.stopPropagation();
     $('#strategy-report-export-title').html(drawingModel.name);
