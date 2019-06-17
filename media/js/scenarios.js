@@ -557,6 +557,7 @@ function scenarioModel(options) {
           if (scenario.active() && self.opacity() > 0) {
             self.original_opacity = self.opacity();
             self.opacity(0);
+            app.viewModel.aggregatedAttributes(false);
           } else {
             if (self.hasOwnProperty('original_opacity')){
               self.opacity(self.original_opacity);
@@ -564,6 +565,8 @@ function scenarioModel(options) {
             } else {
               self.opacity(0.8); //TODO: DON'T HARDCODE THIS!!!
             }
+            var isDrawingModel = scenario instanceof drawingModel;
+            app.map.activateAndShowFeatureAttribution(scenario, isDrawingModel);
           }
         } else {
             if (scenario.active()) { // if layer is active, then deactivate
@@ -697,6 +700,8 @@ function scenarioModel(options) {
         } else { //make visible
             scenario.visible(true);
             app.setLayerVisibility(scenario, true);
+            isDrawingModel = scenario instanceof drawingModel;
+            app.map.activateAndShowFeatureAttribution(scenario, isDrawingModel);
         }
     };
 
@@ -1262,6 +1267,9 @@ function scenariosModel(options) {
                   self.drawingList.push(scenario);
               }
               self.drawingList.sort(self.alphabetizeByName);
+              if (!app.is_authenticated) {
+                app.map.activateAndShowFeatureAttribution(scenario, isDrawingModel);
+              }
           } else {
               var previousScenario = ko.utils.arrayFirst(self.scenarioList(), function(oldScenario) {
                   return oldScenario.uid === scenario.uid;
