@@ -28,7 +28,7 @@ function getHtmlReport(layer_name) {
 function getRegisteredReport(drawingModal, evt) {
     evt.stopPropagation();
     $('#strategy-report-export-title').html(drawingModal.name);
-    $('#strategy-report-export-csv-button').attr('href', '/drawing/get_csv/'+ drawingModal.uid);
+    $('#strategy-report-export-csv-button').attr('href', '/drawing/get_csv/'+ encodeURIComponent(drawingModal.uid));
     $('#invisible_form').attr('action', '/drawing/get_report_print/'+ drawingModal.uid + '/');
     $('#exportModal').modal('show');
 }
@@ -36,7 +36,7 @@ function getRegisteredReport(drawingModal, evt) {
 function getAnonReport(drawingModel, evt){
     evt.stopPropagation();
     $('#strategy-report-export-title').html(drawingModel.name);
-    $('#strategy-report-export-csv-button').attr('href', '/media/csvs/'+ drawingModel.name + '_' + drawingModel.uid + '_drawing.csv');
+    $('#strategy-report-export-csv-button').attr('href', '/media/csvs/'+ encodeURIComponent(drawingModel.name + '_' + drawingModel.uid + '_drawing.csv'));
     $('#report_data_field').val(JSON.stringify(app.viewModel.aggregatedAttributes()[drawingModel.name]).slice(0, -1) + ', {"display": "layer", "data": "' + drawingModel.name + '"}]');
     $('#exportModal').modal('show');
 }
