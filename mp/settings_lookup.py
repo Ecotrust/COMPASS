@@ -1,3 +1,15 @@
+ECOREGION_LOOKUP = {
+    'blue mountains': "<a href='https://oregonconservationstrategy.org/ecoregion/blue-mountains/' class='ocs-species-link' target='_blank'>Blue Mountains</a>",
+    'coast range': "<a href='https://oregonconservationstrategy.org/ecoregion/coast-range/' class='ocs-species-link' target='_blank'>Coast Range</a>",
+    'columbia plateau': "<a href='https://oregonconservationstrategy.org/ecoregion/columbia-plateau/' class='ocs-species-link' target='_blank'>Columbia Plateau</a>",
+    'east cascades': "<a href='https://oregonconservationstrategy.org/ecoregion/east-cascades/' class='ocs-species-link' target='_blank'>East Cascades</a>",
+    'klamath mountains': "<a href='https://oregonconservationstrategy.org/ecoregion/klamath-mountains/' class='ocs-species-link' target='_blank'>Klamath Mountains</a>",
+    'northern basin and range': "<a href='https://oregonconservationstrategy.org/ecoregion/northern-basin-and-range/' class='ocs-species-link' target='_blank'>Northern Basin and Range</a>",
+    'west cascades': "<a href='https://oregonconservationstrategy.org/ecoregion/west-cascades/' class='ocs-species-link' target='_blank'>West Cascades</a>",
+    'willamette valley': "<a href='https://oregonconservationstrategy.org/ecoregion/willamette-valley/' class='ocs-species-link' target='_blank'>Willamette Valley</a>",
+    'nearshore': "<a href='https://oregonconservationstrategy.org/ecoregion/nearshore/' class='ocs-species-link' target='_blank'>Nearshore</a>",
+}
+
 SPECIES_LOOKUP = {
     "1":u"<a href='https://oregonconservationstrategy.org/strategy-species/cascade-torrent-salamander/' class='ocs-species-link' target='_blank'>Cascade Torrent Salamander</a>",
     "2":u"<a href='https://oregonconservationstrategy.org/strategy-species/cascade-torrent-salamander/' class='ocs-species-link' target='_blank'>Cascade Torrent Salamander</a>",

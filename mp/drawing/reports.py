@@ -80,8 +80,6 @@ def unordered_list(list):
     else:
         return "<ul><li>None</li></ul>"
 
-#TODO: Populate species lookup when you get it from Mike
-
 species_lookup = settings.SPECIES_LOOKUP
 
 def get_summary_reports(grid_cells, list_style='unordered'):
@@ -113,10 +111,16 @@ def get_summary_reports(grid_cells, list_style='unordered'):
 
     ecoregions = get_unique_list_values(grid_cells, 'ecoregion')
     ecoregions.sort()
+    ecoregion_list = []
+    for ecoregion in ecoregions:
+        if ecoregion.lower() in settings.ECOREGION_LOOKUP.keys():
+            ecoregion_list.append(settings.ECOREGION_LOOKUP[ecoregion.lower()])
+        else:
+            ecoregion_list.append(ecoregion)
     if list_style=='unordered':
-        attributes.append({'title': report_attr_names['ecoregions'], 'data': unordered_list(ecoregions)})
+        attributes.append({'title': report_attr_names['ecoregions'], 'data': unordered_list(ecoregion_list)})
     else:
-        attributes.append({'title': report_attr_names['ecoregions'], 'data': ecoregions})
+        attributes.append({'title': report_attr_names['ecoregions'], 'data': ecoregion_list})
 
     coas = get_unique_list_values(grid_cells, 'coa_name')
     coas.sort()
