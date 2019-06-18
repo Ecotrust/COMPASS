@@ -37,7 +37,14 @@ function getAnonReport(drawingModel, evt){
     evt.stopPropagation();
     $('#strategy-report-export-title').html(drawingModel.name);
     $('#strategy-report-export-csv-button').attr('href', '/media/csvs/'+ encodeURIComponent(drawingModel.name + '_' + drawingModel.uid + '_drawing.csv'));
-    $('#report_data_field').val(JSON.stringify(app.viewModel.aggregatedAttributes()[drawingModel.name]).slice(0, -1) + ', {"display": "layer", "data": "' + drawingModel.name + '"}]');
+    var geojson_in_options = {
+      'internalProjection': app.map.projection,
+      'externalProjection': "EPSG:4326",
+    }
+    var geojson_format = new OpenLayers.Format.GeoJSON(geojson_in_options);
+    var features = geojson_format.write(drawingModel.features);
+    feature = JSON.parse(features).features[0].geometry;
+    $('#report_data_field').val(JSON.stringify(app.viewModel.aggregatedAttributes()[drawingModel.name]).slice(0, -1) + ', {"display": "layer", "data": "' + drawingModel.name + '"}, {"display": "map", "data": ' + JSON.stringify(feature) + '}]');
     $('#exportModal').modal('show');
 }
 

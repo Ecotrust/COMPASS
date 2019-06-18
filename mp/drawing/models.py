@@ -51,6 +51,12 @@ class AOI(PolygonFeature):
         else:
             return clipped_shape
 
+    @property
+    def geojson_4326(self):
+        geom = self.geometry_final
+        geom.transform(4326)
+        return geom.geojson
+
     def save(self, *args, **kwargs):
         self.geometry_final = self.clip_to_grid()
         # if self.geometry_final:

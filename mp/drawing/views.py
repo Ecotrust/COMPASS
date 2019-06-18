@@ -127,17 +127,27 @@ def get_report_data(request, uid=None):
 
             context = scenario_obj.serialize_attributes
             context['title'] = 'Strategy Report: %s' % scenario_obj.name
-        except AttributeError as e:
+            context['map'] = scenario_obj.geojson_4326
+        except (AttributeError, NameError) as e:
             attributes = []
             context = {'event': 'click', 'attributes': []}
             if request.method == 'POST':
                 if 'parameter' in request.POST.dict().keys():
-                    data = eval(request.POST.get('parameter'))
+                    null = None # eval on null was crashing
+                    try:
+                        data = eval(request.POST.get('parameter'))
+                    except NameError as e2:
+                        # backup plan in case eval crashes on more stuff
+                        import json
+                        data = json.loads(request.POST.get('parameter'))
                     for item in data:
-                        attributes.append({
-                            'title': item['display'],
-                            'data': item['data'],
-                        })
+                        if item['display'] == 'map':
+                            context['map'] = item['data']
+                        else:
+                            attributes.append({
+                                'title': item['display'],
+                                'data': item['data'],
+                            })
                 else:
                     data = request.POST.dict()
                     for key in data.keys():
@@ -150,6 +160,10 @@ def get_report_data(request, uid=None):
         except Exception as e:
             raise Http404
 
+
+        from datetime import datetime
+        now = datetime.now()
+        context['timestamp'] = now.strftime("%b %d, %Y %I:%M %p")
         return context
 
 def get_report_html(request, uid=None, template='aoi/reports/report.html'):

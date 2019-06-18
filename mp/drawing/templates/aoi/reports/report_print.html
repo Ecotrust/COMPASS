@@ -1,9 +1,13 @@
 {% load static %}
 <HTML>
   <head>
+    <link href="{% static 'assets/jquery/jquery.js' %}" rel="stylesheet">
     <link href="{% static 'assets/bootstrap/bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/leaflet/leaflet.css' %}" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
     <link href="{% static 'compass/css/strategy_report.css' %}" rel="stylesheet">
     <link href="{% static 'compass/css/print_report.css' %}" rel="stylesheet">
+
+    <script src="{% static 'assets/leaflet/leaflet.js' %}" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
   </head>
   <body>
     <div class='container'>
@@ -11,7 +15,60 @@
       {% if description %}
         <h3>{{ description }}</h3>
       {% endif %}
-      {% include 'aoi/reports/report.html' %}
+      {% if map %}
+        <div class="row">
+          <div class="span6">
+            <div id="topomapid" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0"></div>
+            <div id="topo-attribution">
+              <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Sources: <a href="https://www.esri.com">ESRI</a>, HERE, Garmin, Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), © OpenStreetMap contributors, and the GIS User Community
+            </div>
+          </div>
+          <div class="span6">
+            <div id="satmapid" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0"></div>
+            <div id="sat-attribution">
+              <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Sources: <a href="https://www.esri.com">ESRI</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and others
+            </div>
+          </div>
+        </div>
+        <script>
+
+          var topomap = L.map('topomapid').setView([44, -120.7], 6);
+          var satmap = L.map('satmapid').setView([44, -120.7], 6);
+
+          L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: 'Sources: <a href="https://www.esri.com">ESRI</a>, HERE, Garmin, ' +
+              'Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, ' +
+              'Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), &copy; OpenStreetMap contributors, ' +
+              'and the GIS User Community',
+            id: 'esri.topo'
+          }).addTo(topomap);
+
+          L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: 'Sources: <a href="https://www.esri.com">ESRI</a>, i-cubed, USDA, USGS, AEX, GeoEye, ' +
+              'Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and others',
+            id: 'esri.aerial'
+          }).addTo(satmap);
+
+
+        // Get GeoJSON and add layer
+        var geojsonFeature = {{ map|safe }};
+        var topoFeatureLayer = L.geoJSON(geojsonFeature);
+        topoFeatureLayer.addTo(topomap);
+        var satFeatureLayer = L.geoJSON(geojsonFeature);
+        satFeatureLayer.addTo(satmap);
+
+        // Zoom mapa to geojson feature
+        topomap.fitBounds(topoFeatureLayer.getBounds());
+        satmap.fitBounds(satFeatureLayer.getBounds());
+
+        </script>
+      {% endif %}
+      <p>{{ timestamp }}</p>
+      <div id="report-div">
+        {% include 'aoi/reports/report.html' %}
+      </div>
     </div>
   </body>
 </HTML>

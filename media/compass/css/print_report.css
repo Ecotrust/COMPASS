@@ -1,0 +1,41 @@
+.strategy-report {
+  border-top: none;
+}
+
+#report-div {
+  border-top: 1px solid black;
+}
+
+.strategy-report dt {
+  margin-top: 1rem;
+}
+
+.strategy-report dt span:first-child {
+  font-size: 20px;
+  margin-right: 1.5rem;
+}
+
+#satmapid,
+#topomapid {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  border: 2px solid black;
+  margin: 1rem;
+}
+
+#topo-attribution,
+#sat-attribution {
+  display: none;
+}
+
+@media print {
+  .leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    display: none;
+  }
+
+  #topo-attribution,
+  #sat-attribution {
+    display: block;
+  }
+}
