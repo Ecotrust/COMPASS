@@ -15,15 +15,17 @@
       {% if description %}
         <h3>{{ description }}</h3>
       {% endif %}
+      <p>{{ timestamp }}</p>
       {% if map %}
         <div class="row">
-          <div class="span6">
+          <div class="span1 left-buffer"></div>
+          <div class="span5">
             <div id="topomapid" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0"></div>
             <div id="topo-attribution">
               <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Sources: <a href="https://www.esri.com">ESRI</a>, HERE, Garmin, Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), © OpenStreetMap contributors, and the GIS User Community
             </div>
           </div>
-          <div class="span6">
+          <div class="span5">
             <div id="satmapid" class="leaflet-container leaflet-touch leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0"></div>
             <div id="sat-attribution">
               <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Sources: <a href="https://www.esri.com">ESRI</a>, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and others
@@ -65,9 +67,12 @@
 
         </script>
       {% endif %}
-      <p>{{ timestamp }}</p>
-      <div id="report-div">
-        {% include 'aoi/reports/report.html' %}
+      <div class="row">
+        <div class="span1 left-buffer"></div>
+          <div id="report-div" class="span10">
+            {% include 'aoi/reports/report.html' %}
+          </div>
+        </div>
       </div>
     </div>
   </body>

@@ -17,7 +17,7 @@
 
 #satmapid,
 #topomapid {
-  width: 100%;
+  width: 90%;
   height: 400px;
   position: relative;
   border: 2px solid black;
@@ -30,6 +30,11 @@
 }
 
 @media print {
+  body {
+    margin: 3rem;
+  }
+
+  .left-buffer,
   .leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
     display: none;
   }
@@ -37,5 +42,13 @@
   #topo-attribution,
   #sat-attribution {
     display: block;
+    font-size: 10px;
+    line-height: 0.7rem;
+    margin: 1.5rem;
+    margin-top: -10px;
+  }
+
+  #report-div {
+    margin: 0 1rem;
   }
 }
