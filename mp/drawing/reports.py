@@ -103,12 +103,12 @@ def get_summary_reports(grid_cells, list_style='unordered'):
 
     # ------- attributes -------
     report_attr_names = {
-        'ecoregions': 'Ecoregions',
-        'coas': 'Conservation Opportunity Areas',
-        'habitat': 'Strategy Habitats',
-        'fish': 'Documented Fish',
+        'ecoregions': '<a href="https://oregonconservationstrategy.org/ecoregions/" class="strategy-report-attribute-link" target="_blank">Ecoregions</a>',
+        'coas': '<a href="https://oregonconservationstrategy.org/conservation-opportunity-areas/" class="strategy-report-attribute-link" target="_blank">Conservation Opportunity Areas</a>',
+        'habitat': '<a href="https://oregonconservationstrategy.org/strategy-habitats/" class="strategy-report-attribute-link" target="_blank">Strategy Habitats</a>',
+        'fish': '<a href="https://oregonconservationstrategy.org/ocs-strategy-species/fish/" class="strategy-report-attribute-link" target="_blank">Documented Fish</a>',
         'modeled': 'Modeled Wildlife Habitat',
-        'observed': 'Observed Wildlife'
+        'observed': '<a href="https://oregonconservationstrategy.org/ocs-strategy-species/" class="strategy-report-attribute-link" target="_blank">Observed Wildlife</a>'
     }
 
     ecoregions = get_unique_list_values(grid_cells, 'ecoregion')

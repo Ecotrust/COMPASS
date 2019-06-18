@@ -11,3 +11,15 @@
 .strategy-report ul {
   list-style-type: none;
 }
+
+.ofr a.strategy-report-attribute-link {
+  color: #00371A;
+  font-weight: bold;
+  padding: 0.2rem;
+  margin-left: -0.2rem;
+}
+.strategy-report-attribute-link:hover {
+  background-color: #D3E9D1;
+  color: black;
+  border-radius: 3px;
+}

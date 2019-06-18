@@ -29,9 +29,25 @@
   display: none;
 }
 
+a.strategy-report-attribute-link {
+  color: #00371A;
+  font-weight: bold;
+  padding: 0.2rem;
+  margin-left: -0.2rem;
+}
+a.strategy-report-attribute-link:hover {
+  background-color: #D3E9D1;
+  color: black;
+  border-radius: 3px;
+}
+
 @media print {
   body {
     margin: 3rem;
+  }
+
+  a[href]:after {
+    content: none;
   }
 
   .left-buffer,
@@ -50,5 +66,9 @@
 
   #report-div {
     margin: 0 1rem;
+  }
+
+  a.strategy-report-attribute-link {
+    color: rgb(51,51,51);
   }
 }
