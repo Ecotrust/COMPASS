@@ -29,12 +29,15 @@
   display: none;
 }
 
+a.ocs-species-link,
 a.strategy-report-attribute-link {
-  color: #00371A;
+  color: #30674A;
   font-weight: bold;
   padding: 0.2rem;
   margin-left: -0.2rem;
 }
+
+a.ocs-species-link:hover,
 a.strategy-report-attribute-link:hover {
   background-color: #D3E9D1;
   color: black;
