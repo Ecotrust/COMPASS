@@ -214,6 +214,26 @@ def get_geometry_orig(request, uid):
 #     return display_wind_analysis(request, wind_obj)
 #     # Create your views here.
 
+# Courtesy of Eloff: https://stackoverflow.com/a/925630
+from html.parser import HTMLParser
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        self.reset()
+        self.strict = False
+        self.convert_charrefs= True
+        self.fed = []
+    def handle_data(self, d):
+        self.fed.append(d)
+    def get_data(self):
+        return ''.join(self.fed)
+
+def strip_tags(html):
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()
+
+
 '''
 '''
 def get_csv(request, uid, download=True):
@@ -248,12 +268,12 @@ def get_csv(request, uid, download=True):
     report_data = {'Name':drawing.name}
     max_row_count = 2   #for disclaimer
     for attribute in summaryReports:
-        headers.append(attribute['title'])
+        headers.append(strip_tags(attribute['title']))
         if type(attribute['data']) is (list or tuple):
             attr_length = len(attribute['data'])
             if attr_length > max_row_count:
                 max_row_count = attr_length
-        report_data[attribute['title']] = attribute['data']
+        report_data[strip_tags(attribute['title'])] = attribute['data']
 
     # Move Observed Species to end of list to be next to disclaimer
     observed = 'Observed Wildlife'
@@ -264,11 +284,15 @@ def get_csv(request, uid, download=True):
     "Data used to generate this report has been summarized.",
     "See http://dfw.state.or.us/maps/compass/reportingtool.asp"
     ]
+
     writer.writerow(headers)
     for index in range(max_row_count):
         row = []
         for header in headers:
-            data = report_data[header]
+            if type(report_data[header]) is (list or tuple):
+                data = [strip_tags(x) for x in report_data[header]]
+            else:
+                data = strip_tags(report_data[header])
             if type(data) is (list or tuple):
                 if index+1 > len(data):
                     row.append("")
