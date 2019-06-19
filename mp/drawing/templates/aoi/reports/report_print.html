@@ -1,16 +1,21 @@
 {% load static %}
 <HTML>
   <head>
-    <link href="{% static 'assets/jquery/jquery.js' %}" rel="stylesheet">
     <link href="{% static 'assets/bootstrap/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'assets/leaflet/leaflet.css' %}">
+    <link href="{% static 'assets/leaflet/leaflet.css' %}" rel="stylesheet">
     <link href="{% static 'compass/css/strategy_report.css' %}" rel="stylesheet">
     <link href="{% static 'compass/css/print_report.css' %}" rel="stylesheet">
 
+    <script src="{% static 'assets/jquery/jquery.js' %}"></script>
     <script src="{% static 'assets/leaflet/leaflet.js' %}"></script>
   </head>
   <body>
     <div class='container'>
+      <svg id="report-header-svg">
+        <rect id="report-header-svg-rect" />
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="39px" fill="white">Compass Conservation Strategy Report</text>
+      </svg>
+      <div id="head-space"></div>
       <h1>{{ title }}</h1>
       {% if description %}
         <h3>{{ description }}</h3>
@@ -71,6 +76,26 @@
         <div class="span1 left-buffer"></div>
           <div id="report-div" class="span10">
             {% include 'aoi/reports/report.html' %}
+          </div>
+        </div>
+        <div id="foot-space"></div>
+        <svg id="report-footer-svg">
+          <rect id="report-footer-svg-rect"></rect>
+        </svg>
+        <div id="data-panel-footer" class="row-fluid footer span12">
+          <div id="data-panel-footer-images">
+            <a href="http://www.dfw.state.or.us/maps/compass/" target="_blank">
+              <img src="{% static 'compass/img/Compass_BW.png' %}">
+            </a>
+            <a href="https://oregonconservationstrategy.com" target="_blank">
+              <img src="{% static 'compass/img/OCSLogo.png' %}">
+            </a>
+            <a href="http://dfw.state.or.us/" target="_blank">
+              <img src="{% static 'compass/img/ODFW_BW.png' %}">
+            </a>
+            <a href="http://www.wafwachat.org/" target="_blank">
+              <img src="{% static 'compass/img/CHAT_BW.png' %}">
+            </a>
           </div>
         </div>
       </div>

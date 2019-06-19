@@ -126,7 +126,7 @@ def get_report_data(request, uid=None):
                 return response
 
             context = scenario_obj.serialize_attributes
-            context['title'] = 'Strategy Report: %s' % scenario_obj.name
+            context['title'] = scenario_obj.name
             context['map'] = scenario_obj.geojson_4326
         except (AttributeError, NameError) as e:
             attributes = []
@@ -180,7 +180,7 @@ def get_report_print(request, uid=None, template='aoi/reports/report_print.html'
 
     for attr in context['attributes']:
         if attr['title'] == 'layer':
-            context['title'] = "Strategy Report: %s" % attr['data']
+            context['title'] = attr['data']
         if attr['title'] == 'Description':
             context['description'] = attr['data']
 
