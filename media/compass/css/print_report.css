@@ -38,14 +38,17 @@
 
 .strategy-report {
   border-top: none;
+  column-count: 2;
 }
 
 #report-div {
   border-top: 1px solid black;
+  padding-top: 2rem;
 }
 
 .strategy-report dt {
   margin-top: 1rem;
+  break-inside: avoid;
 }
 
 .strategy-report dt span:first-child {
@@ -65,6 +68,11 @@
 #topo-attribution,
 #sat-attribution {
   display: none;
+}
+
+.strategy-report dl,
+.strategy-report dt:first-of-type {
+  margin-top: 0;
 }
 
 a.ocs-species-link,
@@ -124,6 +132,10 @@ a.strategy-report-attribute-link:hover {
 
   #report-div {
     margin: 0 1rem;
+  }
+
+  .strategy-report {
+    margin-left: 3rem;
   }
 
   a.strategy-report-attribute-link {
