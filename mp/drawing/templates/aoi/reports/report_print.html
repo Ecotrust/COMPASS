@@ -82,21 +82,37 @@
         <svg id="report-footer-svg">
           <rect id="report-footer-svg-rect"></rect>
         </svg>
-        <div id="data-panel-footer" class="row-fluid footer span12">
-          <div id="data-panel-footer-images">
-            <a href="http://www.dfw.state.or.us/maps/compass/" target="_blank">
-              <img src="{% static 'compass/img/Compass_BW.png' %}">
-            </a>
-            <a href="https://oregonconservationstrategy.com" target="_blank">
-              <img src="{% static 'compass/img/OCSLogo.png' %}">
-            </a>
-            <a href="http://dfw.state.or.us/" target="_blank">
-              <img src="{% static 'compass/img/ODFW_BW.png' %}">
-            </a>
-            <a href="http://www.wafwachat.org/" target="_blank">
-              <img src="{% static 'compass/img/CHAT_BW.png' %}">
-            </a>
-          </div>
+        <div id="data-panel-footer">
+          <div id="data-panel-footer-images"  class="row footer">
+            <!-- <div class="row"> -->
+              <div class="span4">
+                <a href="http://www.dfw.state.or.us/maps/compass/" target="_blank">
+                  <img src="{% static 'compass/img/Compass_BW.png' %}">
+                </a>
+              </div>
+              <div class="span4">
+                <a href="http://dfw.state.or.us/" target="_blank">
+                  <img src="{% static 'compass/img/ODFW_BW.png' %}">
+                </a>
+              </div>
+              <div class="span4">
+                <a href="https://oregonconservationstrategy.com" target="_blank">
+                  <img src="{% static 'compass/img/OCSLogo.png' %}">
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="span4 report-footer-links">
+                <a href="https://compass.dfw.state.or.us" class="report-footer-link" target="_blank">compass.dfw.state.or.us</a>
+              </div>
+              <div class="span4 report-footer-links">
+                <a href="https://www.dfw.state.or.us" class="report-footer-link" target="_blank">www.dfw.state.or.us</a>
+              </div>
+              <div class="span4 report-footer-links">
+                <a href="https://oregonconservationstrategy.org" class="report-footer-link" target="_blank">oregonconservationstrategy.org</a>
+              </div>
+            </div>
+
         </div>
       </div>
     </div>
