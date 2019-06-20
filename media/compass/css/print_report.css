@@ -99,6 +99,10 @@ a.strategy-report-attribute-link:hover {
   border-radius: 3px;
 }
 
+.foot-disclaimer {
+  text-align: center;
+}
+
 #data-panel-footer {
   text-align: center;
   position: absolute;
@@ -161,6 +165,10 @@ a.report-footer-link {
 
   a.strategy-report-attribute-link {
     color: rgb(51,51,51);
+  }
+
+  .foot-disclaimer {
+    display: none;
   }
 
   #foot-space,

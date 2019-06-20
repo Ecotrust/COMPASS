@@ -163,7 +163,7 @@ def get_report_data(request, uid=None):
 
         from datetime import datetime
         now = datetime.now()
-        context['timestamp'] = now.strftime("%b %d, %Y %I:%M %p")
+        context['timestamp'] = now.strftime("%b %d, %Y")
         return context
 
 def get_report_html(request, uid=None, template='aoi/reports/report.html'):
