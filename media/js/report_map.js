@@ -24,8 +24,8 @@ var roadsLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/servic
 });
 // var roadsLayer = L.vectorGrid.protobuf('https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_v2/VectorTileServer/tile/{z}/{y}/{x}.pbf');
 
-labelsLayer.setZIndex(3);
 roadsLayer.setZIndex(3);
+labelsLayer.setZIndex(4);
 
 topoLabel = " Esri Topo";
 aerialLabel = " Esri Aerial";
