@@ -114,8 +114,8 @@ a.strategy-report-attribute-link:hover {
 }
 
 #data-panel-footer img {
-	height: 55px;
-	border-radius: 5px;
+  height: 55px;
+  border-radius: 5px;
 }
 
 .report-footer-links,
@@ -150,8 +150,8 @@ a.report-footer-link {
     display: none;
   }
 
-  #topo-attribution,
-  #sat-attribution {
+  #topo-attribution.show-attribution,
+  #sat-attribution.show-attribution {
     display: block;
     font-size: 10px;
     line-height: 0.7rem;
