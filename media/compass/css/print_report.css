@@ -2,6 +2,10 @@
   position: relative;
 }
 
+#report-header-image {
+  width: 100%;
+}
+
 #report-footer-svg,
 #report-footer-svg-rect,
 #report-header-svg,

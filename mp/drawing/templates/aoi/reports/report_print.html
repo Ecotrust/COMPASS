@@ -11,11 +11,12 @@
   </head>
   <body>
     <div class='container'>
-      <svg id="report-header-svg">
+      <!-- <svg id="report-header-svg">
         <rect id="report-header-svg-rect" />
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="39px" fill="white">Compass Conservation Strategy Report</text>
       </svg>
-      <div id="head-space"></div>
+      <div id="head-space"></div> -->
+      <img src="{% static 'img/ODFW_Compass_report_header.png' %}" id="report-header-image" />
       <h1>{{ title }}</h1>
       {% if description %}
         <h3>{{ description }}</h3>
@@ -84,8 +85,8 @@
           </div>
         </div>
         <div id="foot-space"></div>
-        <svg id="report-footer-svg">
-          <rect id="report-footer-svg-rect"></rect>
+        <svg width="100%" height="5rem" color="#005130" id="report-footer-svg">
+            <rect width="100%" height="100%" fill="currentColor" id="report-footer-svg-rect"></rect>
         </svg>
         <div id="data-panel-footer">
           <div id="data-panel-footer-images"  class="row footer">
