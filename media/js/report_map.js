@@ -6,7 +6,6 @@ var topoLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services
     'and the GIS User Community',
   id: 'esri.topo'
 });
-
 var aerialLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 18,
   attribution: 'Sources: <a href="https://www.esri.com">ESRI</a>, i-cubed, USDA, USGS, AEX, GeoEye, ' +
@@ -37,12 +36,22 @@ var baseMaps = {
   "Esri Aerial": aerialLayer
 };
 
+var vectorStyle = {
+  "color": 'orange',
+  "fillOpacity": 0.3
+};
+
 // Get GeoJSON and add layer
-// var geojsonFeature = {{ map|safe }};
-var topoFeatureLayer = L.geoJSON(geojsonFeature);
+var topoFeatureLayer = L.geoJSON(
+  geojsonFeature,
+  {
+    style: vectorStyle
+  }
+);
 
 var overlayMaps = {
   "Report Area": topoFeatureLayer,
+  // RDH: Adding these to the switcher but toggling with add/removeLayer breaks the click event.
   // "Cities & Boundaries": labelsLayer,
   // "Roads": roadsLayer
 };
