@@ -190,7 +190,35 @@ a.report-footer-link {
 
   .report-footer-links,
   a.report-footer-link {
-    display: unset;
+    display: block;
+  }
+
+  .report-footer-links {
+    position: relative;
+  }
+
+  a.report-footer-link {
+    position: absolute;
+    bottom: 3px;
+    color: black !important;
+  }
+
+  #left-footer-link {
+    left: 70px;
+  }
+
+  #center-footer-link {
+    left: 85px;
+  }
+
+  #right-footer-link {
+    left: 42px;
+  }
+
+  .footer-label-background {
+    color: white !important;
+    position: absolute;
+    bottom: 5px;
   }
 
 }
