@@ -32,8 +32,8 @@ aerialLabel = " Esri Aerial";
 featureLabel = " Report Area";
 
 var baseMaps = {
-  "Esri Topo": topoLayer,
-  "Esri Aerial": aerialLayer
+  "Esri Aerial": aerialLayer,
+  "Esri Topo": topoLayer
 };
 
 var vectorStyle = {
@@ -42,7 +42,7 @@ var vectorStyle = {
 };
 
 // Get GeoJSON and add layer
-var topoFeatureLayer = L.geoJSON(
+var featureLayer = L.geoJSON(
   geojsonFeature,
   {
     style: vectorStyle
@@ -50,7 +50,7 @@ var topoFeatureLayer = L.geoJSON(
 );
 
 var overlayMaps = {
-  "Report Area": topoFeatureLayer,
+  "Report Area": featureLayer,
   // RDH: Adding these to the switcher but toggling with add/removeLayer breaks the click event.
   // "Cities & Boundaries": labelsLayer,
   // "Roads": roadsLayer
@@ -59,14 +59,14 @@ var overlayMaps = {
 var map = L.map('topomapid', {
   center: [44, -120.7],
   zoom: 6,
-  layers: [topoLayer, topoFeatureLayer]
+  layers: [aerialLayer, roadsLayer, labelsLayer, featureLayer]
 });
 
 layerSwitcher = L.control.layers(baseMaps, overlayMaps);
 layerSwitcher.addTo(map);
 
 // Zoom mapa to geojson feature
-map.fitBounds(topoFeatureLayer.getBounds());
+map.fitBounds(featureLayer.getBounds());
 
 $('.leaflet-control-layers-selector').click(
   function(evt) {
