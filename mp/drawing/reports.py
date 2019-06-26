@@ -104,9 +104,9 @@ def get_summary_reports(grid_cells, list_style='unordered'):
         'ecoregions': '<a href="https://oregonconservationstrategy.org/ecoregions/" class="strategy-report-attribute-link" target="_blank">Ecoregions</a>',
         'coas': '<a href="https://oregonconservationstrategy.org/conservation-opportunity-areas/" class="strategy-report-attribute-link" target="_blank">Conservation Opportunity Areas</a>',
         'habitat': '<a href="https://oregonconservationstrategy.org/strategy-habitats/" class="strategy-report-attribute-link" target="_blank">Strategy Habitats</a>',
-        'fish': '<a href="https://oregonconservationstrategy.org/ocs-strategy-species/fish/" class="strategy-report-attribute-link" target="_blank">Documented Fish</a>',
-        'modeled': '<a href="https://www.dfw.state.or.us/maps/compass/reportingtool.asp" class="strategy-report-attribute-link" target="_blank">Modeled Wildlife Habitat</a>',
-        'observed': '<a href="https://oregonconservationstrategy.org/ocs-strategy-species/" class="strategy-report-attribute-link" target="_blank">Observed Wildlife</a>'
+        'fish': '<a href="https://oregonconservationstrategy.org/ocs-strategy-species/fish/" class="strategy-report-attribute-link" target="_blank">Documented Strategy Fish</a>',
+        'modeled': '<a href="https://www.dfw.state.or.us/maps/compass/reportingtool.asp" class="strategy-report-attribute-link" target="_blank">Modeled Strategy Wildlife Habitat</a>',
+        'observed': '<a href="https://oregonconservationstrategy.org/ocs-strategy-species/" class="strategy-report-attribute-link" target="_blank">Observed Strategy Wildlife</a>'
     }
 
     ecoregions = get_unique_list_values(grid_cells, 'ecoregion')
