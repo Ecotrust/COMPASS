@@ -65,6 +65,14 @@ var map = L.map('topomapid', {
 layerSwitcher = L.control.layers(baseMaps, overlayMaps);
 layerSwitcher.addTo(map);
 
+scaleBar = L.control.scale({
+  maxWidth: 250,
+  metric: false,
+  position: 'bottomright'
+});
+
+scaleBar.addTo(map);
+
 // Zoom mapa to geojson feature
 map.fitBounds(featureLayer.getBounds());
 
