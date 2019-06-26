@@ -124,17 +124,63 @@ a.strategy-report-attribute-link:hover {
   border-radius: 5px;
 }
 
+#data-panel-footer img:hover {
+  border: 2px solid yellow;
+  margin: -4px;
+  opacity: 0.85;
+}
+
 .report-footer-links,
 a.report-footer-link {
-  color: white !important;
   font-weight: bold;
   margin-top: 5px;
-  display: none;
 }
 
 .report-footer-links {
   text-align: center;
 }
+
+/* former print styles for footer print links */
+#report-footer-svg,
+#report-footer-svg-rect,
+#foot-space {
+  height: 105px;
+}
+
+
+.report-footer-links,
+a.report-footer-link {
+  display: block;
+}
+
+.report-footer-links {
+  position: relative;
+}
+
+a.report-footer-link {
+  position: absolute;
+  bottom: 3px;
+  color: black !important;
+}
+
+#left-footer-link {
+  left: 52px;
+}
+
+#center-footer-link {
+  left: 85px;
+}
+
+#right-footer-link {
+  left: 42px;
+}
+
+.footer-label-background {
+  color: white !important;
+  position: absolute;
+  bottom: 5px;
+}
+/* -- End show footer links -- */
 
 @media print {
   #report-header-title h1 {
@@ -192,44 +238,9 @@ a.report-footer-link {
     page-break-inside: avoid;
   }
 
-  #report-footer-svg,
-  #report-footer-svg-rect,
-  #foot-space {
-    height: 105px;
-  }
 
-  .report-footer-links,
-  a.report-footer-link {
-    display: block;
-  }
 
-  .report-footer-links {
-    position: relative;
-  }
 
-  a.report-footer-link {
-    position: absolute;
-    bottom: 3px;
-    color: black !important;
-  }
-
-  #left-footer-link {
-    left: 70px;
-  }
-
-  #center-footer-link {
-    left: 85px;
-  }
-
-  #right-footer-link {
-    left: 42px;
-  }
-
-  .footer-label-background {
-    color: white !important;
-    position: absolute;
-    bottom: 5px;
-  }
 
 }
 
