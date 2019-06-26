@@ -80,6 +80,7 @@ def unordered_list(list):
     else:
         return "<ul><li>None</li></ul>"
 
+coa_lookup = settings.COA_LOOKUP
 species_lookup = settings.SPECIES_LOOKUP
 
 def get_summary_reports(grid_cells, list_style='unordered'):
@@ -122,7 +123,7 @@ def get_summary_reports(grid_cells, list_style='unordered'):
     else:
         attributes.append({'title': report_attr_names['ecoregions'], 'data': ecoregion_list})
 
-    coas = get_unique_list_values(grid_cells, 'coa_name')
+    coas = apply_lookup(get_unique_list_values(grid_cells, 'coa_name'), coa_lookup)
     coas.sort()
     if list_style=='unordered':
         attributes.append({'title': report_attr_names['coas'], 'data': unordered_list(coas)})

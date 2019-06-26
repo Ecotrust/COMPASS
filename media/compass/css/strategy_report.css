@@ -12,6 +12,7 @@
   list-style-type: none;
 }
 
+.ofr a.ocs-coa-link,
 .ofr a.ocs-species-link,
 .ofr a.strategy-report-attribute-link {
   color: #00371A;
@@ -20,6 +21,7 @@
   margin-left: -0.2rem;
 }
 
+.ofr a.ocs-coa-link:hover,
 .ofr a.ocs-species-link:hover,
 .strategy-report-attribute-link:hover {
   background-color: #D3E9D1;
