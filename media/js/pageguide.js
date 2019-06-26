@@ -308,6 +308,91 @@ var activeGuideOverrides = {
   }
 };
 
+/* THE REPORTING TOOL PAGE GUIDE */
+
+var reportGuide = {
+  id: 'report-guide',
+  title: 'Report Tool Guide',
+  steps: [
+    {
+      target: '#designsTab',
+      content: $('#help-text-report-tour-toolsTab').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+    {
+      target: '#drawings-header',
+      content: $('#help-text-report-tour-report-panel').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+    {
+      target: '#create-new-drawing-button',
+      content: $('#help-text-report-tour-new-button').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+    {
+      target: '#draw-shape-button',
+      content: $('#help-text-report-tour-draw-button').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+    {
+      target: '#drawing_cancel',
+      content: $('#help-text-report-tour-cancel-button').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+  ]
+};
+
+app.pageguide.reportListControl = function(open) {
+  if (open) {
+    if (!$('#planning-unit-drawing div.accordion-group div.accordion-body').hasClass('in')) {
+      $('#planning-unit-drawing div.accordion-group div.accordion-body').addClass('in');
+    }
+  } else {
+    if ($('#planning-unit-drawing div.accordion-group div.accordion-body').hasClass('in')) {
+      $('#planning-unit-drawing div.accordion-group div.accordion-body').removeClass('in');
+    }
+  }
+}
+
+var reportGuideOverrides = {
+  events: {
+    open: function () {
+        app.pageguide.defaultOpenStuff();
+    },
+    close: function () { // activated regardless of whether the 'tour' was clicked  or the 'close' was clicked?
+      app.pageguide.defaultCloseStuff();
+    }
+  },
+  step: {
+    events: {
+      select: function() {
+        if ($(this).data('idx') === 0) {
+            $('#designsTab').tab('show');
+        } else if ($(this).data('idx') === 1) {
+            $('#designsTab').tab('show');
+            app.pageguide.reportListControl(true);
+        } else if ($(this).data('idx') === 2) {
+            $('#designsTab').tab('show');
+            $('#drawing_cancel').click();
+        } else if ($(this).data('idx') === 3) {
+            $('#designsTab').tab('show');
+            $('#drawing_cancel').click();
+            $('#create-new-drawing-button').click();
+        } else if ($(this).data('idx') === 4) {
+            $('#designsTab').tab('show');
+            $('#drawing_cancel').click();
+            $('#create-new-drawing-button').click();
+        }
+      }
+    }
+  }
+};
+
 app.pageguide.defaultOpenStuff = function() {
     app.pageguide.tourIsActive = true;
     app.viewModel.hideMapAttribution();

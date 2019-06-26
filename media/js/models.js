@@ -2246,6 +2246,28 @@ function viewModel() {
         }
     };
 
+    self.startReportTour = function() {
+        if ( $.pageguide('isOpen') ) { // activated when 'tour' is clicked
+            // close the pageguide
+            app.pageguide.togglingTours = true;
+            $.pageguide('close');
+        } else {
+            //save state
+            app.pageguide.state = app.getState();
+            app.saveStateMode = false;
+        }
+
+        $.pageguide(reportGuide, reportGuideOverrides);
+
+        // Show 'Tools' tab
+        $('#designsTab').tab('show');
+
+        //start the tour
+        setTimeout( function() { $.pageguide('open'); }, 700 );
+
+        app.pageguide.togglingTours = false;
+    };
+
     self.showMapAttribution = function() {
         $('.olControlScaleBar').show();
         $('.olControlAttribution').show();
