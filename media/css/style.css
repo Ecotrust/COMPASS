@@ -148,13 +148,9 @@ body {
 
 #aggregated-attribute-overlay {
   position: absolute;
-  /*top: 25%;
-  top: 180px;
-  left: 10px;*/
   z-index: 950;
   min-width: 190px;
   width: 280px;
-  max-height: 250px;
   font-size: 14px;
   color: white;
   border-radius: 4px;
@@ -218,7 +214,6 @@ body {
 }
 
 #aggregated-attribute-content {
-  max-height: 250px;
   padding-bottom: 0px;
   margin-bottom: -8px !important;
 }
@@ -236,7 +231,6 @@ body {
 }
 
 #aggregated-attribute-content .mCustomScrollBox {
-  max-height: 250px;
   margin-right: -20px;
   left: -5px;
 }

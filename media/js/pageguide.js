@@ -373,14 +373,28 @@ app.pageguide.reportListControl = function(open) {
 
 
 var reportStep1Html = "<div class='flex-container'>" +
-  "<div><p>1.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_1.png' /></div>" +
-  "<div><p>2.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_2.png' /></div>" +
-  "<div><p>3.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_3.png' /></div>" +
-  "<div><p>4.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_4.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>1.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_1.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>2.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_2.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>3.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_3.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>4.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_4.png' /></div>" +
 "</div>";
-var reportStep2Html = "";
-var reportStep3Html = "";
-var reportStep4Html = "";
+var reportStep2Html = "<div class='flex-container'>" +
+  "<div><span class='report-tutorial-modal-step-number'>1.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_edit_1.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>2.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_edit_2.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>3.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_edit_3.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>4.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_edit_4.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>4.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_edit_5.png' /></div>" +
+"</div>";
+var reportStep3Html = "<div class='flex-container'>" +
+  "<div><span class='report-tutorial-modal-step-number'>1.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_form_1.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>2.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_form_2.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>3.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_form_3.png' /></div>" +
+"</div>";
+var reportStep4Html = "<div class='flex-container'>" +
+  "<div><span class='report-tutorial-modal-step-number'>1.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_report_1.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>2.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_report_2.png' /></div>" +
+  "<div><span class='report-tutorial-modal-step-number'>3.</span><img class='tutorial-image' src='/static/compass/img/tutorial/report_report_3.png' /></div>" +
+"</div>";
 
 var reportGuideOverrides = {
   events: {
@@ -397,8 +411,10 @@ var reportGuideOverrides = {
       select: function() {
         if ($(this).data('idx') === 0) {
             $('#designsTab').tab('show');
+            $('#tool-tutorial-view-window').html('');
         } else if ($(this).data('idx') === 1) {
             $('#designsTab').tab('show');
+            $('#tool-tutorial-view-window').html('');
             app.pageguide.reportListControl(true);
         } else if ($(this).data('idx') === 2) {
             $('#designsTab').tab('show');

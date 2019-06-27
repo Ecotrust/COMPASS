@@ -2257,6 +2257,8 @@ function viewModel() {
             app.saveStateMode = false;
         }
 
+        app.viewModel.closeAttribution();
+
         $('#report-tutorial-modal').modal({
           // show: true,
           keyboard: false,

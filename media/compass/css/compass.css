@@ -140,57 +140,6 @@ body.print #disclaimer-modal {
 	visibility: hidden;
 }
 
-#report-tutorial-modal {
-  right: 30px;
-  left: auto;
-  top: 63px;
-  bottom: 170px;
-  width: calc(100% - 430px);
-  z-index: 750;
-}
-
-#report-tutorial-modal-body {
-  height: 100%;
-}
-
-#report-tutorial-primary-row {
-  height: 100%;
-}
-
-#report-tutorial-container {
-  /* overflow: hidden;
-  flex-flow: column; */
-  height: 100%;
-  position: relative;
-}
-
-#report-tutorial-header-wrapper {
-  height: 40px;
-}
-
-#tool-tutorial-view-wrapper {
-  overflow-y: auto;
-  padding: 1rem;
-  /* flex-grow: 1; */
-  position: absolute;
-  top: 50px;
-  bottom: 0;
-  width: 98%;
-  border: 1px solid;
-}
-
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.tutorial-image {
-  height: 200px;
-  margin: 1rem;
-  border: 2px solid aqua;
-  border-radius: 4px;
-}
-
 /*.ofr a:hover, .ofr a:focus {
 	color: #EF3824;
 	text-decoration: none;
@@ -454,6 +403,7 @@ body.print #map .olControlZoom {
 	position: fixed;
 	border-radius: 4px;
 	min-width: 250px;
+	bottom: 85px;
 }
 
 body.print #aggregated-attribute-overlay {
@@ -491,6 +441,7 @@ body.print #aggregated-attribute-overlay {
 	/*opacity: .95;*/
 	padding: 0px;
 	margin: 6px;
+	z-index: 749;
 }
 
 .ofr #basemaps a {
@@ -771,6 +722,7 @@ body.print #map .olControlMousePosition {
 #aggregated-attribute-content {
 	background-color: #404041;
 	color: white;
+	height: calc(100% - 35px);
 }
 
 #aggregated-attribute-content .accordion-group {
