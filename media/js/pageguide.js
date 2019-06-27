@@ -333,14 +333,26 @@ var reportGuide = {
       arrow: {offsetX: 50, offsetY: 0}
     },
     {
-      target: '#draw-shape-button',
-      content: $('#help-text-report-tour-draw-button').html(),
+      target: '#tool-tutorial-step-1',
+      content: $('#help-text-report-tour-modal-step1').html(),
       direction: 'top',
       arrow: {offsetX: 50, offsetY: 0}
     },
     {
-      target: '#drawing_cancel',
-      content: $('#help-text-report-tour-cancel-button').html(),
+      target: '#tool-tutorial-step-2',
+      content: $('#help-text-report-tour-modal-step2').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+    {
+      target: '#tool-tutorial-step-3',
+      content: $('#help-text-report-tour-modal-step3').html(),
+      direction: 'top',
+      arrow: {offsetX: 50, offsetY: 0}
+    },
+    {
+      target: '#tool-tutorial-step-4',
+      content: $('#help-text-report-tour-modal-step4').html(),
       direction: 'top',
       arrow: {offsetX: 50, offsetY: 0}
     },
@@ -359,12 +371,24 @@ app.pageguide.reportListControl = function(open) {
   }
 }
 
+
+var reportStep1Html = "<div class='flex-container'>" +
+  "<div><p>1.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_1.png' /></div>" +
+  "<div><p>2.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_2.png' /></div>" +
+  "<div><p>3.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_3.png' /></div>" +
+  "<div><p>4.</p><img class='tutorial-image' src='/static/compass/img/tutorial/report_draw_4.png' /></div>" +
+"</div>";
+var reportStep2Html = "";
+var reportStep3Html = "";
+var reportStep4Html = "";
+
 var reportGuideOverrides = {
   events: {
     open: function () {
         app.pageguide.defaultOpenStuff();
     },
     close: function () { // activated regardless of whether the 'tour' was clicked  or the 'close' was clicked?
+      $('#report-tutorial-modal').modal('hide');
       app.pageguide.defaultCloseStuff();
     }
   },
@@ -379,14 +403,27 @@ var reportGuideOverrides = {
         } else if ($(this).data('idx') === 2) {
             $('#designsTab').tab('show');
             $('#drawing_cancel').click();
+            $('#tool-tutorial-view-window').html('');
         } else if ($(this).data('idx') === 3) {
             $('#designsTab').tab('show');
-            $('#drawing_cancel').click();
-            $('#create-new-drawing-button').click();
+            $('#tool-tutorial-view-window').html(reportStep1Html);
+            // $('#drawing_cancel').click();
+            // $('#create-new-drawing-button').click();
         } else if ($(this).data('idx') === 4) {
             $('#designsTab').tab('show');
-            $('#drawing_cancel').click();
-            $('#create-new-drawing-button').click();
+            $('#tool-tutorial-view-window').html(reportStep2Html);
+            // $('#drawing_cancel').click();
+            // $('#create-new-drawing-button').click();
+        } else if ($(this).data('idx') === 5) {
+            $('#designsTab').tab('show');
+            $('#tool-tutorial-view-window').html(reportStep3Html);
+            // $('#drawing_cancel').click();
+            // $('#create-new-drawing-button').click();
+        } else if ($(this).data('idx') === 6) {
+            $('#designsTab').tab('show');
+            $('#tool-tutorial-view-window').html(reportStep4Html);
+            // $('#drawing_cancel').click();
+            // $('#create-new-drawing-button').click();
         }
       }
     }

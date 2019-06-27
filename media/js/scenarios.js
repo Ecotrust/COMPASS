@@ -1027,6 +1027,7 @@ function scenariosModel(options) {
                 $('#drawing-form').html(data);
                 app.viewModel.scenarios.drawingFormModel = new polygonFormModel();
                 ko.applyBindings(app.viewModel.scenarios.drawingFormModel, document.getElementById('drawing-form'));
+                $('#draw-shape-button').click();
                 //self.polygonFormModel.updateDesignScrollBar();
             },
             error: function (result) {

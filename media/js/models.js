@@ -2257,6 +2257,18 @@ function viewModel() {
             app.saveStateMode = false;
         }
 
+        $('#report-tutorial-modal').modal({
+          // show: true,
+          keyboard: false,
+          backdrop: 'static'
+        });
+        $('#report-tutorial-modal').modal('show');
+        $('#report-tutorial-modal').show();
+        $('#report-tutorial-modal').addClass('in');
+        window.setTimeout(function() {
+          $('div.modal-backdrop').hide();
+        }, 100);
+
         $.pageguide(reportGuide, reportGuideOverrides);
 
         // Show 'Tools' tab
