@@ -81,6 +81,18 @@ body {
           transition: background-position 0.1s linear;
 }
 
+#strategy-report-export-csv-button {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+#strategy-report-export-csv-button:hover,
+#strategy-report-export-printable-button:hover {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+
 .ofr #login-buttons {
 	z-index: 1021;
 	right: 0px;
