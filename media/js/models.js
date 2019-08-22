@@ -2247,6 +2247,8 @@ function viewModel() {
     };
 
     self.startReportTour = function() {
+        // var reportType = 'manual';
+        var reportType = 'video';
         if ( $.pageguide('isOpen') ) { // activated when 'tour' is clicked
             // close the pageguide
             app.pageguide.togglingTours = true;
@@ -2259,26 +2261,34 @@ function viewModel() {
 
         app.viewModel.closeAttribution();
 
-        $('#report-tutorial-modal').modal({
-          // show: true,
-          keyboard: false,
-          backdrop: 'static'
-        });
-        $('#report-tutorial-modal').modal('show');
-        $('#report-tutorial-modal').show();
-        $('#report-tutorial-modal').addClass('in');
+
+        if (reportType == 'video') {
+          $('#video-report-tutorial-modal').modal({
+            // show: true,
+            keyboard: false,
+            backdrop: 'static'
+          });
+          $('#video-report-tutorial-modal').modal('show');
+          $('#video-report-tutorial-modal').show();
+          $('#video-report-tutorial-modal').addClass('in');
+        } else {
+          $('#report-tutorial-modal').modal({
+            // show: true,
+            keyboard: false,
+            backdrop: 'static'
+          });
+          $('#report-tutorial-modal').modal('show');
+          $('#report-tutorial-modal').show();
+          $('#report-tutorial-modal').addClass('in');
+          $.pageguide(reportGuide, reportGuideOverrides);
+          //start the tour
+          setTimeout( function() { $.pageguide('open'); }, 700 );
+        }
+        // Show 'Tools' tab
+        $('#designsTab').tab('show');
         window.setTimeout(function() {
           $('div.modal-backdrop').hide();
         }, 100);
-
-        $.pageguide(reportGuide, reportGuideOverrides);
-
-        // Show 'Tools' tab
-        $('#designsTab').tab('show');
-
-        //start the tour
-        setTimeout( function() { $.pageguide('open'); }, 700 );
-
         app.pageguide.togglingTours = false;
     };
 

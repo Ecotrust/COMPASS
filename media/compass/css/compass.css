@@ -517,6 +517,11 @@ body.print #aggregated-attribute-overlay {
 	color: #EF3824;
 }
 
+#modals-wrapper {
+  text-align: center;
+  position: relative;
+}
+
 .modal {
 	background-color: #404041;
 	color: white;
@@ -547,6 +552,29 @@ body.print #aggregated-attribute-overlay {
 
 #feedback-modal form {
 	margin-bottom: 0px;
+}
+
+#video-report-tutorial-modal {
+  width: unset;
+  left: 50%;
+  top: 50%;
+  max-height: 100vh;
+  max-width: 100vw;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+
+#video-report-tutorial-modal div.modal-header {
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+#video-report-tutorial-modal-body,
+#video-tutorial-wrapper iframe {
+  min-height: 70vh;
+  max-height: 90vh;
+  min-width: 70vw;
+  max-width: 90vw;
 }
 
 .ofr #project-logo {

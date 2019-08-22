@@ -124,18 +124,23 @@
       <div class="row-fluid">
         <div class="span12" data-bind="style: {display: hideTours() ? 'none': 'block'}, css: {span12: !hideTours()}">
             <h4>
-              Tour {% if project_name %}
-              {{ project_name }}
+              {% if project_name %}
+                {{ project_name }}
               {% else %}
-              Marine Planner
+                Marine Planner
               {% endif %}
+              Tutorials
             </h4>
             <div style="text-align: center">
             <ul class="unstyled" style="margin-left: 1px">
-                <li><a href="#" data-dismiss="modal" data-bind="click: startDefaultTour">Tour the Basics</a></li>
-                <li><a href="#" data-dismiss="modal" data-bind="click: startDataTour">Tour the Data Tab</a></li>
-                <li><a href="#" data-dismiss="modal" data-bind="click: startActiveTour">Tour the Active Tab</a></li>
-                <li><a href="#" data-dismiss="modal" data-bind="click: startReportTour">Tour the Reporting Tool Tab</a></li>
+                <li><a href="#" data-dismiss="modal" data-bind="click: startDefaultTour">{% if project_name %}
+                  {{ project_name }}
+                {% else %}
+                  Marine Planner
+                {% endif %} Overview</a></li>
+                <li><a href="#" data-dismiss="modal" data-bind="click: startDataTour">Data Tab</a></li>
+                <li><a href="#" data-dismiss="modal" data-bind="click: startActiveTour">Active Tab</a></li>
+                <li><a href="#" data-dismiss="modal" data-bind="click: startReportTour">Tools Tab</a></li>
             </ul>
             </div>
         </div>
@@ -145,6 +150,22 @@
         <button href="#" class="btn" data-dismiss="modal">Close</button>
     </div>
 </div>
+
+<!-- VIDEO REPORT TOOL TUTORIAL MODAL -->
+<div id="video-report-tutorial-modal" class="modal hide fade" role="dialog">
+    <div class="modal-header" style="min-height: 20px;">
+        REPORTING TOOL TUTORIAL
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body" style="text-align: center" id="video-report-tutorial-modal-body">
+      <div class="row-fluid">
+        <div class="span12" id="video-tutorial-wrapper">
+          <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+</div>
+
 
 <!-- REPORT TOOL TUTORIAL MODAL -->
 <div id="report-tutorial-modal" class="modal hide fade" role="dialog">

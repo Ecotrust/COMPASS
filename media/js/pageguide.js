@@ -68,6 +68,12 @@ var defaultGuide = {
       arrow: {offsetX: 25, offsetY: -15}
     },
     {
+      target: '#designsTab',
+      content: $('#help-text-designsTab').html(),
+      direction: 'bottom',
+      arrow: {offsetX: 25, offsetY:-15}
+    },
+    {
       target: '#legendTab',
       content: $('#help-text-legendTab').html(),
       direction: 'bottom',
@@ -147,6 +153,9 @@ var defaultGuideOverrides = {
         }
         if (defaultGuide.steps[$(this).data('idx')].target == '#activeTab') {
             $('#activeTab').tab('show');
+        }
+        if (defaultGuide.steps[$(this).data('idx')].target == '#designsTab') {
+            $('#designsTab').tab('show');
         }
         if (defaultGuide.steps[$(this).data('idx')].target == '#legendTab') {
             $('#legendTab').tab('show');
