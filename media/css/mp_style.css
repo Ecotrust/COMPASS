@@ -81,11 +81,6 @@ li a {
 	-moz-box-shadow: none;
 }
 
-.navbar .dropdown-menu {
-    min-width: 50px;
-    margin-top: 20px;
-}
-
 .navbar .nav > li > a {
 	text-transform: uppercase;
 	width: 80px;
@@ -778,7 +773,6 @@ img + h3 {
     /*z-index: 1019!important;*/
 }
     #login-buttons .dropdown-menu {
-        right: 0;
         left: auto;
     }
     #login-buttons .btn-large {

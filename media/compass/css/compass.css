@@ -142,6 +142,7 @@ body {
 
 #disclaimer-modal .modal-body {
 	height: calc(70vh - 140px);
+	text-align: left;
 }
 
 body.print #compass-search-header {
@@ -550,6 +551,14 @@ body.print #aggregated-attribute-overlay {
 .modal-header .close {
 	color: white;
 	opacity: 1;
+	padding: 0.2rem 0.4rem;
+	border-radius: 6px;
+	margin-top: -0.1rem;
+}
+
+.modal-header .close:hover {
+	color: #AAA;
+	background-color: #555;
 }
 
 .modal-header h3 {
@@ -938,7 +947,7 @@ body.print #compass-search-header {
 }
 
 .compass-search-header-content {
-	width: calc(100vw - 436px); /* 370px for left panel, 66px for oregon logo */
+	width: calc(100vw - 433px); /* 370px for left panel, 63px for nav-menu-button */
 }
 
 .compass-search-header-searchbar {
@@ -993,11 +1002,11 @@ body.print #compass-search-header {
   margin: 0;
   padding: 0;
   /* text-indent: -999em; */
-	width: 66px;
+	width: 63px;
 	-webkit-box-flex: 0;
   -webkit-flex: 0 0 66px;
   -ms-flex: 0 0 66px;
-  flex: 0 0 66px;
+  flex: 0 0 63px;
 	background-color: #00381A;
 	border: none;
 	position: absolute;
