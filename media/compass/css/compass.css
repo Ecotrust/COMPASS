@@ -543,6 +543,12 @@ body.print #aggregated-attribute-overlay {
 	background-color: #737562;
 }
 
+#sign-in-form .modal-header h3{
+  /* background-color: #D3E9D1; */
+  /* color: #2d8998; */
+  color: white;
+}
+
 .modal-header .close {
 	color: white;
 	opacity: 1;
@@ -977,18 +983,18 @@ body.print #compass-search-header {
 	line-height: 63px;
 	height: 63px;
 	text-align: center;
-	background-image: url("/static/compass/img/icons-nav.png");
-  background-position: 0 -871px;
+	/* background-image: url("/static/compass/img/icons-nav.png"); */
+  /* background-position: 0 -871px; */
   background-size: initial;
-  background-repeat-x: no-repeat;
-  background-repeat-y: no-repeat;
-  background-attachment: initial;
-  background-origin: initial;
-  background-clip: initial;
+  /* background-repeat-x: no-repeat; */
+  /* background-repeat-y: no-repeat; */
+  /* background-attachment: initial; */
+  /* background-origin: initial; */
+  /* background-clip: initial; */
 	display: block;
   margin: 0;
   padding: 0;
-  text-indent: -999em;
+  /* text-indent: -999em; */
 	width: 66px;
 	-webkit-box-flex: 0;
   -webkit-flex: 0 0 66px;
@@ -999,6 +1005,14 @@ body.print #compass-search-header {
 	position: absolute;
 	top: 0;
 	right: 0;
+}
+
+#menu-icon {
+  font-size: x-large;
+}
+
+.ofr #login-buttons {
+  position: initial;
 }
 
 .login-btn-group,
