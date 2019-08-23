@@ -543,9 +543,7 @@ body.print #aggregated-attribute-overlay {
 	background-color: #737562;
 }
 
-#sign-in-form .modal-header h3{
-  /* background-color: #D3E9D1; */
-  /* color: #2d8998; */
+#sign-in-form .modal-header h3 {
   color: white;
 }
 

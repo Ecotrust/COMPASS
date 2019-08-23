@@ -391,6 +391,13 @@ $(document).ready(function() {
     app.viewModel.scenarios.initSharingModal();
   });
 
+  $(document).on('click', '#close-report-video-tutorial-button', function() {
+    if ($("#video-tutorial-wrapper iframe").length > 0) {
+      youtubeSrc = $("#video-tutorial-wrapper iframe").attr('src');
+      $("#video-tutorial-wrapper iframe").attr('src', youtubeSrc);
+    }
+  })
+
   // hiding feature attributes on new click events (but ignoring map pan events)
   app.map.events.register('move', app.map, function() {
     app.map.mousedrag = true;
