@@ -1,6 +1,9 @@
 #!/bin/bash
 
 sleep 5
+/usr/sbin/service uwsgi restart
+
+sleep 5
 
 /usr/sbin/service nginx restart
 

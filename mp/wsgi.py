@@ -1,24 +1,14 @@
-import sys
-import site
+"""
+WSGI config for lot project.
+It exposes the WSGI callable as a module-level variable named ``application``.
+For more information on this file, see
+https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
+"""
+
 import os
 
-project = '/usr/local/marine-planner/mp'
-ve = '/usr/local/venv/marine-planner'
-vepath = os.path.join(ve, 'lib/python2.7/site-packages')
+from django.core.wsgi import get_wsgi_application
 
-prev_sys_path = list(sys.path)
-# add the site-packages of our virtualenv as a site dir
-site.addsitedir(vepath)
-# add the app's directory to the PYTHONPATH
-sys.path.append(project)
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
-# reorder sys.path so new directories from the addsitedir show up first
-new_sys_path = [p for p in sys.path if p not in prev_sys_path]
-for item in new_sys_path:
-    sys.path.remove(item)
-sys.path[:0] = new_sys_path
-
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-from django.core.handlers.wsgi import WSGIHandler
-application = WSGIHandler()
+application = get_wsgi_application()
