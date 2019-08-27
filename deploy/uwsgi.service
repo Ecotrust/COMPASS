@@ -1,9 +1,11 @@
 [Unit]
 Description=uWSGI Emperor service
 After=syslog.target
+Type=oneshot
 
 [Service]
 ExecStart=/usr/local/apps/COMPASS/env/bin/uwsgi --ini /etc/uwsgi/apps-enabled/compass.ini
+#ExecStart=/usr/local/apps/dev-compass/env/bin/uwsgi --ini /etc/uwsgi/apps-enabled/compass_dev.ini
 Restart=always
 KillSignal=SIGQUIT
 Type=notify
