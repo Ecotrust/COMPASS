@@ -2247,8 +2247,8 @@ function viewModel() {
     };
 
     self.startReportTour = function() {
-        // var reportType = 'manual';
-        var reportType = 'video';
+        var reportType = 'manual';
+        // var reportType = 'video';
         if ( $.pageguide('isOpen') ) { // activated when 'tour' is clicked
             // close the pageguide
             app.pageguide.togglingTours = true;
