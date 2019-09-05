@@ -51,7 +51,7 @@ app.fixture = {
 	}, {
 		name: "Essential Fish Habitat",
 		type: "WMS",
-		url: "http://egisws02.nos.noaa.gov/ArcGIS/services/NMFS/HAPC/MapServer/WMSServer?service=WMS",
+		url: "https://egisws02.nos.noaa.gov/ArcGIS/services/NMFS/HAPC/MapServer/WMSServer?service=WMS",
 		id: 101
 	}, {
 		name: "Marine Mammals and Sea Turtles",
@@ -66,7 +66,7 @@ app.fixture = {
 	}, {
 		name: "Seabed Form",
 		type: "XYZ",
-		url: "http://s3.amazonaws.com/marco-public-2d/Geophysical/SeabedForm/${z}/${x}/${y}.png",
+		url: "https://s3.amazonaws.com/marco-public-2d/Geophysical/SeabedForm/${z}/${x}/${y}.png",
 		id: 11
 	}, {
 		name: "Waterbird Survey",
@@ -81,7 +81,7 @@ app.fixture = {
 	}, {
 		name: "U.S. Marine Protected Areas",
 		type: "WMS",
-		url: "http://egisws02.nos.noaa.gov/ArcGIS/services/MPA/MPA_Inventory/MapServer/WMSServer?service=WMS",
+		url: "https://egisws02.nos.noaa.gov/ArcGIS/services/MPA/MPA_Inventory/MapServer/WMSServer?service=WMS",
 		id: 102
 	}, {
 		name: "Wind Speed",
@@ -102,26 +102,26 @@ app.fixture = {
 		subLayers: [{
 		name: "All Gear Types",
 		type: "XYZ",
-		url: "http://s3.amazonaws.com/marco-public-2d/Fishing/AllGearTypes/${z}/${x}/${y}.png",
+		url: "https://s3.amazonaws.com/marco-public-2d/Fishing/AllGearTypes/${z}/${x}/${y}.png",
 		legend: "https://s3.amazonaws.com/marco-public-2d/Fishing/AllGearTypes/Legend.png",
 		id: 15,
 		parent: 501
 	}, {
 		name: "Bottom Gear Types",
 		type: "XYZ",
-		url: "http://s3.amazonaws.com/marco-public-2d/Fishing/BottomGearTypes/${z}/${x}/${y}.png",
+		url: "https://s3.amazonaws.com/marco-public-2d/Fishing/BottomGearTypes/${z}/${x}/${y}.png",
 		id: 16,
 		parent: 501
 	}, {
 		name: "Pelagic Gear Types",
 		type: "XYZ",
-		url: "http://s3.amazonaws.com/marco-public-2d/Fishing/PelagicGearTypes/${z}/${x}/${y}.png",
+		url: "https://s3.amazonaws.com/marco-public-2d/Fishing/PelagicGearTypes/${z}/${x}/${y}.png",
 		id: 17,
 		parent: 501
 	}, {
 		name: "Summer Flounder Landings",
 		type: "XYZ",
-		url: "http://s3.amazonaws.com/marco-public-2d/Fishing/SummerFlounderLandings/${z}/${x}/${y}.png",
+		url: "https://s3.amazonaws.com/marco-public-2d/Fishing/SummerFlounderLandings/${z}/${x}/${y}.png",
 		id: 18,
 		parent: 501
 	}]
@@ -174,7 +174,7 @@ app.fixture = {
 	}, {
 		name: "AIS Shipping Density",
 		type: "XYZ",
-		url: "http://s3.amazonaws.com/marco-public-2d/Shipping/AISDensity/${z}/${x}/${y}.png",
+		url: "https://s3.amazonaws.com/marco-public-2d/Shipping/AISDensity/${z}/${x}/${y}.png",
 		id: 224
 	}, {
 		name: "Dredging",

@@ -169,7 +169,7 @@ function bookmarksModel(options) {
             long_url = self.sharingBookmark().getBookmarkUrl();
 
         $.getJSON(
-            "http://api.bitly.com/v3/shorten?callback=?",
+            "https://api.bitly.com/v3/shorten?callback=?",
             {
                 "format": "json",
                 "apiKey": bitly_api_key,
@@ -191,7 +191,7 @@ function bookmarksModel(options) {
             urlHash = $.param(self.sharingBookmark().state);
 
         if ( !urlOrigin ) {
-            urlOrigin = 'http://' + window.location.host;
+            urlOrigin = window.location.protocol + '//' + window.location.host;
         }
         var embedURL = urlOrigin + '/embed/map/#' + urlHash
         $('#bookmark-iframe-html')[0].value = '<iframe width="600" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" ' +
@@ -207,7 +207,7 @@ function bookmarksModel(options) {
             mapWindow = window.open('', windowName, windowSize);
         var urlOrigin = window.location.origin;
         if ( !urlOrigin ) {
-            urlOrigin = 'http://' + window.location.host;
+            urlOrigin = window.location.protocol + '//' + window.location.host;
         }
         var header = '<header role="banner"><div class="navbar navbar-fixed-top"><div class="navbar-inner"><div class="container-fluid"><div class="row-fluid"><div class="span12"><a href="/visualize"><img src="'+urlOrigin+'/media/marco/img/marco-logo_planner.jpg"/></a><h3 class="pull-right" data-bind="visible: mapTitle, text: mapTitle"></h3></div></div></div></div></div></header>';
         mapWindow.document.write('<html><body>' + header + $('#bookmark-iframe-html')[0].value + '</body></html>');

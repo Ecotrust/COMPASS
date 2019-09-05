@@ -160,7 +160,7 @@ function drawingModel(options) {
             // dataType: json
             success: function(response, status, request) {
               //Crazy workaround to trigger download dialog from AJAX as shown here:
-              // http://stackoverflow.com/questions/16086162/handle-file-download-from-ajax-post
+              // https://stackoverflow.com/questions/16086162/handle-file-download-from-ajax-post
               var disp = request.getResponseHeader('Content-Disposition');
               if (disp && disp.search('attachment') != -1) {
                 var form = $('<form method="POST" action="' + url + '">');

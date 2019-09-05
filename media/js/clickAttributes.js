@@ -63,7 +63,7 @@ app.clickAttributes = (function() {
       9: "nine"
     };
 
-    // taken directly from TLindig and nus at http://stackoverflow.com/questions/1960473/unique-values-in-an-array#answer-14438954
+    // taken directly from TLindig and nus at https://stackoverflow.com/questions/1960473/unique-values-in-an-array#answer-14438954
     var onlyUnique = function(value, index, self) {
       return self.indexOf(value) === index;
     }

@@ -1,7 +1,7 @@
 (function () {
 	var socket,
-		socketUrl = app.socketUrl || 'http://localhost:8989';
-		// socketUrl = marco_settings !== 'undefined' ? marco_settings.socketUrl : 'http://localhost:8989';
+		socketUrl = app.socketUrl || window.location.protocol + '//localhost:8989';
+		// socketUrl = marco_settings !== 'undefined' ? marco_settings.socketUrl : window.location.protocol + '//localhost:8989';
 
 	function printModel (map, viewModel) {
 		var self = this;
@@ -62,7 +62,7 @@
 		self.shotWidth = ko.observable();
 
 		// read or write shot height/width in pixels or inches
-	
+
 
 		// dpi settings for phantomjs
 		self.dpiWidth = 101.981;
@@ -105,7 +105,7 @@
 			}
 		});
 		self.shotWidthDisplay = ko.computed({
-			read: function () {		
+			read: function () {
 				var value = self.shotWidth();
 
 				if (self.units() === 'inches') {
@@ -139,21 +139,21 @@
 				$input.val(val);
 			});
 		});
-		
+
 		// lock aspect ratio with these subscriptions
 		self.shotHeight.subscribe(function (newVal) {
 			var width = newVal / self.ratio;
 			if ($.isNumeric(width) && width !== self.shotWidth()) {
-				self.shotWidth(width);		
+				self.shotWidth(width);
 			}
 		});
 		self.shotWidth.subscribe(function (newVal) {
 			var height = newVal * self.ratio;
 			if ($.isNumeric(height) && height !== self.shotHeight()) {
-				self.shotHeight(height);		
+				self.shotHeight(height);
 			}
 		});
-		
+
 		// borderless turned on will disable title and legend
 		self.borderLess.subscribe(function (newVal) {
 			if (newVal === true) {
@@ -174,7 +174,7 @@
 				w.print();
 				w.close();
 			}, 500);
-				
+
 		};
 
 		self.downloadFile = function (self,event) {
@@ -241,18 +241,18 @@
 
 		// make sure we have a socket
 		if (typeof io !== 'undefined') {
-			socket = io.connect(socketUrl);	
+			socket = io.connect(socketUrl);
 			self.enabled(true);
 		} else {
-			self.enabled(false);				
+			self.enabled(false);
 		}
 
 	}
 	var shots = {
-		$popover: $("#printing-popover")	
+		$popover: $("#printing-popover")
 	};
 	app.viewModel.printing = new printModel(app.map, app.viewModel);
-	
+
 	$(document).on('map-ready', function () {
 		app.map.events.register('changebaselayer', null, function (event) {
 			// console.log('base layer changed');

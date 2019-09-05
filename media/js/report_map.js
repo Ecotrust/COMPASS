@@ -1,4 +1,4 @@
-var topoLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+var topoLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 18,
   attribution: 'Sources: <a href="https://www.esri.com">ESRI</a>, HERE, Garmin, ' +
     'Intermap, increment P Corp., GEBCO, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, ' +
@@ -6,7 +6,7 @@ var topoLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services
     'and the GIS User Community',
   id: 'esri.topo'
 });
-var aerialLayer = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+var aerialLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
   maxZoom: 18,
   attribution: 'Sources: <a href="https://www.esri.com">ESRI</a>, i-cubed, USDA, USGS, AEX, GeoEye, ' +
     'Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and others',
