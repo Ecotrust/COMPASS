@@ -131,6 +131,7 @@ app.init = function() {
 
     //Scale Bar
     var scalebar = new OpenLayers.Control.ScaleBar({
+        geodesic: true,
         displaySystem: "english",
         minWidth: 200, //default
         maxWidth: 250, //default
