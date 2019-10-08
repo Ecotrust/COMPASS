@@ -7,7 +7,7 @@
     "default_hash": "#x=-121.58&y=43.76&z=7&logo=true&basemap=ESRI+Satellite&tab=data",
     "project_name": "ODFW Compass",
     "table_of_contents": 7,
-    "project_icon": "https://dfw.state.or.us/favicon.ico", 
+    "project_icon": "https://dfw.state.or.us/favicon.ico",
     "bitly_api_key": "",
     "bitly_registered_domain": "",
     "max_zoom": 14,
@@ -16,10 +16,10 @@
     "latitude": 43.76,
     "min_zoom": 5,
     "slug_name": "odfw-compass",
-    "project_logo": "http://www.dfw.state.or.us/maps/compass/images/CompassLogo.gif",
+    "project_logo": "https://www.dfw.state.or.us/maps/compass/images/CompassLogo.gif",
     "active": true,
     "enable_drawing": true,
-    "project_home_page": "http://www.dfw.state.or.us/maps/compass/"
+    "project_home_page": "https://www.dfw.state.or.us/maps/compass/"
   }
 }
 ]

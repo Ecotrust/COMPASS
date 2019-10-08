@@ -420,7 +420,7 @@ class Layer(models.Model):
             # if self.compass_instance_id and len(self.compass_instance_id) > 0 and self.compass_service_name and len(self.compass_service_name) > 0:
             if self.layer_source == 'mapserver':
                 self.layer_type = 'XYZ'
-                self.url = 'http://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
+                self.url = 'https://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
             if self.layer_source == 'featureserver':
                 self.layer_type = 'Vector'
                 self.url = '%s/arcgis/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
