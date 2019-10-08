@@ -7,7 +7,10 @@ def get_domain(port=8010):
         domain = Site.objects.get(id=SITE_ID).domain
         if 'localhost' in domain:
             domain = 'localhost:%s' %port
-        # domain = 'http://' + domain
+        if DEFAULT_PROTOCOL:
+            domain = DEFAULT_PROTOCOL + domain
+        else:
+            domain = 'https://' + domain
     except:
         domain = '..'
     #print(domain)

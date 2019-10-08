@@ -87,6 +87,8 @@ FEEDBACK_RECIPIENT = "Compass Team <odfwcompass@ecotrust.org>"
 HELP_EMAIL = "odfwcompass@ecotrust.org"
 DEFAULT_FROM_EMAIL = "Compass Team <odfwcompass@ecotrust.org>"
 
+DEFAULT_PROTOCOL = "https://"
+
 
 
 # url for socket.io printing
@@ -154,7 +156,7 @@ if MIDDLEWARE and len(MIDDLEWARE) > 0:
     MIDDLEWARE = list(MIDDLEWARE) + list(MIDDLEWARE_CLASSES)
 else:
     MIDDLEWARE = list(MIDDLEWARE_CLASSES)
-    
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
