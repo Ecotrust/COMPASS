@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>{{layer.name}} ArcRest example</title>
-    <link rel="stylesheet" href="http://dev.openlayers.org/theme/default/style.css" type="text/css">
-    <link rel="stylesheet" href="http://dev.openlayers.org/examples/style.css" type="text/css">
-    <script src="http://dev.openlayers.org/OpenLayers.js"></script>
+    <link rel="stylesheet" href="https://dev.openlayers.org/theme/default/style.css" type="text/css">
+    <link rel="stylesheet" href="https://dev.openlayers.org/examples/style.css" type="text/css">
+    <script src="https://dev.openlayers.org/OpenLayers.js"></script>
     <script type="text/javascript">
         var map, esriOcean, layer;
         function init(){
@@ -18,8 +18,8 @@
             var map_settings = JSON.parse('{{map_settings|safe}}');
             if (map_settings) {
                 if (map_settings.lat) {
-                    lat = map_settings.lat;                    
-                } 
+                    lat = map_settings.lat;
+                }
                 if (map_settings.lng) {
                     lng = map_settings.lng;
                 }
@@ -33,8 +33,8 @@
                 projection: "EPSG:3857"
             });
             esriocean = new OpenLayers.Layer.XYZ(
-                "ESRI Ocean", 
-                "http://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/${z}/${y}/${x}", 
+                "ESRI Ocean",
+                "https://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/${z}/${y}/${x}",
                 {
                     sphericalMercator: true,
                     isBaseLayer: true,
@@ -42,9 +42,9 @@
                 }
             );
             map.addLayer(esriocean);
-                       
+
             layer = new OpenLayers.Layer.ArcGIS93Rest(
-                "{{layer.name}}", 
+                "{{layer.name}}",
                 "{{layer.url}}",
                 {
                     layers: "show:"+"{{layer.arcgis_layers}}",
@@ -54,17 +54,17 @@
                     isBaseLayer: false
                 }
             );
-            map.addLayer(layer);  
-            layer.setVisibility(true);  
-            
+            map.addLayer(layer);
+            layer.setVisibility(true);
+
             //app.initializeMapLocation();
             map.setCenter(
                 new OpenLayers.LonLat(lng, lat).transform(
                     new OpenLayers.Projection("EPSG:4326"),
                     map.getProjectionObject()
                 ), zoom
-            ); 
-            
+            );
+
         }
     </script>
   </head>

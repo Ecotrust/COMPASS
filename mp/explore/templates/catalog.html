@@ -33,7 +33,7 @@
         <![endif]-->
         <!-- html5.js -->
         <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+        <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
         </script>
         <![endif]-->
         <!--[if IE]>
@@ -46,7 +46,7 @@
 
         <!-- marine planner stylesheet -->
         <link rel="stylesheet" href="{% static 'css/mp_style.css' %}">
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/base/jquery-ui.css">
         {% if project_icon %}
         <link rel="shortcut icon" href="{{project_icon}}">
         {% else %}
@@ -615,7 +615,7 @@
                         theme = span.closest('.theme');
                     //theme.find('.title').text(name);
                     if ( thumbnail === 'None' || thumbnail === '') {
-                        thumbnail = 'http://placehold.it/320x180';
+                        thumbnail = 'https://placehold.it/320x180';
                     }
                     //theme.find('.thumbnail img').attr('src', thumbnail);
                 });
@@ -626,7 +626,7 @@
                         theme = layer.closest('.theme');
                     //theme.find('.title').text(name);
                     if ( thumbnail === 'None' || thumbnail === '') {
-                        thumbnail = 'http://placehold.it/320x180';
+                        thumbnail = 'https://placehold.it/320x180';
                     }
                     //theme.find('.thumbnail img').attr('src', thumbnail);
                 });
