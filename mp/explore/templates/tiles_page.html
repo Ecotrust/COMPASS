@@ -13,7 +13,7 @@
         <div class="span6">
             <h4>OpenLayers</h4>
             <p>If you are developing in OpenLayers, you will want to use the
-            <a href="https://dev.openlayers.org/docs/files/OpenLayers/Layer/XYZ-js.html" target="_blank">OpenLayers XYZ class</a>.
+            <a href="http://dev.openlayers.org/docs/files/OpenLayers/Layer/XYZ-js.html" target="_blank">OpenLayers XYZ class</a>.
             <p>An example of your solution might look similar to the code below.
 
         </div>
@@ -110,7 +110,7 @@ ID: {{layer.arcgis_layers}}</pre>
         <div class="span6">
             <h4>OpenLayers</h4>
             <p>If you are developing in OpenLayers, you will want to use the
-            <a href="https://dev.openlayers.org/docs/files/OpenLayers/Layer/ArcGIS93Rest-js.html" target="_blank">OpenLayers ArcGIS93Rest class</a>.
+            <a href="http://dev.openlayers.org/docs/files/OpenLayers/Layer/ArcGIS93Rest-js.html" target="_blank">OpenLayers ArcGIS93Rest class</a>.
             <p>An example of your solution might look similar to the code below.
         </div>
         <div class="span5">
@@ -144,6 +144,51 @@ map.addLayer(layer); </pre>
     {% if layer.layer_type == 'Vector' %}
     The {{layer.name}} dataset is displayed as a geojson vector layer which is currently not available for download.
     {% endif %}
+
+    <!-- OGC WMS DATA -->
+    {% if layer.layer_type == 'WMS' %}
+    The {{layer.name}} dataset is consumed from an external Open Geospatial Consortium Web Mapping Service (OGC WMS) via the following URL endpoint and layer name:
+
+<pre>
+  <b>URL:</b>
+  {{layer.url}}<br />
+  <b>Layer name:</b>
+  {{layer.wms_slug}}
+</pre>
+
+
+    <div class="row-fluid" style="margin-top: 20px;">
+        <div class="span6">
+            <h4>OpenLayers</h4>
+            <p>If you are developing in OpenLayers 2, you will want to use the
+            <a href="http://dev.openlayers.org/docs/files/OpenLayers/Layer/WMS-js.html" target="_blank">OpenLayers WMS class</a>.
+            <p>An example of your solution might look similar to the code below.
+        </div>
+        <div class="span5">
+            <iframe scrolling="no" width="100%" height="250" frameborder="0" src="{{domain}}/explore/wms_example/{{layer.slug}}"></iframe>
+        </div>
+        <div class="span1"></div>
+        <div class="row-fluid">
+            <div class="span11">
+                <pre>
+layer = new OpenLayers.Layer.WMS(
+    "{{layer.name}}"",
+    "{{layer.url}}",
+    {
+      layers: {{layer.wms_slug}},
+      transparent: "true",
+      format: "image/png"
+    },
+    {}
+);
+
+map.addLayer(layer); </pre>
+
+            </div>
+        </div>
+    </div>
+
+    {% endif %} <!-- End OGC WMS -->
 
 
 </div>

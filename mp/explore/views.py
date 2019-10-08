@@ -140,6 +140,12 @@ def arcrest_example(request, slug=None, template='arcrest_example.html'):
     context = {'layer': layer, 'map_settings': map_settings}
     return render(request, template, context)
 
+def wms_example(request, slug=None, template='wms_example.html'):
+    map_settings = getMapSettings()
+    layer = get_object_or_404(Layer, slug_name=slug)
+    context = {'layer': layer, 'map_settings': map_settings}
+    return render(request, template, context)
+
 def linkify(text):
     return text.lower().replace(' ', '-')
 

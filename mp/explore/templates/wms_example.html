@@ -1,16 +1,16 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>{{layer.name}} OpenLayers example</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/theme/default/style.css" type="text/css">
+    <title>{{layer.name}} ArcRest example</title>
+    <link rel="stylesheet" href='{% static "assets/openlayers/theme/default/style.css" %}' type="text/css">
     <link rel="stylesheet" href='{% static "assets/openlayers/examples/style.css" %}' type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js"></script>
+    <script src='{% static "assets/openlayers/OpenLayers.js" %}'></script>
     <script type="text/javascript">
-        // var map, esriOcean, layer;
+        var map, esriOcean, layer;
         function init(){
             var lat = 38.8,
                 lng = -73,
@@ -29,7 +29,10 @@
                 }
             }
 
-            map = new OpenLayers.Map('mymap');
+            map = new OpenLayers.Map('mymap', {
+                //allOverlays: true,
+                projection: "EPSG:3857"
+            });
             esriocean = new OpenLayers.Layer.XYZ(
                 "ESRI Ocean",
                 "https://services.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/${z}/${y}/${x}",
@@ -41,16 +44,20 @@
             );
             map.addLayer(esriocean);
 
-            layer = new OpenLayers.Layer.XYZ(
+            layer = new OpenLayers.Layer.WMS(
                 "{{layer.name}}",
                 "{{layer.url}}",
                 {
-                    sphericalMercator: true,
-                    isBaseLayer: false
-                }
+                    layers: "{{layer.wms_slug}}",
+                    transparent: true,
+                    format: "image/png"
+                },
+                {}
             );
             map.addLayer(layer);
+            layer.setVisibility(true);
 
+            //app.initializeMapLocation();
             map.setCenter(
                 new OpenLayers.LonLat(lng, lat).transform(
                     new OpenLayers.Projection("EPSG:4326"),
@@ -60,13 +67,6 @@
 
         }
     </script>
-    <!-- <script src="{% static '/explore/map-tile-example.js' %}"></script> -->
-    <style>
-    .olImageLoadError {
-        opacity: 0 !important;
-        filter: alpha(opacity=0) !important; /* IE */
-    }
-    </style>
   </head>
   <body onload="init()">
     <div id="mymap" class="smallmap"></div>
