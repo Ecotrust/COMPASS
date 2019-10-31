@@ -1113,22 +1113,30 @@ function mapLinksModel() {
 
     self.useShortURL = function() {
         var bitly_login = self.bitlyUsername,
-            bitly_api_key = self.bitlyAPIKey,
+            bitly_access_token = self.bitlyAPIKey,
             long_url = self.getURL();
 
-        $.getJSON(
-            "https://api.bitly.com/v3/shorten?callback=?",
-            {
-                "format": "json",
-                "apiKey": bitly_api_key,
-                "login": bitly_login,
-                "longUrl": long_url
+        var params = {
+          "long_url" : long_url
+        }
+
+        $.ajax({
+            url: "https://api-ssl.bitly.com/v4/shorten",
+            cache: false,
+            dataType: "json",
+            method: "POST",
+            type: "POST",
+            contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Bearer " + bitly_access_token);
             },
-            function(response)
-            {
-                $('#short-url')[0].value = response.data.url;
-            }
-        );
+            data: JSON.stringify(params)
+        }).done(function(response) {
+            $('.in #short-url')[0].value = response.link;
+
+        }).fail(function(data) {
+            console.log(data);
+        });
     };
 
     self.getPortalURL = function() {
