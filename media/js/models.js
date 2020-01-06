@@ -318,7 +318,7 @@ function layerModel(options, parent) {
                 app.viewModel.loadingLayers.remove(self.id);
               }
           });
-      } else if (self.type == "WMS"){
+      } else if (self.type == "WMS" && (!self.legend || self.legend.length < 1)) {
         legend_url = self.url + '?TRANSPARENT=true&FORMAT=image%2Fpng&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=' + self.wms_slug;
         self.legend = legend_url;
       }
