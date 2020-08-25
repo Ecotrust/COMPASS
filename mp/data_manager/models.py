@@ -423,13 +423,14 @@ class Layer(models.Model):
                 self.url = 'https://tiles.arcgis.com/tiles/%s/arcgis/rest/services/%s/MapServer/tile/${z}/${y}/${x}' % (self.compass_instance_id, self.compass_service_name)
             if self.layer_source == 'featureserver':
                 self.layer_type = 'Vector'
-                self.url = '%s/arcgis/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
-                    settings.ARC_URL_DOMAIN,
-                    self.compass_instance_id,
-                    self.compass_service_name,
-                    self.arcgis_layers[0],
-                    "geometry=%7B%22xmin%22%3A-13882776.537694%2C%22ymin%22%3A5140361.7152923%2C%22xmax%22%3A-12925173.44747%2C%22ymax%22%3A5825237.4886322%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=pgeojson"
-                )
+                if self.url.index('/') == 0:
+                    self.url = '%s/arcgis/%s/arcgis/rest/services/%s/FeatureServer/%s/query?%s' % (
+                        settings.ARC_URL_DOMAIN,
+                        self.compass_instance_id,
+                        self.compass_service_name,
+                        self.arcgis_layers[0],
+                        "geometry=%7B%22xmin%22%3A-13882776.537694%2C%22ymin%22%3A5140361.7152923%2C%22xmax%22%3A-12925173.44747%2C%22ymax%22%3A5825237.4886322%2C%22spatialReference%22%3A%7B%22wkid%22%3A102100%7D%7D&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&units=esriSRUnit_Meter&outFields=*&returnGeometry=true&f=pgeojson"
+                    )
         super(Layer, self).save(*args, **kwargs)
 
 
