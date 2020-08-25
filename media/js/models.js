@@ -75,8 +75,24 @@ function layerModel(options, parent) {
       return '#' + self.hexDigitAdjuster(r) + self.hexDigitAdjuster(g) + self.hexDigitAdjuster(b);
     }
 
-    self.interpretStyle = function(symbol){
-      var style = {}; // TODO
+    self.interpretStyle = function(symbol, renderer){
+      var style = {};
+
+      // TODO: We need to stylize by variable, but OL2 can only handle
+      //   a direct int val as pixel radius from attributes. The only workaround
+      //   would be to manually calculate the intended radius and inserting a
+      //   new attribute for size into the GEOJSON before adding the data to
+      //   the layer.
+
+      // var variables = {};
+      //
+      // if (renderer.hasOwnProperty('visualVariables')) {
+      //   if (renderer.visualVariables.type == 'sizeInfo') {
+      //     variables.size = {
+      //       'field': renderer.visualVariables.field,
+      //     }
+      //   }
+      // }
 
       if (symbol.type.indexOf('esriSFS') !== -1){
         var fillColor = self.rgbToHex(symbol.color);
@@ -94,7 +110,7 @@ function layerModel(options, parent) {
           style.fillOpacity = 0;
         }
         if (symbol.hasOwnProperty('outline')) {
-          var outline = self.interpretStyle(symbol.outline);
+          var outline = self.interpretStyle(symbol.outline, renderer);
           style.strokeColor = outline.strokeColor;
           style.strokeWidth = outline.strokeWidth;
         }
@@ -102,8 +118,12 @@ function layerModel(options, parent) {
         style.strokeColor = self.rgbToHex(symbol.color);
         style.strokeWidth = symbol.width;
       } else if (symbol.type.indexOf('esriSMS') !== -1){
-        // alert('esriSMS');
-        // TODO
+        style.fillColor = self.rgbToHex(symbol.color);
+        style.strokeColor = self.rgbToHex(symbol.outline.color);
+        style.strokeWidth = symbol.outline.width;
+        // style.graphicZIndex = 1;
+        style.pointRadius = symbol.size;
+
       } else if (symbol.type.indexOf('esriPMS') !== -1){
         var imageUrl = self.url.split('query?')[0] + 'images/' + symbol.url;
         style.externalGraphic = imageUrl;
@@ -131,17 +151,17 @@ function layerModel(options, parent) {
       var defaultStyle = {};
       var rules = [];
       if (renderer.type  == 'simple') {
-          defaultStyle = self.interpretStyle(renderer.symbol);
+          defaultStyle = self.interpretStyle(renderer.symbol, renderer);
       } else {
         if (renderer.defaultSymbol){
-          defaultStyle = self.interpretStyle(renderer.defaultSymbol);
+          defaultStyle = self.interpretStyle(renderer.defaultSymbol, renderer);
         }
         if (renderer.type  == 'uniqueValue') {
           if (renderer.field1 !== null ) {
             // TODO 'field2, field3'
             for (var uviIdx in renderer.uniqueValueInfos){
               var uvi = renderer.uniqueValueInfos[uviIdx];
-              var ruleSymbolizer = self.interpretStyle(uvi.symbol);
+              var ruleSymbolizer = self.interpretStyle(uvi.symbol, renderer);
               var ruleFilter = new OpenLayers.Filter.Comparison({
                   type: OpenLayers.Filter.Comparison.EQUAL_TO,
                   property: renderer.field1,
@@ -166,7 +186,7 @@ function layerModel(options, parent) {
           if (renderer.field !== null) {
             for (var breakIdx in renderer.classBreakInfos) {
               var cbi = renderer.classBreakInfos[breakIdx];
-              var ruleSymbolizer = self.interpretStyle(cbi.symbol);
+              var ruleSymbolizer = self.interpretStyle(cbi.symbol, renderer);
               if (cbi.hasOwnProperty('classMinValue')) {
                 minVal = cbi.classMinValue;
               }

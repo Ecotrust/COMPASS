@@ -27,22 +27,22 @@
  * OpenLayers.Util.pagePosition is based on Yahoo's getXY method, which is
  * Copyright (c) 2006, Yahoo! Inc.
  * All rights reserved.
- * 
+ *
  * Redistribution and use of this software in source and binary forms, with or
  * without modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * * Redistributions of source code must retain the above copyright notice,
  *   this list of conditions and the following disclaimer.
- * 
+ *
  * * Redistributions in binary form must reproduce the above copyright notice,
  *   this list of conditions and the following disclaimer in the documentation
  *   and/or other materials provided with the distribution.
- * 
+ *
  * * Neither the name of Yahoo! Inc. nor the names of its contributors may be
  *   used to endorse or promote products derived from this software without
  *   specific prior written permission of Yahoo! Inc.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -52,7 +52,7 @@
  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
 var OpenLayers={VERSION_NUMBER:"Release 2.12",singleFile:true,_getScriptLocation:(function(){var r=new RegExp("(^|(.*?\\/))(OpenLayers[^\\/]*?\\.js)(\\?|$)"),s=document.getElementsByTagName('script'),src,m,l="";for(var i=0,len=s.length;i<len;i++){src=s[i].getAttribute('src');if(src){m=src.match(r);if(m){l=m[1];break;}}}
@@ -1359,7 +1359,7 @@ if(this.repositionTimer){window.clearTimeout(this.repositionTimer);}
 OpenLayers.Layer.Google.prototype.destroy.apply(this,arguments);}};OpenLayers.ProxyHost="";OpenLayers.Request={DEFAULT_CONFIG:{method:"GET",url:window.location.href,async:true,user:undefined,password:undefined,params:null,proxy:OpenLayers.ProxyHost,headers:{},data:null,callback:function(){},success:null,failure:null,scope:null},URL_SPLIT_REGEX:/([^:]*:)\/\/([^:]*:?[^@]*@)?([^:\/\?]*):?([^\/\?]*)/,events:new OpenLayers.Events(this),makeSameOrigin:function(url,proxy){var sameOrigin=url.indexOf("http")!==0;var urlParts=!sameOrigin&&url.match(this.URL_SPLIT_REGEX);if(urlParts){var location=window.location;sameOrigin=urlParts[1]==location.protocol&&urlParts[3]==location.hostname;var uPort=urlParts[4],lPort=location.port;if(uPort!=80&&uPort!=""||lPort!="80"&&lPort!=""){sameOrigin=sameOrigin&&uPort==lPort;}}
 if(!sameOrigin){if(proxy){if(typeof proxy=="function"){url=proxy(url);}else{url=proxy+encodeURIComponent(url);}}else{OpenLayers.Console.warn(OpenLayers.i18n("proxyNeeded"),{url:url});}}
 return url;},issue:function(config){var defaultConfig=OpenLayers.Util.extend(this.DEFAULT_CONFIG,{proxy:OpenLayers.ProxyHost});config=OpenLayers.Util.applyDefaults(config,defaultConfig);var customRequestedWithHeader=false,headerKey;for(headerKey in config.headers){if(config.headers.hasOwnProperty(headerKey)){if(headerKey.toLowerCase()==='x-requested-with'){customRequestedWithHeader=true;}}}
-if(customRequestedWithHeader===false){config.headers['X-Requested-With']='XMLHttpRequest';}
+//if(customRequestedWithHeader===false){config.headers['X-Requested-With']='XMLHttpRequest';}
 var request=new OpenLayers.Request.XMLHttpRequest();var url=OpenLayers.Util.urlAppend(config.url,OpenLayers.Util.getParameterString(config.params||{}));url=OpenLayers.Request.makeSameOrigin(url,config.proxy);request.open(config.method,url,config.async,config.user,config.password);for(var header in config.headers){request.setRequestHeader(header,config.headers[header]);}
 var events=this.events;var self=this;request.onreadystatechange=function(){if(request.readyState==OpenLayers.Request.XMLHttpRequest.DONE){var proceed=events.triggerEvent("complete",{request:request,config:config,requestUrl:url});if(proceed!==false){self.runCallbacks({request:request,config:config,requestUrl:url});}}};if(config.async===false){request.send(config.data);}else{window.setTimeout(function(){if(request.readyState!==0){request.send(config.data);}},0);}
 return request;},runCallbacks:function(options){var request=options.request;var config=options.config;var complete=(config.scope)?OpenLayers.Function.bind(config.callback,config.scope):config.callback;var success;if(config.success){success=(config.scope)?OpenLayers.Function.bind(config.success,config.scope):config.success;}
