@@ -134,7 +134,9 @@ function layerModel(options, parent) {
             // It's possible for specialty markers like pointers this adjustment
             // would be necessary, but for now there's no known need.
         // style.graphicXOffset = symbol.xoffset;
+        style.graphicXOffset = 0;
         // style.graphicYOffset = symbol.yoffset;
+        style.graphicYOffset = 0;
         style.rotation = symbol.angle;
       } else if (symbol.type.indexOf('esriPFS') !== -1){
         // alert('esriPFS');
@@ -157,7 +159,7 @@ function layerModel(options, parent) {
           defaultStyle = self.interpretStyle(renderer.defaultSymbol, renderer);
         }
         if (renderer.type  == 'uniqueValue') {
-          if (renderer.field1 !== null ) {
+          if (renderer.field1 !== null &&  renderer.field1 !== undefined) {
             // TODO 'field2, field3'
             for (var uviIdx in renderer.uniqueValueInfos){
               var uvi = renderer.uniqueValueInfos[uviIdx];
@@ -167,6 +169,7 @@ function layerModel(options, parent) {
                   property: renderer.field1,
                   value: uvi.value
               });
+
               rules.push(
                 new OpenLayers.Rule(
                   {
@@ -176,6 +179,8 @@ function layerModel(options, parent) {
                 )
               );
             }
+          } else {
+            defaultStyle =  self.interpretStyle(renderer.uniqueValueInfos[0].symbol, renderer);
           }
         }
         if (renderer.type == 'classBreaks') {
@@ -209,15 +214,21 @@ function layerModel(options, parent) {
           }
         }
       }
-      if (app.viewModel.layerIndex[self.id].opacity() != 0 && defaultStyle.fillOpacity != 0) {
+      if (app.viewModel.layerIndex[self.id].opacity() != 0 && defaultStyle.hasOwnProperty('fillOpacity') && defaultStyle.fillOpacity != 0) {
         defaultStyle.fillOpacity = app.viewModel.layerIndex[self.id].opacity();
         defaultStyle.strokeOpacity = app.viewModel.layerIndex[self.id].opacity();
         self.fillOpacity = app.viewModel.layerIndex[self.id].opacity();
         self.defaultOpacity = app.viewModel.layerIndex[self.id].opacity();
       }
       var selectStyle = defaultStyle;
+      if (rules.length > 0) {
+        return new OpenLayers.StyleMap({
+          "default": new OpenLayers.Style(defaultStyle, {rules: rules}),
+          "select": new OpenLayers.Style(selectStyle)
+        })
+      }
       return new OpenLayers.StyleMap({
-        "default": new OpenLayers.Style(defaultStyle, {rules: rules}),
+        "default": new OpenLayers.Style(defaultStyle),
         "select": new OpenLayers.Style(selectStyle)
       })
 
@@ -262,6 +273,16 @@ function layerModel(options, parent) {
             legendObj.colors.push(element);
           } else if (symbol.externalGraphic){
             element.swatch = symbol.externalGraphic;
+            if (symbol.hasOwnProperty('graphicHeight')) {
+              element.height = symbol.graphicHeight;
+            } else {
+              element.height = 'auto';
+            }
+            if (symbol.hasOwnProperty('graphicWidth')) {
+              element.width = symbol.graphicWidth;
+            } else {
+              element.width = 'auto';
+            }
             legendObj.elements.push(element);
           }
         }
