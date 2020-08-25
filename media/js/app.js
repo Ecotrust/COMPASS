@@ -404,8 +404,8 @@ $(document).ready(function() {
   });
   $('#map').mouseup( function() {
     if ( !app.map.mousedrag ) {
-      app.map.clickOutput.attributes = {};
       if (!app.viewModel.featureClick()) {
+        app.map.clickOutput.attributes = {};
         app.viewModel.closeAttribution();
         app.viewModel.closeDescription();
       }
