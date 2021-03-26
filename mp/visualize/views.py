@@ -84,7 +84,8 @@ def show_planner(request, project=None, template='planner.html'):
         'project_logo': project_logo, 'project_icon': project_icon, 'project_home_page': project_home_page,
         'enable_drawing': enable_drawing,
         'bitly_registered_domain': bitly_registered_domain, 'bitly_username': bitly_username, 'bitly_api_key': bitly_api_key,
-        'content': content_dict
+        'content': content_dict,
+        'google_analytics_code': settings.GA_TRACKING_CODE
     }
     if request.user.is_authenticated:
         context['session'] = request.session._session_key

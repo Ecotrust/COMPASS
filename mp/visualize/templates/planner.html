@@ -4,13 +4,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>
-            {% if project_name %}
-            {{ project_name }}
-            {% else %}
-            Marine Planner
-            {% endif %}
-        </title>
+        <title>{% if project_name %}{{ project_name }}{% else %}Marine Planner{% endif %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="This online system of maps helps you make informed land use decisions related to fish and wildlife habitats as you plan energy, transportation, conservation and other large projects. Compass also provides access to spatial representations of Oregon Conservation Strategy components.">
         <meta name="author" content="">
@@ -75,8 +69,15 @@
             // }
         </script>
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_code }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-
+            gtag('config', '{{ google_analytics_code }}');
+        </script>
     </head>
 
     <body class='ofr'>

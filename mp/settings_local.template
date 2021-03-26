@@ -13,6 +13,8 @@ SECRET_KEY = '3j9~fjio+adjf93jda()#Jfk3ljf-ea9#$@#90dsfj9@0aj3()*fj3iow2f'
 # The following Google key is for localhost:
 # GOOGLE_API_KEY = 'ABQIAAAAu2dobIiH7nisivwmaz2gDhT2yXp_ZAY8_ufC3CFXhHIE1NvwkxSLaQmJjJuOq03hTEjc-cNV8eegYg'
 
+GA_TRACKING_CODE = 'set in local settings'
+
 # You'll want to specify any database connection info here:
 DATABASES = {
     'default': {

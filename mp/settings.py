@@ -89,7 +89,7 @@ DEFAULT_FROM_EMAIL = "Compass Team <odfwcompass@ecotrust.org>"
 
 DEFAULT_PROTOCOL = "https://"
 
-
+GA_TRACKING_CODE = 'set in local settings'
 
 # url for socket.io printing
 # SOCKET_URL = 'http://ofr.marineplanner.io:8080'
