@@ -362,9 +362,9 @@ SPECIES_LOOKUP = {
     "349":u"<a href='https://oregonconservationstrategy.org/strategy-species/chum-salmon/' class='ocs-species-link' target='_blank'>Chum Salmon</a>",
     "350":u"<a href='https://oregonconservationstrategy.org/strategy-species/coastal-cutthroat-trout/' class='ocs-species-link' target='_blank'>Coastal Cutthroat Trout</a>",
     "351":u"<a href='https://oregonconservationstrategy.org/strategy-species/coho-salmon/' class='ocs-species-link' target='_blank'>Coho Salmon</a>",
-    "352":u"Western Speckled Dace group",   #http://oregonconservationstrategy.org/strategy-species/foskett-spring-speckled-dace/ ?
+    "352":u"<a href='https://oregonconservationstrategy.org/strategy-species/foskett-spring-speckled-dace/' class='ocs-species-link' target='_blank'>Foskett Spring Speckled Dace</a>",
     "353":u"<a href='https://oregonconservationstrategy.org/strategy-species/goose-lake-sucker/' class='ocs-species-link' target='_blank'>Goose Lake Sucker</a>",
-    "354":u"Oregon Lakes Tui Chub group",   # http://oregonconservationstrategy.org/strategy-species/hutton-spring-tui-chub-group/ ?
+    "354":u"<a href='https://oregonconservationstrategy.org/strategy-species/hutton-spring-tui-chub-group/' class='ocs-species-link' target='_blank'>Hutton Springs Tui Chub</a>",
     "355":u"<a href='https://oregonconservationstrategy.org/strategy-species/lahontan-cutthroat-trout/' class='ocs-species-link' target='_blank'>Lahontan Cutthroat Trout</a>",
     "356":u"<a href='https://oregonconservationstrategy.org/strategy-species/lost-river-sucker/' class='ocs-species-link' target='_blank'>Lost River Sucker</a>",
     "357":u"<a href='https://oregonconservationstrategy.org/strategy-species/miller-lake-lamprey/' class='ocs-species-link' target='_blank'>Miller Lake Lamprey</a>",
