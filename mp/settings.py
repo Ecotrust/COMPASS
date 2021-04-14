@@ -1,5 +1,6 @@
 # Django settings for lot project.
 from madrona.common.default_settings import *
+import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TIME_ZONE = 'America/Vancouver'
@@ -236,6 +237,8 @@ DJANGO_WYSIWYG_FLAVOR = "tinymce"    # or "tinymce_advanced"
 
 EXTERNAL_PORT = 80
 
+TEMPORARY_SHAPES_DIR = os.path.join(BASE_DIR, '..','media','extracted')
+
 PLANNING_UNIT_FILENAME = "PU_grid"
 
 PU_FIELDS = {
@@ -250,11 +253,11 @@ PU_FIELDS = {
     'mod_spec': str
 }
 
-PU_SQL_LOC = "../media/planning_unit_sql/"
+PU_SQL_LOC = os.path.join(BASE_DIR, "..","media","planning_unit_sql")
 PU_SQL_LIVE = PU_SQL_LOC + "pu_sql.sql"
 PU_SQL_BACKUP = PU_SQL_LOC + "pu_sql_backup.sql"
 
-PROCESS_GRID_SCRIPT = "../scripts/process_grid.sh"
+PROCESS_GRID_SCRIPT = os.path.join(BASE_DIR,"..","scripts","process_grid.sh")
 
 #Set this in local settings
 VIRTUAL_ENV_PYTHON = False

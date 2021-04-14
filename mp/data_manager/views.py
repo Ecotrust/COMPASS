@@ -10,6 +10,10 @@ import os, datetime, time, zipfile, sys, glob, settings
 from data_manager.models import *
 from data_manager.forms import *
 
+# Python 3 has no cmp, so just remake it as a function. This is the official solution.
+def cmp(a, b):
+    return (a > b) - (a < b)
+
 
 #@cache_page(60 * 60 * 24, key_prefix="data_manager_get_json")
 def get_json(request, project=None):
@@ -370,18 +374,18 @@ def handle_imported_planning_units_file(import_file, user):
     #   * unzip
     try:
         with zipfile.ZipFile(import_file) as shapezip:
-            shapezip.extractall("../media/extracted/")
-    except:
+            shapezip.extractall(settings.TEMPORARY_SHAPES_DIR)
+    except Exception as e:
         error_message = "Failed to unzip zipfile."
         return {'state': False, 'message': error_message}
 
     #   * test if right files exist
     if not (
-        os.path.isfile('../media/extracted/%s.cpg' % settings.PLANNING_UNIT_FILENAME) and
-        os.path.isfile('../media/extracted/%s.dbf' % settings.PLANNING_UNIT_FILENAME) and
-        os.path.isfile('../media/extracted/%s.prj' % settings.PLANNING_UNIT_FILENAME) and
-        os.path.isfile('../media/extracted/%s.shp' % settings.PLANNING_UNIT_FILENAME) and
-        os.path.isfile('../media/extracted/%s.shx' % settings.PLANNING_UNIT_FILENAME)
+        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.cpg' % settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.dbf' % settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.prj' % settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.shp' % settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.shx' % settings.PLANNING_UNIT_FILENAME))
     ):
         error_message = "Zipfile does not contail all required filetypes: cpg, dbf, prj, shp, shx"
         return {'state': False, 'message': error_message}
@@ -391,7 +395,7 @@ def handle_imported_planning_units_file(import_file, user):
     source_3857 = osr.SpatialReference()
     source_3857.ImportFromEPSG(3857)
     driver = ogr.GetDriverByName('ESRI Shapefile')
-    dataset = driver.Open(r'../media/extracted/%s.shp' % settings.PLANNING_UNIT_FILENAME)
+    dataset = driver.Open(r'%s.shp' % os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME))
     layer = dataset.GetLayer()
     spatialRef = layer.GetSpatialRef()
     arcgis_web_merc_wkt = 'PROJCS["WGS_1984_Web_Mercator_Auxiliary_Sphere",GEOGCS["GCS_WGS_1984",DATUM["WGS_1984",SPHEROID["WGS_84",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Mercator_Auxiliary_Sphere"],PARAMETER["False_Easting",0.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",0.0],PARAMETER["Standard_Parallel_1",0.0],PARAMETER["Auxiliary_Sphere_Type",0.0],UNIT["Meter",1.0]]'
@@ -401,7 +405,7 @@ def handle_imported_planning_units_file(import_file, user):
 
     #   * test if correct attributes
     geom = layer[0]
-    if not (cmp(geom.keys().sort(),settings.PU_FIELDS.keys().sort())==0):
+    if not (cmp(sorted(geom.keys()),sorted(settings.PU_FIELDS.keys()))==0):
         error_message = "Incorrect attribute names. Must match: %s" % str(settings.PU_FIELDS.keys())
         return {'state': False, 'message': error_message}
 
@@ -444,7 +448,7 @@ def handle_imported_planning_units_file(import_file, user):
             start_time = os.stat(settings.PU_SQL_LIVE).st_mtime
         else:
             start_time = float(datetime.datetime.now().strftime("%s"))
-        grid_subprocess = "%s ../media/extracted/%s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,settings.PLANNING_UNIT_FILENAME,settings.PU_SQL_LIVE,python_exec)
+        grid_subprocess = "%s %s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,os.path.join(TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME),settings.PU_SQL_LIVE,python_exec)
         process_success = subprocess.call(grid_subprocess, shell=True)
         mod_time = os.stat(settings.PU_SQL_LIVE).st_mtime
         if not start_time < mod_time:
