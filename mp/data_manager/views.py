@@ -381,11 +381,11 @@ def handle_imported_planning_units_file(import_file, user):
 
     #   * test if right files exist
     if not (
-        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.cpg' % settings.PLANNING_UNIT_FILENAME)) and
-        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.dbf' % settings.PLANNING_UNIT_FILENAME)) and
-        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.prj' % settings.PLANNING_UNIT_FILENAME)) and
-        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.shp' % settings.PLANNING_UNIT_FILENAME)) and
-        os.path.isfile(os.path.join(settings.TEMPORARY_SHAPES_DIR)'%s.shx' % settings.PLANNING_UNIT_FILENAME))
+        os.path.isfile('%s.cpg' % os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile('%s.dbf' % os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile('%s.prj' % os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile('%s.shp' % os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME)) and
+        os.path.isfile('%s.shx' % os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME))
     ):
         error_message = "Zipfile does not contail all required filetypes: cpg, dbf, prj, shp, shx"
         return {'state': False, 'message': error_message}
@@ -448,7 +448,7 @@ def handle_imported_planning_units_file(import_file, user):
             start_time = os.stat(settings.PU_SQL_LIVE).st_mtime
         else:
             start_time = float(datetime.datetime.now().strftime("%s"))
-        grid_subprocess = "%s %s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,os.path.join(TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME),settings.PU_SQL_LIVE,python_exec)
+        grid_subprocess = "%s %s.shp %s %s" % (settings.PROCESS_GRID_SCRIPT,os.path.join(settings.TEMPORARY_SHAPES_DIR, settings.PLANNING_UNIT_FILENAME),settings.PU_SQL_LIVE,python_exec)
         process_success = subprocess.call(grid_subprocess, shell=True)
         mod_time = os.stat(settings.PU_SQL_LIVE).st_mtime
         if not start_time < mod_time:
