@@ -254,8 +254,8 @@ PU_FIELDS = {
 }
 
 PU_SQL_LOC = os.path.join(BASE_DIR, "..","media","planning_unit_sql")
-PU_SQL_LIVE = PU_SQL_LOC + "pu_sql.sql"
-PU_SQL_BACKUP = PU_SQL_LOC + "pu_sql_backup.sql"
+PU_SQL_LIVE = os.path.join(PU_SQL_LOC, "pu_sql.sql")
+PU_SQL_BACKUP = os.path.join(PU_SQL_LOC, "pu_sql_backup.sql")
 
 PROCESS_GRID_SCRIPT = os.path.join(BASE_DIR,"..","scripts","process_grid.sh")
 
